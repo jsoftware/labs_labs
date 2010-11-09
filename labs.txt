@@ -1,0 +1,4 @@
+directory: user\labs
+
+This is an empty directory created when J
+is installed, and is available for user labs.

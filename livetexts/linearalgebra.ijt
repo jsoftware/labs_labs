@@ -6,7 +6,7 @@ NB. =========================================================
 Lab Chapter SYSTEMS OF LINEAR EQUATIONS
 NB. =========================================================
 Lab Section 1. Introduction
-	
+
 This lab is written as a companion to Seymour Lipshutz "LINEAR ALGEBRA" of Schaum's Outline Series, published by McGraw Hill, 1991, ISBN 0-07-038007-4. It will be referred to here by the author's initials SL.
 
 The use of the computer makes it possible to experiment with
@@ -2894,7 +2894,7 @@ c=:_2  1  1
 
 V mp A
 
-%.V	
+%.V
 
 NB. =========================================================
 Lab Section 5-6. Annihilators -- Transpose of a Linear Mapping

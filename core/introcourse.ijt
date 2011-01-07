@@ -1878,7 +1878,10 @@ Lab Section The fndisplay Tool
 A J tool called fndisplay lets you see how operations are applied
 on cells.  To invoke it, first load it with
 
-  load 'system/packages/misc/fndisplay.ijs'
+  load '~addons/general/misc/fndisplay.ijs'
+
+If the load fails you need to use jal to install addon general/misc.
+
   setfnform 'J'
 
 Define verbs you want to use, giving them a rank if it's not infinite:
@@ -1892,7 +1895,7 @@ Define named nouns you plan to use:
 When you use those verbs and nouns, the result will show how the
 operation was performed.
 )
-load 'system/packages/misc/fndisplay.ijs'
+load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
 setfnform 'J'
 defverbs 'Sum Sq"0'
 Sum@:Sq 1 2 3

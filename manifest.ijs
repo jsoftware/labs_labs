@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.3'
+VERSION=: '1.0.4'
 
 FILES=: 0 : 0
 history.txt

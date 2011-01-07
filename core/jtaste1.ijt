@@ -249,6 +249,8 @@ NB. =========================================================
 Lab Section
 The function "load" reads in definitions from "script" files.
 
+The load will fail if stats/base addon is not installed. Use jal to install the addon if necessary.
+
 For example, read in the stats functions:
 )
 load 'stats'
@@ -269,16 +271,10 @@ dstat normalrand 10000
 
 NB. =========================================================
 Lab Section
-Read in the trig and plot functions:
-)
-load 'trig plot'
-
-NB. =========================================================
-Lab Section
 Try generating sines, here the arguments are in radians:
 )
+sin=: 1&o.
 sin i.6
-
 sin i.3 4
 
 NB. =========================================================
@@ -289,19 +285,13 @@ You can plot numbers directly. The next section plots the sin of i.3 4. The line
 NB. =========================================================
 Lab Section
 )
+NB. load'plot' if you get a value error on the verb plot.
 plot sin i.3 4
 
-NB. =========================================================
-Lab Section
-The next two sections plot sin 0.2 * i.30 30, first as a series of lines, then as a surface. This time there are enough data points to show smooth lines.
-)
 
 NB. =========================================================
 Lab Section
 )
-plot sin 0.2 * i.30 30
+plot sin 0.2 * i.10 30
 
-NB. =========================================================
-Lab Section
-)
-'surface' plot sin 0.2 * i.30 30
+

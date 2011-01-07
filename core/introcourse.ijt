@@ -1955,7 +1955,7 @@ NB. Then }. is applied, leaving 4 6.
 
 }.@:({.@>) a
 
-load 'system/packages/misc/fndisplay.ijs'
+load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed
@@ -1978,7 +1978,7 @@ NB. an array of shape 3 0, which display as three blank lines.
 
 }.@({.@>) a
 
-load 'system/packages/misc/fndisplay.ijs'
+load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed
@@ -2003,7 +2003,7 @@ NB. }.@{. is equivalent to }.@:{. because both compounds have rank _ .
 
 }.@:{.@> a
 
-load 'system/packages/misc/fndisplay.ijs'
+load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed
@@ -2025,7 +2025,7 @@ NB. to that, leaving the result 2 3 .
 
 }.@({.@:>) a
 
-load 'system/packages/misc/fndisplay.ijs'
+load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed

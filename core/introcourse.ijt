@@ -1880,7 +1880,7 @@ on cells.  To invoke it, first load it with
 
   load '~addons/general/misc/fndisplay.ijs'
 
-If the load fails you need to use jal to install addon general/misc.
+If the load fails, use jal to install general/misc addon.
 
   setfnform 'J'
 
@@ -5143,7 +5143,9 @@ NB. ============================================================================
 Lab Section Following Execution using the trace facility
 To follow parsing and execution, use the trace facility built into J.  Type
 
-   load 'trace'
+   load '~addons/general/misc/trace.ijs'
+
+If the load fails, use jal to install general/misc addon.
 
 This defines two verbs: trace and paren.  Each takes a y argument which is
 a string containing the text of a J sentence.
@@ -5154,7 +5156,7 @@ paren y    returns the fully-parenthesized version of y
            sentence y.  x is the maximum call depth to trace; we will
            be leaving it off, which will show everything.
 )
-load 'trace'
+load '~addons/general/misc/trace.ijs' NB. jal addon general/misc
 
 paren 'i.&1-.3<+/i.5'  NB. A hard-to-read sentence
 

@@ -285,7 +285,7 @@ You can plot numbers directly. The next section plots the sin of i.3 4. The line
 NB. =========================================================
 Lab Section
 )
-NB. load'plot' if you get a value error on the verb plot.
+NB. assumes approproiate plot is available
 plot sin i.3 4
 
 

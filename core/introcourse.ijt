@@ -5032,7 +5032,7 @@ Thge J Performance Monitor lets you probe your code to see what parts
 are taking time.
 )
 NB. Load the application
-load 'plot'
+NB. assumes approproiate plot is available
 NB. Load the J Performance Monitor
 load 'jpm'
 
@@ -5315,14 +5315,12 @@ the display of the data, captioning, etc.
 
 The very fastest plot uses the plot verb.
 )
-load 'plot'
 plot *: i. 20  NB. Just the y values.  X is assumed to be integers.
 
 NB. ============================================================================
 Lab Section 2D Line Plots
 You can give both x and y values.
 )
-require 'plot'
 require 'trig'
 x =: 50 %~ o. i. 100  NB. 100 values of x from 0 to 2p1
 plot x ; sin x  NB. abscissas ; ordinates
@@ -5331,7 +5329,6 @@ NB. ============================================================================
 Lab Section 2D Point Plots
 You can plot points rather than lines.
 )
-require 'plot'
 require 'trig'
 x =: 50 %~ o. i. 100  NB. 100 values of x from 0 to 2p1
 'point;pensize 3' plot x ; sin x  NB. abscissas ; ordinates
@@ -5340,7 +5337,6 @@ NB. ============================================================================
 Lab Section Plots With More Than One Ordinate
 You can plot more than one curve on the same plot.
 )
-require 'plot'
 require 'trig'
 x =: 50 %~ o. i. 100  NB. 100 values of x from 0 to 2p1
 plot x ; (sin ,: cos) x  NB. abscissas ; ordinates
@@ -5357,7 +5353,6 @@ For more complex plots, you use the pd verb.  pd sends options, data, and
 COMMANDS to the Plot Package.  The commands start and display or print the
 plot.
 )
-require 'plot'
 require 'trig'
 pd 'reset'  NB. Start new plot
 pd 'type line; color red'  NB. Start line plot
@@ -5370,7 +5365,6 @@ NB. ============================================================================
 Lab Section Parametric plots
 y does not have to be a function of x.
 )
-require 'plot'
 require 'trig'
 t =: 50 %~ o. i. 201  NB. 100 values of x from 0 to 2p1
 plot (sin t) ; cos 1.5 * t  NB. Parametric function
@@ -5379,7 +5373,6 @@ NB. ============================================================================
 Lab Section Surface plots
 3D datasets can be plotted either as surfaces or as 3D lines.
 )
-require 'plot'
 require 'trig'
 dat=. (];];sin@*/~) i:2j70  NB. x ; y ; sin(x*y) from _2 to 2
 pd 'reset'
@@ -5392,7 +5385,6 @@ pd 'show'
 NB. ============================================================================
 Lab Section Wireframe plots
 )
-require 'plot'
 require 'trig'
 dat=. (];];sin@*/~) i:2j70  NB. x ; y ; sin(x*y) from _2 to 2
 pd 'reset'

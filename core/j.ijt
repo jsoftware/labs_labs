@@ -377,7 +377,8 @@ Lab Section Simple plot
 The square function (*:) applied to a list x
 may be plotted against its argument as follows:
 )
-NB. assumes approproiate plot is available
+require 'plot'
+
 x=: i.5
 y=: *: x
 
@@ -615,6 +616,7 @@ i.#c
 c * i. # c
 der=:}. c * i. # c NB. Coefficients of derivative
 der
+require 'plot'
 PLOT=:'stick,line'&plot
 PLOT x;>(c p. x);(der p. x)
 
@@ -839,6 +841,7 @@ boxed x and y coordinates.
 cos=:2&o.
 sin=:1&o.
 ]pent=:(cos,.sin) 2r5p1 * i. 5
+require 'plot'
 |:pent    NB. Transpose table
 ;/|: pent NB. Box rows (columns of pent)
 (fix=: ;/@|:) pent
@@ -988,6 +991,7 @@ because the graph of a function at intervals of i exhibits the
 average rate of change as the slopes of the lines connecting
 successive points.
 )
+require 'plot'
 PLOT=:'stick,line'&plot
 i*i.20
 f i*i.20

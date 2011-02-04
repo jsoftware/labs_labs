@@ -25,7 +25,7 @@ for the following reasons:
 )
 PREPARE
 
-require 'plot graph'
+require 'plot'
 color=:viewmat
 
 decimal=:x:^:_1
@@ -95,7 +95,7 @@ erec=:]`(>:@:[ erec estep)@.(>:@:[<<./@:$@:])
 TO=:x:@(-/@(?.@((2: , [) $ >:@])))  NB. A random function
 SYM=:]+|:
 HERM=:]++@:|:
-load 'plot graph'
+load 'plot'
 roots=:>@:{:@:p.
 
 orth=:{: - (({: ip }:) % }: ip }:) mp }:
@@ -1825,7 +1825,7 @@ hex=:,c=:+.r   NB. Coords and ravelled coords of hexagon
 
 (,.r);c        NB. Coords r as a column
 
-load 'plot graph'
+load 'plot'
 red=:255 0  0
 gdopen ''
 red gdpolygon hex

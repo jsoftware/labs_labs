@@ -59,7 +59,7 @@ The next step plots the data in d. After you have seen the plot window, close it
 clear ''      NB. erase all names
 d=: ?1+i.50
 names ''      NB. list names
-NB. assumes approproiate plot is available
+load 'plot'   NB. load plot module
 names ''      NB. no new names
 
 NB. =========================================================
@@ -351,10 +351,10 @@ NB. =========================================================
 Lab Section
 The result should be:
     aa 0
- �       dd 0
- �       cc_foo_ 0
- �       bb 0
- �       aa 0
+ dd 0
+ cc_foo_ 0
+ bb 0
+ aa 0
 )
 
 NB. =========================================================

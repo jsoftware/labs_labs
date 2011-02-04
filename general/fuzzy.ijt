@@ -145,7 +145,7 @@ fs =: fuzzySubset =: ,:~
 about2Q =: -.@(%&4)@(4&<.)@(|@(-&2))
 (fs about2Q) i
 
-NB. assumes approproiate plot is available
+load 'plot'
 'yrange 0 1' plot ;/|. (fs about2Q) i
 
 about0Q =: -.@(%&4)@(4&<.)@(|@(-&0))

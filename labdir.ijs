@@ -11,16 +11,13 @@ NB.
 NB. Use an underscore for a blank in the shortname.
 
 j=. <;._2 (0 : 0)
-Language           ~system\extras\labs\language
-Graphics           ~system\extras\labs\graphics
-System             ~system\extras\labs\system
-Concrete_Math      ~system\extras\labs\cmc
-General_Interest   ~system\extras\labs\general
-Math               ~system\extras\labs\math
-Live_Texts         ~system\extras\labs\livetexts
-Personal           ~system\extras\labs\personal
-User               ~user\labs
-Addons             ~addons
+Core               ~addons/labs/labs/core
+Graphics           ~addons/labs/labs/graphics
+System             ~addons/labs/labs/system
+General_Interest   ~addons/labs/labs/general
+Math               ~addons/labs/labs/math
+Live_Texts         ~addons/labs/labs/livetexts
+Personal           ~addons/labs/labs/personal
 )
 
 ndx=. j i.&> ' '

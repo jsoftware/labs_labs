@@ -6,13 +6,13 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.9'
+VERSION=: '1.0.10'
 
 FILES=: 0 : 0
-history.txt
 labdir.ijs
 lab.ijs
 labintro.txt
+lablist.txt
 manifest.ijs
 readme.txt
 core/

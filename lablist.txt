@@ -1,6 +1,7 @@
 NB. list of labs valid for the gtk ide
-NB. commented out - not yet tested in J7
-NB. update to add new labs
+NB.
+NB. The labs not yet tested in J7 are commented out.
+NB. uncomment when a lab is working
 
 Core;A J Introduction;~addons/labs/labs/core/j.ijt
 Core;A Taste of J (1);~addons/labs/labs/core/jtaste1.ijt
@@ -10,7 +11,7 @@ Core;An Introductory Course in J;~addons/labs/labs/core/introcourse.ijt
 Core;Function Display;~addons/labs/labs/core/display.ijt
 Core;Locales;~addons/labs/labs/core/locales.ijt
 Core;Monad/Dyad;~addons/labs/labs/core/monad.ijt
-Core;Object Oriented Programming;~addons/labs/labs/core/oop.ijt
+NB. Core;Object Oriented Programming;~addons/labs/labs/core/oop.ijt
 Core;Sparse Arrays;~addons/labs/labs/core/sparse.ijt
 
 NB. General;Circuit Theory I;~addons/labs/labs/general/circuittheoryi.ijt
@@ -26,9 +27,9 @@ NB. Image3;Image Addon 3 Html;~addons/media/image3/image3html.ijt
 NB. Image3;Image Addon 3 Movie;~addons/media/image3/image3movie.ijt
 
 LiveTexts;Arithmetic;~addons/labs/labs/livetexts/arithmetic.ijt
-LiveTexts;Book of Numbers;~addons/labs/labs/livetexts/candg.ijt
+NB. LiveTexts;Book of Numbers;~addons/labs/labs/livetexts/candg.ijt
 LiveTexts;Coleman (sample topics);~addons/labs/labs/livetexts/coleman.ijt
-LiveTexts;Grade 8-7 (Saxon);~addons/labs/labs/livetexts/grade8-7.ijt
+NB. LiveTexts;Grade 8-7 (Saxon);~addons/labs/labs/livetexts/grade8-7.ijt
 LiveTexts;Linear algebra (Schaum);~addons/labs/labs/livetexts/linearalgebra.ijt
 
 Math;Area;~addons/labs/labs/math/area.ijt
@@ -51,18 +52,18 @@ Math;Pythagorean Triples;~addons/labs/labs/math/pythag3.ijt
 Math;Rotations;~addons/labs/labs/math/rot.ijt
 Math;Shapley Value on Old Macdonald's Farm;~addons/labs/labs/math/shapley.ijt
 Math;Spirals;~addons/labs/labs/math/spiral.ijt
-Math;Teacher's Aide;~addons/labs/labs/math/teachersaide.ijt
+NB. Math;Teacher's Aide;~addons/labs/labs/math/teachersaide.ijt
 Math;Volume;~addons/labs/labs/math/volume.ijt
 
-System;Application Distribution - Installer;~addons/labs/labs/system/appdist.ijt
-System;Building Applications;~addons/labs/labs/system/apps.ijt
+NB. System;Application Distribution - Installer;~addons/labs/labs/system/appdist.ijt
+NB. System;Building Applications;~addons/labs/labs/system/apps.ijt
 System;Client/Server (Simple Socket);~addons/labs/labs/system/client_server.ijt
 NB. System;DLL Callback;~addons/labs/labs/system/callback.ijt
 NB. System;DLL: Using System DLLs (file examples);~addons/labs/labs/system/dllwin32.ijt
 NB. System;DLL: Writing and Using a DLL;~addons/labs/labs/system/dllwrite.ijt
 NB. System;Debug;~addons/labs/labs/system/debug.ijt
-System;Files;~addons/labs/labs/system/files.ijt
-System;Formatting with printf;~addons/labs/labs/system/printf.ijt
+NB. System;Files;~addons/labs/labs/system/files.ijt
+NB. System;Formatting with printf;~addons/labs/labs/system/printf.ijt
 System;Mapped Files;~addons/labs/labs/system/mapfile.ijt
 System;Mapped Files Database;~addons/labs/labs/system/mappeddb.ijt
 NB. System;ODBC: A simple application;~addons/labs/labs/system/odbcsap.ijt

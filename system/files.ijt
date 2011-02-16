@@ -124,7 +124,7 @@ Let's look at the first 80 bytes of the file.
 )
 PREPARE
 3 : 0 ''
-if. 0=#fdir f=.'~config/base.cfg' do.
+if. 0=#fdir jpath f=.'~config/base.cfg' do.
   f=. '~system/extras\config\stdcfg.ijs'
 end.
 0!:101 ']cfgfile=:jpath ''',f,''''
@@ -547,4 +547,3 @@ A summary of the primary file verbs:
 PREPARE Clean up.
 ferase 'labfile.txt'
 PREPARE ___________
-

@@ -371,6 +371,8 @@ There are five pre-defined file handles. They may be used with fread and fwrite.
   4 write to standard output (stdout)
   5 write to standard error  (stderr)
 
+Unless you redirect stdin, it reads from the jconsole screen. Your J session hangs while reading stdin. fread continues to read from stdin until an end file (Ctrl-z) is encountered.
+
 smoutput writes to the screen as well.
 
 For serious manipulation of the session window, study the jfe interface.

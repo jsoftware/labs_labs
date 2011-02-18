@@ -72,6 +72,8 @@ NB. =========================================================
 Lab Section
 *  "String" verbs, like freads, fappends, and fwrites, convert text strings between Host and J formats. Text strings may be delimited by the CRLF pair, or by isolated CR or LF characters. J text strings are delimited by the LF character alone. When converting J text strings to Host format, the LF characters are replaced by CRLF, CR or LF as appropriate.
 
+Even if your system uses CRLF to end a line, some J files may have LF only to end a line. This is not a problem for J, but can cause confusion for other applications.
+
 *  Filenames conform to the normal rules for the base operating system.
 
 *  Extended filenames are supported. The extended name should not be enclosed in double quotes (").
@@ -124,7 +126,7 @@ Let's look at the first 80 bytes of the file.
 )
 PREPARE
 3 : 0 ''
-if. 0=#fdir jpath f=.'~config/base.cfg' do.
+if. 0=#fdir jpath f=.'~system/config/base.cfg' do.
   f=. '~system/extras\config\stdcfg.ijs'
 end.
 0!:101 ']cfgfile=:jpath ''',f,''''
@@ -144,11 +146,15 @@ Search for line separators in the string:
 )
 PREPARE Do my own write to session so appropriate eol is used.
 eol=:;('CR';'LF')#~(CR,LF)e.toHOST LF
-0!:101]eol,' ss fread (cfgfile);0 80'
+0!:101]eol,' ss fread cfgfile;0 80'
+
+0!:101](-.CR e. fread cfgfile;0 80)#'LF ss fread cfgfile;0 80'
 PREPARE _________________________
 
 NB. =========================================================
 Lab Section
+Even if your system uses CRLF to end a line, some J files may still use LF only. Be aware.
+
 The 'b' option boxes each line of the file.
 )
 'b' fread (cfgfile);0 80
@@ -202,7 +208,7 @@ freads reads characters from a file, converting any CRLF or isolated CR characte
 freads (cfgfile);0 80
 ]l=.$fread cfgfile
 ]ls=.$'s' fread cfgfile
-l-ls                NB. The result will be zero for UNIX
+l-ls
 
 NB. =========================================================
 Lab Chapter Writes
@@ -384,7 +390,7 @@ NB. =========================================================
 Lab Chapter Miscellaneous
 NB. =========================================================
 Lab Section fview
-fview displays the file using a Windows edit box. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
+fview displays the file using a view box. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
 
 At this time fview is only available in JGTK.
 )
@@ -408,7 +414,7 @@ Returns:
 
 NB. =========================================================
 Lab Section fssrplc
-fstringrpelace (fssrplc for a shorter name) search for occurrences of a specified string in the file and replaces those occurrences with another string. The format of fssrplc is:
+fstringrpelace (or fssrplc) search for occurrences of a specified string in the file and replaces those occurrences with another string. The format of fssrplc is:
 
   (oldstring;newstring) fssrplc (filename|file handle)
 
@@ -449,11 +455,9 @@ NB. =========================================================
 Lab Section
 Maybe you noticed something strange? The result does not look right?
 
-For some reason the file size is not reset if a fwrite to an existing file is shorter than the file size.
+The file size is set when the file is opened. The fwrite with a handle always writes from the beginning of the file, but the file size is only updated if the file size increases.
 
-If it does look right then the bug has been fixed.
-
-To be on the safe side it would be advisable to erase a file instead of just replacing it.
+fwrite with a file name always resets the size of the file to the length of the write.
 )
 
 NB. =========================================================

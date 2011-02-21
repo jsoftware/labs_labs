@@ -19,16 +19,6 @@ NB.   LINE         line character
 NB.
 NB.   regex fns
 
-NB.! script_z_ '~system/main/compare.ijs'
-NB.! script_z_ '~system/main/dir.ijs'
-NB.! script_z_ '~system/main/dll.ijs'
-NB.! script_z_ '~system/main/files.ijs'
-NB.! script_z_ '~system/packages/files/jfiles.ijs'
-NB.! script_z_ '~system/packages/files/kfiles.ijs'
-NB.! script_z_ '~system/main/regex.ijs'
-NB.! script_z_ '~system/main/strings.ijs'
-NB.! script_z_ '~system/main/text.ijs'
-
 PATHSEP_j_=: '/' NB.!
 
 coclass 'jlab'
@@ -246,8 +236,7 @@ j=. '{}',CRLF
 )
 
 ADVANCE=: 0 : 0
-To advance the lab, select menu Studio|Advance or the
-corresponding shortcut.
+To advance the lab, press Esc A in JHS or Ctrl-J in Gtk.
 )
 
 ALL=: '(All)'

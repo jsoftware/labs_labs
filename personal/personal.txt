@@ -1,4 +1,0 @@
-directory:  personal
-
-This is an empty directory created when J
-is installed, and is available for user labs.

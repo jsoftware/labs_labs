@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.16'
+VERSION=: '1.0.17'
 
 FILES=: 0 : 0
 labdir.ijs
@@ -20,7 +20,6 @@ general/
 graphics/
 livetexts/
 math/
-personal/
 system/
 )
 

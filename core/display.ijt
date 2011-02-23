@@ -1,12 +1,15 @@
 LABTITLE=: 'Function Display'
+LABCOMMENTS=: 0 : 0
+Updated for J7
+Minor fixes for alignment and a section added for Unicode remark.
+)
 LABFOCUS=: 0
 
 NB. =========================================================
 Lab Section INTRODUCTION
+Although a simple representation, such as the vector of coefficients of a polynomial, may give all essential information about a particular function, it may also be helpful to display it in a more elaborate and more familiar form. 
 
-Although a simple representation, such as the vector of coefficients of a polynomial, may give all essential information about a particular function, it may also be helpful to display it in a more elaborate and more familiar form.
-
-For example, we may use the following function "display" to show the polynomial represented by the coefficients c:
+For typerwriter display, super- and sub-scripts are handled by placing them on lines above and below. For example, we may use the following function "display" to show the polynomial represented by the coefficients c:
 )
 c=: 1 3 3 1
 y=: 0 1 2 3 4 5 6
@@ -14,15 +17,13 @@ c p. y
 
 display=: 3 : 0
 r=. '',:''                NB. 2 row 0 col
-
 while. 0<#y do.
-  r=. ('',:~":<:# y),.r  NB. exponent
+  r=. ('',:~":<:# y),.r   NB. exponent
   r=. ('',:,'x'),.r       NB. argument x
-  r=. ('',:":{:y),.r     NB. coefficient
+  r=. ('',:":{:y),.r      NB. coefficient
   r=. ('',:,'+'),.r       NB. plus sign
-  y=. }:y               NB. delete last coefficient
+  y=. }:y                 NB. delete last coefficient
 end.
-
 }."1 r                    NB. delete leading +
 )
 
@@ -38,12 +39,14 @@ Lab Section FUNCTIONS OF TWO ARGUMENTS
 
 Although expressions such as a+b and a-b and a*b provide a completely general scheme for functions of two arguments, other schemes abound in mathematics. Many of these fall in two popular classes:
 
-.                                              n
-The use of superscripts and subscripts, as in x  for x
-to the power n, in log y for the base b logarithm of y,
-.                       b
-and in 1066  for the base 8 value of the digits 1066.
-.          8
+.                                                n
+  The use of superscripts and subscripts, as in x  for x
+to the power n,
+  in log y for the base b logarithm of y,
+.                           b
+
+  and in 1066  for the base 8 value of the digits 1066.
+.                  8
 
 2. The use of various brackets to embrace the arguments, as
        n                                  n       n
@@ -138,6 +141,8 @@ c=: 1 3 3 1
 d=: 1 4 6 4 1
 
 c*/d
+
+</.c*/d
 
 e=: +//. c*/d
 
@@ -312,3 +317,20 @@ pd=: +`%   NB. Plus divide
 pd/ 2 3 5 7 11 13 17
 
 2 + 3 % 5 + 7 % 11 + 13 % 17
+
+NB. =========================================================
+Lab Section
+Computer displays have improved considerably over simply displaying text output. Unicode and other tools provide ways to improve the quality of the display. Here is an example to display a polynomial that is a little nicer. 
+
+However, this may not display correctly in all situations as it depends on features that may not be present or options set on your computer. For example, the font may not support Unicode superscript numbers.
+)
+UC_display=: 3 : 0
+su=.u:8304,185 178 179,8308+i.6       NB. UTF-8 for superscript 0-9
+coeff=.":&.>|y                        NB. Coefficients
+exp=.((10&#.^:_1)&.>i.#y){&.><su      NB. Exponents
+sign=.<"0(0<y){'-+'                   NB. Signs of coefficients
+,:;(0<{.y)}.,sign,.coeff,.(<'x'),.exp NB. Put it all together
+)
+
+UC_display 2 1 _3 6
+

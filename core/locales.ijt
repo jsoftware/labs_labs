@@ -54,7 +54,7 @@ First a quick example of locales in action.
 
 plot is a module of hundreds of definitions. These definitions are loaded into their own locale, so we do not see their names in the main application.
 
-The next step plots the data in d. After you have seen the plot window, close it and continue the lab.
+The next step plots the data in d. If the plot is opened in a separate window, close it after you have seen the plot, close it and continue the lab.
 )
 clear ''      NB. erase all names
 d=: ?1+i.50

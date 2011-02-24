@@ -259,7 +259,7 @@ T=: todense S
 
 NB. =========================================================
 Lab Section
-Sparse arrays are useful when you have large arrays, with most values being a common "sparse element". Ordinary J primitives work directly on sparse arrays. The $. verb converts to and from the sparse representation.
+Sparse arrays are useful when you have large arrays, with most values being a common "sparse element". Most, but not all, J primitives work directly on sparse arrays. The $. verb converts to and from the sparse representation.
 
 For more information about sparse arrays, see the entry for $. in the Vocabulary Help.
 )

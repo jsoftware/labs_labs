@@ -11,13 +11,14 @@ PREPARE
 clear''
 coerase <'plab'
 require 'opengl gl2 gl3'
-coinsert 'jgl2 jgl3'
+coinsert 'jgtk jgl2 jgl3'
+window=: 0
 nextijs=: 3 : 0
-if. -. '\' e. y do.
-y=.jpath '~system\examples\graphics\opengl\lab\',y end.
+if. -. '/' e. y do.
+y=.jpath '~addons/demos/opengl/lab/',y end.
 if. -. '.' e. y do. y=. y,'.ijs' end.
 d=.1!:1<y
-f=.jpath '~temp\ogl.ijs'
+f=.jpath '~temp/ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
@@ -27,7 +28,7 @@ smsetsaved_jijs_ ''
 testdlls=: 3 : 0
 try.
  ogl=.''conew'jzopengl'
- alloc__ogl 4 4
+ current__ogl 0
  destroy__ogl''
  'OpenGL OK.'
 catch.

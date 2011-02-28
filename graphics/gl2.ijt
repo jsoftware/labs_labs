@@ -10,26 +10,25 @@ isigraph control.
 )
 SCRIPT
 require'gl2'   NB. load gl2 definitions in jgl2 locale
-coinsert'jgl2' NB. allow use of gl2... without _jgl2_
-
-GL2LAB=: 0 : 0
-pc gl2lab closeok;
-xywh 0 0 100 100;cc g isigraph rightmove bottommove;
-pas 0 0;
-rem form end;
-)
+coinsert'jgtk jgl2' NB. allow use of gl2... without _jgl2_
+gl2lab=: 0
 
 gl2lab_run=: 3 : 0
-wd GL2LAB
-GHANDLE=: wd'qhwndc g' NB. gsel arg to select gl2 target
+gl2lab=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2lab;'gl2lab'
+gtk_widget_set_name gl2lab;'gl2lab'
+consig gl2lab;'destroy';'gl2lab_close'
+NB. gsel arg to select gl2 target
+GHANDLE=: glcanvas_jgl2_ 'gl2lab';'g';200 200;coname''
+gtk_container_add gl2lab,gtkbox__GHANDLE
 gl2lab_g_paint''
-wd'pshow;'
+gtk_widget_show_all gl2lab
 )
 
 NB. create form (or just repaint if it already exists)
 gl2lab=: 3 : 0
 try.
- wd'psel gl2lab'
+NB.  wd'psel gl2lab'
  glclear''        NB. clear out old drawing
  gl2lab_g_paint'' NB. new drawing
  glpaint''        NB. copy to screen
@@ -42,7 +41,7 @@ SCRIPT
 PREPARE
 goto=: 3 : 'lab_jlab_ 0[NDX_jlab_=:(<.#SECTIONDATA_jlab_)<.0>.<:y'
 gl2boiler=: toHOST SCRIPT_jlab_
-gl2labijs=: <jpath '~temp\gl2lab.ijs'
+gl2labijs=: <jpath '~temp/gl2lab.ijs'
 gl2lab_update=: 3 : 0
 t=.gl2boiler,toHOST SCRIPT_jlab_
 t 1!:2 gl2labijs
@@ -620,27 +619,34 @@ The next example creates two forms each with two isigraphs.
 NB. =========================================================
 Lab Section
 )
-GL2LABDOUBLE=: 0 : 0
-pc gl2labdouble closeok;
-xywh 0  0 100 50;cc g0 isigraph rightmove bottommove;
-xywh 0 50 100 50;cc g1 isigraph rightmove bottommove;
-pas 0 0;
-)
-
 run=: 3 : 0
-wd GL2LABDOUBLE
-wd'pn *form 1'
-GHANDLE10=: wd'qhwndc g0'
-GHANDLE11=: wd'qhwndc g1'
-xywh=. ".wd'qformx'
-wd'pmovex ',":xywh+0,(3{xywh),0 0
-wd'pshow'
+gl2lab0=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2lab0;'form 0'
+gtk_widget_set_name gl2lab0;'gl2labdouble'
+consig gl2lab0;'destroy';'gl2labdouble_close'
+GHANDLE00=: glcanvas_jgl2_ 'gl2labdouble;'g0';200 100;coname''
+GHANDLE01=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
+box=. gtk_vbox_new 0 0
+gtk_container_add gl2lab0,box
+gtk_box_pack_start box,gtkbox__GHANDLE10, 0 0 0
+gtk_box_pack_start box,gtkbox__GHANDLE11, 0 0 0
+gtk_widget_show_all gl2lab0
 
-wd GL2LABDOUBLE
-wd'pn *form 0'
-GHANDLE00=: wd'qhwndc g0'
-GHANDLE01=: wd'qhwndc g1'
-wd'pshow;'
+gl2lab1=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2lab1;'form 1'
+gtk_widget_set_name gl2lab0;'gl2labdouble'
+consig gl2lab1;'destroy';'gl2labdouble_close'
+GHANDLE10=: glcanvas_jgl2_ 'gl2labdouble';'g0';200 100;coname''
+GHANDLE11=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
+box=. gtk_vbox_new 0 0
+gtk_container_add gl2lab1,box
+gtk_box_pack_start box,gtkbox__GHANDLE10, 0 0 0
+gtk_box_pack_start box,gtkbox__GHANDLE11, 0 0 0
+gtk_widget_show_all gl2lab1
+
+NB. xywh=. ".wd'qformx'
+NB. wd'pmovex ',":xywh+0,(3{xywh),0 0
+
 )
 
 NB. RGB draw GHANDLExy
@@ -651,7 +657,6 @@ glbrush''
 glrect 10 10 50 50
 glpaint''
 )
-
 run'' NB. create 2 forms each with 2 isigraphs
 255 0   0   draw GHANDLE00     NB. form 0 isigraph 0
 0   255 0   draw GHANDLE01     NB. form 0 isigraph 1
@@ -664,8 +669,8 @@ NB. =========================================================
 Lab Section
 The two forms are closed.
 )
-wd'psel gl2labdouble;pclose'
-wd'psel gl2labdouble;pclose'
+gtk_widget_destroy gl2lab0
+gtk_widget_destroy gl2lab1
 
 NB. =========================================================
 Lab Section
@@ -724,75 +729,7 @@ Lab Section
 The pixels are saved as file gl2lab.bmp. Try using this bmp file in some other application such as word.
 )
 require'bmp' NB. define writebmp
-(200 200$pixels) writebmp jpath'~temp\gl2lab.bmp'
-
-NB. =========================================================
-Lab Section
-gl2 commands can be saved in a Windows Enhanced Metafile (Windows only).
-
-Study the emfcreate definition.
-
-Try using the gl2lab.emf file in another application such as Word.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glrgb 255 0 0
-glbrush ''
-glrgb 0 0 255
-glpen 10,PS_SOLID
-glpolygon 0 0 400 400 100 0 0 100 400 100
-)
-
-emfcreate=: 3 : 0
-glsel GHANDLE    NB. isigraph target
-glfile y
-glemfopen''      NB. open EMF file
-gl2lab_g_paint'' NB. draw commands
-glemfclose''     NB. close EMF file
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-gl2lab''
-fn=: jpath'~temp\gl2lab.emf'
-emfcreate fn
-
-NB. =========================================================
-Lab Section
-You can play an EMF file in an isigraph control.
-
-glemfplay with just xy argument plays the EMF file at that location in its original size.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glfile fn
-glemfplay 50 50
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-gl2lab''
-
-NB. =========================================================
-Lab Section
-glemfplay with xywh argument plays the EMF file at that location and with the original size scaled to fit the width and height.
-
-In neither case is the EMF drawing clipped. That is, drawing beyond the visible size when the EMF file was created is drawn.
-
-You can use glclip to clip the EMF drawing if required.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glfile fn
-glemfplay 50 50 50 50
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-gl2lab''
+(200 200$pixels) writebmp jpath'~temp/gl2lab.bmp'
 
 NB. =========================================================
 Lab Section

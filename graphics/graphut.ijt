@@ -31,6 +31,7 @@ The windows can be left open as you step through the lab. However, you can also 
 PREPARE
 coinsert 'jgl2'
 gdreset''
+gl2demo=: 0
 PREPARE
 
 NB. =========================================================
@@ -46,15 +47,14 @@ NB. =========================================================
 Lab Section
 )
 SCRIPT
-GL2DEMO=: 0 : 0
-pc gl2demo closeok;
-xywh 0 0 100 100;cc g isigraph ws_border rightmove bottommove;
-pas 0 0;
-)
-
 gl2demo_run=: 3 : 0
-wd GL2DEMO
-wd'pshow'
+gl2demo=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2demo;'gl2demo'
+gtk_widget_set_name gl2demo;'gl2demo'
+consig gl2demo;'destroy';'gl2demo_close'
+gloc=: glcanvas_jgl2_ 'gl2demo';'g';200 200;coname''
+gtk_container_add gl2demo,gtkbox__gloc
+gtk_widget_show_all gl2demo
 )
 
 gl2demo_g_paint=: 3 : 0
@@ -64,12 +64,17 @@ glbrush_jgl2_''
 glrect_jgl2_ (wh,wh) * 300 300 400 400 % 1000
 )
 
+gl2demo_close=: 3 : 0
+gl2demo=: 0
+cbfree''
+)
+
 gl2demo_run''
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\gl2demo.ijs'
-open jpath '~temp\gl2demo.ijs'
-NB. tile_jijs_''
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/gl2demo.ijs'
+open jpath '~temp/gl2demo.ijs'
+tile_jijs_''
 PREPARE
 
 NB. =========================================================
@@ -78,8 +83,8 @@ The next section draws the same square using Graph.
 )
 PREPARE
 3 : 0''
-if. 0=wdisparent <'gl2demo' do.
-  load '~temp\gl2demo.ijs'
+if. 0=wdisparent 'gl2demo' do.
+  load '~temp/gl2demo.ijs'
 end.
 PREPARE
 

@@ -12,13 +12,14 @@ J uses the API with cd (shared library call) and the J programmer has the same a
 PREPARE
 clear''		NB. clear base locale
 require 'opengl gl2 gl3'
-coinsert 'jgl2 jgl3'
+coinsert 'jgtk jgl2 jgl3'
+window=: 0
 nextijs=: 3 : 0
-if. -. '\' e. y do.
-y=.jpath '~system\examples\graphics\opengl\lab\',y end.
+if. -. '/' e. y do.
+y=.jpath '~addons/demos/opengl/lab/',y end.
 if. -. '.' e. y do. y=. y,'.ijs' end.
 d=.1!:1<y
-f=.jpath '~temp\ogl.ijs'
+f=.jpath '~temp/ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
@@ -28,16 +29,32 @@ load f
 )
 
 gl3lab=: 3 : 0
-if. 1<+/(<'gl3lab')=<;._2 wd'qp' do.
- while. +/(<'gl3lab')=<;._2 wd'qp' do.
-  wd'psel gl3lab;pclose' NB. close all if more than 1
- end.
+NB. close all if more than 1
+window1=. 0
+del=. 0
+for_a. getGtkToplevelWindows'' do.
+  if. 0~:r=. gtk_widget_get_name a do.
+    if. 'GtkWindow' -: memr 0 _1 2,~ r do.
+      if. 0~:r=. gtk_widget_get_name a do.
+        if. 'gl3lab'-: memr 0 _1 2,~ r do.
+          if. 0=del do.
+            del=. 1 [ window1=. a
+          else.
+            gtk_widget_destroy a
+          end.
+        end.
+      end.
+    end.
+  end.
 end.
-try.
- wd'psel gl3lab;pshow;pactive'
+smoutput 'window1 ',":window1
+if. window1 do.
+ window=: window1
+ gtk_window_present_with_time window,GDK_CURRENT_TIME
+ gtk_widget_grab_focus window
  free__ogl''      NB. force new rc
- gl3lab_g_paint'' NB. new drawing
-catch.
+ gtk_widget_queue_draw window NB. new drawing
+else.
  gl3lab_run''
 end.
 i.0 0
@@ -46,7 +63,7 @@ i.0 0
 testdlls=: 3 : 0
 try.
  ogl=.''conew'jzopengl'
- alloc__ogl 4 4
+ current__ogl 0
  destroy__ogl''
  'OpenGL OK.'
 catch.
@@ -54,7 +71,7 @@ catch.
 end.
 )
 
-try=: load bind (jpath '~system\examples\graphics\opengl\simple\gldemos.ijs')
+try=: load bind (jpath '~addons/demos/opengl/simple/gldemos.ijs')
 gl3lab_jctrl_fkey=: 3 : 0 :: ]
 smselout_jijs_ ''
 smfocus_jijs_ ''

@@ -22,6 +22,14 @@ General;Sequential Machines;~addons/labs/labs/general/seqmachine.ijt
 General;The Tower of Hanoi;~addons/labs/labs/general/towerofhanoi.ijt
 General;Turtle Geometry - JTurtle User Guide;~addons/labs/labs/general/jturtleuser.ijt
 
+Graphics;Fractals, Visualization & J;~addons/labs/labs/graphics/fractals.ijt
+Graphics;Graph Utilities;~addons/labs/labs/graphics/graphut.ijt
+Graphics;Graphics - gl2 commands;~addons/labs/labs/graphics/gl2.ijt
+NB. Graphics;OpenGL Introduction;~addons/labs/labs/graphics/opengl.ijt
+NB. Graphics;OpenGL Utilities;~addons/labs/labs/graphics/openglut.ijt
+Graphics;Plot Package;~addons/labs/labs/graphics/plot.ijt
+Graphics;Viewmat;~addons/labs/labs/graphics/viewmat.ijt
+
 Image3;Image Addon 3;~addons/media/image3/image3.ijt
 Image3;Image Addon 3 Html;~addons/media/image3/image3html.ijt
 Image3;Image Addon 3 Movie;~addons/media/image3/image3movie.ijt

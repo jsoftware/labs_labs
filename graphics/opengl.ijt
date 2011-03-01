@@ -93,7 +93,7 @@ If you would like to see what can be done with OpenGL, try the OpenGL demo with 
 
 NB. =========================================================
 Lab Section J Forms
-This lab assumes familiarity with J, forms, isigraph control, classes, and objects.
+This lab assumes familiarity with J, forms, canvas control, classes, and objects.
 )
 
 NB. =========================================================
@@ -132,14 +132,14 @@ gl3 defines the OpenGL API calls. The coinsert allows reference to the gl3 names
 
 NB. =========================================================
 Lab Section
-OpenGL drawing is done on an isigraph control with the opengl style.
+OpenGL drawing is done on a canvas control with the opengl style.
 
-An isigraph with opengl style supports only a few gl2 commands. The key one is glqwh.
+A canvas with opengl style supports only a few gl2 commands. The key one is glqwh.
 )
 
 NB. =========================================================
 Lab Section
-gl3lab_run creates the form and isigraph control with the opengl style.
+gl3lab_run creates the form and canvas control with the opengl style.
 
 conew creates a new OpenGL object. This object is used to manage the OpenGL render context.
 
@@ -155,7 +155,7 @@ gl3lab_close destroys the OpenGL object and closes the form.
 
 NB. =========================================================
 Lab Section
-gl3lab_g_paint is called to paint the control. When called the isigraph must be the target for gl3 commands.
+gl3lab_g_paint is called to paint the control. When called the canvas must be the target for gl3 commands.
 
 rc__ogl makes the OpenGL render context current for drawing. If the RC already exists the result is 0 and the g_draw_init call is avoided. If the RC doesn't exist or the size has changed, a new RC is created and the result is 1 so that g_draw_init is run.
 
@@ -173,11 +173,11 @@ Resize the drawing. Each time the triangle is drawn in a new, random color.
 
 NB. =========================================================
 Lab Section
-With the isigraph in focus press Ctrl+f.
+With the canvas in focus press Ctrl+f.
 
 gl3lab_fctrl_fkey is called by Ctrl+f. It times showing 100 frames and then reports frames per second.
 
-target__ogl selects the OpenGL object isigraph as the target for gl3 commands as gl3lab_g_paint requires a target.
+target__ogl selects the OpenGL object canvas as the target for gl3 commands as gl3lab_g_paint requires a target.
 )
 
 NB. =========================================================
@@ -308,7 +308,7 @@ Bitmaps can be used to draw characters and J OpenGL support provides a platform 
 
 glaCreateBitmapFont creates bitmaps for the ASCII character set. Its argument is a wd fontspec and its result has a row for each character with width, height, and bitmap data as 8 bit characters.
 
-The bitmaps are built by drawing text in a temporary form and isigraph control, reading the pixels, and converting them to the format required for an OpenGL bitmap.
+The bitmaps are built by drawing text in a temporary form and canvas control, reading the pixels, and converting them to the format required for an OpenGL bitmap.
 )
 
 NB. =========================================================

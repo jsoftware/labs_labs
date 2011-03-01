@@ -3,10 +3,10 @@ LABFOCUS=: 1
 
 NB. =========================================================
 Lab Section gl2
-This lab is an overview of drawing on an isigraph control.
+This lab is an overview of drawing on a canvas control.
 
 Plot, grid, and printing are all built in J drawing on an
-isigraph control.
+canvas control.
 )
 SCRIPT
 require'gl2'   NB. load gl2 definitions in jgl2 locale
@@ -27,14 +27,19 @@ gtk_widget_show_all gl2lab
 
 NB. create form (or just repaint if it already exists)
 gl2lab=: 3 : 0
-try.
-NB.  wd'psel gl2lab'
+if. wdisparent 'gl2lab' do.
  glclear''        NB. clear out old drawing
  gl2lab_g_paint'' NB. new drawing
  glpaint''        NB. copy to screen
-catch.
+else.
  gl2lab_run''
 end.
+)
+
+gl2lab_close=: 3 : 0
+gtk_widget_destroy ::0: gl2lab
+cbfree''
+0
 )
 
 SCRIPT
@@ -55,7 +60,7 @@ PREPARE
 
 NB. =========================================================
 Lab Section
-gl2 commands draw on an isigraph control.
+gl2 commands draw on a canvas control.
 
 gl2 commands are loaded in the jgl2 locale. This avoids cluttering up the base locale with the gl2 names. For convenience we coinsert jgl2 so the names can be accessed directly from the base locale.
 )
@@ -66,14 +71,14 @@ glrect         NB. with coinsert you don't need _jgl2_
 
 NB. =========================================================
 Lab Section
-gl2lab.ijs creates form gl2lab with an isigraph g that fills the form and is resized as the form is resized.
+gl2lab.ijs creates form gl2lab with a canvas g that fills the form and is resized as the form is resized.
 
 Study the gl2lab script.
 
 gl2lab_g_paint draws the control. As it has no drawing commands the control is the default white.
 )
 SCRIPT
-NB. paint for isigraph g on form gl2
+NB. paint for canvas g on form gl2
 gl2lab_g_paint=: 3 : 0
 ''
 )
@@ -81,18 +86,18 @@ SCRIPT
 PREPARE
 gl2lab_update''
 PREPARE
-gl2lab'' NB. create form with isigraph
+gl2lab'' NB. create form with canvas
 
 NB. =========================================================
 Lab Section
-gl2lab_g_paint is called in gl2lab_run after the isigraph control is created and just before pshow.
+gl2lab_g_paint is called in gl2lab_run after the canvas control is created and just before pshow.
 
 This step loads the script and runs gl2lab to create the form.
 
 Study gl2lab_g_paint at the end of the script.
 )
 SCRIPT
-NB. draw for isigraph g on form gl2
+NB. draw for canvas g on form gl2
 gl2lab_g_paint=: 3 : 0
 glrgb 255 0 0       NB. RGB red
 glbrush ''          NB. red brush
@@ -467,7 +472,7 @@ gllines D
 
 redraw=: 3 : 0
 D=: newdata 20
-glsel GHANDLE NB. isigraph target
+glsel GHANDLE NB. canvas target
 gl2lab_g_paint''
 glpaint'' NB. update screen
 )
@@ -496,7 +501,7 @@ gllines D
 
 redraw=: 3 : 0
 D=: newdata 20
-glsel GHANDLE    NB. isigraph target
+glsel GHANDLE    NB. canvas target
 glclear''        NB. reinitialize the memory buffer
 gl2lab_g_paint''
 glpaint''        NB. update screen
@@ -514,7 +519,7 @@ animate in this example does redraw in a loop with a sleep delay.
 SCRIPT
 redraw=: 3 : 0
 D=: newdata 20
-glsel GHANDLE    NB. isigraph target
+glsel GHANDLE    NB. canvas target
 glclear''        NB. reinitialize the memory buffer
 gl2lab_g_paint''
 glpaint''        NB. update screen
@@ -547,7 +552,7 @@ gllines D
 )
 
 redraw=: 3 : 0
-glsel GHANDLE    NB. isigraph target
+glsel GHANDLE    NB. canvas target
 pos=. 50 50
 glrgb 0 255 0
 glbrush''
@@ -573,47 +578,47 @@ animate 30      NB. update small area every 0.1 seconds
 
 NB. =========================================================
 Lab Section
-gl2 commands don't specify the isigraph control. There is an implicit target for gl2 commands as follow:
+gl2 commands don't specify the canvas control. There is an implicit target for gl2 commands as follow:
 
-gl2 target is selected isigraph on selected form.
+gl2 target is selected canvas on selected form.
 
 A form is selected by: create (wd pc) form; event on the form; or a wd psel command.
 
-An isigraph is selected on a form by: create (wd cc) isigraph; event on the isigraph; or a glsel command.
+A canvas is selected on a form by: create (wd cc) canvas; event on the canvas; or a glsel command.
 )
 
 NB. =========================================================
 Lab Section
 In most cases the gl2 target is automatically selected for you by the system. For example:
 
-Create a form and isigraph and gl2 commands automatically go to the new isigraph on the new form.
+Create a form and canvas and gl2 commands automatically go to the new canvas on the new form.
 
-An isigraph event (paint, mouse, character) selects the form and the isigraph.
+A canvas event (paint, mouse, character) selects the form and the canvas.
 )
 
 NB. =========================================================
 Lab Section
-If the situation is more complicated and the system hasn't already selected your form and isigraph, then you need to explicity select the target for your gl2 commands. For example:
+If the situation is more complicated and the system hasn't already selected your form and canvas, then you need to explicity select the target for your gl2 commands. For example:
 
-If there are 2 isigraph controls on a form, you need to explicitly select a target if you don't know that it is already selected.
+If there are 2 canvas controls on a form, you need to explicitly select a target if you don't know that it is already selected.
 
-If another form (with or without an isigraph control) was selected then you need to explicity set the target for your gl2 commands.
+If another form (with or without a canvas control) was selected then you need to explicity set the target for your gl2 commands.
 )
 
 NB. =========================================================
 Lab Section
 You can explicitly set the target by doing a psel and a gsel. The wd command psel and gsel can take id arguments or handles. As ids are not unigue it is probably better to use the handles.
 
-glsel ID selects the first isigraph with that ID on the selected form.
+glsel ID selects the first canvas with that ID on the selected form.
 
-glsel HANDLE selects the form that has the isigraph with that handle and then selects the isigraph.
+glsel HANDLE selects the form that has the canvas with that handle and then selects the canvas.
 
-To select an isigraph it is best to use glsel HANDLE.
+To select a canvas it is best to use glsel HANDLE.
 )
 
 NB. =========================================================
 Lab Section
-The next example creates two forms each with two isigraphs.
+The next example creates two forms each with two canvass.
 )
 
 NB. =========================================================
@@ -657,11 +662,11 @@ glbrush''
 glrect 10 10 50 50
 glpaint''
 )
-run'' NB. create 2 forms each with 2 isigraphs
-255 0   0   draw GHANDLE00     NB. form 0 isigraph 0
-0   255 0   draw GHANDLE01     NB. form 0 isigraph 1
-0   0   255 draw GHANDLE10     NB. form 1 isigraph 0
-192 192 192 draw GHANDLE11     NB. form 1 isigraph 1
+run'' NB. create 2 forms each with 2 canvass
+255 0   0   draw GHANDLE00     NB. form 0 canvas 0
+0   255 0   draw GHANDLE01     NB. form 0 canvas 1
+0   0   255 draw GHANDLE10     NB. form 1 canvas 0
+192 192 192 draw GHANDLE11     NB. form 1 canvas 1
 
 NB. try you own examples of draw
 
@@ -688,7 +693,7 @@ glpolygon 0 0 200 200 100 0 0 100 200 100
 )
 
 readpixels=: 3 : 0
-glsel GHANDLE    NB. isigraph target
+glsel GHANDLE    NB. canvas target
 glqpixels y  NB. get pixels
 )
 SCRIPT

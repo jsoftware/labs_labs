@@ -95,7 +95,7 @@ There should also be a verb 'paint' that does the OpenGL calls. This starts with
 
 In between these are the graphics definitions, in this case to draw a dodecahedron.
 
-The isigraph paint event handler, opengl_g_paint, is defined to be paint.
+The canvas paint event handler, opengl_g_paint, is defined to be paint.
 
 The character event handler is defined to be gschar, and this gives standard character event handling.
 

@@ -5,7 +5,7 @@ NB. =========================================================
 Lab Section Introduction
 This lab describes the graph utilities (Graph) included with J. These apply to Windows GDI graphics, not OpenGL graphics.
 
-GDI graphics are drawn in an isigraph control. A set of "gl2" commands, defined in script system\main\gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
+GDI graphics are drawn in a canvas control. A set of "gl2" commands, defined in script system\main\gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
 
 The Graph utilities are a set of cover functions for the most commonly used gl2 commands, that simplify drawing into the control.
 )
@@ -36,7 +36,7 @@ PREPARE
 
 NB. =========================================================
 Lab Section Drawing with gl2 commands
-We now look at an example of drawing to an isigraph control using the gl2 commands directly. The example draws a red square in the middle of the control.
+We now look at an example of drawing to a canvas control using the gl2 commands directly. The example draws a red square in the middle of the control.
 
 The next section opens up a script, gl2demo, that will draw the picture. You may need to rearrange the windows to see the script.
 

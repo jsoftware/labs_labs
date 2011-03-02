@@ -20,7 +20,7 @@ gtk_widget_set_name gl2lab;'gl2lab'
 consig gl2lab;'destroy';'gl2lab_close'
 NB. gsel arg to select gl2 target
 GHANDLE=: glcanvas_jgl2_ 'gl2lab';'g';200 200;coname''
-gtk_container_add gl2lab,gtkbox__GHANDLE
+gtk_container_add gl2lab,canvas__GHANDLE
 gl2lab_g_paint''
 gtk_widget_show_all gl2lab
 )
@@ -65,7 +65,7 @@ gl2 commands draw on a canvas control.
 gl2 commands are loaded in the jgl2 locale. This avoids cluttering up the base locale with the gl2 names. For convenience we coinsert jgl2 so the names can be accessed directly from the base locale.
 )
 require'gl2'   NB. load gl2 definitions in jgl2 locale
-coinsert'jgl2' NB. allow use of commands from base
+coinsert'jgtk jgl2' NB. allow use of commands from base
 glrect_jgl2_   NB. command to draw rectangle
 glrect         NB. with coinsert you don't need _jgl2_
 
@@ -633,8 +633,8 @@ GHANDLE00=: glcanvas_jgl2_ 'gl2labdouble;'g0';200 100;coname''
 GHANDLE01=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
 box=. gtk_vbox_new 0 0
 gtk_container_add gl2lab0,box
-gtk_box_pack_start box,gtkbox__GHANDLE10, 0 0 0
-gtk_box_pack_start box,gtkbox__GHANDLE11, 0 0 0
+gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0
+gtk_box_pack_start box,canvas__GHANDLE11, 0 0 0
 gtk_widget_show_all gl2lab0
 
 gl2lab1=: gtk_window_new GTK_WINDOW_TOPLEVEL
@@ -645,8 +645,8 @@ GHANDLE10=: glcanvas_jgl2_ 'gl2labdouble';'g0';200 100;coname''
 GHANDLE11=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
 box=. gtk_vbox_new 0 0
 gtk_container_add gl2lab1,box
-gtk_box_pack_start box,gtkbox__GHANDLE10, 0 0 0
-gtk_box_pack_start box,gtkbox__GHANDLE11, 0 0 0
+gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0
+gtk_box_pack_start box,canvas__GHANDLE11, 0 0 0
 gtk_widget_show_all gl2lab1
 
 NB. xywh=. ".wd'qformx'

@@ -78,7 +78,7 @@ NB. =========================================================
 Lab Section
 Study the script:
 
-* coinsert 'jzopenglutil'  puts the utilities on the path.
+* coinsert 'jgtk jzopenglutil'  puts the utilities on the path.
 
 * the code before the NB. === comment line is all standard from the lab "OpenGL Introduction". No utilities are used, and this part is the same throughout this lab.
 

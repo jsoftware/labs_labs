@@ -29,7 +29,7 @@ The lab will display several windows. You can rearrange and resize these windows
 The windows can be left open as you step through the lab. However, you can also close them if you wish - they will be re-created when they are next used.
 )
 PREPARE
-coinsert 'jgl2'
+coinsert 'jgtk jgl2'
 gdreset''
 gl2demo=: 0
 PREPARE
@@ -53,7 +53,7 @@ gtk_window_set_title gl2demo;'gl2demo'
 gtk_widget_set_name gl2demo;'gl2demo'
 consig gl2demo;'destroy';'gl2demo_close'
 gloc=: glcanvas_jgl2_ 'gl2demo';'g';200 200;coname''
-gtk_container_add gl2demo,gtkbox__gloc
+gtk_container_add gl2demo,canvas__gloc
 gtk_widget_show_all gl2demo
 )
 

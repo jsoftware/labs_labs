@@ -11,9 +11,10 @@ J uses the API with cd (shared library call) and the J programmer has the same a
 )
 PREPARE
 clear''		NB. clear base locale
-require 'opengl gl2 gl3'
-coinsert 'jgtk jgl2 jgl3'
+require 'gl2 opengl'
+coinsert 'jgtk jgl3'
 window=: 0
+WINDOWNAME=: 'gl3lab' 
 nextijs=: 3 : 0
 if. -. '/' e. y do.
 y=.jpath '~addons/demos/opengl/lab/',y end.
@@ -30,30 +31,11 @@ load f
 
 gl3lab=: 3 : 0
 NB. close all if more than 1
-window1=. 0
-del=. 0
-for_a. getGtkToplevelWindows'' do.
-  if. 0~:r=. gtk_widget_get_name a do.
-    if. 'GtkWindow' -: memr 0 _1 2,~ r do.
-      if. 0~:r=. gtk_widget_get_name a do.
-        if. 'gl3lab'-: memr 0 _1 2,~ r do.
-          if. 0=del do.
-            del=. 1 [ window1=. a
-          else.
-            gtk_widget_destroy a
-          end.
-        end.
-      end.
-    end.
-  end.
-end.
-smoutput 'window1 ',":window1
-if. window1 do.
- window=: window1
+if. 0~:window do.
  gtk_window_present_with_time window,GDK_CURRENT_TIME
  gtk_widget_grab_focus window
- free__ogl''      NB. force new rc
- gtk_widget_queue_draw window NB. new drawing
+ realloc__gloc''      NB. force new rc
+ gtk_widget_queue_draw canvas__gloc NB. new drawing
 else.
  gl3lab_run''
 end.
@@ -61,13 +43,11 @@ i.0 0
 )
 
 testdlls=: 3 : 0
-try.
- ogl=.''conew'jzopengl'
- current__ogl 0
- destroy__ogl''
+try. 
+ current_jzopengl_ 0 
  'OpenGL OK.'
 catch.
- 'OpenGL create context failed. OpenGL not available.'
+ 'OpenGL not available.'
 end.
 )
 
@@ -317,8 +297,9 @@ The 3rd row of FONT has the width, height, and bitmap data for the # character.
 
 Data is bits in 8 bit character values. The row width is rounded up to an 8 bit boundary.
 )
-FONT=: glaCreateBitmapFont__ogl 'arial 16'
-3{FONT
+NB. FONT=: glaCreateBitmapFont__ogl 'arial 16'
+NB. 3{FONT
+'Fails - glaCreateBitmapFont not yet implemented'
 
 NB. =========================================================
 Lab Section
@@ -327,7 +308,8 @@ Study the script to see how FONT is created and how glaChars displays text.
 glPixelStorei is required so that the bitmap data is corrrectly interpreted.
 )
 nextijs'ogl_bitmapfont'
-gl3lab''
+'Fails - glaCreateBitmapFont not yet implemented'
+gl3lab^:0 ''
 
 NB. =========================================================
 Lab Section
@@ -339,7 +321,7 @@ This is not portable and won't work in Unix.
 )
 nextijs'ogl_bitmapfont_windows'
 'Fails in Unix - not portable.'
-gl3lab''
+gl3lab^:IFWIN ''
 
 NB. =========================================================
 Lab Section
@@ -347,7 +329,7 @@ Windows also supports outline fonts that have more features and capabilities tha
 )
 nextijs'ogl_outlinefont_windows'
 'Fails in Unix - not portable.'
-gl3lab''
+gl3lab^:IFWIN ''
 
 NB. =========================================================
 Lab Section The End
@@ -355,6 +337,9 @@ This lab just scratches the surface of what is possible with OpenGL. But you hav
 
 Once you understand the basic concepts, you should take lab: OpenGL Utilities.
 )
+PREPARE
+gtk_widget_destroy ::0: window
+PREPARE
 
 NB. =========================================================
 Lab Section Further Information

@@ -10,9 +10,9 @@ The next section tests to see if the OpenGL dlls are available.
 PREPARE
 clear''
 coerase <'plab'
-require 'opengl gl2 gl3'
-coinsert 'jgtk jgl2 jgl3'
-window=: 0
+require 'gl2 opengl'
+coinsert 'jgtk jgl3'
+window_base_=: 0
 nextijs=: 3 : 0
 if. -. '/' e. y do.
 y=.jpath '~addons/demos/opengl/lab/',y end.
@@ -26,13 +26,11 @@ smfocus_jijs_ ''
 smsetsaved_jijs_ ''
 )
 testdlls=: 3 : 0
-try.
- ogl=.''conew'jzopengl'
- current__ogl 0
- destroy__ogl''
+try. 
+ current_jzopengl_ 0 
  'OpenGL OK.'
 catch.
- 'OpenGL create context failed. OpenGL not available.'
+ 'OpenGL not available.'
 end.
 )
 PREPARE

@@ -25,8 +25,8 @@ General;Turtle Geometry - JTurtle User Guide;~addons/labs/labs/general/jturtleus
 Graphics;Fractals, Visualization & J;~addons/labs/labs/graphics/fractals.ijt
 Graphics;Graph Utilities;~addons/labs/labs/graphics/graphut.ijt
 Graphics;Graphics - gl2 commands;~addons/labs/labs/graphics/gl2.ijt
-NB. Graphics;OpenGL Introduction;~addons/labs/labs/graphics/opengl.ijt
-NB. Graphics;OpenGL Utilities;~addons/labs/labs/graphics/openglut.ijt
+Graphics;OpenGL Introduction;~addons/labs/labs/graphics/opengl.ijt
+Graphics;OpenGL Utilities;~addons/labs/labs/graphics/openglut.ijt
 Graphics;Plot Package;~addons/labs/labs/graphics/plot.ijt
 Graphics;Viewmat;~addons/labs/labs/graphics/viewmat.ijt
 

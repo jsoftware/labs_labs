@@ -20,7 +20,7 @@ General;Fuzzy Logic;~addons/labs/labs/general/fuzzy.ijt
 General;Huffman Coding;~addons/labs/labs/general/huffman.ijt
 General;Sequential Machines;~addons/labs/labs/general/seqmachine.ijt
 General;The Tower of Hanoi;~addons/labs/labs/general/towerofhanoi.ijt
-General;Turtle Geometry - JTurtle User Guide;~addons/labs/labs/general/jturtleuser.ijt
+General;Turtle Geometry - JTurtle User Guide;~addons/graphics/jturtle/jturtleuser.ijt
 
 Graphics;Fractals, Visualization & J;~addons/labs/labs/graphics/fractals.ijt
 Graphics;Graph Utilities;~addons/labs/labs/graphics/graphut.ijt

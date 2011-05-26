@@ -21,6 +21,9 @@ General;Huffman Coding;~addons/labs/labs/general/huffman.ijt
 General;Sequential Machines;~addons/labs/labs/general/seqmachine.ijt
 General;The Tower of Hanoi;~addons/labs/labs/general/towerofhanoi.ijt
 General;Turtle Geometry - JTurtle User Guide;~addons/graphics/jturtle/jturtleuser.ijt
+General;JOD (1) Introduction;~addons/general/jod/jodlabs/jodintro.ijt
+General;JOD (2) Source Code Dump Scripts;~addons/general/jod/jodlabs/joddump.ijt
+General;JOD (3) Best Practices;~addons/general/jod/jodlabs/jodbest.ijt
 
 Graphics;Fractals, Visualization & J;~addons/labs/labs/graphics/fractals.ijt
 Graphics;Graph Utilities;~addons/labs/labs/graphics/graphut.ijt

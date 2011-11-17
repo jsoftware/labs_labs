@@ -48,6 +48,7 @@ Math;Area;~addons/labs/labs/math/area.ijt
 Math;Averages;~addons/labs/labs/math/averages.ijt
 Math;Best Fit;~addons/labs/labs/math/bestfit.ijt
 Math;Binomial Coefficients;~addons/labs/labs/math/bincoefs.ijt
+Math;CAL - the TABULA engine (1);~addons/math/cal/cal.ijt
 Math;Catalan Numbers;~addons/labs/labs/math/catalan.ijt
 Math;Families of Functions;~addons/labs/labs/math/families.ijt
 Math;Fast Fourier Transform;~addons/math/fftw/fftw.ijt
@@ -62,6 +63,7 @@ Math;Mathematical Roots of J;~addons/labs/labs/math/mathroot.ijt
 Math;Polynomials;~addons/labs/labs/math/polynom.ijt
 Math;Pythagorean Triples;~addons/labs/labs/math/pythag3.ijt
 Math;Rotations;~addons/labs/labs/math/rot.ijt
+Math;Scientific Units;~addons/math/uu/uu.ijt
 Math;Shapley Value on Old Macdonald's Farm;~addons/labs/labs/math/shapley.ijt
 Math;Spirals;~addons/labs/labs/math/spiral.ijt
 Math;Teacher's Aide;~addons/labs/labs/math/teachersaide.ijt

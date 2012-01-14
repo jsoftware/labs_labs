@@ -14,8 +14,8 @@ quote=: (a&,@(,&a))@ (#~ >:@(=&a))
 plurals=: ] , (1: ~: [) # 's'"_
 round=: [ * [: <. 0.5"_ + %~
 setlocale=: 18!:4 @ <
-termLF=: , (0: < #) # LF"_ -. _1&{.    
-termdelLF=: }.~ [: - 0: i.~ LF&= @ |.  
+termLF=: , (0: < #) # LF"_ -. _1&{.
+termdelLF=: }.~ [: - 0: i.~ LF&= @ |.
 tolist=: }. @ ; @: (LF&, each)
 wdifopen=: boxopen e. <;._2 @ (wd bind 'qp')
 assert=: 3 : 0
@@ -224,10 +224,10 @@ SMARKER=: 'Lab Section'
 RXSMARKER=: '\\par [\\[:alnum:]* ]*',SMARKER
 RXPAREN=: '\\par [\\[:alnum:]* ]*)'
 
-IFCOMMENTS=: 1        
-IFSENTENCES=: 1       
-LABFOCUS=: _1         
-IFWINDOWS=: 1         
+IFCOMMENTS=: 1
+IFSENTENCES=: 1
+LABFOCUS=: _1
+IFWINDOWS=: 1
 
 LABS=: ''
 LABCAT=: ''

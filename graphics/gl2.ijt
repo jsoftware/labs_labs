@@ -19,7 +19,7 @@ gtk_window_set_title gl2lab;'gl2lab'
 gtk_widget_set_name gl2lab;'gl2lab'
 consig gl2lab;'destroy';'gl2lab_close'
 NB. gsel arg to select gl2 target
-GHANDLE=: glcanvas_jgl2_ 'gl2lab';'g';200 200;coname''
+GHANDLE=: glcanvas_jgl2_ 200 200;coname''
 gtk_container_add gl2lab,canvas__GHANDLE
 gl2lab_g_paint''
 gtk_widget_show_all gl2lab
@@ -629,8 +629,8 @@ gl2lab0=: gtk_window_new GTK_WINDOW_TOPLEVEL
 gtk_window_set_title gl2lab0;'form 0'
 gtk_widget_set_name gl2lab0;'gl2labdouble'
 consig gl2lab0;'destroy';'gl2labdouble_close'
-GHANDLE00=: glcanvas_jgl2_ 'gl2labdouble;'g0';200 100;coname''
-GHANDLE01=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
+GHANDLE00=: glcanvas_jgl2_ 200 100;coname''
+GHANDLE01=: glcanvas_jgl2_ 200 100;coname''
 box=. gtk_vbox_new 0 0
 gtk_container_add gl2lab0,box
 gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0
@@ -641,8 +641,8 @@ gl2lab1=: gtk_window_new GTK_WINDOW_TOPLEVEL
 gtk_window_set_title gl2lab1;'form 1'
 gtk_widget_set_name gl2lab0;'gl2labdouble'
 consig gl2lab1;'destroy';'gl2labdouble_close'
-GHANDLE10=: glcanvas_jgl2_ 'gl2labdouble';'g0';200 100;coname''
-GHANDLE11=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
+GHANDLE10=: glcanvas_jgl2_ 200 100;coname''
+GHANDLE11=: glcanvas_jgl2_ 200 100;coname''
 box=. gtk_vbox_new 0 0
 gtk_container_add gl2lab1,box
 gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0

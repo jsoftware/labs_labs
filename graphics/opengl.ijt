@@ -34,8 +34,9 @@ NB. close all if more than 1
 if. 0~:window do.
  gtk_window_present_with_time window,GDK_CURRENT_TIME
  gtk_widget_grab_focus window
- realloc__gloc''      NB. force new rc
- gtk_widget_queue_draw canvas__gloc NB. new drawing
+ l=. glgetloc canvas
+ realloc__l''      NB. force new rc
+ gtk_widget_queue_draw canvas NB. new drawing
 else.
  gl3lab_run''
 end.

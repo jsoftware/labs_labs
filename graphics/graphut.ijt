@@ -52,8 +52,8 @@ gl2demo=: gtk_window_new GTK_WINDOW_TOPLEVEL
 gtk_window_set_title gl2demo;'gl2demo'
 gtk_widget_set_name gl2demo;'gl2demo'
 consig gl2demo;'destroy';'gl2demo_close'
-gloc=: glcanvas_jgl2_ 200 200;coname''
-gtk_container_add gl2demo,canvas__gloc
+canvas=: glcanvas_jgl2_ 200 200;coname''
+gtk_container_add gl2demo,canvas
 gtk_widget_show_all gl2demo
 )
 

@@ -54,6 +54,7 @@ setlocale 'base'
 )
 tdo=: 3 : 0
 setlocale 'base'
+logged_jgtkide_=: 1
 0!:101 y [ 4!:55<'y'
 )
 tdo1=: 3 : 0
@@ -213,7 +214,7 @@ dat=. (ndx+len) }. dat
 j=. '{}',CRLF
 ". ((<./ dat i. j) {. dat) -. j
 )
-ADVANCE=: 'To advance the lab, press Ctrl-. in JHS or Ctrl-J in Gtk.',LF,'On a tablet your mileage may vary.'
+ADVANCE=: 'To advance the lab, press Esc A in JHS or Ctrl-J in Gtk.'
 
 ALL=: '(All)'
 LABDIRECTORY=: jpath '~system\extras\labs\'

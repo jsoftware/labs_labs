@@ -87,6 +87,7 @@ setlocale 'base'
 NB. =========================================================
 tdo=: 3 : 0
 setlocale 'base'
+logged_jgtkide_=: 1
 0!:101 y [ 4!:55<'y'
 )
 

@@ -22,7 +22,7 @@ NB.   ALL          all category
 NB.   CMARKER      marks lab chapters
 NB.   SMARKER      marks lab sections
 
-ADVANCE=: 'To advance the lab, press Esc A in JHS or Ctrl-J in Gtk.'
+ADVANCE=: 'To advance the lab, press Ctrl-. in JHS or Ctrl-J in Gtk.',LF,'On a tablet your mileage may vary.'
 
 ALL=: '(All)'
 LABDIRECTORY=: jpath '~system\extras\labs\'

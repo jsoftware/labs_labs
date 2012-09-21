@@ -59,20 +59,13 @@ logged_jgtkide_=: 1
 )
 tdo1=: 3 : 0
 setlocale 'base'
+logged_jgtkide_=: 1
 0!:111 y [ 4!:55<'y'
 )
 
 runquiet=: doquiet f.
 run=: tdo f.
 run1=: tdo1 f.
-wdmove=: 4 : 0
-'px py'=. y
-'sx sy'=. 2 {. 0 ". wd 'qm'
-'x y w h'=. 0 ". wd 'psel ',x,';qformx'
-if. px < 0 do. px=. sx - w + 1 + px end.
-if. py < 0 do. py=. sy - h + 1 + py end.
-wd 'pmovex ',": px,py,w,h
-)
 wraptext=: 3 : 0
 if. LABWIDTH > #y do. y return. end.
 if. LABWRAP do.

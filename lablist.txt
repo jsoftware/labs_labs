@@ -16,6 +16,7 @@ Core;Sparse Arrays;~addons/labs/labs/core/sparse.ijt
 
 Format;Strings conversion package;~addons/format/zulu/zulu.ijt
 Format;Strings conversion package: LITE version;~addons/format/zulu-lite/zulu-lite.ijt
+Format;Displaying boxed nouns containing Unicode glyphs;~addons/format/sbox/sbox.ijt
 
 General;Circuit Theory I;~addons/labs/labs/general/circuittheoryi.ijt
 General;Circuit Theory II;~addons/labs/labs/general/circuittheoryii.ijt

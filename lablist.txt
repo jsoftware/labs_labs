@@ -30,6 +30,7 @@ General;JOD (1) Introduction;~addons/general/jod/jodlabs/jodintro.ijt
 General;JOD (2) Source Code Dump Scripts;~addons/general/jod/jodlabs/joddump.ijt
 General;JOD (3) Best Practices;~addons/general/jod/jodlabs/jodbest.ijt
 
+Graphics;D3 - how to use with JHS;~addons/graphics/d3/d3.ijt
 Graphics;Fractals, Visualization & J;~addons/labs/labs/graphics/fractals.ijt
 Graphics;Graph Utilities;~addons/labs/labs/graphics/graphut.ijt
 Graphics;Graphics - gl2 commands;~addons/labs/labs/graphics/gl2.ijt

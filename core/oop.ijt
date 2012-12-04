@@ -10,7 +10,7 @@ It covers OOP ideas and terminology and shows how to do it.
 )
 PREPARE
 3 : 0''
-fms=. wdforms''
+fms=. wdforms ::((0 6$<'')"_) ''
 nos=. (conl 1) -. (2 {"1 fms) #~ (3 {"1 fms) e. 'jijs';'jijx'
 if. #nos do.
   h=. 'Object Oriented Programming'

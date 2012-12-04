@@ -107,7 +107,7 @@ Switching between the two tasks will be indicated by a dialog box, as in the nex
 NB. =========================================================
 Lab Section
 )
-wdinfo 'Server';(0 : 0 )
+sminfo 'Server';(0 : 0 )
 Start another copy of J to run as the client of this server.
 
 In the new client task run the lab "Socket Driver Server - Client".

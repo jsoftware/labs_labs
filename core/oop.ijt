@@ -15,7 +15,7 @@ nos=. (conl 1) -. (2 {"1 fms) #~ (3 {"1 fms) e. 'jijs';'jijx'
 if. #nos do.
   h=. 'Object Oriented Programming'
   t=. 'There are some numbered locales that will be deleted when you go through this lab.'
-  wdinfo h;t
+  sminfo h;t
 end.
 clear ''
 coerase <'pbc'

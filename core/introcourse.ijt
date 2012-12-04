@@ -584,7 +584,7 @@ try.
   alloc__ogl 4 4
   destroy__ogl''
 catch.
-  wdinfo 'OpenGL';'OpenGL create context failed. OpenGL not available.'
+  sminfo 'OpenGL';'OpenGL create context failed. OpenGL not available.'
 end.
 )
 

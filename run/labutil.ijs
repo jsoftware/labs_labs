@@ -37,7 +37,7 @@ setlocale=: 18!:4 @ <
 termLF=: , (0: < #) # LF"_ -. _1&{.    NB. ensure LF terminated
 termdelLF=: }.~ [: - 0: i.~ LF&= @ |.  NB. ensure not LF terminated
 tolist=: }. @ ; @: (LF&, each)
-wdifopen=: boxopen e. <;._2 @ (wd bind 'qp')
+wdifopen=: boxopen e. <;._2 @ wdqp
 
 NB. =========================================================
 NB. assert

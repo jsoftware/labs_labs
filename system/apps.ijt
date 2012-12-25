@@ -229,7 +229,7 @@ wd WP
 wd 'set names ',,NAMES,.LF
 a=: conew 'jzplot'
 PForm__a=: 'wp'
-PFormhwnd__a=: wd 'qhwndp'
+PFormhwnd__a=: wdqhwndp''
 PId__a=: 'g'
 wd 'pshow'
 )

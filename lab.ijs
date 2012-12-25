@@ -17,7 +17,7 @@ setlocale=: 18!:4 @ <
 termLF=: , (0: < #) # LF"_ -. _1&{.
 termdelLF=: }.~ [: - 0: i.~ LF&= @ |.
 tolist=: }. @ ; @: (LF&, each)
-wdifopen=: boxopen e. <;._2 @ (wd bind 'qp')
+wdifopen=: boxopen e. <;._2 @ wdqp
 assert=: 3 : 0
 '' assert y
 :

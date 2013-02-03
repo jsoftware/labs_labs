@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.40'
+VERSION=: '1.0.41'
 
 FILES=: 0 : 0
 labdir.ijs
@@ -23,4 +23,4 @@ math/
 system/
 )
 
-RELEASE=: 'j701'
+RELEASE=: 'j801'

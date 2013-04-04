@@ -216,10 +216,10 @@ Lab Section
 SCRIPT
 WP=: 0 : 0
 pc wp closeok;pn "Sales for Year";
-xywh 159 3 34 12;cc cancel button leftmove rightmove;cn "Close";
-xywh 5 10 40 9;cc label static;cn "Names:";
-xywh 4 19 60 98;cc names listbox ws_vscroll rightscale bottommove;
-xywh 67 19 126 98;cc g isigraph ws_border leftscale rightmove bottommove;
+cc cancel button;cn "Close";
+cc label static;cn "Names:";
+wh 120 196;cc names listbox;
+wh 232 196;cc g isigraph;
 pas 4 4;pcenter;
 rem form end;
 )
@@ -229,7 +229,7 @@ wd WP
 wd 'set names ',,NAMES,.LF
 a=: conew 'jzplot'
 PForm__a=: 'wp'
-PFormhwnd__a=: wdqhwndp''
+PFormhwnd__a=: wd 'qhwndp'
 PId__a=: 'g'
 wd 'pshow'
 )

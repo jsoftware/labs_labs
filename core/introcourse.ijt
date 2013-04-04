@@ -508,7 +508,7 @@ gsetdefaults :: ] ''
 
 OPENGL=: 0 : 0
 pc opengl;
-xywh 0 0 400 400;cc g isigraph opengl rightmove bottommove;
+wh 800 800;cc g opengl opengl;
 pas 0 0;
 rem form end;
 )
@@ -584,7 +584,7 @@ try.
   alloc__ogl 4 4
   destroy__ogl''
 catch.
-  sminfo 'OpenGL';'OpenGL create context failed. OpenGL not available.'
+  wdinfo 'OpenGL';'OpenGL create context failed. OpenGL not available.'
 end.
 )
 
@@ -1878,10 +1878,7 @@ Lab Section The fndisplay Tool
 A J tool called fndisplay lets you see how operations are applied
 on cells.  To invoke it, first load it with
 
-  load '~addons/general/misc/fndisplay.ijs'
-
-If the load fails, use jal to install general/misc addon.
-
+  load 'system/packages/misc/fndisplay.ijs'
   setfnform 'J'
 
 Define verbs you want to use, giving them a rank if it's not infinite:
@@ -1895,7 +1892,7 @@ Define named nouns you plan to use:
 When you use those verbs and nouns, the result will show how the
 operation was performed.
 )
-load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
+load 'system/packages/misc/fndisplay.ijs'
 setfnform 'J'
 defverbs 'Sum Sq"0'
 Sum@:Sq 1 2 3
@@ -1955,7 +1952,7 @@ NB. Then }. is applied, leaving 4 6.
 
 }.@:({.@>) a
 
-load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
+load 'system/packages/misc/fndisplay.ijs'
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed
@@ -1978,7 +1975,7 @@ NB. an array of shape 3 0, which display as three blank lines.
 
 }.@({.@>) a
 
-load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
+load 'system/packages/misc/fndisplay.ijs'
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed
@@ -2003,7 +2000,7 @@ NB. }.@{. is equivalent to }.@:{. because both compounds have rank _ .
 
 }.@:{.@> a
 
-load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
+load 'system/packages/misc/fndisplay.ijs'
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed
@@ -2025,7 +2022,7 @@ NB. to that, leaving the result 2 3 .
 
 }.@({.@:>) a
 
-load '~addons/general/misc/fndisplay.ijs' NB. jal addon general/misc
+load 'system/packages/misc/fndisplay.ijs'
 setfnform 'J'
 defverbs 'drop head unbox"0'
 NB. The boxing of the items of a is not displayed
@@ -5143,9 +5140,7 @@ NB. ============================================================================
 Lab Section Following Execution using the trace facility
 To follow parsing and execution, use the trace facility built into J.  Type
 
-   load '~addons/general/misc/trace.ijs'
-
-If the load fails, use jal to install general/misc addon.
+   load 'trace'
 
 This defines two verbs: trace and paren.  Each takes a y argument which is
 a string containing the text of a J sentence.
@@ -5156,7 +5151,7 @@ paren y    returns the fully-parenthesized version of y
            sentence y.  x is the maximum call depth to trace; we will
            be leaving it off, which will show everything.
 )
-load '~addons/general/misc/trace.ijs' NB. jal addon general/misc
+load 'trace'
 
 paren 'i.&1-.3<+/i.5'  NB. A hard-to-read sentence
 
@@ -5432,7 +5427,7 @@ require 'grid'
 NB. Form definition
 GRIDEX=: 0 : 0
 pc gridex;
-xywh 0 0 200 200;cc grid isigraph rightmove bottommove;
+wh 400 400;cc grid isigraph;
 pas 0 0;ptop;pmove 217 113 215 220;
 rem form end;
 )
@@ -5490,7 +5485,7 @@ require 'grid'
 NB. Form definition
 GRIDEX=: 0 : 0
 pc gridex;
-xywh 0 0 200 200;cc grid isigraph rightmove bottommove;
+wh 400 400;cc grid isigraph;
 pas 0 0;ptop;pmove 217 113 215 220;
 rem form end;
 )

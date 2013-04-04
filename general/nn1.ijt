@@ -1067,7 +1067,7 @@ pressing the "return" key twice.
 )
 PREPARE
 
-require jpath '~addons/general/misc/trace.ijs'
+require jpath '~system/packages/misc/trace.ijs'
 
 PREPARE
 
@@ -1308,7 +1308,7 @@ pressing the "return" key twice.
 )
 PREPARE
 
-require jpath '~addons/general/misc/trace.ijs'
+require jpath '~system/packages/misc/trace.ijs'
 
 PREPARE
 

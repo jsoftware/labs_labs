@@ -11,16 +11,14 @@ J uses the API with cd (shared library call) and the J programmer has the same a
 )
 PREPARE
 clear''		NB. clear base locale
-require 'gl2 opengl'
-coinsert 'jgtk jgl3'
-window=: 0
-WINDOWNAME=: 'gl3lab' 
+require 'opengl gl2 gl3'
+coinsert 'jgl2 jgl3'
 nextijs=: 3 : 0
-if. -. '/' e. y do.
-y=.jpath '~addons/demos/opengl/lab/',y end.
+if. -. '\' e. y do.
+y=.jpath '~system\examples\graphics\opengl\lab\',y end.
 if. -. '.' e. y do. y=. y,'.ijs' end.
 d=.1!:1<y
-f=.jpath '~temp/ogl.ijs'
+f=.jpath '~temp\ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
@@ -30,29 +28,33 @@ load f
 )
 
 gl3lab=: 3 : 0
-NB. close all if more than 1
-if. 0~:window do.
- gtk_window_present_with_time window,GDK_CURRENT_TIME
- gtk_widget_grab_focus window
- l=. glgetloc canvas
- realloc__l''      NB. force new rc
- gtk_widget_queue_draw canvas NB. new drawing
-else.
+if. 1<+/(<'gl3lab')=<;._2 wd'qp' do.
+ while. +/(<'gl3lab')=<;._2 wd'qp' do.
+  wd'psel gl3lab;pclose' NB. close all if more than 1
+ end.
+end.
+try.
+ wd'psel gl3lab;pshow;pactive'
+ free__ogl''      NB. force new rc
+ gl3lab_g_paint'' NB. new drawing
+catch.
  gl3lab_run''
 end.
 i.0 0
 )
 
 testdlls=: 3 : 0
-try. 
- current_jzopengl_ 0 
+try.
+ ogl=.''conew'jzopengl'
+ alloc__ogl 4 4
+ destroy__ogl''
  'OpenGL OK.'
 catch.
- 'OpenGL not available.'
+ 'OpenGL create context failed. OpenGL not available.'
 end.
 )
 
-try=: load bind (jpath '~addons/demos/opengl/simple/gldemos.ijs')
+try=: load bind (jpath '~system\examples\graphics\opengl\simple\gldemos.ijs')
 gl3lab_jctrl_fkey=: 3 : 0 :: ]
 smselout_jijs_ ''
 smfocus_jijs_ ''
@@ -74,7 +76,7 @@ If you would like to see what can be done with OpenGL, try the OpenGL demo with 
 
 NB. =========================================================
 Lab Section J Forms
-This lab assumes familiarity with J, forms, canvas control, classes, and objects.
+This lab assumes familiarity with J, forms, isigraph control, classes, and objects.
 )
 
 NB. =========================================================
@@ -113,14 +115,14 @@ gl3 defines the OpenGL API calls. The coinsert allows reference to the gl3 names
 
 NB. =========================================================
 Lab Section
-OpenGL drawing is done on a canvas control with the opengl style.
+OpenGL drawing is done on an isigraph control with the opengl style.
 
-A canvas with opengl style supports only a few gl2 commands. The key one is glqwh.
+An isigraph with opengl style supports only a few gl2 commands. The key one is glqwh.
 )
 
 NB. =========================================================
 Lab Section
-gl3lab_run creates the form and canvas control with the opengl style.
+gl3lab_run creates the form and isigraph control with the opengl style.
 
 conew creates a new OpenGL object. This object is used to manage the OpenGL render context.
 
@@ -136,7 +138,7 @@ gl3lab_close destroys the OpenGL object and closes the form.
 
 NB. =========================================================
 Lab Section
-gl3lab_g_paint is called to paint the control. When called the canvas must be the target for gl3 commands.
+gl3lab_g_paint is called to paint the control. When called the isigraph must be the target for gl3 commands.
 
 rc__ogl makes the OpenGL render context current for drawing. If the RC already exists the result is 0 and the g_draw_init call is avoided. If the RC doesn't exist or the size has changed, a new RC is created and the result is 1 so that g_draw_init is run.
 
@@ -154,11 +156,11 @@ Resize the drawing. Each time the triangle is drawn in a new, random color.
 
 NB. =========================================================
 Lab Section
-With the canvas in focus press Ctrl+f.
+With the isigraph in focus press Ctrl+f.
 
 gl3lab_fctrl_fkey is called by Ctrl+f. It times showing 100 frames and then reports frames per second.
 
-target__ogl selects the OpenGL object canvas as the target for gl3 commands as gl3lab_g_paint requires a target.
+target__ogl selects the OpenGL object isigraph as the target for gl3 commands as gl3lab_g_paint requires a target.
 )
 
 NB. =========================================================
@@ -289,7 +291,7 @@ Bitmaps can be used to draw characters and J OpenGL support provides a platform 
 
 glaCreateBitmapFont creates bitmaps for the ASCII character set. Its argument is a wd fontspec and its result has a row for each character with width, height, and bitmap data as 8 bit characters.
 
-The bitmaps are built by drawing text in a temporary form and canvas control, reading the pixels, and converting them to the format required for an OpenGL bitmap.
+The bitmaps are built by drawing text in a temporary form and isigraph control, reading the pixels, and converting them to the format required for an OpenGL bitmap.
 )
 
 NB. =========================================================
@@ -298,9 +300,8 @@ The 3rd row of FONT has the width, height, and bitmap data for the # character.
 
 Data is bits in 8 bit character values. The row width is rounded up to an 8 bit boundary.
 )
-NB. FONT=: glaCreateBitmapFont__ogl 'arial 16'
-NB. 3{FONT
-'Fails - glaCreateBitmapFont not yet implemented'
+FONT=: glaCreateBitmapFont__ogl 'arial 16'
+3{FONT
 
 NB. =========================================================
 Lab Section
@@ -309,8 +310,7 @@ Study the script to see how FONT is created and how glaChars displays text.
 glPixelStorei is required so that the bitmap data is corrrectly interpreted.
 )
 nextijs'ogl_bitmapfont'
-'Fails - glaCreateBitmapFont not yet implemented'
-gl3lab^:0 ''
+gl3lab''
 
 NB. =========================================================
 Lab Section
@@ -322,7 +322,7 @@ This is not portable and won't work in Unix.
 )
 nextijs'ogl_bitmapfont_windows'
 'Fails in Unix - not portable.'
-gl3lab^:IFWIN ''
+gl3lab''
 
 NB. =========================================================
 Lab Section
@@ -330,7 +330,7 @@ Windows also supports outline fonts that have more features and capabilities tha
 )
 nextijs'ogl_outlinefont_windows'
 'Fails in Unix - not portable.'
-gl3lab^:IFWIN ''
+gl3lab''
 
 NB. =========================================================
 Lab Section The End
@@ -338,9 +338,6 @@ This lab just scratches the surface of what is possible with OpenGL. But you hav
 
 Once you understand the basic concepts, you should take lab: OpenGL Utilities.
 )
-PREPARE
-gtk_widget_destroy ::0: window
-PREPARE
 
 NB. =========================================================
 Lab Section Further Information

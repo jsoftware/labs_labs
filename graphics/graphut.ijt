@@ -5,7 +5,7 @@ NB. =========================================================
 Lab Section Introduction
 This lab describes the graph utilities (Graph) included with J. These apply to Windows GDI graphics, not OpenGL graphics.
 
-GDI graphics are drawn in a canvas control. A set of "gl2" commands, defined in script system\main\gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
+GDI graphics are drawn in an isigraph control. A set of "gl2" commands, defined in script system\main\gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
 
 The Graph utilities are a set of cover functions for the most commonly used gl2 commands, that simplify drawing into the control.
 )
@@ -29,14 +29,13 @@ The lab will display several windows. You can rearrange and resize these windows
 The windows can be left open as you step through the lab. However, you can also close them if you wish - they will be re-created when they are next used.
 )
 PREPARE
-coinsert 'jgtk jgl2'
+coinsert 'jgl2'
 gdreset''
-gl2demo=: 0
 PREPARE
 
 NB. =========================================================
 Lab Section Drawing with gl2 commands
-We now look at an example of drawing to a canvas control using the gl2 commands directly. The example draws a red square in the middle of the control.
+We now look at an example of drawing to an isigraph control using the gl2 commands directly. The example draws a red square in the middle of the control.
 
 The next section opens up a script, gl2demo, that will draw the picture. You may need to rearrange the windows to see the script.
 
@@ -47,14 +46,15 @@ NB. =========================================================
 Lab Section
 )
 SCRIPT
+GL2DEMO=: 0 : 0
+pc gl2demo closeok;
+wh 200 200;cc g isigraph;
+pas 0 0;
+)
+
 gl2demo_run=: 3 : 0
-gl2demo=: gtk_window_new GTK_WINDOW_TOPLEVEL
-gtk_window_set_title gl2demo;'gl2demo'
-gtk_widget_set_name gl2demo;'gl2demo'
-consig gl2demo;'destroy';'gl2demo_close'
-canvas=: glcanvas_jgl2_ 200 200;coname''
-gtk_container_add gl2demo,canvas
-gtk_widget_show_all gl2demo
+wd GL2DEMO
+wd'pshow'
 )
 
 gl2demo_g_paint=: 3 : 0
@@ -64,17 +64,12 @@ glbrush_jgl2_''
 glrect_jgl2_ (wh,wh) * 300 300 400 400 % 1000
 )
 
-gl2demo_close=: 3 : 0
-gl2demo=: 0
-cbfree''
-)
-
 gl2demo_run''
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/gl2demo.ijs'
-open jpath '~temp/gl2demo.ijs'
-tile_jijs_''
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\gl2demo.ijs'
+open jpath '~temp\gl2demo.ijs'
+NB. tile_jijs_''
 PREPARE
 
 NB. =========================================================
@@ -83,8 +78,8 @@ The next section draws the same square using Graph.
 )
 PREPARE
 3 : 0''
-if. 0=wdisparent 'gl2demo' do.
-  load '~temp/gl2demo.ijs'
+if. 0=wdisparent <'gl2demo' do.
+  load '~temp\gl2demo.ijs'
 end.
 PREPARE
 

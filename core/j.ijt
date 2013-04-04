@@ -16,7 +16,7 @@ To clarify ideas, enter your own experiments
 (which you may do at any point).
 )
 2+3
-x=:2
+x=: 2
 y=:3
 x+y
 
@@ -266,7 +266,7 @@ Lab Section Addition Table
  main window to
  return focus to it.
 )
-require 'viewmat'
+require 'plot graph'
 color =: viewmat
 x=:i. 5
 x +/ x
@@ -377,7 +377,7 @@ Lab Section Simple plot
 The square function (*:) applied to a list x
 may be plotted against its argument as follows:
 )
-require 'plot'
+require'plot graph'
 
 x=: i.5
 y=: *: x
@@ -616,7 +616,7 @@ i.#c
 c * i. # c
 der=:}. c * i. # c NB. Coefficients of derivative
 der
-require 'plot'
+require 'plot graph'
 PLOT=:'stick,line'&plot
 PLOT x;>(c p. x);(der p. x)
 
@@ -841,7 +841,7 @@ boxed x and y coordinates.
 cos=:2&o.
 sin=:1&o.
 ]pent=:(cos,.sin) 2r5p1 * i. 5
-require 'plot'
+require 'plot graph'
 |:pent    NB. Transpose table
 ;/|: pent NB. Box rows (columns of pent)
 (fix=: ;/@|:) pent
@@ -991,7 +991,7 @@ because the graph of a function at intervals of i exhibits the
 average rate of change as the slopes of the lines connecting
 successive points.
 )
-require 'plot'
+require'plot graph'
 PLOT=:'stick,line'&plot
 i*i.20
 f i*i.20
@@ -1383,7 +1383,7 @@ The color window is better if expanded (by
 clicking in the middle tiny square at upper right of
 the window).
 )
-NB. require 'graph'
+require 'graph'
 color=:viewmat
 
 color (i.!4) A. 'ABCD'

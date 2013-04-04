@@ -3,50 +3,46 @@ LABFOCUS=: 1
 
 NB. =========================================================
 Lab Section gl2
-This lab is an overview of drawing on a canvas control.
+This lab is an overview of drawing on an isigraph control.
 
 Plot, grid, and printing are all built in J drawing on an
-canvas control.
+isigraph control.
 )
 SCRIPT
 require'gl2'   NB. load gl2 definitions in jgl2 locale
-coinsert'jgtk jgl2' NB. allow use of gl2... without _jgl2_
-gl2lab=: 0
+coinsert'jgl2' NB. allow use of gl2... without _jgl2_
+
+GL2LAB=: 0 : 0
+pc gl2lab closeok;
+wh 200 200;cc g isigraph;
+pas 0 0;
+rem form end;
+)
 
 gl2lab_run=: 3 : 0
-gl2lab=: gtk_window_new GTK_WINDOW_TOPLEVEL
-gtk_window_set_title gl2lab;'gl2lab'
-gtk_widget_set_name gl2lab;'gl2lab'
-consig gl2lab;'destroy';'gl2lab_close'
-NB. gsel arg to select gl2 target
-GHANDLE=: glcanvas_jgl2_ 200 200;coname''
-gtk_container_add gl2lab,canvas__GHANDLE
+wd GL2LAB
+GHANDLE=: wd'qhwndc g' NB. gsel arg to select gl2 target
 gl2lab_g_paint''
-gtk_widget_show_all gl2lab
+wd'pshow;'
 )
 
 NB. create form (or just repaint if it already exists)
 gl2lab=: 3 : 0
-if. wdisparent 'gl2lab' do.
+try.
+ wd'psel gl2lab'
  glclear''        NB. clear out old drawing
  gl2lab_g_paint'' NB. new drawing
  glpaint''        NB. copy to screen
-else.
+catch.
  gl2lab_run''
 end.
-)
-
-gl2lab_close=: 3 : 0
-gtk_widget_destroy ::0: gl2lab
-cbfree''
-0
 )
 
 SCRIPT
 PREPARE
 goto=: 3 : 'lab_jlab_ 0[NDX_jlab_=:(<.#SECTIONDATA_jlab_)<.0>.<:y'
 gl2boiler=: toHOST SCRIPT_jlab_
-gl2labijs=: <jpath '~temp/gl2lab.ijs'
+gl2labijs=: <jpath '~temp\gl2lab.ijs'
 gl2lab_update=: 3 : 0
 t=.gl2boiler,toHOST SCRIPT_jlab_
 t 1!:2 gl2labijs
@@ -60,25 +56,25 @@ PREPARE
 
 NB. =========================================================
 Lab Section
-gl2 commands draw on a canvas control.
+gl2 commands draw on an isigraph control.
 
 gl2 commands are loaded in the jgl2 locale. This avoids cluttering up the base locale with the gl2 names. For convenience we coinsert jgl2 so the names can be accessed directly from the base locale.
 )
 require'gl2'   NB. load gl2 definitions in jgl2 locale
-coinsert'jgtk jgl2' NB. allow use of commands from base
+coinsert'jgl2' NB. allow use of commands from base
 glrect_jgl2_   NB. command to draw rectangle
 glrect         NB. with coinsert you don't need _jgl2_
 
 NB. =========================================================
 Lab Section
-gl2lab.ijs creates form gl2lab with a canvas g that fills the form and is resized as the form is resized.
+gl2lab.ijs creates form gl2lab with an isigraph g that fills the form and is resized as the form is resized.
 
 Study the gl2lab script.
 
 gl2lab_g_paint draws the control. As it has no drawing commands the control is the default white.
 )
 SCRIPT
-NB. paint for canvas g on form gl2
+NB. paint for isigraph g on form gl2
 gl2lab_g_paint=: 3 : 0
 ''
 )
@@ -86,18 +82,18 @@ SCRIPT
 PREPARE
 gl2lab_update''
 PREPARE
-gl2lab'' NB. create form with canvas
+gl2lab'' NB. create form with isigraph
 
 NB. =========================================================
 Lab Section
-gl2lab_g_paint is called in gl2lab_run after the canvas control is created and just before pshow.
+gl2lab_g_paint is called in gl2lab_run after the isigraph control is created and just before pshow.
 
 This step loads the script and runs gl2lab to create the form.
 
 Study gl2lab_g_paint at the end of the script.
 )
 SCRIPT
-NB. draw for canvas g on form gl2
+NB. draw for isigraph g on form gl2
 gl2lab_g_paint=: 3 : 0
 glrgb 255 0 0       NB. RGB red
 glbrush ''          NB. red brush
@@ -472,7 +468,7 @@ gllines D
 
 redraw=: 3 : 0
 D=: newdata 20
-glsel GHANDLE NB. canvas target
+glsel GHANDLE NB. isigraph target
 gl2lab_g_paint''
 glpaint'' NB. update screen
 )
@@ -501,7 +497,7 @@ gllines D
 
 redraw=: 3 : 0
 D=: newdata 20
-glsel GHANDLE    NB. canvas target
+glsel GHANDLE    NB. isigraph target
 glclear''        NB. reinitialize the memory buffer
 gl2lab_g_paint''
 glpaint''        NB. update screen
@@ -519,7 +515,7 @@ animate in this example does redraw in a loop with a sleep delay.
 SCRIPT
 redraw=: 3 : 0
 D=: newdata 20
-glsel GHANDLE    NB. canvas target
+glsel GHANDLE    NB. isigraph target
 glclear''        NB. reinitialize the memory buffer
 gl2lab_g_paint''
 glpaint''        NB. update screen
@@ -552,7 +548,7 @@ gllines D
 )
 
 redraw=: 3 : 0
-glsel GHANDLE    NB. canvas target
+glsel GHANDLE    NB. isigraph target
 pos=. 50 50
 glrgb 0 255 0
 glbrush''
@@ -578,80 +574,73 @@ animate 30      NB. update small area every 0.1 seconds
 
 NB. =========================================================
 Lab Section
-gl2 commands don't specify the canvas control. There is an implicit target for gl2 commands as follow:
+gl2 commands don't specify the isigraph control. There is an implicit target for gl2 commands as follow:
 
-gl2 target is selected canvas on selected form.
+gl2 target is selected isigraph on selected form.
 
 A form is selected by: create (wd pc) form; event on the form; or a wd psel command.
 
-A canvas is selected on a form by: create (wd cc) canvas; event on the canvas; or a glsel command.
+An isigraph is selected on a form by: create (wd cc) isigraph; event on the isigraph; or a glsel command.
 )
 
 NB. =========================================================
 Lab Section
 In most cases the gl2 target is automatically selected for you by the system. For example:
 
-Create a form and canvas and gl2 commands automatically go to the new canvas on the new form.
+Create a form and isigraph and gl2 commands automatically go to the new isigraph on the new form.
 
-A canvas event (paint, mouse, character) selects the form and the canvas.
+An isigraph event (paint, mouse, character) selects the form and the isigraph.
 )
 
 NB. =========================================================
 Lab Section
-If the situation is more complicated and the system hasn't already selected your form and canvas, then you need to explicity select the target for your gl2 commands. For example:
+If the situation is more complicated and the system hasn't already selected your form and isigraph, then you need to explicity select the target for your gl2 commands. For example:
 
-If there are 2 canvas controls on a form, you need to explicitly select a target if you don't know that it is already selected.
+If there are 2 isigraph controls on a form, you need to explicitly select a target if you don't know that it is already selected.
 
-If another form (with or without a canvas control) was selected then you need to explicity set the target for your gl2 commands.
+If another form (with or without an isigraph control) was selected then you need to explicity set the target for your gl2 commands.
 )
 
 NB. =========================================================
 Lab Section
 You can explicitly set the target by doing a psel and a gsel. The wd command psel and gsel can take id arguments or handles. As ids are not unigue it is probably better to use the handles.
 
-glsel ID selects the first canvas with that ID on the selected form.
+glsel ID selects the first isigraph with that ID on the selected form.
 
-glsel HANDLE selects the form that has the canvas with that handle and then selects the canvas.
+glsel HANDLE selects the form that has the isigraph with that handle and then selects the isigraph.
 
-To select a canvas it is best to use glsel HANDLE.
+To select an isigraph it is best to use glsel HANDLE.
 )
 
 NB. =========================================================
 Lab Section
-The next example creates two forms each with two canvass.
+The next example creates two forms each with two isigraphs.
 )
 
 NB. =========================================================
 Lab Section
 )
+GL2LABDOUBLE=: 0 : 0
+pc gl2labdouble closeok;
+wh 200 100;cc g0 isigraph;
+wh 200 100;cc g1 isigraph;
+pas 0 0;
+)
+
 run=: 3 : 0
-gl2lab0=: gtk_window_new GTK_WINDOW_TOPLEVEL
-gtk_window_set_title gl2lab0;'form 0'
-gtk_widget_set_name gl2lab0;'gl2labdouble'
-consig gl2lab0;'destroy';'gl2labdouble_close'
-GHANDLE00=: glcanvas_jgl2_ 200 100;coname''
-GHANDLE01=: glcanvas_jgl2_ 200 100;coname''
-box=. gtk_vbox_new 0 0
-gtk_container_add gl2lab0,box
-gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0
-gtk_box_pack_start box,canvas__GHANDLE11, 0 0 0
-gtk_widget_show_all gl2lab0
+wd GL2LABDOUBLE
+wd'pn *form 1'
+GHANDLE10=: wd'qhwndc g0'
+GHANDLE11=: wd'qhwndc g1'
+xywh=. ".wd'qform'
+wd'pmove ',":xywh+0,(3{xywh),0 0
+wd'pshow'
 
-gl2lab1=: gtk_window_new GTK_WINDOW_TOPLEVEL
-gtk_window_set_title gl2lab1;'form 1'
-gtk_widget_set_name gl2lab0;'gl2labdouble'
-consig gl2lab1;'destroy';'gl2labdouble_close'
-GHANDLE10=: glcanvas_jgl2_ 200 100;coname''
-GHANDLE11=: glcanvas_jgl2_ 200 100;coname''
-box=. gtk_vbox_new 0 0
-gtk_container_add gl2lab1,box
-gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0
-gtk_box_pack_start box,canvas__GHANDLE11, 0 0 0
-gtk_widget_show_all gl2lab1
-
-NB. xywh=. ".wd'qformx'
-NB. wd'pmovex ',":xywh+0,(3{xywh),0 0
-
+wd GL2LABDOUBLE
+wd'pn *form 0'
+GHANDLE00=: wd'qhwndc g0'
+GHANDLE01=: wd'qhwndc g1'
+wd'pshow;'
 )
 
 NB. RGB draw GHANDLExy
@@ -662,11 +651,12 @@ glbrush''
 glrect 10 10 50 50
 glpaint''
 )
-run'' NB. create 2 forms each with 2 canvass
-255 0   0   draw GHANDLE00     NB. form 0 canvas 0
-0   255 0   draw GHANDLE01     NB. form 0 canvas 1
-0   0   255 draw GHANDLE10     NB. form 1 canvas 0
-192 192 192 draw GHANDLE11     NB. form 1 canvas 1
+
+run'' NB. create 2 forms each with 2 isigraphs
+255 0   0   draw GHANDLE00     NB. form 0 isigraph 0
+0   255 0   draw GHANDLE01     NB. form 0 isigraph 1
+0   0   255 draw GHANDLE10     NB. form 1 isigraph 0
+192 192 192 draw GHANDLE11     NB. form 1 isigraph 1
 
 NB. try you own examples of draw
 
@@ -674,8 +664,8 @@ NB. =========================================================
 Lab Section
 The two forms are closed.
 )
-gtk_widget_destroy gl2lab0
-gtk_widget_destroy gl2lab1
+wd'psel gl2labdouble;pclose'
+wd'psel gl2labdouble;pclose'
 
 NB. =========================================================
 Lab Section
@@ -693,7 +683,7 @@ glpolygon 0 0 200 200 100 0 0 100 200 100
 )
 
 readpixels=: 3 : 0
-glsel GHANDLE    NB. canvas target
+glsel GHANDLE    NB. isigraph target
 glqpixels y  NB. get pixels
 )
 SCRIPT
@@ -734,7 +724,75 @@ Lab Section
 The pixels are saved as file gl2lab.bmp. Try using this bmp file in some other application such as word.
 )
 require'bmp' NB. define writebmp
-(200 200$pixels) writebmp jpath'~temp/gl2lab.bmp'
+(200 200$pixels) writebmp jpath'~temp\gl2lab.bmp'
+
+NB. =========================================================
+Lab Section
+gl2 commands can be saved in a Windows Enhanced Metafile (Windows only).
+
+Study the emfcreate definition.
+
+Try using the gl2lab.emf file in another application such as Word.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 255 0 0
+glbrush ''
+glrgb 0 0 255
+glpen 10,PS_SOLID
+glpolygon 0 0 400 400 100 0 0 100 400 100
+)
+
+emfcreate=: 3 : 0
+glsel GHANDLE    NB. isigraph target
+glfile y
+glemfopen''      NB. open EMF file
+gl2lab_g_paint'' NB. draw commands
+glemfclose''     NB. close EMF file
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+fn=: jpath'~temp\gl2lab.emf'
+emfcreate fn
+
+NB. =========================================================
+Lab Section
+You can play an EMF file in an isigraph control.
+
+glemfplay with just xy argument plays the EMF file at that location in its original size.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glfile fn
+glemfplay 50 50
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+glemfplay with xywh argument plays the EMF file at that location and with the original size scaled to fit the width and height.
+
+In neither case is the EMF drawing clipped. That is, drawing beyond the visible size when the EMF file was created is drawn.
+
+You can use glclip to clip the EMF drawing if required.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glfile fn
+glemfplay 50 50 50 50
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
 
 NB. =========================================================
 Lab Section

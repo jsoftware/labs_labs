@@ -1,6 +1,6 @@
-NB. list of labs valid for the gtk ide
+NB. list of labs valid for the qt ide
 NB.
-NB. The labs not yet tested in J7 are commented out.
+NB. The labs not yet tested in J8 are commented out.
 NB. uncomment when a lab is working
 
 Core;A J Introduction;~addons/labs/labs/core/j.ijt

@@ -1,16 +1,7 @@
 LABTITLE=: 'Files'
 LABAUTHOR=: 0 : 0
 Don Guinn
-donguinn@gmail.com
-)
-LABCOMMENTS=: 0 : 0
-Converted from J6. Some sections dropped from J6 as they are no longer in J7 or are quite different. Those sections are not really necessary in the understanding of files.
-
-This is one lab which will need revision as J7 evolves. This is a first cut.
-
-Tested in JGTK and JHS under VISTA 32 and UBUNTU 64.
-
-AUTOLAB_jlab_ is tested in this script and left as is. It is only set to zero nullifying the code in (1) 2. It is only referenced in this lab. I do not know what it is for and leaving it alone.
+donguinn@pvtnetworks.net
 )
 LABERRORS=: 1
 LABFOCUS=: 0
@@ -19,18 +10,27 @@ NB. =========================================================
 Lab Chapter Introduction
 NB. =========================================================
 Lab Section Introduction
-J provides a number of utility verbs (functions) to aid in the processing of files. Several file organizations are supported by J. These include text files, component files and memory mapped files. This lab is for working with text files. These text files could also be called flat files. The verbs described in this lab treat a file as if it were a character string.
+J provides a number of utility verbs (functions) to aid in the processing of files. Several file organizations are supported by J. These include text files, component files and memory mapped files. This lab is for working with text files. These text files could also be called flat files. The verbs in this lab treat a file as if it were a character string containing any of the possible 256 bit configurations found in a byte.
 
-Also available are labs on Mapped Files and database.
+Also available are labs on Mapped Files.
 
-In J7 the file verbs are included as part of the base. It is not necessary to "load 'files'" although it does not hurt.
+The script file defining most of these verbs is loaded by:
+
+   load 'files'
+
+The text viewer will also be used:
+
+   load 'jview'
+
 )
-
-load 'files'                 NB. Unnecessary in J7
+PREPARE
+clear''
+PREPARE
+load 'files jview'
 
 NB. =========================================================
 Lab Section
-Most of these verbs use the foreign conjunction 1!: to access files and provide services similar to those provided by DOS. For more information on the facilities of 1!: refer to Help/Foreign Conjunction.
+Most of these verbs use the foreign conjunction 1!: to access files and provide services similar to those provided by DOS.  For more information on the facilities of 1!: refer to Help/Foreign Conjunction.
 
 This lab is divided into several chapters. You may run through the entire lab or skip to a particular chapter via Studio/Chapters on the Menu bar. Go to the Summary chapter for a brief description of the files verbs.
 
@@ -53,11 +53,11 @@ There are a few general rules that apply to the file verbs:
 
 *  Where a file name is required as an argument, it should be a single name given either as an open or boxed character string, or as a file handle created by 1!:21 as in the following:
 
-   fread 'c:/config.sys'
-   fread <'c:/config.sys'
+   fread 'c:\config.sys'
+   fread <'c:\config.sys'
    fread 270802
 
-*  Verbs that read files with a right argument of only a file name read the entire file. If a file name is linked with 1 or 2 numbers, they are the index and the size of the read. The index may be negative, and if so counts backwards from the end of the file. If size is missing, the read is to the end of the file.
+*  Verbs that read files with a right argument of only a file name read the entire file. If a file name is linked with 1 or 2 numbers, they are the starting position and the size of the read. The starting position may be negative, and if so counts backwards from the end of the file. If size is missing, the read is to the end of the file.
 
 For example:
   fread 'labfile.txt';20 50
@@ -70,35 +70,25 @@ For example:
 
 NB. =========================================================
 Lab Section
-*  "String" verbs, like freads, fappends, and fwrites, convert text strings between Host and J formats. Text strings may be delimited by the CRLF pair, or by isolated CR or LF characters. J text strings are delimited by the LF character alone. When converting J text strings to Host format, the LF characters are replaced by CRLF, CR or LF as appropriate.
-
-Even if your system uses CRLF to end a line, some J files may have LF only to end a line. This is not a problem for J, but can cause confusion for other applications.
+*  `String` verbs, like freads, fappends, and fwrites, convert text strings between Host and J formats. Text strings may be delimited by the CRLF pair, or by isolated CR or LF characters. J text strings are delimited by the LF character alone. When converting J text strings to Host format, the LF characters are replaced by CRLF, CR or LF as appropriate.
 
 *  Filenames conform to the normal rules for the base operating system.
 
-*  Extended filenames are supported. The extended name should not be enclosed in double quotes (").
+*  Extended filenames found in Windows 9x are supported.  The extended name should not be enclosed in double quotes (").
 )
 NB. Test your system to see what your line separator is.
 'abc' fwrites 'labfile.txt'
 eol=:;('CR';'LF')#~(CR,LF)e.fread 'labfile.txt';_2
 'Your host line separator is ',eol,'.'
 
-NB. Some interesting names in the z locale
-3 u:&.>LF;CR;CRLF
-
 NB. =========================================================
 Lab Section
-As you are probably aware, UNIX uses "/" for path separators where Windows uses "\". J uses the UNIX convention in the J libraries. But J will replace "/" with "\" and "\" with "/" internally for system calls appropriate for the host system. So, for the most part, you can use either "/" or "\" when entering path separators.
+As you are probably aware, Unix uses "/" for path separators where Windows uses "\". The file foreign conjunctions convert both to the one appropriate for your system; however, you can use the verb "jhostpath" to make displayed filenames correct for your system. This may be necessary for filenames passed to other applications.
 
-However, if you are making system calls directly, not going through the J engine, you must make sure that you are using the appropriate separator. Use "jpathsep" to make sure that separators are set to the UNIX separator and "winpathsep" to make sure they are for Windows type systems.
-
-In J6 the verb "jhostpath" is defined and it will convert separators to the host system as appropriate.
+You may use either "/" or "\" without regard to your base operating system.  This lab will use the Windows convention for filenames.
 )
-(winpathsep,:jpathsep) 'dir1/dir2\dir3'
-
 NB. See what your path separator is.
-(]{~{.@I.@e.&'\/')1!:43'' NB. OK, I cheated to find out.
-NB. Challenge: Figure out what I did.
+jhostpath 'dir1/dir2\dir3'
 
 NB. =========================================================
 Lab Chapter Reads
@@ -119,27 +109,26 @@ If there is no left argument the file contents are returned as a character vecto
    s   convert CR or CRLF to LF
 
 If the left argument is not present or null then the data is read with no conversion (byte mode).
+
+For example - Read the first 80 bytes of a file:
 )
+fread (jpath '~system/extras\config\stdcfg.ijs');0 80
+$fread (jpath '~system/extras\config\stdcfg.ijs');0 80
 
 NB. =========================================================
 Lab Section
-We will use various file verbs to look at a configuration file. The name of the file is in cfgfile.
+Did you notice the path separators above?
 
-A file name preceeded by a tilde (~) represents relative file names. The verb "jpath" translates the relative name to the full path name. "jpath" also converts both "\" and "/" to the J convention. Some, but not all, verbs include "jpath" in their definition. If no tilde is in the name the name is returned witn "\" converted to "/" but otherwise unaltered. So it never hurts to apply "jpath" to a file name.
+You may have noticed also the name "jpath" in front of the file names.
+Here,
 
-Let's look at the first 80 bytes of the file.
+  jpath '~system'
+
+sets the path to the J system files.
+
+This is covered in more detail in the chapter on 8, Relative File Names.
 )
-PREPARE
-3 : 0 ''
-if. 0=#fdir jpath f=.'~system/config/base.cfg' do.
-  f=. '~system/extras\config\stdcfg.ijs'
-end.
-0!:101 ']cfgfile=:jpath ''',f,''''
-)
-PREPARE
-
-fread (cfgfile);0 80
-$fread (cfgfile);0 80
+jpath '~system/extras\config\stdcfg.ijs'
 
 NB. =========================================================
 Lab Section
@@ -151,28 +140,23 @@ Search for line separators in the string:
 )
 PREPARE Do my own write to session so appropriate eol is used.
 eol=:;('CR';'LF')#~(CR,LF)e.toHOST LF
-0!:101]eol,' ss fread cfgfile;0 80'
-
-0!:101](-.CR e. fread cfgfile;0 80)#'LF ss fread cfgfile;0 80'
+0!:101]eol,' ss fread (jpath ''~system\extras\config\stdcfg.ijs'');0 80'
 PREPARE _________________________
 
 NB. =========================================================
 Lab Section
-Even if your system uses CRLF to end a line, some J files may still use LF only. Be aware.
-
 The 'b' option boxes each line of the file.
 )
-'b' fread (cfgfile);0 80
+'b' fread (jpath '~system\extras\config\stdcfg.ijs');0 80
 
 NB. =========================================================
 Lab Section
 The 'm' option creates a matrix with each line in the file on a separate row. The line separators are removed.
 
-Notice that lines may be padded with blanks.
+Notice that some lines may be padded with blanks.
 )
-
-'m' fread (cfgfile);0 80
-$'m' fread (cfgfile);0 80
+'m' fread (jpath '~system\extras\config\stdcfg.ijs');0 80
+$'m' fread (jpath '~system\extras\config\stdcfg.ijs');0 80
 
 NB. =========================================================
 Lab Section freadr
@@ -194,23 +178,26 @@ $freadr 'labfile.txt'
 
 NB. =========================================================
 Lab Section
-The optional index and length specify the line (item) index and number of lines to read.
 )
 freadr 'labfile.txt';1 3
 
 NB. =========================================================
 Lab Section
 Be careful using freadr. If the file does not contain fixed length records unpredictable results may occur which may result in an error or garbage data.
+
+Deleting "labfile.txt" to clean up.
 )
+ferase 'labfile.txt'
 
 NB. =========================================================
 Lab Section freads
-freads reads characters from a file, converting any CRLF or isolated CR characters into LF characters as J keeps script file internally. It is equivalent to 's'&fread.
+freads reads characters from a file, converting any CRLF or isolated CR characters into LF characters. It is equivalent to 's'&fread.
 )
-freads (cfgfile);0 80
-]l=.$fread cfgfile
-]ls=.$'s' fread cfgfile
+freads (jpath '~system\extras\config\stdcfg.ijs');0 80
+]l=.$fread jpath '~system\extras\config\stdcfg.ijs'
+]ls=.$freads jpath '~system\extras\config\stdcfg.ijs'
 l-ls
+$'b'fread jpath '~system\extras\config\stdcfg.ijs'
 
 NB. =========================================================
 Lab Chapter Writes
@@ -218,9 +205,9 @@ NB. =========================================================
 Lab Section Writes
 There are 5 verbs that write to files: fappend, fappends, freplace, fwrite and fwrites. They are all of the form:
 
-   data verb filename[;number]
+   data verb filename
 
-The data for all writes must be text (bytes). Text arrays of higher rank will be raveled before writing.
+The data for all writes must be text (bytes).
 
 As with reads, the file can be referred to by name or by a file handle created by 1!:21.
 )
@@ -236,7 +223,7 @@ fread 'labfile.txt'
 
 NB. =========================================================
 Lab Section fwrites
-fwrites is like fwrite except the host line separator is appended to the end of each each line. Any CR or LF characters in the data are converted to the host line separator.
+fwrites is like fwrite except that it when raveled, the host line separator is appended to each row. Any CR or LF characters in the data are converted to the host line separator.
 )
 (2 3$'abcdef') fwrites 'labfile.txt'
 fread 'labfile.txt'
@@ -245,8 +232,6 @@ a.i. fread 'labfile.txt'
 NB. =========================================================
 Lab Section fappend
 fappend appends the text to the end of the file. If the file does not exist or is empty then fappend is like fwrite.
-
-If the file does not exist the file is created.
 )
 'abc' fwrite 'labfile.txt'
 'xy' fappend 'labfile.txt'
@@ -254,9 +239,7 @@ fread 'labfile.txt'
 
 NB. =========================================================
 Lab Section fappends
-fappends is like fappend except it handles the line separators CRLF, CR and LF as in fwrites. Notice that fappends does not start a new line.
-
-If the file does not exist the file is created.
+fappends is like fappend except it handles the line separators CRLF, CR and LF as in fwrites.
 )
 'abc' fwrite 'labfile.txt'
 'xy' fappends 'labfile.txt'
@@ -273,7 +256,7 @@ If the starting index is negative then the replacement start is from the end of 
 If the number of characters is such that some characters would extend beyond the end of the file, it is extended.
 )
 (10$'a') fwrite 'labfile.txt'
-'XYZ' freplace 'labfile.txt';4
+'XYZ' freplace 'labfile.txt';3
 fread 'labfile.txt'
 
 NB. =========================================================
@@ -288,9 +271,7 @@ NB. =========================================================
 Lab Chapter Directory and File Management
 NB. =========================================================
 Lab Section Directory and File Management
-This chapter covers some directory and file management verbs. These verbs are very similar to those found in DOS. The list of verbs described below is far from complete. J7 has a number of new verbs for managing files. Following are a few of interest.
-
-Explore '~system/main/stdlib.ijs' to find others. If you feel it is of general use, do not hesitate to add them to this tutorial.
+This chapter covers the directory and file management verbs. These verbs are very similar to those found in DOS.
 )
 
 NB. =========================================================
@@ -299,35 +280,12 @@ fdir lists the directory information for files and directories matching the file
 
 The returned value is a boxed matrix, a row for each file found and 5 columns as follows: filename, date and time of file creation in J time stamp format, file size in bytes, access privileges, flags.
 )
-fdir jpath '~system/main/s*.ijs'
-
-NB. =========================================================
-Lab Section
-dir is similar to fdir except it takes an optional left argument and makes a prettier return as follows:
-
-- if not given, defaults to 'n'
-
-- if character, returns a formatted directory,
-    where x is the sort option:
-      d=by date
-      n=by name
-      s=by size
-
-- if numeric, there are 1 or 2 elements:
-  0{  0= list short names
-      1= boxed list of full pathnames
-      2= full directory list
-  1{  0= filenames only (default)
-      1= include subdirectories
-)
-
-'s' dir jpath '~system/main/s*.ijs'
+fdir jpath '~system\main\s*.ijs'
 
 NB. =========================================================
 Lab Section ferase
 ferase erases a file or all matching files if wildcards are included in the filename. If the erase is successful a 1 is returned for each file erased. _1 is returned for each file that could not be erased.
 )
-ferase 'labfile.txt'
 ferase 'labfile.txt'
 
 NB. =========================================================
@@ -338,31 +296,26 @@ fexist returns 1 if the file exists, 0 if not.
 fexist 'labfile.txt'
 ferase 'labfile.txt'
 fexist 'labfile.txt'
+ferase 'labfile.txt'
 
 NB. =========================================================
 Lab Section fsize
-fsize returns the size of a file in bytes. By the way, this is the script file that defines the file verbs.
-
-Windows users: Notice that sometimes "\" slip through.
+fsize returns the size of a file in bytes.
 )
-PREPARE
-0!:101 'fsize ''',(;(4!:4<'fread'){4!:3''),''''
-PREPARE
+fsize jpath '~system\main\stdlib.ijs'
 
 NB. =========================================================
 Lab Section fstamp
 fstamp returns the date and time a file is created in J timestamp format.
 )
-PREPARE
-0!:101 'fstamp ''',(;(4!:4<'fread'){4!:3''),''''
-PREPARE
+fstamp jpath '~system\main\files.ijs'
 
 NB. =========================================================
 Lab Section fss
 fss performs a string search on a file returning the indices where the string is found.
 )
-]t=:'tab' fss jpath '~system/main/stdlib.ijs'
-fread (jpath '~system/main/stdlib.ijs');(_29+{.t),40
+]t=:'tab' fss jpath '~system\main\convert.ijs'
+fread (jpath '~system\main\convert.ijs');(_10+{.t),30
 
 NB. =========================================================
 Lab Chapter Session Input and Output
@@ -372,117 +325,44 @@ The J session is displayed in an execution window. As you well know by now, you 
 
 This typewriter-type interface was the only way to interactively communicate with computers before video screens were available. It is an easy interface for simple applications.
 
-There are five pre-defined file handles. They may be used with fread and fwrite.
+Your applications can communicate with the session window by:
+  to read  - 1!:1]1,
+  to write - 1!:2]2 (or "sm" verbs in the jijs locale.)
 
-  1 read from the keyboard
-  3 read from standard input (stdin) 
+There are many verbs in the jijs locale starting with "sm" (session manager) available for manipulating the execution and script windows. For example, here is a simple verb to ask for information. The following line is an example of its use:
 
-  2 write to GTK or JHS screen
-  4 write to standard output (stdout)
-  5 write to standard error  (stderr)
+   prompt 'Enter your name: '
 
-Unless you redirect stdin, it reads from the jconsole screen. Your J session hangs while reading stdin. fread continues to read from stdin until an end file (Ctrl-z) is encountered. stdout and stderr default to writing to the jconsole window.
-
-smoutput defaults to writing to the session screen.
-
-For serious manipulation of the session window, study the jfe interface.
+Notice that the entire line including your prompt is returned. You may want to discard the prompt or allow the user to backspace and overtype information.
 )
 
-smoutput 'This is some text'
-
-'Write to session screen' (1!:2)2
-
-NB. =========================================================
-Lab Chapter Unicode and UTF-8
-NB. =========================================================
-Lab Section Unicode and UTF-8
-Unicode is a computing industry standard for the consistent encoding, representation and handling of text expressed in most of the world's writing systems. Presently Unicode is supported in a double-byte character set (DBCS) where each character represented by 2 bytes. To support Unicode a new data type has been added to J and is identified as type 131072 and is called "unicode" in J.
-
-UTF-8 (Unicode Transformation Formats) is backward-compatible with ASCII. It can represent every character in the Unicode character set while ASCII characters are unchanged. In J UTF-8 is a literal, type is 2. Although it is literal the characters in the last 128 characters of alphabet (a.) are reserved to support Unicode characters.
-
-J files can read and write both Unicode characters and UTF-8 characters; however, both are treated as literals.
+prompt =: 3 : 0
+smprompt_jijs_ y NB. Avoids new line. 1!:1]1 does not.
+1!:1]1            NB. fread 1 would also work.
 )
 
 NB. =========================================================
-Lab Section Unicode Review
-Unicode is an extension of the J alphabet (a.). Literals (type=2) and unicode (type=131072) can be mixed in expressions.
+Lab Section
+"smprompt" has an interesting property of leaving J enabled for interrupts. J does not hang.
 
-Using alphabet (a.) with unicode may not work as expected. The verb "Unicode" (u:) can be used to avoid problems with "a.". Use "3 u: text" instead of "a.i.text" to convert text to numeric. Use "4 u: n" instead of "n{a." to convert numbers to text; however, the result is always unicode even if all numbers map to ASCII characters.
+The library script "misc" contains a much nicer version of "prompt".
 )
-]l=:(u:16b2211),' 1 2 3'   NB. 16b2211 is Unicode sigma.
-3!:0 l
-#l          NB. One atom per character.
-l='s 1 4 3' NB. Mixing literal and unicode.
-a.i.l       NB. unicode characters are outside of alphabet.
-3 u:l       NB. Can be used with both unicode and literals.
-
-NB. =========================================================
-Lab Section A review of UTF-8
-UTF-8 is always literal (type=2). Unicode characters are represented by multiple characters from the non-ASCII part of "alphabet" (a.) - the characters in the last 128 characters in alphabet. Using these non-ASCII characters for non-unicode purposes gives unpredicitable results.
-
-Unicode includes characters that cannot be represented in unicode (DBCS) but can be in UTF-8. JHS and J6 display such characters properly (if appropriate Unicode character are installed) but will result in a domain error when atempting to convert to unicode. At the time of this writing JGTK displays some UTF-8 characters in a rather interesting way.
-)
-]ls=:8 u: l       NB. Convert unicode to UTF-8
-3!:0 ls
-#ls               NB. The count changes.
-l-:ls  
-3 u:ls            NB. The sigma takes three characters.
-3 u:l2=:'𨀀'      NB. Unicode U+16b28000 (may not display)
-4 u:l2            NB. Too big to fit in unicode (DBCS)
-
-NB. =========================================================
-Lab Section Writing and reading UTF-8 files
-No special considerations are necessary except one needs to be aware that the number of characters displayed may be less than the count of the noun written.
-)
-ls fwrite 'labfile.txt'
-]l2=:fread 'labfile.txt'
-ls-:l2
-
-NB. =========================================================
-Lab Section Writing and reading a unicode file
-When writing unicode is written as is, but reading always reads as literal. Therefore, the unicode type is changed to literal when read. When reading a unicode file convert the literal byte pairs back to unicode using "6 u:".
-
-The non-ASCII characters appear as two characters and their display is unpredictable. ASCII characters display normally because the null characters do not generate a space.
-
-Notice the nulls appear with each ASCII character.
-
-The sigma is a two-byte number. Depending on your system it may appear as 17 34 or 34 17.
-)
-l fwrite 'labfile.txt'
-]ls=:fread 'labfile.txt'
-3!:0 ls
-l-:ls
-# each l;ls
-a.i.ls
-6 u: fread 'labfile.txt'
-
-NB. =========================================================
-Lab Section Unicode Summary
-The choice of using Unicode or the UTF-8 representation of Unicode within a J application depends on the needs of the application. However, when using files to interface with non-J applications or other computer platforms, one should consider:
-
-• UTF-8 representation of Unicode is becoming a standard and is accepted and works well with most browsers and platforms.
-
-• Unicode has endian issues. UTF-8 does not.
-
-• There is no way in J to tell whether a file is Unicode or UTF-8. Looking for nulls is one way to tell.
-
-• J uses UTF-8 internally for displaying.
-
-See "u:" in the Dictionary for how J supports Unicode and UTF-8 and go to wikipedia.org/wiki/UTF-8 for how Unicode is represented in UTF-8.
-
-Deleting "labfile.txt" to clean up.
-)
-ferase 'labfile.txt'
 
 NB. =========================================================
 Lab Chapter Miscellaneous
 NB. =========================================================
-Lab Section fview
-fview displays the file using a view box. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
+Lab Section fselect
+fselect provides quick access to the file open Windows utility form called the Windows common dialog box. J is suspended until the box is closed.
 
-At this time fview is only available in JGTK.
+fselect uses the windows driver to invoke the wd command mbopen. See help/wd commands and scroll down to mbopen for more information.
 )
-fview jpath '~system\main\stdlib.ijs'
+fselect jpath '~system\main\files.ijs'
+
+NB. =========================================================
+Lab Section fview
+fview displays the file using a Windows edit box. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
+)
+fview jpath '~system\main\files.ijs'
 
 NB. =========================================================
 Lab Section fcopynew
@@ -501,8 +381,13 @@ Returns:
 )
 
 NB. =========================================================
+Lab Section fcopynews
+fcopynews is the same as fnewcopy except the files are checked for line separators as is done in freads and fwrites.
+)
+
+NB. =========================================================
 Lab Section fssrplc
-fstringrpelace (or fssrplc) search for occurrences of a specified string in the file and replaces those occurrences with another string. The format of fssrplc is:
+fssrplc searches for occurrences of a specified string in the file and replaces those occurrences with another string. The format of fssrplc is:
 
   (oldstring;newstring) fssrplc (filename|file handle)
 
@@ -540,15 +425,6 @@ fread h
 fclose h
 
 NB. =========================================================
-Lab Section
-Maybe you noticed something strange? The result does not look right?
-
-The file size is set when the file is opened. The fwrite with a handle always writes from the beginning of the file, but the file size is only updated if the file size increases.
-
-fwrite with a file name always resets the size of the file to the length of the write.
-)
-
-NB. =========================================================
 Lab Section Other file verbs
 Another interesting verb available in 1!: is:
 
@@ -571,34 +447,43 @@ jpath with an argument with a leading ~ looks up the name in the folder tables. 
 
 Here is the full filename to the profile script which starts J.
 )
-jpath '~system/profile.ijs' NB.  The default profile.
+jpath '~system\profile.ijs' NB.  The default profile.
 
 NB. =========================================================
 Lab Section Nouns and Verbs to find the Libraries
-The standard J profile creates two nouns to define the the J libraries, SystemFolders_j_ and UserFolders_j_. You can edit UserFolders_j_ with Edit/Configure/Folders.
+The standard J profile creates two nouns to define the the J libraries, SYSTEMFOLDERS_j_ and USERFOLDERS_j_. You can edit USERFOLDERS with Edit/Configure/Folders. The relative names for various J system libraries are:
 
-Changes take effect in the next restart. See the remarks in the ~config/folders.cfg .
-)
-NB. The relative names for various J system libraries are:
->{."1 SystemFolders_j_
+   addons
+   config
+   home
+   profile
+   system
+   temp
+   user
 
-NB. =========================================================
-Lab Section
-What`s in the user library?
+If you want to change them you must change them during initialization, not later. See the remarks in the default profile.
+
+You should use the verbs to find the libraries.
 )
-fdir jpath '~user/*.*'
+NB. What`s in the user library?
+fdir jpath '~user\*.*'
 
 NB. =========================================================
 Lab Section The J Profile
-A couple more interesting names in the z locale:
+At the bottom of the standard profile script are definitions for the nouns to access J libraries. Be sure to make backups of any initialization files you modify and be able to restore them using the operating system facilities, not J, as an error in initialization may make J inoperable.
+
+Execute the following line to look at the current profile.
+
+   fview jpath '~bin/profile.ijs'
 )
+NB. A couple of interesting names in the z locale:
 
 ARGV     NB. The command line starting J.
 BINPATH  NB. The path to the J binaries.
 
 NB. =========================================================
 Lab Section
-There is one more directory of interest - the current working directory. Initially it is the same as the J ~bin; however, it can be specified to be somewhere else by the script or icon starting J and can be changed by a J application.
+There is one more directory of interest - the current working directory. Normally it is the same as the J system directory; however, it can be specified to be somewhere else by the script or icon starting J and can be changed by a J application.
 
 It is managed by the foreign conjunctions 1!:43 to query the current working directory and 1!:44 to set it.
 )
@@ -608,11 +493,12 @@ NB. =========================================================
 Lab Chapter Summary
 NB. =========================================================
 Lab Section Summary
-A summary of the primary file verbs:
+A summary of the verbs defined in the files script:
 
     dat fappend   fl      append
     dat fappends  fl      append string
      to fcopynew  fls     copy files (if changed)
+     to fcopynews fls     copy files as strings (if changed)
         fdir      dirpath file directory
         ferase    fl      erase file
         fexist    fl      return 1 if file exists
@@ -620,6 +506,7 @@ A summary of the primary file verbs:
         freadr    fl      read records (flat file)
         freads    fl      read string
     dat freplace  fl      replace in file
+    opt fselect   dirpath select file
         fsize     fl      size of file
     str fss       fl      string search file
  oldnew fssrplc   fl      search and replace in file

@@ -10,12 +10,12 @@ It covers OOP ideas and terminology and shows how to do it.
 )
 PREPARE
 3 : 0''
-fms=. wdforms ::((0 6$<'')"_) ''
+fms=. wdforms''
 nos=. (conl 1) -. (2 {"1 fms) #~ (3 {"1 fms) e. 'jijs';'jijx'
 if. #nos do.
   h=. 'Object Oriented Programming'
   t=. 'There are some numbered locales that will be deleted when you go through this lab.'
-  sminfo h;t
+  wdinfo h;t
 end.
 clear ''
 coerase <'pbc'

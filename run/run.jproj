@@ -1,9 +1,0 @@
-NB. project: 
-NB.
-NB. defines list of source files.
-NB. path defaults to project directory.
-
-labutil.ijs
-labfiles.ijs
-labini.ijs
-labreset.ijs

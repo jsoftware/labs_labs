@@ -10,15 +10,14 @@ The next section tests to see if the OpenGL dlls are available.
 PREPARE
 clear''
 coerase <'plab'
-require 'gl2 opengl'
-coinsert 'jgtk jgl3'
-window_base_=: 0
+require 'opengl gl2 gl3'
+coinsert 'jgl2 jgl3'
 nextijs=: 3 : 0
-if. -. '/' e. y do.
-y=.jpath '~addons/demos/opengl/lab/',y end.
+if. -. '\' e. y do.
+y=.jpath '~system\examples\graphics\opengl\lab\',y end.
 if. -. '.' e. y do. y=. y,'.ijs' end.
 d=.1!:1<y
-f=.jpath '~temp/ogl.ijs'
+f=.jpath '~temp\ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
@@ -26,11 +25,13 @@ smfocus_jijs_ ''
 smsetsaved_jijs_ ''
 )
 testdlls=: 3 : 0
-try. 
- current_jzopengl_ 0 
+try.
+ ogl=.''conew'jzopengl'
+ alloc__ogl 4 4
+ destroy__ogl''
  'OpenGL OK.'
 catch.
- 'OpenGL not available.'
+ 'OpenGL create context failed. OpenGL not available.'
 end.
 )
 PREPARE
@@ -76,7 +77,7 @@ NB. =========================================================
 Lab Section
 Study the script:
 
-* coinsert 'jgtk jzopenglutil'  puts the utilities on the path.
+* coinsert 'jzopenglutil'  puts the utilities on the path.
 
 * the code before the NB. === comment line is all standard from the lab "OpenGL Introduction". No utilities are used, and this part is the same throughout this lab.
 
@@ -93,7 +94,7 @@ There should also be a verb 'paint' that does the OpenGL calls. This starts with
 
 In between these are the graphics definitions, in this case to draw a dodecahedron.
 
-The canvas paint event handler, opengl_g_paint, is defined to be paint.
+The isigraph paint event handler, opengl_g_paint, is defined to be paint.
 
 The character event handler is defined to be gschar, and this gives standard character event handling.
 

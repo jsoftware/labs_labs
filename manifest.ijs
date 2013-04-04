@@ -6,15 +6,18 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.41'
+VERSION=: '1.0.42'
 
 FILES=: 0 : 0
-labdir.ijs
+autolab.ijs
 lab.ijs
+labdict.ijs
+labdir.ijs
 labintro.txt
 lablist.txt
+labmake.ijs
+lauthor.ijs
 manifest.ijs
-readme.txt
 core/
 general/
 graphics/

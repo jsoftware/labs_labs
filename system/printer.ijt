@@ -170,7 +170,7 @@ NB. =========================================================
 Lab Section
 There are some restrictions in Jwdp (the portable Java front end).
 
-printer parameter is not supported and must be "". You can only print to the default. Use the print dialog (wd'mbprinter') to change the default printer.
+printer parameter is not supported and must be "". You can only print to the default. Use the print dialog (wd'mb print') to change the default printer.
 
 filename parameter is not supported and must be "". You can request a print to file in the print dialog and the next print will request a filename.
 
@@ -205,13 +205,13 @@ pd 'print'
 
 NB. =========================================================
 Lab Section
-mbprinter runs the Print common dialog.
+mb print runs the Print common dialog.
 )
-wd'mbprinter'
+wd'mb print'
 
 NB. =========================================================
 Lab Section
-mbprinter pd_printsetup runs the Print Setup common dialog.
+mb print runs the Print Setup common dialog.
 )
-wd'mbprinter pd_printsetup'
+wd'mb print'
 

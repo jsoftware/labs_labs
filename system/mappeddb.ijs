@@ -5,9 +5,7 @@ NB. for example,      buildlic and licfmt
 
 require 'jmf dir'
 
-IFWINCE=: 7=9!:12''
-
-ROWS=:    IFWINCE { 1e6,50000    NB. 1 million records (50K if WinCE)
+ROWS=:    1e6    NB. 1 million records
 
 GROWTH=:  20          NB. extra records for file size
 PATH=:    jpath '~temp\vr\'  NB. path for VR database files
@@ -71,11 +69,7 @@ colorfmt=: 3 : '<>(a.i.y{color){COLORS'
 buildyear=: 3 : 0
 dbcreate'year';SZI_jmf_
 seed 98765
-if. IFWINCE do.
-year=: 1995+?ROWS$4
-else.
 year=: 1900+?ROWS$99
-end.
 empty''
 )
 

@@ -15,13 +15,6 @@ Each record has 8 fields for a record size of 32 bytes.
 The total size of the VR database is 32MB.
 )
 PREPARE
-3 : 0''
-if. IFWINCE do.
-smoutput ''
-smoutput 'Note:'
-smoutput 'For Windows CE machines, the database has only 50,000 records.'
-end.
-)
 PREPARE
 
 NB. =========================================================

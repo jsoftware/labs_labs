@@ -21,7 +21,8 @@ f=.jpath '~temp\ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
-smfocus_jijs_ ''
+NB. smfocus_jijs_ ''
+smact''
 smsetsaved_jijs_ ''
 )
 testdlls=: 3 : 0

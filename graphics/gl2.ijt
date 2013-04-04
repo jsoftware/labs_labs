@@ -684,7 +684,7 @@ glpolygon 0 0 200 200 100 0 0 100 200 100
 
 readpixels=: 3 : 0
 glsel GHANDLE    NB. isigraph target
-glqpixels y  NB. get pixels
+alpha17 glqpixels y  NB. get pixels
 )
 SCRIPT
 PREPARE
@@ -710,7 +710,7 @@ white=.256#.3#255
 NB. get indexes of non white pixels
 i=. (pixels~:white)#i.#pixels
 NB. replace those pixels with random colors
-newp=.(?(#i)#white) i}pixels
+newp=.alpha27 (?(#i)#white) i}pixels
 glpixels 10 10 200 200,newp
 )
 SCRIPT

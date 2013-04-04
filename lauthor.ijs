@@ -314,8 +314,7 @@ labsetfocus''
 )
 labsetfocus=: 3 : 0
 if. LABFOCUS do.
-  smselout_jijs_''
-  smfocus_jijs_''
+smact''
 end.
 )
 labadvance=: 3 : 0
@@ -574,8 +573,8 @@ j=. j,' LABWRAP NDX SECTIONDATA'
 pdef_jlab_ pack j
 )
 tdeletefile=: 3 : 0
-t=. 'mbopen "Select File" "',LABPATH,'" "" '
-t=. t,'"Lab (*.ijt)|*.ijt" ofn_pathmustexist ofn_filemustexist'
+t=. 'mb open "Select File" "',LABPATH,'" '
+t=. t,'"Lab (*.ijt)|*.ijt"'
 fl=. wd t
 if. 0=#fl do. 0 return. end.
 j=. 'OK to delete ',fl,'?'
@@ -634,9 +633,8 @@ tshow 0
 topenfile=: 3 : 0
 fl=. y
 if. 0=#fl do.
-  t=. 'mbopen "Select File" "',LABPATH,'" "*.ijt" '
-  t=. t,'"Labs|*.ijt|All Files|*"'
-  t=. t,' ofn_filemustexist ofn_pathmustexist;'
+  t=. 'mb open "Select File" "',LABPATH,'" '
+  t=. t,'"Labs|*.ijt|All Files|*";'
   fl=. wd t
   if. 0=#fl do. return. end.
 end.
@@ -722,8 +720,8 @@ s=. dat fwrite fl=. LABPATH,LABFILE
 tinfo 'Saved: ',fl
 )
 tsaveas=: 3 : 0
-t=. 'mbsave "Save File" "',LABPATH,'" "',LABFILE,'" '
-t=. t,'"Lab (*.ijt)|*.ijt" ofn_pathmustexist'
+t=. 'mb save "Save File" "',LABPATH,LABFILE,'" '
+t=. t,'"Lab (*.ijt)|*.ijt"'
 fl=. wd t
 if. 0=#fl do. 0 return. end.
 if. '.' e. fl do.
@@ -955,7 +953,7 @@ if. #y do.
   y=. y -. 'ansi';'oem';'default'
   y=. }: ; ,&' ' &.> y
 end.
-r=. wd 'mbfont ',y
+r=. wd 'mb font ',y
 r=. r, (0=#r)#LABFONT
 )
 TFONT=: 0 : 0

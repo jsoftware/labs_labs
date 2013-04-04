@@ -354,7 +354,7 @@ NB. =========================================================
 Lab Section fselect
 fselect provides quick access to the file open Windows utility form called the Windows common dialog box. J is suspended until the box is closed.
 
-fselect uses the windows driver to invoke the wd command mbopen. See help/wd commands and scroll down to mbopen for more information.
+fselect uses the windows driver to invoke the wd command mb open. See help/wd commands and scroll down to mb open for more information.
 )
 fselect jpath '~system\main\files.ijs'
 

@@ -17,7 +17,7 @@ there are unread messages.
 )
 PREPARE
 3 : 0''
-if. IFJAVA >: IFWIN32 do.
+if. -. IFWIN32 do.
   a=. 'The Taskbar Notification Area lab will only work in the Windows system (Jwdw).'
   wdinfo 'Taskbar Lab';a
 end.

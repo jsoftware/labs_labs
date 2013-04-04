@@ -524,8 +524,7 @@ labsetfocus''
 )
 labsetfocus=: 3 : 0
 if. LABFOCUS do.
-  smselout_jijs_''
-  smfocus_jijs_''
+smact''
 end.
 )
 labadvance=: 3 : 0
@@ -702,9 +701,6 @@ if. wdisparent 'labsel' do.
   wd 'psel labsel;pshow;pactive' return.
 end.
 wd LABSEL
-if. IFWINCE do.
-  wd 'setshow print 0'
-end.
 labshowcats''
 wd 'set comments checked ',":IFCOMMENTS
 wd 'set sentences checked ',":IFSENTENCES
@@ -727,7 +723,7 @@ end.
 )
 labsel_print_button=: 3 : 0
 if. #listbox do.
-  printfiles_j_ 2 pick (".listbox_select) { LABCATSEL#LABS
+  wd 'mb print ', 2 pick (".listbox_select) { LABCATSEL#LABS
 end.
 )
 labsel_enter=: labsel_ok_button=: labsel_listbox_button
@@ -735,8 +731,7 @@ labsel_intro_button=: labselrun bind (jpath '~addons/labs/labs/labintro.txt')
 labselrun=: 3 : 0
 labinit y
 wd :: ] 'psel labsel;pclose;'
-smselout_jijs_''
-smfocus_jijs_''
+smact''
 )
 labsel_cancel_button=: wd bind 'pclose'
 labsel_exit_button=: labsel_cancel_button

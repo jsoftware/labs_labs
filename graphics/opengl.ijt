@@ -22,7 +22,8 @@ f=.jpath '~temp\ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
-smfocus_jijs_ ''
+NB. smfocus_jijs_ ''
+smact''
 erase 'gl3lab_g_char gl3lab_g_paint'
 load f
 )
@@ -57,7 +58,8 @@ end.
 try=: load bind (jpath '~system\examples\graphics\opengl\simple\gldemos.ijs')
 gl3lab_jctrl_fkey=: 3 : 0 :: ]
 smselout_jijs_ ''
-smfocus_jijs_ ''
+NB. smfocus_jijs_ ''
+smact''
 lab_j_ 0
 )
 PREPARE

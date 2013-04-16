@@ -711,7 +711,7 @@ wd 'pshow;'
 labsel_browse_button=: 3 : 0
 p=. jpath '~user'
 j=. '"Labs (*.ijt)|*.ijt|All Files (*.*)|*.*"'
-f=. wd 'mb open "Open File" "',p,'" " ',j
+f=. wd 'mb open1 "Open File" "',p,'" " ',j
 if. #f do.
   labselrun f
 end.

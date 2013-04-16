@@ -573,7 +573,7 @@ j=. j,' LABWRAP NDX SECTIONDATA'
 pdef_jlab_ pack j
 )
 tdeletefile=: 3 : 0
-t=. 'mb open "Select File" "',LABPATH,'" '
+t=. 'mb open1 "Select File" "',LABPATH,'" '
 t=. t,'"Lab (*.ijt)|*.ijt"'
 fl=. wd t
 if. 0=#fl do. 0 return. end.
@@ -633,7 +633,7 @@ tshow 0
 topenfile=: 3 : 0
 fl=. y
 if. 0=#fl do.
-  t=. 'mb open "Select File" "',LABPATH,'" '
+  t=. 'mb open1 "Select File" "',LABPATH,'" '
   t=. t,'"Labs|*.ijt|All Files|*";'
   fl=. wd t
   if. 0=#fl do. return. end.

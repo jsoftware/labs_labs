@@ -17,7 +17,7 @@ the patterns that occur in them.
 )
 PREPARE
 9!:3 (5)
-load'graph plot'
+load'viewmat plot'
 PLOT=:'stick,line'&plot
 color=:viewmat
 bare=:/~~

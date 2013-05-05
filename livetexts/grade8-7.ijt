@@ -21,7 +21,7 @@ recall earlier material.
 PREPARE
 NB. For MAC: load ':system:packages:graphics:bmp.ijs'
 
-load 'graph plot'
+load 'viewmat plot'
 PLOT=:plot@(;/@|:@([,{.))
 color=:viewmat
 

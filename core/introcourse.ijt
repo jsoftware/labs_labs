@@ -508,7 +508,7 @@ gsetdefaults :: ] ''
 
 OPENGL=: 0 : 0
 pc opengl;
-wh 800 800;cc g opengl opengl;
+minwh 800 800;cc g opengl opengl;
 pas 0 0;
 rem form end;
 )
@@ -5427,7 +5427,7 @@ require 'grid'
 NB. Form definition
 GRIDEX=: 0 : 0
 pc gridex;
-wh 400 400;cc grid isigraph;
+minwh 400 400;cc grid isigraph;
 pas 0 0;ptop;pmove 217 113 215 220;
 rem form end;
 )
@@ -5485,7 +5485,7 @@ require 'grid'
 NB. Form definition
 GRIDEX=: 0 : 0
 pc gridex;
-wh 400 400;cc grid isigraph;
+minwh 400 400;cc grid isigraph;
 pas 0 0;ptop;pmove 217 113 215 220;
 rem form end;
 )

@@ -218,8 +218,8 @@ WP=: 0 : 0
 pc wp closeok;pn "Sales for Year";
 cc cancel button;cn "Close";
 cc label static;cn "Names:";
-wh 120 196;cc names listbox;
-wh 232 196;cc g isigraph;
+minwh 120 196;cc names listbox;
+minwh 232 196;cc g isigraph;
 pas 4 4;pcenter;
 rem form end;
 )

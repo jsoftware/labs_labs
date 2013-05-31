@@ -14,7 +14,7 @@ coinsert'jgl2' NB. allow use of gl2... without _jgl2_
 
 GL2LAB=: 0 : 0
 pc gl2lab closeok;
-wh 200 200;cc g isigraph;
+minwh 200 200;cc g isigraph;
 pas 0 0;
 rem form end;
 )
@@ -622,8 +622,8 @@ Lab Section
 )
 GL2LABDOUBLE=: 0 : 0
 pc gl2labdouble closeok;
-wh 200 100;cc g0 isigraph;
-wh 200 100;cc g1 isigraph;
+minwh 200 100;cc g0 isigraph;
+minwh 200 100;cc g1 isigraph;
 pas 0 0;
 )
 

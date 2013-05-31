@@ -48,7 +48,7 @@ Lab Section
 SCRIPT
 GL2DEMO=: 0 : 0
 pc gl2demo closeok;
-wh 200 200;cc g isigraph;
+minwh 200 200;cc g isigraph;
 pas 0 0;
 )
 

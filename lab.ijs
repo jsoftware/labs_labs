@@ -798,7 +798,7 @@ if. IFCHAPTERS do.
   j=. 'menu chapter'&, @ ": each i.#CHAPTERS
   chaps=. ;j ,each ' "'&, @ (,&'";') each CHAPTERS
   txt=. 'menupop "&Chapters";',chaps
-  labwin=. labwin rplc 'wh ';txt,'wh '
+  labwin=. labwin rplc 'minwh ';txt,'minwh '
 end.
 wd labwin
 wd 'setfont text ',WINFONT

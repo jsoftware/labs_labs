@@ -121,7 +121,7 @@ For example, the following creates a form with an edit control, and the next sec
 If necessary, rearrange windows so as to make the form visible.
 )
 wd 'pc myform closeok'
-wd 'wh 100 24'
+wd 'minwh 100 24'
 wd 'cc myedit edit'
 wd 'pcenter;pshow'
 

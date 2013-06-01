@@ -131,7 +131,7 @@ Verb goo is defined with an error as follows, TXT is not defined:
 
   goo=: 3 : 0
   wd 'pc myform closeok'
-  wd 'wh 200 24;cc text edit'
+  wd 'minwh 200 24;cc text edit'
   txt=. TXT, ' edit'
   wd 'set text text *',txt
   wd 'pas 5 5;pshow'
@@ -140,7 +140,7 @@ Verb goo is defined with an error as follows, TXT is not defined:
 PREPARE
 goo=: 3 : 0
 wd 'pc myform closeok'
-wd 'wh 200 24;cc text edit'
+wd 'minwh 200 24;cc text edit'
 txt=. TXT, ' edit'
 wd 'set text text *',txt
 wd 'pas 5 5;pshow'

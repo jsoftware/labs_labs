@@ -467,16 +467,15 @@ for the 6 immediate neighbors, 1 for 18 neighbors at distance 2.
 The next section tests to see if your system supports OpenGL.
 )
 PREPARE
-require :: ] 'opengl'
-coinsert 'jzopenglutil'
+require :: ] 'gl3 graphics/gl1ut'
+coinsert 'jgl1ut'
 testdlls=: 3 : 0
 try.
- ogl=.''conew'jzopengl'
- alloc__ogl 4 4
- destroy__ogl''
+ wd 'pc testopengl;minwh 10 10;cc g opengl;pclose'
  IFOPENGL_z_=: 1
  'OpenGL OK.'
 catch.
+ wdpclose 'testopengl'
  IFOPENGL_z_=: 0
  'OpenGL create context failed. OpenGL not available.'
 end.
@@ -501,14 +500,14 @@ Each cube is a 0-cell of the array.
 If OpenGL is not available, just step to the next section.
 )
 PREPARE
-require :: ] 'opengl'
-coinsert 'jzopenglutil'
+require :: ] 'gl3 graphics/gl1ut'
+coinsert 'jgl1ut'
 
 gsetdefaults :: ] ''
 
 OPENGL=: 0 : 0
 pc opengl;
-minwh 800 800;cc g opengl opengl;
+minwh 800 800;cc g opengl compatibility flush;
 pas 0 0;
 rem form end;
 )
@@ -536,17 +535,14 @@ boxs =: $0
 end.
 if. wdisparent 'opengl' do.
 wd 'psel opengl'
-paint''
+wd 'set g invalid'
 else.
 wd OPENGL
-ogl=: '' conew 'jzopengl'
 end.
 wd'pshow;'
 )
 
 opengl_close=: 3 : 0
-destroy__ogl''
-ogl=: ''
 wd 'pclose'
 )
 
@@ -576,17 +572,6 @@ gsfini''
 opengl_g_paint=: paint
 opengl_g_char=: gschar
 opengl_default=: gsdefault
-
-3 : 0''
-if. -. IFOPENGL do. i.0 0 return. end.
-try.
-  ogl=. ''conew'jzopengl'
-  alloc__ogl 4 4
-  destroy__ogl''
-catch.
-  wdinfo 'OpenGL';'OpenGL create context failed. OpenGL not available.'
-end.
-)
 
 PREPARE
 showm m;''

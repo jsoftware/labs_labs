@@ -11,14 +11,14 @@ J uses the API with cd (shared library call) and the J programmer has the same a
 )
 PREPARE
 clear''		NB. clear base locale
-require 'opengl gl2 gl3'
-coinsert 'jgl2 jgl3'
+require 'gl2 gl3 graphics/gl1ut'
+coinsert 'jgl2 jgl1ut'
 nextijs=: 3 : 0
-if. -. '\' e. y do.
-y=.jpath '~system\examples\graphics\opengl\lab\',y end.
+if. -. '/' e. y do.
+y=.jpath '~addons/labs/labs/graphics/ogl/',y end.
 if. -. '.' e. y do. y=. y,'.ijs' end.
 d=.1!:1<y
-f=.jpath '~temp\ogl.ijs'
+f=.jpath '~temp/ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
@@ -29,14 +29,14 @@ load f
 )
 
 gl3lab=: 3 : 0
-if. 1<+/(<'gl3lab')=<;._2 wd'qp' do.
- while. +/(<'gl3lab')=<;._2 wd'qp' do.
+if. 1<+/(<'gl3lab')=<;._2 wd'qpx' do.
+ while. +/(<'gl3lab')=<;._2 wd'qpx' do.
   wd'psel gl3lab;pclose' NB. close all if more than 1
  end.
 end.
 try.
  wd'psel gl3lab;pshow;pactive'
- free__ogl''      NB. force new rc
+NB.  free__ogl''      NB. force new rc
  gl3lab_g_paint'' NB. new drawing
 catch.
  gl3lab_run''
@@ -46,16 +46,15 @@ i.0 0
 
 testdlls=: 3 : 0
 try.
- ogl=.''conew'jzopengl'
- alloc__ogl 4 4
- destroy__ogl''
+ wd 'pc testopengl;minwh 10 10;cc g opengl;pclose'
  'OpenGL OK.'
 catch.
+ wdpclose 'testopengl'
  'OpenGL create context failed. OpenGL not available.'
 end.
 )
 
-try=: load bind (jpath '~system\examples\graphics\opengl\simple\gldemos.ijs')
+try=: load bind (jpath '~addons/demos/glsimple/gldemos.ijs')
 gl3lab_jctrl_fkey=: 3 : 0 :: ]
 smselout_jijs_ ''
 NB. smfocus_jijs_ ''
@@ -302,7 +301,7 @@ The 3rd row of FONT has the width, height, and bitmap data for the # character.
 
 Data is bits in 8 bit character values. The row width is rounded up to an 8 bit boundary.
 )
-FONT=: glaCreateBitmapFont__ogl 'arial 16'
+FONT=: glaCreateBitmapFont 'arial 16'
 3{FONT
 
 NB. =========================================================
@@ -354,7 +353,7 @@ Although most OpenGL books use C, you should still find them valuable in underst
 
 NB. =========================================================
 Lab Section Simple Examples
-Studio|Demos|OpenGL Lab Demos... helps run a number of scripts from examples\graphics\opengl\simple.
+Studio|Demos|OpenGL Lab Demos... helps run a number of scripts from addons/demos/nglsimple.
 
 Most of these examples are based closely on examples in "OpenGL Programming Guide".
 

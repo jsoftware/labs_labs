@@ -10,14 +10,14 @@ The next section tests to see if the OpenGL dlls are available.
 PREPARE
 clear''
 coerase <'plab'
-require 'opengl gl2 gl3'
-coinsert 'jgl2 jgl3'
+require 'gl2 gl3 graphics/gl1ut'
+coinsert 'jgl2 jgl1ut'
 nextijs=: 3 : 0
-if. -. '\' e. y do.
-y=.jpath '~system\examples\graphics\opengl\lab\',y end.
+if. -. '/' e. y do.
+y=.jpath '~addons/labs/labs/graphics/ogl/',y end.
 if. -. '.' e. y do. y=. y,'.ijs' end.
 d=.1!:1<y
-f=.jpath '~temp\ogl.ijs'
+f=.jpath '~temp/ogl.ijs'
 d 1!:2 <f
 smopen_jijs_ f
 smwrite_jijs_ ,d
@@ -27,11 +27,10 @@ smsetsaved_jijs_ ''
 )
 testdlls=: 3 : 0
 try.
- ogl=.''conew'jzopengl'
- alloc__ogl 4 4
- destroy__ogl''
+ wd 'pc testopengl;minwh 10 10;cc g opengl;pclose'
  'OpenGL OK.'
 catch.
+ wdpclose 'testopengl'
  'OpenGL create context failed. OpenGL not available.'
 end.
 )
@@ -51,13 +50,13 @@ This lab introduces some utilities provided, that simplify OpenGL programming.
 
 NB. =========================================================
 Lab Section
-First, load OpenGL. This creates the jzopengl and jzopenglutil classes.
+First, load OpenGL. This creates the jgl3 and jgl1ut classes.
 
-The jzopengl class is the essential class for using OpenGL, and is described in the lab "OpenGL Introduction".
+The jgl3 class is the essential class for using OpenGL, and is described in the lab "OpenGL Introduction".
 
-The jzopenglutil class has the utilities.
+The jgl1ut class has the utilities.
 )
-load 'opengl'
+load 'gl3 graphics/gl1ut'
 
 NB. =========================================================
 Lab Section
@@ -78,7 +77,7 @@ NB. =========================================================
 Lab Section
 Study the script:
 
-* coinsert 'jzopenglutil'  puts the utilities on the path.
+* coinsert 'jgl1ut'  puts the utilities on the path.
 
 * the code before the NB. === comment line is all standard from the lab "OpenGL Introduction". No utilities are used, and this part is the same throughout this lab.
 
@@ -87,11 +86,7 @@ Study the script:
 
 NB. =========================================================
 Lab Section Utilities
-The utilities require that noun ogl is an jzopengl object, i.e.
-
-   ogl=: ''conew'jzopengl'
-
-There should also be a verb 'paint' that does the OpenGL calls. This starts with gsinit'' and ends with gsfini''.
+There should be a verb 'paint' that does the OpenGL calls. This starts with gsinit'' and ends with gsfini''.
 
 In between these are the graphics definitions, in this case to draw a dodecahedron.
 
@@ -125,7 +120,7 @@ Click on the graphics control to give it focus, then try pressing the movement k
 
 NB. =========================================================
 Lab Section Names
-To minimize name conflicts, all utilities in class jzopenglutil have names beginning:
+To minimize name conflicts, all utilities in class jgl1ut have names beginning:
 
   GS_     nouns, e.g. GS_COLOR
   gs      other definitions, e.g. gsinit

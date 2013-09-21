@@ -12,6 +12,7 @@ NB. Use an underscore for a blank in the shortname.
 
 j=. <;._2 (0 : 0)
 Core_Language      ~addons/labs/labs/core
+Debug              ~addons/labs/labs/debug
 Graphics           ~addons/labs/labs/graphics
 System             ~addons/labs/labs/system
 General_Interest   ~addons/labs/labs/general

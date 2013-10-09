@@ -32,7 +32,7 @@ NB. latprop
 NB. labreset
 NB. )
 NB.
-NB. (jpath '~addons/labs/labs/labdir.ijs') copynew_jproject_ jpath '~Source\main\labs\labdir.ijs'
+NB. (jpath '~addons/labs/labs/labdir.ijs') (copynew_jproject_ ::0:) jpath '~Source\main\labs\labdir.ijs'
 NB.
 NB. t1=.jpath '~temp\t42.ijs'
 NB. t2=.jpath '~temp\t43.ijs'
@@ -54,6 +54,6 @@ NB.
 NB. tlab=. jpath '~addons/labs/labs/lab.ijs'
 NB. taut=. jpath '~addons/labs/labs/lauthor.ijs'
 NB.
-NB. tlab copynew_jproject_ t1
-NB. taut copynew_jproject_ t2
+NB. tlab (copynew_jproject_ ::0:) t1
+NB. taut (copynew_jproject_ ::0:) t2
 NB.

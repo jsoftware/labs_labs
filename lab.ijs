@@ -524,7 +524,7 @@ labsetfocus''
 )
 labsetfocus=: 3 : 0
 if. LABFOCUS do.
-smact''
+smact^:(IFIOS+:'Android'-:UNAME)''
 end.
 )
 labadvance=: 3 : 0

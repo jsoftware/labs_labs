@@ -28,7 +28,7 @@ NB. =========================================================
 Lab Section Application
 The application will create a Windows form to read and plot a data file:
 
-   system\examples\data\sales.dat
+   system\examples/data/sales.dat
 
 To view this file, you can use the file and view utilities that are included with J.
 
@@ -41,9 +41,9 @@ PREPARE
 NB. =========================================================
 Lab Section
 )
-load 'files jview'
+load 'gui/wdclass'
 
-fview jpath '~system\examples\data\sales.dat'
+fview jpath '~addons/labs/labs/examples/data/sales.dat'
 
 NB. =========================================================
 Lab Section
@@ -64,7 +64,7 @@ The result is a character matrix with 50 rows.
 NB. =========================================================
 Lab Section
 )
-DAT=: 'm' fread jpath '~system\examples\data\sales.dat'
+DAT=: 'm' fread jpath '~addons/labs/labs/examples/data/sales.dat'
 
 $DAT
 
@@ -152,7 +152,7 @@ Lab Section
 SCRIPT
 require 'files plot'
 
-DAT=: 'm' fread jpath '~system\examples\data\sales.dat'
+DAT=: 'm' fread jpath '~addons/labs/labs/examples/data/sales.dat'
 
 ndx=: 1 i.~ *./ ' ' = DAT
 NAMES=: ndx {."1  DAT

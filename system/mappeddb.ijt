@@ -48,8 +48,8 @@ Take a quick look at the script.
 NB. =========================================================
 Lab Section
 )
-open '~system\extras\labs\system\mappeddb.ijs'
-load '~system\extras\labs\system\mappeddb.ijs'
+open '~addons/labs/labs\system\mappeddb.ijs'
+load '~addons/labs/labs\system\mappeddb.ijs'
 
 NB. =========================================================
 Lab Section

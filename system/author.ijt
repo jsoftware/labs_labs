@@ -183,7 +183,7 @@ The comment lines NB. === ... are put in by Lab Author and are ignored when runn
 PREPARE
 require'files'
 PREPARE
-fread (jpath '~system\extras\labs\system\author.ijt');0 500
+fread (jpath '~addons/labs/labs\system\author.ijt');0 500
 
 NB. =========================================================
 Lab Section Running the Lab

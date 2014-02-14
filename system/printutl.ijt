@@ -33,7 +33,7 @@ NB. =========================================================
 Lab Section
 )
 print i.2 3 4
-printfile jpath '~system\examples\print\jeltz.txt'
+printfile jpath '~addons/labs/labs/examples/print/jeltz.txt'
 
 NB. =========================================================
 Lab Section
@@ -78,8 +78,8 @@ Compare the following examples:
 NB. =========================================================
 Lab Section
 )
-'fontsize 9' printfile jpath '~system\examples\print\alice.txt'
-'fit;fontsize 9' printfile jpath '~system\examples\print\alice.txt'
+'fontsize 9' printfile jpath '~addons/labs/labs/examples/print/alice.txt'
+'fit;fontsize 9' printfile jpath '~addons/labs/labs/examples/print/alice.txt'
 
 NB. =========================================================
 Lab Section print2 - a 2-up text printer

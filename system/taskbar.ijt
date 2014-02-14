@@ -170,7 +170,7 @@ the  -jijx  option, which causes J to start the application
 without displaying an IJX window.
 )
 j=: jpath '~bin\j.exe'
-wd 'winexec *',j,' -jijx ',jpath '~system\examples\winapi\viewer.ijs'
+wd 'winexec *',j,' -jijx ',jpath '~addons/labs/labs/examples/winapi/viewer.ijs'
 
 NB. =========================================================
 Lab Section
@@ -238,7 +238,7 @@ wd 'clipcopy *',h
 NB. =========================================================
 Lab Section
 Another sample application using the notification area is
-in the script '~system\examples\winapi\hidesess.ijs'.
+in the script '~addons/labs/labs/examples/winapi/hidesess.ijs'.
 
 It defines <smhidesession> and <smshowsession>, both in the
 jijs locale.  Hiding a session causes all forms to be hidden,
@@ -247,7 +247,7 @@ shows all the windows again.
 
 Load the script:
 )
-load '~system\examples\winapi\hidesess.ijs'
+load '~addons/labs/labs/examples/winapi/hidesess.ijs'
 
 NB. =========================================================
 Lab Section

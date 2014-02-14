@@ -54,7 +54,7 @@ NB. =========================================================
 Lab Section
 Some verbs have been included in a script to show the use of sockets to connect with services on the Internet.
 )
-load '~system\examples\socket\socklab.ijs'
+load '~addons/labs/labs/examples/socket/socklab.ijs'
 
 NB. =========================================================
 Lab Section

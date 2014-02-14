@@ -47,7 +47,7 @@ NOTE: to run this lab you must register the following data source with the ODBC 
 
 DSN     DRIVER and DATA LOCATION
 -----------------------------------------
-jblob   Access file  ~system\examples\data\jblob.mdb
+jblob   Access file  ~addons/labs/labs/examples/data/jblob.mdb
 )
 NB. check ODBC dsn registration - result should be 1
 (<'jblob') e. {."1 ddsrc 0

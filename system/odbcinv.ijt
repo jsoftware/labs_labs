@@ -26,10 +26,10 @@ NOTE: to run this lab you must register the following data sources with the ODBC
  -----------------------------------------
 
  jdata   FoxPro or Dbase driver directory
-         \j5\system\examples\data\
+         \j5\system\examples/data/
 
  messier EXCEL driver and spreadsheet file
-         \j5\system\examples\data\messier.xls
+         \j5\system\examples/data/messier.xls
 
 )
 

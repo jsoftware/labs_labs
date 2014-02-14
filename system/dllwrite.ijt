@@ -14,7 +14,7 @@ require 'dll'  NB. DLL utilities
 
 NB. =========================================================
 Lab Section
-system\examples\dllwrite contains files for this lab. DLL dlltest.dll is built for Windows J32 from dlltest.cpp and dlltest.def.
+system\examples/dllwrite contains files for this lab. DLL dlltest.dll is built for Windows J32 from dlltest.cpp and dlltest.def.
 
 The distributed dlltest.dll is for Windows J32. If you are running J32 on Windows you can just  proceed.
 
@@ -33,7 +33,7 @@ Study it and position it so you can refer to it. Whenever a new procedure is men
 NB. =========================================================
 Lab Section
 )
-open '~system\examples\dllwrite\dlltest.cpp'
+open '~addons/labs/labs/examples/dllwrite/dlltest.cpp'
 
 NB. =========================================================
 Lab Section cd
@@ -57,7 +57,7 @@ The filename can be delimited with double quotation marks (") to allow for blank
 
 If you are on a platform other than Windows J32 you need to build your own dlltest shared library and you need to edit the definition of dll to have the full path to the dlltest shared library you built (note Unix file name of libdlltest.so or libdlltest.dylib).
 )
-[dll=: '"',jpath '~system\examples\dllwrite\dlltest.dll" '
+[dll=: '"',jpath '~addons/labs/labs/examples/dllwrite/dlltest.dll" '
 
 NB. =========================================================
 Lab Section declaration

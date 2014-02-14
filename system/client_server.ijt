@@ -298,7 +298,7 @@ Save the script from the previous section as file temp\odbc.ijs and start a jcon
    init 1200
 
 You can use the odbc server from another J session. For example, assuming
-you have registed jdata for the database system\examples\data\jdata.mdb:
+you have registed jdata for the database system\examples/data/jdata.mdb:
 
    load '~system\classes\cs\jssc.ijs'
    c=: 1200 conew 'jssc'

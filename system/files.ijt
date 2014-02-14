@@ -20,13 +20,13 @@ The script file defining most of these verbs is loaded by:
 
 The text viewer will also be used:
 
-   load 'jview'
+   load 'gui/wdclass'
 
 )
 PREPARE
 clear''
 PREPARE
-load 'files jview'
+load 'gui/wdclass'
 
 NB. =========================================================
 Lab Section
@@ -112,8 +112,8 @@ If the left argument is not present or null then the data is read with no conver
 
 For example - Read the first 80 bytes of a file:
 )
-fread (jpath '~system/extras\config\stdcfg.ijs');0 80
-$fread (jpath '~system/extras\config\stdcfg.ijs');0 80
+fread (jpath '~system/extras\config\base.cfg');0 80
+$fread (jpath '~system/extras\config\base.cfg');0 80
 
 NB. =========================================================
 Lab Section
@@ -128,7 +128,7 @@ sets the path to the J system files.
 
 This is covered in more detail in the chapter on 8, Relative File Names.
 )
-jpath '~system/extras\config\stdcfg.ijs'
+jpath '~system/extras\config\base.cfg'
 
 NB. =========================================================
 Lab Section
@@ -140,14 +140,14 @@ Search for line separators in the string:
 )
 PREPARE Do my own write to session so appropriate eol is used.
 eol=:;('CR';'LF')#~(CR,LF)e.toHOST LF
-0!:101]eol,' ss fread (jpath ''~system\extras\config\stdcfg.ijs'');0 80'
+0!:101]eol,' ss fread (jpath ''~system/config/base.cfg'');0 80'
 PREPARE _________________________
 
 NB. =========================================================
 Lab Section
 The 'b' option boxes each line of the file.
 )
-'b' fread (jpath '~system\extras\config\stdcfg.ijs');0 80
+'b' fread (jpath '~system/config/base.cfg');0 80
 
 NB. =========================================================
 Lab Section
@@ -155,8 +155,8 @@ The 'm' option creates a matrix with each line in the file on a separate row. Th
 
 Notice that some lines may be padded with blanks.
 )
-'m' fread (jpath '~system\extras\config\stdcfg.ijs');0 80
-$'m' fread (jpath '~system\extras\config\stdcfg.ijs');0 80
+'m' fread (jpath '~system/config/base.cfg');0 80
+$'m' fread (jpath '~system/config/base.cfg');0 80
 
 NB. =========================================================
 Lab Section freadr
@@ -193,11 +193,11 @@ NB. =========================================================
 Lab Section freads
 freads reads characters from a file, converting any CRLF or isolated CR characters into LF characters. It is equivalent to 's'&fread.
 )
-freads (jpath '~system\extras\config\stdcfg.ijs');0 80
-]l=.$fread jpath '~system\extras\config\stdcfg.ijs'
-]ls=.$freads jpath '~system\extras\config\stdcfg.ijs'
+freads (jpath '~system/config/base.cfg');0 80
+]l=.$fread jpath '~system/config/base.cfg'
+]ls=.$freads jpath '~system/config/base.cfg'
 l-ls
-$'b'fread jpath '~system\extras\config\stdcfg.ijs'
+$'b'fread jpath '~system/config/base.cfg'
 
 NB. =========================================================
 Lab Chapter Writes

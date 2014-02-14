@@ -145,7 +145,7 @@ For example, read in a bitmap file. Each number is an RGB color integer.
 PREPARE
 closeall_jviewmat_ ''
 PREPARE
-a=: readbmp jpath '~system\examples\data\toucan.bmp'
+a=: readbmp jpath '~addons/labs/labs/examples/data/toucan.bmp'
 $a
 (<40;10) { a
 |.256 256 256 #: (<40;10) { a
@@ -157,7 +157,7 @@ Display the bitmap.
 Note that you can resize this image, but the quality is only as good as the initial data.
 )
 PREPARE
-a=. readbmp jpath '~system\examples\data\toucan.bmp'
+a=. readbmp jpath '~addons/labs/labs/examples/data/toucan.bmp'
 PREPARE
 viewrgb a
 
@@ -208,7 +208,7 @@ viewrgb.
 
 For example:
 )
-viewbmp jpath '~system\examples\data\jbox.bmp'
+viewbmp jpath '~addons/labs/labs/examples/data/jbox.bmp'
 
 NB. =========================================================
 Lab Section

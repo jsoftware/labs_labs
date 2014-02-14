@@ -47,7 +47,7 @@ PREPARE
 abc=:666
 1!:5 :: 0: <jpath '~user\projects\apps'
 1!:5 :: 0: <jpath '~user\projects\apps\example'
-src=. jpath '~system\examples\appdist\apps\example\'
+src=. jpath '~addons/labs/labs/examples/appdist\apps\example\'
 snk=. jpath '~user\projects\apps\example\'
 (fread src,'example.ijp')  fwrite snk,'example.ijp'
 (fread src,'example.ijs')  fwrite snk,'example.ijs'

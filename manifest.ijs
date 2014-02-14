@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.53'
+VERSION=: '1.0.54'
 
 FILES=: 0 : 0
 autolab.ijs
@@ -20,6 +20,7 @@ lauthor.ijs
 manifest.ijs
 core/
 debug/
+examples/
 general/
 graphics/
 livetexts/

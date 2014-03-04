@@ -266,7 +266,7 @@ Lab Section Addition Table
  main window to
  return focus to it.
 )
-require 'plot graph'
+require 'plot graph viewmat'
 color =: viewmat
 x=:i. 5
 x +/ x
@@ -1383,7 +1383,7 @@ The color window is better if expanded (by
 clicking in the middle tiny square at upper right of
 the window).
 )
-require 'graph'
+require 'graph viewmat'
 color=:viewmat
 
 color (i.!4) A. 'ABCD'

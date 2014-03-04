@@ -21,7 +21,7 @@ for addition, multiplication, and power may be tested as follows:
 )
 PREPARE
 
-require 'plot graph'
+require 'plot graph viewmat'
 PLOT=:'stick,line'&plot
 hist=:'stick'&plot
 surf=:'surface'&plot

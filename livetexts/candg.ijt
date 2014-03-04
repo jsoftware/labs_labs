@@ -147,7 +147,7 @@ reciprocal=:%
 remainder=:|
   rem=:remainder
 replacezero=:] + >:@(>./@,) * ] = 0:
-require 'graph plot'
+require 'graph plot viewmat'
   color=:viewmat
 rightargument=:]
   right=:rightargument

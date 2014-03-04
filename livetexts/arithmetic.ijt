@@ -51,7 +51,7 @@ Lab Section Table of Contents
    G. Review and Exercises
 )
 PREPARE
-require 'graph plot trig numeric'
+require 'graph plot trig numeric viewmat'
 color=:viewmat
 
 diag=:/.

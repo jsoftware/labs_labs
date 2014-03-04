@@ -25,7 +25,7 @@ for the following reasons:
 )
 PREPARE
 
-require 'plot graph'
+require 'plot graph viewmat'
 color=:viewmat
 
 decimal=:x:^:_1

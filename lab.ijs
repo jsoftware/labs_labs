@@ -1,12 +1,6 @@
 coclass 'jlab'
 
 PATHSEP=: '/'
-
-3 : 0''
-if. 0~: 4!:0 <'PROFONT_z_' do. PROFONT=: (('Linux';'Darwin';'Android';'Win') i. <UNAME){:: 'Sans 10' ; '"Lucida Grande" 10' ; (IFQT{::'Sans 10';'"Droid Sans" 10') ; 'Tahoma 10' else. PROFONT=: PROFONT_z_ end.
-if. 0~: 4!:0 <'FIXFONT_z_' do. FIXFONT=: (('Linux';'Darwin';'Android';'Win') i. <UNAME){:: 'mono 10' ; 'Monaco 10' ; (IFQT{::'monospace 10';'"Droid Sans Mono" 10') ; '"Lucida Console" 10' else. FIXFONT=: FIXFONT_z_ end.
-EMPTY
-)
 cat=: ,&,.&.|:
 deb=: #~ (+. 1: |. (> </\))@(' '&~:)
 dtb=: #~ [: +./\. ' '&~:
@@ -68,14 +62,6 @@ setlocale 'base'
 runquiet=: doquiet f.
 run=: tdo f.
 run1=: tdo1 f.
-wdmove=: 4 : 0
-'px py'=. y
-'sx sy'=. 2 {. 0 ". wd 'qm'
-'x y w h'=. 0 ". wd 'psel ',x,';qform'
-if. px < 0 do. px=. sx - w + 1 + px end.
-if. py < 0 do. py=. sy - h + 1 + py end.
-wd 'pmove ',": px,py,w,h
-)
 wraptext=: 3 : 0
 if. LABWIDTH > #y do. y return. end.
 if. LABWRAP do.
@@ -270,18 +256,13 @@ SECTIONS=: ,a:
 
 IFCHAPTERS=: 0
 IFNEWSECTION=: 0
-IFSOUND=: 0
 LABFOCUS=: _1
 LABWRAP=: 1
 ENDOFLAB=: 0
 
 empty''
-WINFONT=: FIXFONT
-WINFONTSIZE=: getfontsize WINFONT
-WINFONTSIZENOW=: WINFONTSIZE
 )
 output=: [: empty 1!:2 & 2
-outputwin=: labwin_output
 start=: 3 : 0
 if. #LABS do. y labinit 1 pick LABNDX{LABS end.
 empty''
@@ -502,8 +483,13 @@ if. IFSENTENCES=0 do.
   return.
 end.
 
+first=. 0=NDX+CHAPTERNDX+CODENDX
+
 'cmd snd'=. CODENDX pick CODE
 CODENDX=: >:CODENDX
+if. first *. #cmd do.
+ cmd=. cmd,LF
+end.
 if. CODENDX < #CODE do.
   outtxt=. LF,(3#LINE),' more ',(7#LINE),LF
 else.
@@ -524,7 +510,7 @@ labsetfocus''
 )
 labsetfocus=: 3 : 0
 if. LABFOCUS do.
-smact^:(IFIOS+:'Android'-:UNAME)''
+  smact^:(IFIOS+:'Android'-:UNAME)''
 end.
 )
 labadvance=: 3 : 0
@@ -570,18 +556,8 @@ ind=. 2+((LF,')') E. y) i. 1
 }. each ind ({.;}.) y
 )
 labsplitcode=: 3 : 0
-f=. 'SOUND'&-: @ (5&{.) &>
-if. IFSOUND do.
-  dat=. <;.2 (termLF y) , 'SOUND',LF
-  b=. f dat
-  dat=. (5*b) }.each dat
-  dat=. b <@ (;@}: ; (}: each) @{:) ;.2 dat
-  dat=. dat -. <2$a:
-else.
-  dat=. <;.2 termLF y
-  dat=. ;dat #~ -. f dat
-  ,<dat;''
-end.
+dat=. termLF y
+,<dat;''
 )
 LABJUMP=: 0 : 0
 pc labjump closeok;pn "Lab Selection";
@@ -765,129 +741,5 @@ d=. LABCATSEL # LABS
 wd 'set listbox items ', tolist 1{"1 d
 wd 'setselect listbox 0'
 )
-PTOP=: 1
-
-LABWIN=: 0 : 0
-pc labwin;
-menupop "&Options";
-menupop "Font";
-menu largest "Larg&est" "" "" "";
-menu larger "&Larger" "" "" "";
-menu medium "&Medium" "" "" "";
-menu smaller "&Smaller" "" "" "";
-menu smallest "Sm&allest" "" "" "";
-menupopz;
-menusep ;
-menu close "&Close Window" "" "" "";
-menupopz;
-cc down button;cn "&<<";
-cc up button;cn "&>>";
-cc index static;cn "(555)";
-cc pos static;
-cc ptop checkbox;cn "&Top";
-cc section static;cn "";
-cc next button;cn "&Advance";
-cc runline button;cn "&Run Selection";
-minwh 420 200;cc text editm;
-pas 0 0;
-rem form end;
-)
-labwin_init=: 3 : 0
-labwin=. LABWIN
-if. IFCHAPTERS do.
-  j=. 'menu chapter'&, @ ": each i.#CHAPTERS
-  chaps=. ;j ,each ' "'&, @ (,&'";') each CHAPTERS
-  txt=. 'menupop "&Chapters";',chaps
-  labwin=. labwin rplc 'minwh ';txt,'minwh '
-end.
-wd labwin
-wd 'setfont text ',WINFONT
-wd 'setenable down 0'
-wd 'setenable runline 0'
-wd 'setcaption index'
-wd 'setcaption pos'
-wd 'setfocus next'
-wd 'set ptop ',":PTOP
-'labwin' wdmove _1 0
-wd 'pshow ',":PTOP
-)
-labwin_open=: 3 : 0
-if. -. wdifopen 'labwin' do. labwin_init'' end.
-)
-labwin_output=: (1&$:) : (4 : 0)
-labwin_open''
-wd 'psel labwin;set text *', y
-wd 'pn *',WINTITLE
-if. x do.
-  wd 'pn *',WINTITLE
-  wd 'setcaption section *',;labsection''
-  wd 'setcaption pos *',labposition''
-  wd 'setcaption index'
-  LABWINPOS=: NDX
-  wd 'setenable down ',":0<LABWINPOS
-  wd 'setenable up ',":LABWINPOS<<:#SECTIONDATA
-  wd 'setenable runline 1'
-
-else.
-  wd 'pn *',LABTITLE
-end.
-)
-labwin_close_button=: 3 : 0
-wd :: ] 'psel labwin;pclose'
-)
-
-labwin_cancel=: labwin_close=: labwin_close_button
-labwin_chapter_button=: labjump
-labwin_ptop_button=: 3 : 0
-wd 'ptop ',ptop
-PTOP=: ".ptop
-)
-labwin_runline_button=: 3 : 0
-sel=. ".text_select
-if. =/sel do.
-  ndx=. I. LF=text=. LF,text,LF
-  ind=. +/ndx <: {.sel
-  bgn=. >:(ind-1){ndx
-  end=. ind{ndx
-else.
-  'bgn end'=. sel
-end.
-cmd=. bgn}.end{.text
-cmd=. cmd #~ +./\cmd ~: ' '
-run1 cmd
-)
-labwin_scalefont=: 3 : 0
-FONTSCALE=: 1+0.1*y
-WINFONTSIZENOW=: <.0.5+FONTSCALE*WINFONTSIZE
-wd 'setfont text ',WINFONTSIZENOW setfontsize WINFONT
-)
-
-labwin_largest_button=: labwin_scalefont bind 2
-labwin_larger_button=: labwin_scalefont bind 1
-labwin_medium_button=: labwin_scalefont bind 0
-labwin_smaller_button=: labwin_scalefont bind _1
-labwin_smallest_button=: labwin_scalefont bind _2
-labwin_down_button=: labwin_showpos bind _1
-labwin_up_button=: labwin_showpos bind 1
-labwin_showpos=: 3 : 0
-LABWINPOS=: 0 >. (<:#SECTIONDATA) <. LABWINPOS+y
-
-dat=. _2 }. 0 pick labsplit LABWINPOS pick SECTIONDATA
-
-wd 'setenable down ',":0<LABWINPOS
-wd 'setenable up ',":LABWINPOS<<:#SECTIONDATA
-
-wd 'psel labwin;set text *',dat
-wd 'setcaption index *(',(":LABWINPOS+1),')'
-)
-
-labwin_default=: 3 : 0
-if. 'chapter' -: 7{.syschild do.
-  labopenchapter ".7}.syschild
-  labrun''
-end.
-)
-labwin_actrl_fkey=: labrun
-labwin_next_button=: labrun
 
 labreset ''

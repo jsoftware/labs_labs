@@ -8,6 +8,9 @@ This lab shows how to program with locales. Locales are used in modular programm
 
 Building an application as a monolith is a recipe for failure. It is better to build and test small modules, and then combine them to build the application.
 )
+DEPENDS
+plot
+DEPENDS
 
 NB. =========================================================
 Lab Section

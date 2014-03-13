@@ -29,6 +29,16 @@ info msg
 laberror=. 13!:8@1:
 laberror''
 )
+checkdepends=: 3 : 0
+dat=. ' ',y rplc LF,' '
+dat=. a: -.~ <;._1 dat
+fls=. getscripts_j_ each dat
+msk=. *./ @ fexist &> fls
+if. *./msk do. 1 return. end.
+dat=. ;:^:_1 (-.msk) # dat
+smoutput LF,'To run this lab, first install: ',dat
+0
+)
 pdef=: 3 : 0
 if. 0 e. $y do. empty'' return. end.
 names=. {."1 y
@@ -448,7 +458,16 @@ output LF,section,txt
 cmd=. (+./\.dat ~: LF)#dat
 
 while. 1 do.
-  if. 'PREPARE' -: 7{.cmd do.
+  if. 'DEPENDS' -: 5{.cmd do.
+    cmd=. }. <;.2 cmd,LF
+    ndx=. 1 i.~ 'DEPENDS'&-: @ (5&{.) &> cmd
+    prep=. ;ndx{.cmd
+    cmd=. ;(ndx+1)}.cmd
+    if. -. checkdepends prep do.
+      labreset'' return.
+    end.
+    continue.
+  elseif. 'PREPARE' -: 7{.cmd do.
     cmd=. }. <;.2 cmd,LF
     ndx=. 1 i.~ 'PREPARE'&-: @ (7&{.) &> cmd
     prep=. ;ndx{.cmd
@@ -488,7 +507,7 @@ first=. 0=NDX+CHAPTERNDX+CODENDX
 'cmd snd'=. CODENDX pick CODE
 CODENDX=: >:CODENDX
 if. first *. #cmd do.
- cmd=. cmd,LF
+  cmd=. cmd,LF
 end.
 if. CODENDX < #CODE do.
   outtxt=. LF,(3#LINE),' more ',(7#LINE),LF

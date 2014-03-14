@@ -8,7 +8,6 @@ It can be downloaded from the JWiki.  See
 http://www.jsoftware.com/jwiki/FrontPage
 )
 LABCOMMENTS=: 'Copyright 2006 Version 0.006'
-LABFOCUS=: 1
 
 NB. =========================================================
 Lab Chapter Introduction

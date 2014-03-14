@@ -4,7 +4,7 @@ John D. Baker
 bakerjd@kos.net
 )
 LABCOMMENTS=: 'This lab illustrates a technique for inserting binary large objects into ODBC databases.'
-LABERRORS=: 1
+LABDEPENDS=: 'data/odbc'
 
 NB. =========================================================
 Lab Section BLOBS and ODBC

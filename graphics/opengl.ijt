@@ -1,5 +1,5 @@
 LABTITLE=: 'OpenGL Introduction'
-LABFOCUS=: 0
+LABDEPENDS=: 'gl2 gl3 graphics/gl1ut'
 
 NB. =========================================================
 Lab Section Introduction

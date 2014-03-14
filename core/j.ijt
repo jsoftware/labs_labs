@@ -1,6 +1,5 @@
 LABTITLE=: 'A J Introduction'
-LABERRORS=: 1
-LABFOCUS=: 0
+LABDEPENDS=: 'plot viewmat'
 
 NB. =========================================================
 Lab Chapter J
@@ -266,7 +265,7 @@ Lab Section Addition Table
  main window to
  return focus to it.
 )
-require 'plot graph viewmat'
+require 'plot viewmat'
 color =: viewmat
 x=:i. 5
 x +/ x

@@ -1,6 +1,6 @@
 LABTITLE=: 'Fractals, Visualization & J'
 LABCOMMENTS=: 'Based on Cliff Reiter''s book Fractals Visualization and J'
-LABFOCUS=: 0
+LABDEPENDS=: 'graph numeric trig'
 
 NB. =========================================================
 Lab Chapter Introduction

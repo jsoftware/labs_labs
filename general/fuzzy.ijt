@@ -1,6 +1,6 @@
 LABTITLE=: 'Fuzzy Logic'
 LABAUTHOR =: 'Brian Schott'
-LABERRORS=: 1
+LABDEPENDS=: 'plot'
 
 NB. =========================================================
 Lab Section Overview
@@ -111,8 +111,6 @@ LOC =: 0.5"_+WTAVG%#
     INDEX =: i: @<.@ -:@#
 
 PREPARE
-
-
 
 NB. =========================================================
 Lab Section Set Membership

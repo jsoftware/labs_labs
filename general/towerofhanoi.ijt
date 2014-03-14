@@ -2,7 +2,6 @@ LABTITLE=: 'The Tower of Hanoi'
 LABAUTHOR=: 'Roger Hui'
 LABWIDTH=: 51
 LABWRAP=: 0
-LABFOCUS=: 1
 
 NB. ===============================================
 Lab Section The Problem

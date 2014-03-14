@@ -1,7 +1,6 @@
 LABTITLE=: 'Arithmetic'
 LABAUTHOR=: 'Kenneth E. Iverson'
-LABERRORS=: 1
-LABFOCUS=: 0
+LABDEPENDS=: 'numeric plot trig viewmat'
 
 NB. =========================================================
 Lab Chapter INTRODUCTION
@@ -51,7 +50,7 @@ Lab Section Table of Contents
    G. Review and Exercises
 )
 PREPARE
-require 'graph plot trig numeric viewmat'
+require 'plot trig numeric viewmat'
 color=:viewmat
 
 diag=:/.

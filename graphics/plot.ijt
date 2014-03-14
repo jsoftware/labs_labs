@@ -1,4 +1,5 @@
 LABTITLE=: 'Plot Package'
+LABDEPENDS=: 'plot numeric trig'
 
 NB. =========================================================
 Lab Section Plot Package

@@ -1,4 +1,5 @@
 LABTITLE=: 'Spirals'
+LABDEPENDS=: 'plot trig'
 
 NB. =========================================================
 Lab Section LINK AND PLOT

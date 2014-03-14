@@ -1,7 +1,6 @@
 LABTITLE=: 'Book of Numbers'
 LABAUTHOR=: 'KEI'
-LABERRORS=: 1
-LABFOCUS=: 0
+LABDEPENDS=: 'plot viewmat'
 
 NB. =========================================================
 Lab Chapter The Romance of Numbers
@@ -147,7 +146,7 @@ reciprocal=:%
 remainder=:|
   rem=:remainder
 replacezero=:] + >:@(>./@,) * ] = 0:
-require 'graph plot viewmat'
+require 'plot viewmat'
   color=:viewmat
 rightargument=:]
   right=:rightargument
@@ -2498,7 +2497,3 @@ End of Book of Numbers lab.
 PREPARE
 clear''
 PREPARE
-
-
-
-

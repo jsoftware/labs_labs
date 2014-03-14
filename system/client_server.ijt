@@ -1,7 +1,6 @@
 LABTITLE=: 'Client/Server (Simple Socket)'
 LABAUTHOR=: 'Eric Iverson'
-LABERRORS=: 1
-LABFOCUS=: 1
+LABDEPENDS=: 'data/odbc net/clientserver'
 
 NB. =========================================================
 Lab Section Overview
@@ -62,7 +61,7 @@ NB. =========================================================
 Lab Section
 In the Jconsole session load the server script by running the following sentence:
 
-   load '~system\classes\cs\jsss_demo.ijs'
+   load 'net/clientserver/jsss_demo'
 )
 
 NB. =========================================================
@@ -87,7 +86,7 @@ We'll now act as a client of the server you just started.
 
 First we load the client class definitions.
 )
-load '~system/classes/cs/jssc.ijs'
+load 'net/clientserver/jssc'
 
 NB. =========================================================
 Lab Section
@@ -281,7 +280,7 @@ NB. =========================================================
 Lab Section
 Bill Lam provided the forum with a nice example for an ODBC server that can be built with the following script:
 
-   require '~system\classes\cs\jsss.ijs'
+   require 'net/clientserver/jsss'
    cocurrent'jsss'
    require'dd'
 
@@ -292,15 +291,15 @@ NB. define cmd_ddxxx for each ddxxx_jdd_
 
 NB. =========================================================
 Lab Section
-Save the script from the previous section as file temp\odbc.ijs and start a jconsole server with the following:
+Save the script from the previous section as file temp/odbc.ijs and start a jconsole server with the following:
 
-   load '~temp\odbc.ijs'
+   load '~temp/odbc.ijs'
    init 1200
 
 You can use the odbc server from another J session. For example, assuming
 you have registed jdata for the database system\examples/data/jdata.mdb:
 
-   load '~system\classes\cs\jssc.ijs'
+   load 'net/clientserver/jssc'
    c=: 1200 conew 'jssc'
    ch=: ddcon__c 'dsn=jdata'
    sh=: ch ddsel__c~ 'select * from tdata'

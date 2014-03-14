@@ -1,6 +1,5 @@
 LABTITLE=: 'Mapped Files'
-LABERRORS=: 1
-LABFOCUS=: 0
+LABDEPENDS=: 'data/jmf'
 
 NB. =========================================================
 Lab Section overview
@@ -18,8 +17,7 @@ First a quick example.
 NB. =========================================================
 Lab Section
 )
-require'jmf'        NB. map file utilities loaded in jmf
-require'files dir'
+require'data/jmf'        NB. map file utilities loaded in jmf
 fn=: jpath '~temp\t.txt'
 'testing testing 1 2 3'  fwrite fn
 fread fn

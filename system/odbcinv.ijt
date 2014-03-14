@@ -4,7 +4,7 @@ John D. Baker
 bakerjd@kos.net
 )
 LABCOMMENTS=: 'This lab shows how to invert SQL column data.'
-LABERRORS=: 1
+LABDEPENDS=: 'data/odbc'
 
 NB. =========================================================
 Lab Section What is data inversion?

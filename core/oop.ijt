@@ -1,6 +1,4 @@
 LABTITLE=: 'Object Oriented Programming'
-LABERRORS=: 1
-LABFOCUS=: 0
 
 NB. =========================================================
 Lab Section Overview
@@ -10,12 +8,11 @@ It covers OOP ideas and terminology and shows how to do it.
 )
 PREPARE
 3 : 0''
-fms=. wdforms''
-nos=. (conl 1) -. (2 {"1 fms) #~ (3 {"1 fms) e. 'jijs';'jijx'
+nos=. conl 1
 if. #nos do.
   h=. 'Object Oriented Programming'
   t=. 'There are some numbered locales that will be deleted when you go through this lab.'
-  wdinfo h;t
+  sminfo h;t
 end.
 clear ''
 coerase <'pbc'
@@ -28,10 +25,7 @@ PREPARE
 NB. =========================================================
 Lab Section
 Lab "Locales" is a prerequisite. However, if you ignore details you can jump right in, and get back to it later.
-
-The lab first loads the locale utilities script, coutil.
 )
-load 'coutil'
 
 NB. =========================================================
 Lab Section What is OOP?

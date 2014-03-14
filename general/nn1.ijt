@@ -1,6 +1,6 @@
 LABTITLE=: 'Neural Networks -- Feedforward w/ Backpropagation'
 LABAUTHOR=: 'Brian Schott with Raul Miller'
-LABFOCUS=: 1
+LABDEPENDS=: 'general/misc'
 
 NB. =========================================================
 Lab Chapter Overview
@@ -1066,9 +1066,7 @@ pressing the "return" key twice.
 3 trace '2 _1 fw a' NB. traces recursive steps
 )
 PREPARE
-
-require jpath '~system/packages/misc/trace.ijs'
-
+require 'general/misc/trace'
 PREPARE
 
 NB. =========================================================
@@ -1191,10 +1189,8 @@ desout    =: [
 errExt    =: desout-outBckExt
 errPrv    =: [
 
-
 actOut =: linear
 derivOut =: derivLin =: 1:
-
 PREPARE
 
 actHid =: linear
@@ -1307,9 +1303,7 @@ pressing the "return" key twice.
 3 trace '0 bpBegin temp'
 )
 PREPARE
-
-require jpath '~system/packages/misc/trace.ijs'
-
+require 'general/misc/trace'
 PREPARE
 
 NB. =========================================================

@@ -1,5 +1,4 @@
 LABTITLE=: 'Socket Driver Server - Client'
-LABFOCUS=: 0
 
 NB. =========================================================
 Lab Section Socket Driver Client

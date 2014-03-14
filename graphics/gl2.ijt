@@ -1,5 +1,5 @@
 LABTITLE=: 'Graphics - gl2 commands'
-LABFOCUS=: 1
+LABDEPENDS=: 'gl2'
 
 NB. =========================================================
 Lab Section gl2

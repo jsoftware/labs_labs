@@ -2,6 +2,7 @@ coclass 'jlab'
 
 PATHSEP=: '/'
 cat=: ,&,.&.|:
+commaseps=: 2 }. ;@:(', '&,&.>)
 deb=: #~ (+. 1: |. (> </\))@(' '&~:)
 dtb=: #~ [: +./\. ' '&~:
 info=: wdinfo @ ('Labs'&;)
@@ -30,14 +31,20 @@ laberror=. 13!:8@1:
 laberror''
 )
 checkdepends=: 3 : 0
-dat=. ' ',y rplc LF,' '
-dat=. a: -.~ <;._1 dat
-fls=. getscripts_j_ each dat
-msk=. *./ @ fexist &> fls
-if. *./msk do. 1 return. end.
-dat=. ;:^:_1 (-.msk) # dat
-smoutput LF,'To run this lab, first install: ',dat
-0
+if. 0 = #r=. checkdepends1 '' do. 1 return. end.
+0[smoutput LF,r
+)
+checkdepends1=: 3 : 0
+fls=. getscripts_j_ LABDEPENDS
+if. 0=#fls do. '' return. end.
+add=. jpath '~addons/'
+if. 1 e. b=. (<add) ~: (#add) {.each fls do.
+  'Lab dependency not an addon: ',commaseps b#fls return.
+end.
+if. -. 1 e. b=. -. fexist &> fls do. '' return. end.
+fls=. (#add) }. each b#fls
+fls=. ({.~ 2 i.~ '/' +/\ .= ]) each fls
+'To run this lab, first install: ',commaseps fls
 )
 pdef=: 3 : 0
 if. 0 e. $y do. empty'' return. end.
@@ -49,6 +56,19 @@ names=. {."1 y
 nl=. ;: ::] x
 pdef (names e. nl)#y
 )
+runimmex=: 3 : 0
+IMMEX=: y
+9!:27 '0!:100 IMMEX_jlab_'
+9!:29 [ 1
+)
+run1=: 3 : 0
+setlocale 'base'
+0!:111 y [ 4!:55<'y'
+)
+runquiet=: 3 : 0
+setlocale 'base'
+0!:100 y [ 4!:55<'y'
+)
 setfontsize=: 4 : 0
 b=. ~: /\ y='"'
 nam=. b#y
@@ -56,22 +76,9 @@ txt=. ;:(-.b)#y
 ndx=. 1 i.~ ([: *./ e.&'0123456789.') &> txt
 nam, ; ,&' ' &.> (<":x) ndx } txt
 )
-doquiet=: 3 : 0
-setlocale 'base'
-0!:100 y [ 4!:55<'y'
+trimLF=: 3 : 0
+y #~ (+./\ *. +./\.) LF~:y
 )
-tdo=: 3 : 0
-setlocale 'base'
-0!:101 y [ 4!:55<'y'
-)
-tdo1=: 3 : 0
-setlocale 'base'
-0!:111 y [ 4!:55<'y'
-)
-
-runquiet=: doquiet f.
-run=: tdo f.
-run1=: tdo1 f.
 wraptext=: 3 : 0
 if. LABWIDTH > #y do. y return. end.
 if. LABWRAP do.
@@ -143,7 +150,14 @@ else.
   j=. ~. j,ADDLABS
 end.
 j=. (~: 1 {"1 j) # j
-LABS=: j sort > 1{"1 j
+labs=. j sort > 1{"1 j
+if. IFQT do.
+  ex=. 'b' fread '~addons/labs/labs/xqtlabs.txt'
+  ex=. ((jpath '~addons/'),deb) each ex #~ '#' ~: {.&> ex
+  labs=. labs #~ -. (2{"1 labs) e. ex
+end.
+
+LABS=: labs
 )
 labgettutor=: labgetjt , labgetrtf
 labgetjt=: 3 : 0
@@ -229,7 +243,6 @@ RXPAREN=: '\\par [\\[:alnum:]* ]*)'
 
 IFCOMMENTS=: 1
 IFSENTENCES=: 1
-LABFOCUS=: _1
 IFWINDOWS=: 1
 
 LABS=: ''
@@ -243,7 +256,7 @@ AUTOLAB=: 0
 labreset=: 3 : 0
 LABAUTHOR=: ''
 LABCOMMENTS=: ''
-LABERRORS=: 0
+LABDEPENDS=: ''
 LABTITLE=: ''
 LABWINPOS=: _1
 LABOUTPUT=: 1
@@ -266,7 +279,6 @@ SECTIONS=: ,a:
 
 IFCHAPTERS=: 0
 IFNEWSECTION=: 0
-LABFOCUS=: _1
 LABWRAP=: 1
 ENDOFLAB=: 0
 
@@ -285,22 +297,14 @@ elseif. 0 e. $y do.
   labselect''
 elseif. 0 = {.y do.
   labrun }.y
+elseif. y-:_1 do.
+  labrun y
 elseif. y-:1 do.
   labjump''
-elseif. y-:2 do.
-  0!:0 <jpath '~addons/labs/labs/lauthor.ijs'
-  author_jlabauthor_ ''
 elseif. y-:3 do.
   labopt_run''
 elseif. 2=3!:0 y do.
-  d=. 1 dir y
-  if. 0 e. $y do.
-    info 'not found: ',y
-  elseif. d -: ,<y do.
-    labinit y
-  elseif. 1 do.
-    labselect y
-  end.
+  labinit y
 end.
 empty''
 )
@@ -350,15 +354,14 @@ j=. ' ',labsectionname''
 )
 labopen=: 3 : 0
 labreset''
-try. dat=. 1!:1 boxopen y
-catch.
+f=. fboxname y
+dat=. fread f
+if. dat-:_1 do.
   info 'not found: ',":>y
   0 return.
 end.
-LABFOCUS=: 0 >. LABFOCUS
 
-'LABPATH LABFILE'=: pathname >y
-
+'LABPATH LABFILE'=: pathname >f
 IFCHAPTERS=: 1 e. CMARKER E. dat
 dat=. toJ dat
 dat=. dat,LF -. {:dat
@@ -378,6 +381,8 @@ else.
   CHAPTERS=: ,a:
   CHAPTERDATA=: <(cut i. 1)}.dat
 end.
+
+if. -. checkdepends'' do. 0 return. end.
 
 if. LABOUTPUT *. IFCOMMENTS do.
   output=: [: empty 1!:2 & 2
@@ -428,7 +433,9 @@ if. #y do.
     NDX=: {. y
     CODENDX=: 0
     CODE=: ''
-  else.
+  elseif. y=_1 do.
+    NDX=: CODENDX=: 0
+  elseif. do.
     info 'Invalid jump section'
     return.
   end.
@@ -455,30 +462,21 @@ section=. labline''
 txt=. LF, (0<#txt) # wraptext txt
 output LF,section,txt
 
-cmd=. (+./\.dat ~: LF)#dat
+cmd=. trimLF dat
 
 while. 1 do.
-  if. 'DEPENDS' -: 5{.cmd do.
-    cmd=. }. <;.2 cmd,LF
-    ndx=. 1 i.~ 'DEPENDS'&-: @ (5&{.) &> cmd
-    prep=. ;ndx{.cmd
-    cmd=. ;(ndx+1)}.cmd
-    if. -. checkdepends prep do.
-      labreset'' return.
-    end.
-    continue.
-  elseif. 'PREPARE' -: 7{.cmd do.
+  if. 'PREPARE' -: 7{.cmd do.
     cmd=. }. <;.2 cmd,LF
     ndx=. 1 i.~ 'PREPARE'&-: @ (7&{.) &> cmd
     prep=. ;ndx{.cmd
-    cmd=. ;(ndx+1)}.cmd
+    cmd=. trimLF ;(ndx+1)}.cmd
     runquiet prep
     continue.
   elseif. 'SCRIPT' -: 6{.cmd do.
     cmd=. }. <;.2 cmd,LF
     ndx=. 1 i.~ 'SCRIPT'&-: @ (6&{.) &> cmd
     SCRIPT=: ;ndx{.cmd
-    cmd=. ;(ndx+1)}.cmd
+    cmd=. trimLF ;(ndx+1)}.cmd
     continue.
   end.
   break.
@@ -517,20 +515,11 @@ else.
 end.
 
 if. (1 e. cmd ~: LF) *. 2 = 3!:0 cmd do.
-  if. LABERRORS do.
-    run1 cmd
-  else.
-    run cmd
-  end.
+  run1 cmd
 end.
 
 output outtxt
 labsetfocus''
-)
-labsetfocus=: 3 : 0
-if. LABFOCUS do.
-  smact^:(IFIOS+:'Android'-:UNAME)''
-end.
 )
 labadvance=: 3 : 0
 NDX=: >:NDX
@@ -570,6 +559,9 @@ if. 0 < NDX do.
 end.
 r
 )
+labsetfocus=: 3 : 0
+i.0 0
+)
 labsplit=: 3 : 0
 ind=. 2+((LF,')') E. y) i. 1
 }. each ind ({.;}.) y
@@ -591,11 +583,9 @@ bin sz;
 pas 4 2;pcenter;
 rem form end;
 )
-
 labfmt=: 4 : 0
 DEL,(":x),'. ',y,DEL
 )
-
 labjump_run=: 3 : 0
 if. 1=#CHAPTERDATA do.
   info 'There is only one chapter in the lab'
@@ -611,14 +601,12 @@ wd 'setselect listbox ',":CHAPTERNDX
 wd 'setfocus listbox'
 wd 'pshow;'
 )
-
 labjump_listbox_button=: 3 : 0
 labopenchapter ".listbox_select
 labchapterline''
 wd 'pclose'
 labrun''
 )
-
 labjump_enter=: labjump_ok_button=: labjump_listbox_button
 labjump_close=: labjump_cancel=: labjump_cancel_button=: wd bind 'pclose'
 LABOPT=: 0 : 0
@@ -690,7 +678,6 @@ groupboxend;
 pas 6 4;pcenter;
 rem form end;
 )
-
 labsel_run=: 3 : 0
 if. wdisparent 'labsel' do.
   wd 'psel labsel;pshow;pactive' return.

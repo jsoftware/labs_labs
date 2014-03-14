@@ -3,7 +3,7 @@ LABAUTHOR=: 0 : 0
 John C. Wilson
 Comments to  J Forum  or johnwilson@pocketmail.com
 )
-LABFOCUS=: 1
+LABDEPENDS=: 'general/misc'
 
 NB. =========================================================
 Lab Chapter Introduction

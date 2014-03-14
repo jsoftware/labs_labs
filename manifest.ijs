@@ -11,10 +11,10 @@ VERSION=: '1.0.58'
 FILES=: 0 : 0
 autolab.ijs
 lab.ijs
-labdict.ijs
+labs.ijs
 labdir.ijs
 labintro.txt
-lablist.txt
+qtlabs.txt
 manifest.ijs
 core/
 debug/

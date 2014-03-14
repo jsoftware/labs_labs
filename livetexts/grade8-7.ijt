@@ -1,7 +1,6 @@
 LABTITLE=: 'Grade 8-7 (Saxon)'
 LABAUTHOR=: 'Kenneth E. Iverson'
-LABERRORS=: 1
-LABFOCUS=: 0
+LABDEPENDS=: 'plot trig viewmat'
 
 NB. =========================================================
 Lab Chapter INTRODUCTION

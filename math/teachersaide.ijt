@@ -1,6 +1,6 @@
 LABTITLE=: 'Teacher''s Aide'
 LABAUTHOR=: 'Kenneth E. Iverson'
-LABFOCUS=: 0
+LABDEPENDS=: 'plot viewmat'
 
 NB. =========================================================
 Lab Chapter PURPOSE

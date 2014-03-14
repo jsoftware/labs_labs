@@ -1,6 +1,5 @@
 LABTITLE=: 'Mapped Files Database'
-LABERRORS=: 1
-LABFOCUS=: 0
+LABDEPENDS=: 'data/jmf'
 
 NB. =========================================================
 Lab Section Mapped File Database
@@ -14,8 +13,6 @@ Each record has 8 fields for a record size of 32 bytes.
 
 The total size of the VR database is 32MB.
 )
-PREPARE
-PREPARE
 
 NB. =========================================================
 Lab Section
@@ -35,7 +32,7 @@ NB. =========================================================
 Lab Section
 Data for each field is in its own file. The field is used by mapping a name to the file.
 
-The files for the fields will be in the temp\vr directory.
+The files for the fields will be in the temp/vr directory.
 )
 
 NB. =========================================================
@@ -48,12 +45,12 @@ Take a quick look at the script.
 NB. =========================================================
 Lab Section
 )
-open '~addons/labs/labs\system\mappeddb.ijs'
-load '~addons/labs/labs\system\mappeddb.ijs'
+open '~addons/labs/labs/system/mappeddb.ijs'
+load '~addons/labs/labs/system/mappeddb.ijs'
 
 NB. =========================================================
 Lab Section
-Clear out and create the temp\vr directory.
+Clear out and create the temp/vr directory.
 )
 vrdeleteall''   NB. delete any from a previous lab run
 createdir PATH  NB. create directory to hold VR files
@@ -67,7 +64,7 @@ Some of the following steps may take many seconds to run. Access to the VR datab
 NB. =========================================================
 Lab Section
 The next step builds a file for the lic field:
- creates file temp\vr\lic.jmf
+ creates file temp/vr\lic.jmf
  maps name lic to the file
  sets values for lic for each row in the table
 
@@ -287,11 +284,11 @@ When you get an allocation error you need to increase the size of the file. This
 
 NB. =========================================================
 Lab Section
-This lab has created files in your temp\vr directory. Use vrdeleteall to delete those files if you are finished with them.
+This lab has created files in your temp/vr directory. Use vrdeleteall to delete those files if you are finished with them.
 
 You can play with the VR database in future sessions. Just run the mappeddb script and run vrmap to map the fields.
 
-The VR script is: system\extras\labs\system\mappeddb.ijs
+The VR script is: ~addons/labs/labs/system/mappeddb.ijs
 )
 NB. to delete the vr directory and all its files, do:
 NB. vrdeleteall ''

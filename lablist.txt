@@ -1,6 +1,0 @@
-NB. list of labs not valid for the qt ide
-NB.
-NB. NOTE: *not* yet used by qtide as of 11 Mar 2014
-NB.
-NB. form:
-NB. core/j.ijt

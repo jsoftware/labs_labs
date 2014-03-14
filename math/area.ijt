@@ -1,4 +1,5 @@
 LABTITLE=: 'Area'
+LABDEPENDS=: 'plot'
 
 NB. =========================================================
 Lab Section Area of a triangle

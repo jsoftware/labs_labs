@@ -4,6 +4,7 @@ John D. Baker
 bakerjd@kos.net
 )
 LABCOMMENTS=: 'This lab demonstrates a simple ODBC spreadsheet application.'
+LABDEPENDS=: 'data/odbc'
 
 NB. =========================================================
 Lab Section Introduction

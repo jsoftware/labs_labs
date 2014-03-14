@@ -1,6 +1,5 @@
 LABTITLE=: 'Linear algebra (Schaum)'
-LABERRORS=: 1
-LABFOCUS=: 0
+LABDEPENDS=: 'graph plot viewmat'
 
 NB. =========================================================
 Lab Chapter SYSTEMS OF LINEAR EQUATIONS
@@ -25,7 +24,7 @@ for the following reasons:
 )
 PREPARE
 
-require 'plot graph viewmat'
+require 'plot viewmat'
 color=:viewmat
 
 decimal=:x:^:_1
@@ -95,7 +94,7 @@ erec=:]`(>:@:[ erec estep)@.(>:@:[<<./@:$@:])
 TO=:x:@(-/@(?.@((2: , [) $ >:@])))  NB. A random function
 SYM=:]+|:
 HERM=:]++@:|:
-load 'plot graph'
+load 'plot'
 roots=:>@:{:@:p.
 
 orth=:{: - (({: ip }:) % }: ip }:) mp }:
@@ -1825,7 +1824,7 @@ hex=:,c=:+.r   NB. Coords and ravelled coords of hexagon
 
 (,.r);c        NB. Coords r as a column
 
-load 'plot graph'
+load 'plot'
 red=:255 0  0
 gdopen ''
 red gdpolygon hex

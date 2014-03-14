@@ -1,7 +1,5 @@
 LABTITLE=: 'An Idiosyncratic Introduction to J'
 LABAUTHOR=: 'Roger Hui'
-LABERRORS=: 1
-LABFOCUS=: 0
 
 NB. =========================================================
 Lab Section Introduction

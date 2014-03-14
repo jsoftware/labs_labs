@@ -1,4 +1,5 @@
 LABTITLE=: 'Rotations'
+LABDEPENDS=: 'trig'
 
 NB. =========================================================
 Lab Section ROTATIONS
@@ -63,7 +64,7 @@ The function:
 
 produces a rotation matrix. The angle of rotation it produces is determined by the argument of r. For example:
 )
-load 'plot trig'
+load 'trig'
 
 r=: (cosd , -@:sind) ,. (sind , cosd)
 

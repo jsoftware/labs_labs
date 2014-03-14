@@ -3,7 +3,7 @@ NB. used in lab 'Mapped File Database'
 NB. every field has a build... and ...fmt verb
 NB. for example,      buildlic and licfmt
 
-require 'jmf dir'
+require 'data/jmf'
 
 ROWS=:    1e6    NB. 1 million records
 

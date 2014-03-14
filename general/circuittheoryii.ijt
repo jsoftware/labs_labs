@@ -4,7 +4,7 @@ John C. Wilson
 
 Comments to  J Forum  or johnwilson@pocketmail.com
 )
-LABFOCUS=: 1
+LABDEPENDS=: 'math/lapack plot'
 
 NB. =========================================================
 Lab Chapter Introduction to part II
@@ -23,16 +23,6 @@ are also addressed.
 
 A final chapter considers some conventionally acceptable
 circuits that are not circuits in this theory.
-
-
-
-
-Please note:
- 1. Both Circuit Theory I and II use "apply" (128!:2), which
-was not available in J406.
-
- 2. Circuit Theory II requires the addon LAPACK, obtainable
-at the JSoftware website.
 )
 PREPARE
 NB. Definitions from Circuit Theory I

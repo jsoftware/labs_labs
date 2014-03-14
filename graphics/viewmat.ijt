@@ -1,5 +1,5 @@
 LABTITLE=: 'Viewmat'
-LABFOCUS=: 1
+LABDEPENDS=: 'color16 trig viewmat'
 
 NB. =========================================================
 Lab Section Overview

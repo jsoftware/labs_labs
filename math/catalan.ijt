@@ -1,4 +1,5 @@
 LABTITLE=: 'Catalan Numbers'
+LABDEPENDS=: 'general/misc/format'
 
 NB. =========================================================
 Lab Section Introduction
@@ -108,7 +109,7 @@ NB. =========================================================
 Lab Section
 This can be formatted using the xfmt (extended format) utility:
 )
-load 'format'
+load 'general/misc/format'
 
 xfmt cat2 1000
 
@@ -248,7 +249,7 @@ NB. =========================================================
 Lab Section
 cat3 can be used to calculate the 10,000th Catalan number.
 
-You can try larger numbers, but be warned this may take a long time, or run out of memory. On the PC of the author, cat3 100,000 takes just under 40 seconds and returns a result with 60,199 digits.
+You can try larger numbers, but be warned this may take a long time, or run out of memory. On the PC of the author, cat3 100,000 takes just under 4 seconds and returns a result with 60,199 digits.
 
 The next section calculates cat3 10000. It may take a few seconds.
 )

@@ -1,5 +1,5 @@
 LABTITLE=: 'Performance Monitor Utilities'
-LABFOCUS=: 0
+LABDEPENDS=: 'finance/interest'
 
 NB. =========================================================
 Lab Section Performance Monitor Utilities
@@ -29,7 +29,7 @@ When you call any of the PM display verbs, this turns off PM and reads the resul
 
 The lab examples use the compound interest functions that are now loaded:
 )
-load '~system\packages\finance\interest.ijs'
+load 'finance/interest/interest'
 
 NB. =========================================================
 Lab Section Examples

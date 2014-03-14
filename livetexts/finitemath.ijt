@@ -1,6 +1,6 @@
 LABTITLE=: 'Finite mathematics'
 LABAUTHOR=: 'KEI'
-LABERRORS=: 1
+LABDEPENDS=: 'plot viewmat'
 
 NB. =========================================================
 Lab Chapter INTRODUCTION
@@ -21,7 +21,7 @@ for addition, multiplication, and power may be tested as follows:
 )
 PREPARE
 
-require 'plot graph viewmat'
+require 'plot viewmat'
 PLOT=:'stick,line'&plot
 hist=:'stick'&plot
 surf=:'surface'&plot

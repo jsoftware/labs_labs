@@ -4,7 +4,7 @@ John D. Baker
 bakerjd@kos.net
 )
 LABCOMMENTS=: 'This lab show how to use the basic facilities of the J/ODBC interface script.'
-LABERRORS=: 1
+LABDEPENDS=: 'data/odbc'
 
 NB. =========================================================
 Lab Section What is ODBC?

@@ -1,4 +1,5 @@
 LABTITLE=: 'A Taste of J (1)'
+LABDEPENDS=: 'plot stats/base trig'
 
 NB. =========================================================
 Lab Section First Steps

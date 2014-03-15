@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.58'
+VERSION=: '1.0.59'
 
 FILES=: 0 : 0
 autolab.ijs
@@ -14,7 +14,7 @@ lab.ijs
 labs.ijs
 labdir.ijs
 labintro.txt
-qtlabs.txt
+exlabs.txt
 manifest.ijs
 core/
 debug/

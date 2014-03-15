@@ -1,6 +1,6 @@
 LABTITLE=: 'Client/Server (Simple Socket)'
 LABAUTHOR=: 'Eric Iverson'
-LABDEPENDS=: 'data/odbc net/clientserver'
+LABDEPENDS=: 'data/odbc net/clientserver/jsss'
 
 NB. =========================================================
 Lab Section Overview

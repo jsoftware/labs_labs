@@ -3,7 +3,7 @@ LABAUTHOR=: 0 : 0
 John C. Wilson
 Comments to  J Forum  or johnwilson@pocketmail.com
 )
-LABDEPENDS=: 'general/misc'
+LABDEPENDS=: 'numeric'
 
 NB. =========================================================
 Lab Chapter Introduction
@@ -114,8 +114,6 @@ tir =: (2&res map 0 1)+(res map 2 3)
 
 apply =: 128!:2
 CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
-
-NB. load 'convert'         NB. to get mfv (matrix from vector)
 
 interc =: conjunction : 0  NB. g interc t
  z =. (#y)$0              NB. eg, (g0`g1`g2)interc(t0;t1;t2)

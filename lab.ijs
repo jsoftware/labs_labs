@@ -46,6 +46,20 @@ fls=. (#add) }. each b#fls
 fls=. ({.~ 2 i.~ '/' +/\ .= ]) each fls
 'To run this lab, first install: ',commaseps fls
 )
+excludes=: 3 : 0
+t=. 'b' fread '~addons/labs/labs/exlabs.txt'
+if. t-:_1 do. y return. end.
+t=. t #~ '#' ~: {.&> t
+0!:100 ; t ,each LF
+r=. EXALL
+if. IFJHS do.
+  r=. r,EXJHS
+elseif. IFQT do.
+  r=. r,EXJQT
+end.
+r=. ((jpath '~addons/'),deb) each <;._2 r
+y #~ -. (2{"1 y) e. r
+)
 pdef=: 3 : 0
 if. 0 e. $y do. empty'' return. end.
 names=. {."1 y
@@ -151,13 +165,7 @@ else.
 end.
 j=. (~: 1 {"1 j) # j
 labs=. j sort > 1{"1 j
-if. IFQT do.
-  ex=. 'b' fread '~addons/labs/labs/xqtlabs.txt'
-  ex=. ((jpath '~addons/'),deb) each ex #~ '#' ~: {.&> ex
-  labs=. labs #~ -. (2{"1 labs) e. ex
-end.
-
-LABS=: labs
+LABS=: excludes labs
 )
 labgettutor=: labgetjt , labgetrtf
 labgetjt=: 3 : 0

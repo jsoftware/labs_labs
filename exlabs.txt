@@ -1,0 +1,60 @@
+# exlabs.txt
+#
+# These are labs excluded from lab selection lists,
+# e.g. because obsolete or designed for another platform.
+#
+# EXJHS  - excluded in JHS
+# EXJQT  - excluded in JQt
+# EXALL  - excluded everywhere
+#
+# lab filenames are relative to ~addons
+#
+# Note: to test a lab from the command line, ensure that
+# the labs addon is installed, then load the labs and call
+# lab_jlab_ with the lab filename. For example:
+#
+#    load 'labs/labs'
+#    lab_jlab_ '~addons/labs/labs/core/intro.ijt'
+#
+# In this file, lines beginning '#' are ignored.
+
+# ---------------------------------------------
+EXJHS=: 0 : 0
+)
+
+# ---------------------------------------------
+EXJQT=: 0 : 0
+labs/labs/general/jturtleuser.ijt
+labs/labs/graphics/plotjhs.ijt
+labs/labs/graphics/d3.ijt
+)
+
+# ---------------------------------------------
+EXALL=: 0 : 0
+general/jod/jodlabs/jodbest.ijt
+general/jod/jodlabs/joddump.ijt
+general/jod/jodlabs/jodintro.ijt
+general/sfl/sfl.ijt
+graphics/fvj3/labs/bafrmid.ijt
+graphics/fvj3/labs/chaotica3.ijt
+graphics/fvj3/labs/dwin2.ijt
+graphics/fvj3/labs/owin3.ijt
+graphics/fvj3/labs/povkit2.ijt
+graphics/fvj3/labs/raster6.ijt
+graphics/jturtle/jturtleuser.ijt
+labs/labs/core/introcourse.ijt
+labs/labs/system/apps.ijt
+labs/labs/system/callback.ijt
+labs/labs/system/dllwrite.ijt
+labs/labs/system/printer.ijt
+labs/labs/system/printutl.ijt
+labs/labs/system/regbuild.ijt
+math/cal/cal.ijt
+math/uu/uu.ijt
+media/image3/image3.ijt
+media/image3/image3html.ijt
+media/image3/image3movie.ijt
+)
+
+
+

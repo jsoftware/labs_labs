@@ -1,6 +1,6 @@
 LABTITLE=: 'Neural Networks -- Feedforward w/ Backpropagation'
 LABAUTHOR=: 'Brian Schott with Raul Miller'
-LABDEPENDS=: 'general/misc'
+LABDEPENDS=: 'general/misc/trace'
 
 NB. =========================================================
 Lab Chapter Overview

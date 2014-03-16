@@ -97,8 +97,6 @@ First, the utility "polygon" can be used to generate the required values for a r
 
 For example:
 )
-polygon=: 4 : '|: 2 1 o./ (2p1*x%y)*i.>:y'
-
 (+. r. 6p1 * int01 11) ; 3 polygon 11
 
 NB. =========================================================

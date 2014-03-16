@@ -680,7 +680,7 @@ groupboxend;
 groupbox "";
 bin hvh;
 cc s1 static;cn "Category:";
-cc category combobox;
+cc category combolist;
 set category stretch 9;
 bin z;
 minwh 296 314;cc listbox listbox;

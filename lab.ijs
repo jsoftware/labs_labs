@@ -354,7 +354,12 @@ if. NDX=0 do.
   end.
   0 labinit LABPATH,LABFILE
 end.
-labjump_run''
+
+if. 0=#y do.
+  labjump_run''
+else.
+  labchapter y
+end.
 )
 labline=: 3 : 0
 j=. ' ',labsectionname''
@@ -608,6 +613,11 @@ wd 'set listbox items ',;d
 wd 'setselect listbox ',":CHAPTERNDX
 wd 'setfocus listbox'
 wd 'pshow;'
+)
+labchapter=: 3 : 0
+labopenchapter <: 1 >. y <. #CHAPTERS
+labchapterline''
+lab 0
 )
 labjump_listbox_button=: 3 : 0
 labopenchapter ".listbox_select

@@ -268,7 +268,7 @@ LABDEPENDS=: ''
 LABTITLE=: ''
 LABWINPOS=: _1
 LABOUTPUT=: 1
-LABWIDTH=: (IFIOS+.'Android'-:UNAME'){61 48
+LABWIDTH=: (IFIOS+.'Android'-:UNAME){61 48
 LABFILE=: ''
 LABPATH=: jpath '~addons/labs/labs/'
 

@@ -49,8 +49,6 @@ labs/labs/system/dllwrite.ijt
 labs/labs/system/printer.ijt
 labs/labs/system/printutl.ijt
 labs/labs/system/regbuild.ijt
-math/cal/cal.ijt
-math/uu/uu.ijt
 media/image3/image3.ijt
 media/image3/image3html.ijt
 media/image3/image3movie.ijt

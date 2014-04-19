@@ -4,9 +4,6 @@ LABDEPENDS=: 'gl2'
 NB. =========================================================
 Lab Section gl2
 This lab is an overview of drawing on an isigraph control.
-
-Plot, grid, and printing are all built in J drawing on an
-isigraph control.
 )
 SCRIPT
 require'gl2'   NB. load gl2 definitions in jgl2 locale
@@ -30,9 +27,7 @@ NB. create form (or just repaint if it already exists)
 gl2lab=: 3 : 0
 try.
  wd'psel gl2lab'
- glclear''        NB. clear out old drawing
- gl2lab_g_paint'' NB. new drawing
- glpaint''        NB. copy to screen
+ glpaint''
 catch.
  gl2lab_run''
 end.
@@ -351,7 +346,7 @@ gl2lab''
 
 NB. =========================================================
 Lab Section
-Cover/uncover the form and minimize/restore and note that the paint handler is not called.
+Cover/uncover the form and minimize/restore.
 )
 
 NB. =========================================================
@@ -410,7 +405,7 @@ NB. =========================================================
 Lab Section
 Resize the form and see how the drawing is scaled to fit the control. Also notice how each time the size changes that gl2lab_g_paint is run and displays the new paintcount.
 
-Note that cover/uncover of the control minimize/restore don't change the size and just copy the current memory buffer to the screen and that gl2lab_g_paint is not called.
+Note that cover/uncover of the control minimize/restore does not trigger a paint event.
 )
 
 NB. =========================================================
@@ -469,108 +464,13 @@ gllines D
 redraw=: 3 : 0
 D=: newdata 20
 glsel GHANDLE NB. isigraph target
-gl2lab_g_paint''
-glpaint'' NB. update screen
+glpaint''     NB. trigger paint event
 )
 SCRIPT
 PREPARE
 gl2lab_update''
 PREPARE
 redraw'' NB. try running this line a few times
-
-NB. =========================================================
-Lab Section
-In the previous example of redraw the new drawing was on top of the previous.
-
-Sometimes this is what you want, but sometimes you want to start afresh.
-
-If you paint to the same memory buffer (not a new buffer from resizing) and you don't want the old stuff then you'll need to do glclear to clear the buffer.
-
-Note that glclear has been added to redraw.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glrgb 0 255 0
-glpen 3,PS_SOLID
-gllines D
-)
-
-redraw=: 3 : 0
-D=: newdata 20
-glsel GHANDLE    NB. isigraph target
-glclear''        NB. reinitialize the memory buffer
-gl2lab_g_paint''
-glpaint''        NB. update screen
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-redraw'' NB. try running this line a few times
-
-NB. =========================================================
-Lab Section
-animate in this example does redraw in a loop with a sleep delay.
-)
-SCRIPT
-redraw=: 3 : 0
-D=: newdata 20
-glsel GHANDLE    NB. isigraph target
-glclear''        NB. reinitialize the memory buffer
-gl2lab_g_paint''
-glpaint''        NB. update screen
-)
-
-animate=: 3 : 0
-for. i.y do.
- redraw''        NB. paint entire control with new data
- sleep 0.1
-end.
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-gl2lab''
-animate 20     NB. update new data every 0.1 seconds
-
-NB. =========================================================
-Lab Section
-You can update only part of the screen. If only a small part of the screen is changed, this can be more efficient than painting everything.
-
-Study redraw and animate in the script.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glrgb 0 255 0
-glpen 3,PS_SOLID
-gllines D
-)
-
-redraw=: 3 : 0
-glsel GHANDLE    NB. isigraph target
-pos=. 50 50
-glrgb 0 255 0
-glbrush''
-glrect pos,100 22
-glfont 'arial 11'
-gltextxy pos+20 2
-gltext 'testing: ',":y
-glpaint''
-)
-
-animate=: 3 : 0
-for_i. i.y do.
- redraw i        NB. update small area
- sleep 0.1
-end.
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-
-animate 30      NB. update small area every 0.1 seconds
 
 NB. =========================================================
 Lab Section
@@ -591,81 +491,6 @@ Create a form and isigraph and gl2 commands automatically go to the new isigraph
 
 An isigraph event (paint, mouse, character) selects the form and the isigraph.
 )
-
-NB. =========================================================
-Lab Section
-If the situation is more complicated and the system hasn't already selected your form and isigraph, then you need to explicity select the target for your gl2 commands. For example:
-
-If there are 2 isigraph controls on a form, you need to explicitly select a target if you don't know that it is already selected.
-
-If another form (with or without an isigraph control) was selected then you need to explicity set the target for your gl2 commands.
-)
-
-NB. =========================================================
-Lab Section
-You can explicitly set the target by doing a psel and a gsel. The wd command psel and gsel can take id arguments or handles. As ids are not unigue it is probably better to use the handles.
-
-glsel ID selects the first isigraph with that ID on the selected form.
-
-glsel HANDLE selects the form that has the isigraph with that handle and then selects the isigraph.
-
-To select an isigraph it is best to use glsel HANDLE.
-)
-
-NB. =========================================================
-Lab Section
-The next example creates two forms each with two isigraphs.
-)
-
-NB. =========================================================
-Lab Section
-)
-GL2LABDOUBLE=: 0 : 0
-pc gl2labdouble closeok;
-minwh 200 100;cc g0 isigraph;
-minwh 200 100;cc g1 isigraph;
-pas 0 0;
-)
-
-run=: 3 : 0
-wd GL2LABDOUBLE
-wd'pn *form 1'
-GHANDLE10=: wd'qhwndc g0'
-GHANDLE11=: wd'qhwndc g1'
-xywh=. ".wd'qform'
-wd'pmove ',":xywh+0,(3{xywh),0 0
-wd'pshow'
-
-wd GL2LABDOUBLE
-wd'pn *form 0'
-GHANDLE00=: wd'qhwndc g0'
-GHANDLE01=: wd'qhwndc g1'
-wd'pshow;'
-)
-
-NB. RGB draw GHANDLExy
-draw=: 4 : 0
-glsel y
-glrgb x
-glbrush''
-glrect 10 10 50 50
-glpaint''
-)
-
-run'' NB. create 2 forms each with 2 isigraphs
-255 0   0   draw GHANDLE00     NB. form 0 isigraph 0
-0   255 0   draw GHANDLE01     NB. form 0 isigraph 1
-0   0   255 draw GHANDLE10     NB. form 1 isigraph 0
-192 192 192 draw GHANDLE11     NB. form 1 isigraph 1
-
-NB. try you own examples of draw
-
-NB. =========================================================
-Lab Section
-The two forms are closed.
-)
-wd'psel gl2labdouble;pclose'
-wd'psel gl2labdouble;pclose'
 
 NB. =========================================================
 Lab Section
@@ -728,78 +553,10 @@ require'bmp' NB. define writebmp
 
 NB. =========================================================
 Lab Section
-gl2 commands can be saved in a Windows Enhanced Metafile (Windows only).
-
-Study the emfcreate definition.
-
-Try using the gl2lab.emf file in another application such as Word.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glrgb 255 0 0
-glbrush ''
-glrgb 0 0 255
-glpen 10,PS_SOLID
-glpolygon 0 0 400 400 100 0 0 100 400 100
-)
-
-emfcreate=: 3 : 0
-glsel GHANDLE    NB. isigraph target
-glfile y
-glemfopen''      NB. open EMF file
-gl2lab_g_paint'' NB. draw commands
-glemfclose''     NB. close EMF file
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-gl2lab''
-fn=: jpath'~temp\gl2lab.emf'
-emfcreate fn
-
-NB. =========================================================
-Lab Section
-You can play an EMF file in an isigraph control.
-
-glemfplay with just xy argument plays the EMF file at that location in its original size.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glfile fn
-glemfplay 50 50
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-gl2lab''
-
-NB. =========================================================
-Lab Section
-glemfplay with xywh argument plays the EMF file at that location and with the original size scaled to fit the width and height.
-
-In neither case is the EMF drawing clipped. That is, drawing beyond the visible size when the EMF file was created is drawn.
-
-You can use glclip to clip the EMF drawing if required.
-)
-SCRIPT
-gl2lab_g_paint=: 3 : 0
-glfile fn
-glemfplay 50 50 50 50
-)
-SCRIPT
-PREPARE
-gl2lab_update''
-PREPARE
-gl2lab''
-
-NB. =========================================================
-Lab Section
 glcmd takes an integer string of commands of the form:
  count,command,....args....
 
-The command number is the x from the 11!:x in the corresponding gl2 command. For example: glrgb is 2032 and glect is 2031
+For example: glrgb is 2032 and glect is 2031
 )
 SCRIPT
 gl2lab_g_paint=: 3 : 0

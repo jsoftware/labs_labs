@@ -120,8 +120,6 @@ tir =: (2&res map 0 1)+(res map 2 3)
 apply =: 128!:2
 CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
 
-NB. load 'convert'         NB. to get mfv (matrix from vector)
-
 interc =: conjunction : 0  NB. g interc t
  z =. (#y)$0              NB. eg, (g0`g1`g2)interc(t0;t1;t2)
  for_k. n do.
@@ -413,7 +411,7 @@ circuits such as diode  and  n2 . Are they passive?
 )
 v1 =: steps _1 1 30
 p =: (res pwr"1)0,.v1
-'' plot v1;p
+plot v1;p
 
 NB. =========================================================
 Lab Section

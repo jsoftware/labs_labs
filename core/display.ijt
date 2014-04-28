@@ -15,11 +15,11 @@ display=: 3 : 0
 r=. '',:''                NB. 2 row 0 col
 
 while. 0<#y do.
-  r=. ('',:~":<:# y),.r  NB. exponent
+  r=. ('',:~":<:# y),.r   NB. exponent
   r=. ('',:,'x'),.r       NB. argument x
-  r=. ('',:":{:y),.r     NB. coefficient
+  r=. ('',:":{:y),.r      NB. coefficient
   r=. ('',:,'+'),.r       NB. plus sign
-  y=. }:y               NB. delete last coefficient
+  y=. }:y                 NB. delete last coefficient
 end.
 
 }."1 r                    NB. delete leading +

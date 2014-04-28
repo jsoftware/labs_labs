@@ -1296,9 +1296,8 @@ J.
 )
  apply =: 128!:2
  CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
- load 'convert'             NB. to get mfv (matrix from vector)
 
- L =: LF mfv  0 : 0         NB. Listing of components & connections
+ L =: [;._2 (0 : 0)         NB. Listing of components & connections
 res map 2 4
 npn map 0 2 1
 diode map 0 3

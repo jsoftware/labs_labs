@@ -43,6 +43,7 @@ graphics/fvj3/labs/povkit2.ijt
 graphics/fvj3/labs/raster6.ijt
 graphics/jturtle/jturtleuser.ijt
 labs/labs/core/introcourse.ijt
+labs/labs/graphics/gl2.ijt
 labs/labs/system/apps.ijt
 labs/labs/system/callback.ijt
 labs/labs/system/dllwrite.ijt
@@ -53,6 +54,3 @@ media/image3/image3.ijt
 media/image3/image3html.ijt
 media/image3/image3movie.ijt
 )
-
-
-

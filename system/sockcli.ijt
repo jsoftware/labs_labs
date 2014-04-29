@@ -8,7 +8,10 @@ PREPARE
 ASSERT=: 3 : 0
 (-.y)#'Something is wrong!'
 )
-toserver=:3 : 'wd''mb Client *'',y,'' Dismiss this dialog, switch to the server session, and continue the lab there.'''
+toserver=: 3 : 0
+m=. y,((0<#y)#LF2),'Dismiss this dialog, switch to the server session, and continue the lab there.'
+wdinfo 'Client';m
+)
 PREPARE
 
 NB. =========================================================

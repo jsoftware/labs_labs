@@ -65,9 +65,9 @@ The next step opens a script with an OpenGL graphic form.
 
 NB. =========================================================
 Lab Section
-Click on the script to give it focus, then press Ctrl-W to run it.
+Click on the script to give it focus, then press Ctrl+L to run it.
 
-This draws the graphic. You can leave this graphic window open during the rest of the lab. With each new script, press Ctrl-W to run it.
+This draws the graphic. You can leave this graphic window open during the rest of the lab. With each new script, press Ctrl+L to run it.
 
 Move and resize the scripts and graphic window if need be.
 )
@@ -132,7 +132,7 @@ NB. =========================================================
 Lab Section
 The next section opens a new script.
 
-As before, click on the script to give it focus, and press Ctrl+W.
+As before, click on the script to give it focus, and press Ctrl+L.
 )
 
 NB. =========================================================
@@ -181,7 +181,7 @@ with
 
   gsinit ''
 
-Then Ctrl-W to run the script.
+Then Ctrl+L to run the script.
 )
 
 NB. =========================================================
@@ -241,7 +241,7 @@ nextijs 'oglut6.ijs'
 
 NB. =========================================================
 Lab Section End
-For more examples, see the demos in Studio|Demos...|opengl.
+For more examples, see the openl demos in Help|Studio|wd Demos...
 
 When running the demos, select Options|View Definition to see the definitions, and experiment with changes to the definitions.
 )

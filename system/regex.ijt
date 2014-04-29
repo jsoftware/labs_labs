@@ -4,7 +4,7 @@ NB. =========================================================
 Lab Section Introduction
 This lab covers both the use of regular expressions in general, and the specifics of this implementation.
 
-First, load the regular expression definitions in the system\main\regex.ijs script:
+First, load the regular expression definitions:
 )
 load 'regex'
 
@@ -400,8 +400,3 @@ Lab Section
 Finally, once you are done with a compiled pattern you can release it and free up the resources it consumes:
 )
 rxfree pdigits
-
-NB. =========================================================
-Lab Section
-This concludes the lab.  Also available is a script containing utilities for regular expressions, and a lab to describe its use.  See system\packages\regex\regbuild.ijs and the "Regular Expression Builder" for more information.
-)

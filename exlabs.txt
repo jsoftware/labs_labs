@@ -47,6 +47,10 @@ labs/labs/graphics/gl2.ijt
 labs/labs/system/apps.ijt
 labs/labs/system/callback.ijt
 labs/labs/system/dllwrite.ijt
+labs/labs/system/odbcsap.ijt
+labs/labs/system/odbcint.ijt
+labs/labs/system/odbcblob.ijt
+labs/labs/system/odbcinv.ijt
 labs/labs/system/printer.ijt
 labs/labs/system/printutl.ijt
 labs/labs/system/regbuild.ijt

@@ -2,14 +2,16 @@ LABTITLE=: 'Socket Driver Server'
 
 NB. =========================================================
 Lab Section Introduction
-There is reference documentation of the Socket Driver in the release documentation available from the J help menu.
+There is reference documentation of the Socket Driver in the User Manual available from the J help menu.
 )
 PREPARE
 ASSERT=: 3 : 0
 (-.y)#'Something is wrong!'
 )
-
-toclient=:3 : 'wd''mb Server *'',y,'' Dismiss this dialog, switch to the client session, and continue the lab there.'''
+toclient=: 3 : 0
+m=. y,((0<#y)#LF2),'Dismiss this dialog, switch to the client session, and continue the lab there.'
+wdinfo 'Server';m
+)
 PREPARE
 
 NB. =========================================================

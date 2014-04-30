@@ -3,11 +3,11 @@ LABDEPENDS=: 'gl2 gl3 graphics/gl1ut'
 
 NB. =========================================================
 Lab Section Introduction
-OpenGL is a 3D graphics API available on Windows and Unix.
+Opengl is a standard 3D graphics API available on most platforms..
 
 Visit www.opengl.org for information and resources.
 
-J uses the API with cd (shared library call) and the J programmer has the same access as a C programmer.
+This lab assumes familiarity with J, forms, controls, classes, and objects.
 )
 PREPARE
 clear''		NB. clear base locale
@@ -25,19 +25,19 @@ smwrite_jijs_ ,d
 NB. smfocus_jijs_ ''
 smact''
 erase 'gl3lab_g_char gl3lab_g_paint'
+gl3lab_g_focus=: gl_paintx
 load f
 )
 
 gl3lab=: 3 : 0
-if. 1<+/(<'gl3lab')=<;._2 wd'qpx' do.
- while. +/(<'gl3lab')=<;._2 wd'qpx' do.
+if. 1<+/(<'gl3lab')={."1 wdforms'' do.
+ while. +/(<'gl3lab')= {."1 wdforms''do.
   wd'psel gl3lab;pclose' NB. close all if more than 1
  end.
 end.
 try.
  wd'psel gl3lab;pshow;pactive'
-NB.  free__ogl''      NB. force new rc
- gl3lab_g_paint'' NB. new drawing
+ gl_paintx''
 catch.
  gl3lab_run''
 end.
@@ -71,21 +71,6 @@ After you have mastered the basics you may want to make use of various utilities
 )
 
 NB. =========================================================
-Lab Section Demo
-If you would like to see what can be done with OpenGL, try the OpenGL demo with Studio|Demos|OpenGL...
-)
-
-NB. =========================================================
-Lab Section J Forms
-This lab assumes familiarity with J, forms, isigraph control, classes, and objects.
-)
-
-NB. =========================================================
-Lab Section OpenGL dlls
-Opengl is a standard API on Windows and Mac OS X. On Linux it is available, but may not be installed on your system. See www.mesa3d.org for the latest Linux version of OpenGL.
-)
-
-NB. =========================================================
 Lab Section
 This section tests to see if the OpenGL dlls are available.
 )
@@ -116,18 +101,18 @@ gl3 defines the OpenGL API calls. The coinsert allows reference to the gl3 names
 
 NB. =========================================================
 Lab Section
-OpenGL drawing is done on an isigraph control with the opengl style.
+OpenGL drawing is done on an opengl control.
 
-An isigraph with opengl style supports only a few gl2 commands. The key one is glqwh.
+An opengl supports some gl2 commands, for example glqwh.
 )
 
 NB. =========================================================
 Lab Section
-gl3lab_run creates the form and isigraph control with the opengl style.
+gl3lab_run creates the form and opengl control.
 
 conew creates a new OpenGL object. This object is used to manage the OpenGL render context.
 
-There is no point in doing the drawing before showing the form as it will just have to be redrawn after the form has been shown.
+Drawing is done in the paint event.
 
 Lab utility gl3lab calls gl3lab_run if form gl3lab doesn't already exist. If it exists it runs gl3lab_g_paint to repaint the form that is already shown.
 )
@@ -139,7 +124,7 @@ gl3lab_close destroys the OpenGL object and closes the form.
 
 NB. =========================================================
 Lab Section
-gl3lab_g_paint is called to paint the control. When called the isigraph must be the target for gl3 commands.
+gl3lab_g_paint is called to paint the control. When called the opengl control must be the target for gl3 commands.
 
 rc__ogl makes the OpenGL render context current for drawing. If the RC already exists the result is 0 and the g_draw_init call is avoided. If the RC doesn't exist or the size has changed, a new RC is created and the result is 1 so that g_draw_init is run.
 
@@ -157,11 +142,11 @@ Resize the drawing. Each time the triangle is drawn in a new, random color.
 
 NB. =========================================================
 Lab Section
-With the isigraph in focus press Ctrl+f.
+With the opengl control in focus press Ctrl+f.
 
 gl3lab_fctrl_fkey is called by Ctrl+f. It times showing 100 frames and then reports frames per second.
 
-target__ogl selects the OpenGL object isigraph as the target for gl3 commands as gl3lab_g_paint requires a target.
+target__ogl selects the OpenGL object opengl control as the target for gl3 commands as gl3lab_g_paint requires a target.
 )
 
 NB. =========================================================
@@ -181,7 +166,7 @@ If you have studied and understood the script then you know everything about the
 
 NB. =========================================================
 Lab Section Isigraph Control
-gl3 verbs are defined in gl3.ijs as cd calls to the OpenGL API.
+gl3 verbs are defined in gl3.ijs as calls to the OpenGL API.
 
 Verbs are defined for all the API calls. There are several conventions to make the J programming more convenient.
 
@@ -271,13 +256,13 @@ nextijs'ogl_sphere'
 gl3lab''
 
 NB. =========================================================
-Lab Section
-This example demonstrates using the select buffer to determine which object a mouse click selected.
-
-Use the x y z keys to rotate the cube selected by a mouse click.
-)
-nextijs'ogl_pickcube'
-gl3lab''
+NB. Lab Section
+NB. This example demonstrates using the select buffer to determine which object a mouse click selected.
+NB.
+NB. Use the x y z keys to rotate the cube selected by a mouse click.
+NB. )
+NB. nextijs'ogl_pickcube'
+NB. gl3lab''
 
 NB. =========================================================
 Lab Section
@@ -292,7 +277,7 @@ Bitmaps can be used to draw characters and J OpenGL support provides a platform 
 
 glaCreateBitmapFont creates bitmaps for the ASCII character set. Its argument is a wd fontspec and its result has a row for each character with width, height, and bitmap data as 8 bit characters.
 
-The bitmaps are built by drawing text in a temporary form and isigraph control, reading the pixels, and converting them to the format required for an OpenGL bitmap.
+The bitmaps are built by drawing text in a temporary form and opengl control, reading the pixels, and converting them to the format required for an OpenGL bitmap.
 )
 
 NB. =========================================================
@@ -353,10 +338,9 @@ Although most OpenGL books use C, you should still find them valuable in underst
 
 NB. =========================================================
 Lab Section Simple Examples
-Studio|Demos|OpenGL Lab Demos... helps run a number of scripts from addons/demos/nglsimple.
+If you would like to see what can be done with OpenGL, try the OpenGL demos in Help|Studio|wd Demos...
 
 Most of these examples are based closely on examples in "OpenGL Programming Guide".
 
 Many of the examples support interaction with the keyboard or mouse as documented in the help menu of each example.
 )
-

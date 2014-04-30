@@ -323,11 +323,13 @@ You could use sdselect to "poll" for actions to be taken. There is also a parame
 
 NB. =========================================================
 Lab Section
-However, we will not explore this use of sdselect because there is a better solution.
+However, we will not explore this use of sdselect because there is a better solution under Windows.
 
-sdasync marks a socket as non-blocking AND requests that any change in the state of the socket, such as new data to be read, causes the sentence socket_handler'' to be executed.
+In Windows, sdasync marks a socket as non-blocking AND requests that any change in the state of the socket, such as new data to be read, causes the sentence socket_handler'' to be executed.
 
 This is similar to how window events such as the press of a form button runs sentence wdhandler''.
+
+On other platforms, calling sdasync will cause an error. Nevertheless, the lab can still be continued.
 )
 
 NB. =========================================================

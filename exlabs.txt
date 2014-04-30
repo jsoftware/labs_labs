@@ -7,6 +7,11 @@
 # EXJQT  - excluded in JQt
 # EXALL  - excluded everywhere
 #
+# The EXALL exclusions are labs that need updating for the current J release,
+# but are still appropriate.
+#
+# Any labs that are obsolete should be removed from the addons svn.
+#
 # lab filenames are relative to ~addons
 #
 # Note: to test a lab from the command line, ensure that
@@ -25,8 +30,8 @@ EXJHS=: 0 : 0
 # ---------------------------------------------
 EXJQT=: 0 : 0
 labs/labs/general/jturtleuser.ijt
-labs/labs/graphics/plotjhs.ijt
 labs/labs/graphics/d3.ijt
+labs/labs/graphics/plotjhs.ijt
 )
 
 # ---------------------------------------------
@@ -44,6 +49,7 @@ graphics/fvj3/labs/raster6.ijt
 graphics/jturtle/jturtleuser.ijt
 labs/labs/core/introcourse.ijt
 labs/labs/graphics/gl2.ijt
+labs/labs/graphics/opengl.ijt
 labs/labs/system/apps.ijt
 labs/labs/system/callback.ijt
 labs/labs/system/dllwrite.ijt

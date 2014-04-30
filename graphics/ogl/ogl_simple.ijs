@@ -46,7 +46,7 @@ NB. press Ctrl+f to report frames/second
 gl3lab_fctrl_fkey=: 3 : 0
 start=. 6!:1''
 for. i.100 do.
- gl3lab_g_paint''
+ gl_paintx''
 end.
 time=. (6!:1'')-start
 smoutput 'w h: ',(":gl_qwh''),' frames/sec: ',":100%time

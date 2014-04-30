@@ -8,7 +8,6 @@ rem form end;
 
 gl3lab_run=: 3 : 0
 wd GL3LAB
-gl3lab_g_paint''
 wd'pshow;'
 )
 

@@ -33,7 +33,7 @@ R=: 0 0 0
 dorot=: 3 : 0
 wd'psel gl3lab'
 R=: y
-gl3lab_g_paint''
+gl_paintx''
 )
 
 NB. y is wh - cmds required for new render context

@@ -144,7 +144,6 @@ t=. tolower each {."1 d#t
 n=. ((toupper)@{. , }.) each t
 t=. n ,. (y&,) each t
 b=. 0 < # @ (1!:0) @ (,&'\*.ijt') &> {:"1 t
-b=. b +. 0 < # @ (1!:0) @ (,&'\*.rtf') &> {:"1 t
 b # t
 )
 labgetfiles=: 3 : 0
@@ -167,7 +166,7 @@ j=. (~: 1 {"1 j) # j
 labs=. j sort > 1{"1 j
 LABS=: excludes labs
 )
-labgettutor=: labgetjt , labgetrtf
+labgettutor=: labgetjt
 labgetjt=: 3 : 0
 path=. y, PATHSEP -. _1{.y
 files=. 1 dir jpathsep path,'*.ijt'
@@ -195,45 +194,6 @@ end.
 labgettitle1=: 3 : 0
 t=. toJ 1!:11 y;0 100
 ". (t i. LF) {. t
-)
-labgetrtf=: 3 : 0
-i.0 3 return.
-
-path=. y, PATHSEP -. _1{.y
-files=. 1 dir path,'*.rtf'
-if. 0=#files do.
-  t=. i.0 3
-else.
-  sf=. 1 dir path,'*.ijf'
-  if. #sf do.
-    j=. _4&}. each sf
-    k=. _4&}. each files
-    s=. k e. j
-  else.
-    s=. (#files)#0
-  end.
-  ph=. rxcomp_jregex_ 'LABTITLE[ ]*=:'
-  t=. ph deb@labrtftitle each files
-  rxfree_jregex_ ph
-  t=. (*@# &> t) # t,. files (,<)"0 [s
-end.
-
-if. #s=. labgetsubdir path do.
-  t=. t, ; labgetrtf each path&, each s
-end.
-
-)
-labrtftitle=: 4 : 0
-size=. 1!:4 <y
-dat=. fread y;0,size <. 5000
-'ndx len'=. {. x rxmatch_jregex_ dat
-if. ndx=_1 do.
-  'ndx len'=. {. x rxmatch_jregex_ fread y
-  if. ndx=_1 do.'' return. end.
-end.
-dat=. (ndx+len) }. dat
-j=. '{}',CRLF
-". ((<./ dat i. j) {. dat) -. j
 )
 ADVANCE=: 0 : 0
 To advance the lab, select menu Studio|Advance or the

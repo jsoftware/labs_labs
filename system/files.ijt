@@ -338,9 +338,10 @@ The library script "misc" contains a much nicer version of "prompt".
 
 NB. =========================================================
 Lab Chapter Miscellaneous
+
 NB. =========================================================
 Lab Section fview
-fview displays the file in a viewer. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
+fview is defined in the Qt IDE (not JHS) and displays the file in a viewer. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
 )
 fview jpath '~bin/profile.ijs'
 

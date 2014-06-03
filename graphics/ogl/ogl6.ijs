@@ -33,5 +33,5 @@ R =: 0 0 0     NB. xyz rotations
 dorot=: 3 : 0
 wd'psel gl3lab'
 R=: y
-gl_paintx''
+gl_paint''
 )

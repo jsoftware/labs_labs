@@ -33,7 +33,7 @@ R=: 0 0 0
 dorot=: 3 : 0
 wd'psel gl3lab'
 R=: y
-gl_paintx''
+gl_paint''
 )
 
 NB. y is wh - cmds required for new render context
@@ -58,7 +58,7 @@ if. S=1 do.
  R1 =: 360 | R1 + 2 * 'xyz'=k end.
 if. S=2 do.
  R2 =: 360 | R2 + 2 * 'xyz'=k end.
-gl_paintx''
+gl_paint''
 )
 
 gl3lab_g_mbldown =: verb define

@@ -25,7 +25,7 @@ smwrite_jijs_ ,d
 NB. smfocus_jijs_ ''
 smact''
 erase 'gl3lab_g_char gl3lab_g_paint'
-gl3lab_g_focus=: gl_paintx
+gl3lab_g_focus=: gl_paint
 load f
 )
 
@@ -37,7 +37,7 @@ if. 1<+/(<'gl3lab')={."1 wdforms'' do.
 end.
 try.
  wd'psel gl3lab;pshow;pactive'
- gl_paintx''
+ gl_paint''
 catch.
  gl3lab_run''
 end.

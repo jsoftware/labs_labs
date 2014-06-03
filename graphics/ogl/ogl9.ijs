@@ -20,7 +20,7 @@ R=: 0 0 0
 dorot=: 3 : 0
 wd'psel gl3lab'
 R=: y
-gl_paintx''
+gl_paint''
 )
 
 gl3lab_g_paint =: verb define

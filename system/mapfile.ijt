@@ -53,7 +53,7 @@ NB. =========================================================
 Lab Section
 When you start an application the OS creates a new process.
 
-A process has a 4GB virtual address space (VAS); each address from 0 to 2^32 can have a byte value.
+For example, a 32-bit process has a 4GB virtual address space (VAS); each address from 0 to 2^32 can have a byte value.
 
 Initially none of the addresses have values.
 )

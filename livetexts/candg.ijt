@@ -79,7 +79,6 @@ diamond=:4 : '(0 1 2 + {:x) from rows(0 1 2 + {.x) from y'"1 2
 dividedby=:%
   dby=:dividedby
 
-each=:"0
 ei=:i.@>:
 expand=:}.@,"2@(0:,."1])
 
@@ -1218,7 +1217,7 @@ f1=:k=zero
 g1=:(n S1 with dec k)+(dec on n)*(dec on n) S1 k
 h1=:n > zero
 
-S1=:f1 tie g1 agenda h1 each
+S1=:f1 tie g1 agenda h1 every
 
 4 S1 0 1 2 3 4 5
 
@@ -1235,7 +1234,7 @@ f2=:k=zero
 g2=:(n S2 with dec k)+k*(dec on n) S2 k
 h2=:n > zero
 
-S2=:f2 tie g2 agenda h2 each
+S2=:f2 tie g2 agenda h2 every
 
 S2 table ei 5
 
@@ -1511,9 +1510,9 @@ Lab Section
 Applying FIB to each of the arguments 0 to 6, and boxing
 each of the results, gives the following pattern:
 )
-< on FIB each 0 1 2 3 4 5 6
+< on FIB every 0 1 2 3 4 5 6
 
-,.< on FIB each 0 1 2 3 4 5 6
+,.< on FIB every 0 1 2 3 4 5 6
 
 NB. =========================================================
 Lab Section
@@ -1794,16 +1793,16 @@ sumfactors=:e on f on g on q:
 sumfactors 496  NB. A known perfect number
 
 y=:2 3 4 5 6 7 8
-sumfactors each y
+sumfactors every y
 
-y=sumfactors each y
+y=sumfactors every y
 
-(y=sumfactors each y) # y
+(y=sumfactors every y) # y
 
 y=:2 int 30
 y
 
-(y=sumfactors each y) # y
+(y=sumfactors every y) # y
 
 NB. =========================================================
 Lab Section
@@ -1981,11 +1980,11 @@ Farey 6
 
 Farey 1
 
-# on Farey each 1 2 3 4 5 6 7 8 9 NB. Primes, but 17 is missing
+# on Farey every 1 2 3 4 5 6 7 8 9 NB. Primes, but 17 is missing
 
-# on Farey each 10                NB. Not prime
+# on Farey every 10                NB. Not prime
 
-# on Farey each 1 int 20
+# on Farey every 1 int 20
 
 NB. =========================================================
 Lab Section
@@ -1993,7 +1992,7 @@ Lab Section
 Prime factorization of these results shows the primes:
 )
 i=: 1 int 28
-(,.i) ; q: # on Farey each i
+(,.i) ; q: # on Farey every i
 
 NB. =========================================================
 Lab Section Euler's totient numbers
@@ -2011,11 +2010,11 @@ the "little table" in BON:
 i=:1 int 20
 i
 
-1 , # on Farey each i
+1 , # on Farey every i
 
-pwdifs 1 , # on Farey each i
+pwdifs 1 , # on Farey every i
 
-1 trim pwdifs 1 , # on Farey each i
+1 trim pwdifs 1 , # on Farey every i
 
 NB. =========================================================
 Lab Section
@@ -2027,7 +2026,7 @@ BON gives the expression n*(1-1 dby p)*(1-1 dby q)*(1-1 dby r)* ...
 for the totient of n, where p,q,r are the different (distinct)
 prime factors of n This is shown below for the case n=:100:
 )
-1 trim pwdifs 1 , # on Farey each 99 100 101
+1 trim pwdifs 1 , # on Farey every 99 100 101
 
 totient=:3 : '*/y,1-1 dby nub q:y'"0
 totient i
@@ -2346,7 +2345,7 @@ sum ravel whole 4j3 dby gint
 
 primality=: 5 with = on sum on ravel on whole on dby
 3j2 primality gint
-primality with gint each 3j2 4j3
+primality with gint every 3j2 4j3
 
 NB. =========================================================
 Lab Chapter Some transcendental numbers
@@ -2365,7 +2364,7 @@ we will produce by first defining a function
 p that performs "addition" of single nimbers, use it, and then
 analyze the definition:
 )
-p=:#. on (neq over) on #: on , each
+p=:#. on (neq over) on #: on , every
 3 p 5
 3 p int 16
 p border int 16
@@ -2376,7 +2375,7 @@ The successive steps in the execution of p are illustrated
 below. The functions #: and #. give the binary representation
 and its inverse:
 )
-p=:#. on (neq over) on #: on , each
+p=:#. on (neq over) on #: on , every
 
 3 , 5
 
@@ -2442,7 +2441,7 @@ a1=:1+a0=:int 7
 a0
 a1
 
-a0 npow each/ a1
+a0 npow every/ a1
 
 NB. =========================================================
 Lab Section Identity elements

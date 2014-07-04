@@ -387,7 +387,7 @@ NB. =========================================================
 Lab Section fview
 fview displays the file using a view box. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
 )
-fview jpath '~bin/profile.ijs'
+fview jpath '~install/bin/profile.ijs'
 
 NB. =========================================================
 Lab Section fcopynew
@@ -484,7 +484,7 @@ jpath with an argument with a leading ~ looks up the name in the folder tables. 
 
 Here is the full filename to the profile script which starts J.
 )
-jpath '~system/profile.ijs' NB.  The default profile.
+jpath '~install/bin/profile.ijs' NB.  The default profile.
 
 NB. =========================================================
 Lab Section Nouns and Verbs to find the Libraries
@@ -507,7 +507,7 @@ At the bottom of the standard profile script are definitions for the nouns to ac
 
 Execute the following line to look at the current profile.
 
-   fview jpath '~bin/profile.ijs'
+   fview jpath '~install/bin/profile.ijs'
 )
 
 NB. A couple more interesting names in the z locale:

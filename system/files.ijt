@@ -1,13 +1,15 @@
-LABTITLE=: 'Files'
+﻿LABTITLE=: 'Files'
 LABCOMMENTS=: 0 : 0
 Don Guinn
 donguinn@gmail.com
 
-Updated to work properly in J8 on Windows, Linux (UBUNTU) and Android. Allowances are made for file names and locations to move around.
+Updated to work properly in J8 on Windows, Linux (UBUNTU) and Android. Allowances are made for profile.ijs to move around. Uses absolute path as last resort.
 
 Ian Clark suggested that this be converted to a WIKI with the actual lab show only examples. Will do, but for now I just want to get it working properly.
 
 AUTOLAB_jlab_ is tested in this script and left as is. It is only set to zero nullifying the code in (1) 2. It is only referenced in this lab. I do not know what it is for and leaving it alone.
+
+profile.ijs was moved to a second bin directory for Android. Lab fixed to find it. Also made running fview of it optional. Easier to see what's going on in Android.
 )
 LABERRORS=: 1
 LABFOCUS=: 0
@@ -22,6 +24,14 @@ Also available are labs on Mapped Files.
 )
 PREPARE
 clear''
+3 : 0 ''
+if. '8'~:{.>(;:JVERSION)([{~[:>:i.)<'Library:' do.
+  smoutput ''
+  smoutput 'Note: This lab is for J version 8.'
+  smoutput 'Some examples in this lab may fail in other versions of J.'
+end.
+i.0 0
+)
 PREPARE
 
 NB. =========================================================
@@ -79,7 +89,7 @@ eol=:;('CR';'LF')#~(CR,LF)e.fread 'labfile.txt';_2
 
 NB. =========================================================
 Lab Section
-As you are probably aware, Unix uses "/" for path separators where Windows uses "\". The file foreign conjunctions convert both to the one appropriate for your system; however, you can use the verb "jhostpath" to make displayed filenames correct for your system. This may be necessary for filenames passed to other applications.
+As you are probably aware, Unix uses "/" for path separators where Windows uses "\". The file foreign conjunctions convert both to the one appropriate for your system; however, you can use the verb "hostpathsep" to make displayed filenames correct for your system. This may be necessary for filenames passed to other applications.
 
 You may use either "/" or "\" without regard to your base operating system.  This lab will use the Windows convention for filenames.
 )
@@ -191,13 +201,12 @@ Lab Section freads
 freads reads characters from a file, converting any CRLF or isolated CR characters into LF characters as J keeps script file internally. It is equivalent to 's'&fread.
 )
 PREPARE
-0!:101 'freads (',cfgfile_jlab_,');0 80'
-0!:101 ']l=.$freads ',cfgfile_jlab_
-0!:101 ']ls=.$''s'' fread ',cfgfile_jlab_
-0!:101 'l-ls'
-0!:101 '$''b'' fread ',cfgfile_jlab_
-erase 'cfgfile_jlab_'
+NB. J config files now only use LF making older example useless.
 PREPARE
+]l=.$fread 'labfile.txt'
+]ls=.$freads 'labfile.txt'
+l-ls
+$'b' fread 'labfile.txt'
 
 NB. =========================================================
 Lab Chapter Writes
@@ -241,7 +250,7 @@ fread 'labfile.txt'
 
 NB. =========================================================
 Lab Section fappends
-fappends is like fappend except it handles the line separators CRLF, CR and LF as in fwrites.
+fappends is like fappend except it appends line separators as in fwrites.
 )
 'abc' fwrite 'labfile.txt'
 'xy' fappends 'labfile.txt'
@@ -322,14 +331,14 @@ NB. =========================================================
 Lab Chapter Session Input and Output
 NB. =========================================================
 Lab Section Session Input and Output
-The J session is displayed in an execution window. As you well know by now, you can type sentences into an execution window and the results of that sentence will be displayed in it. Like on a typewriter.
+Historically interaction between a computer and a user was a question (prompt) then answer dialog. The form approach used on video screens has replaced that approach. When running jconsole the following can be used:
 
-This typewriter-type interface was the only way to interactively communicate with computers before video screens were available. It is an easy interface for simple applications.
+  to read  - (1!:1)1,
+  to write - (1!:2)2 (or smoutput)
 
-Your applications can communicate with the session window by:
-  to read  - 1!:1]1,
-  to write - 1!:2]2 (or "sm" verbs in the jijs locale.)
+But in the initial release of J8, (1!:1)1 does not work well in JQt or JHS and should be avoided. smoutput is fine. This may change in the future. Stay tuned.
 )
+smoutput 'This is a message.'
 
 NB. =========================================================
 Lab Chapter Unicode and UTF-8
@@ -385,9 +394,32 @@ NB. =========================================================
 Lab Chapter Miscellaneous
 NB. =========================================================
 Lab Section fview
-fview displays the file using a view box. The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. The following is a view of the files script that defines the verbs just covered. Why not just browse it for a while?
+The "z" locale contains many helper verbs to access files. A few follow.
+
+fview displays the file using a view box (available in JQt only). The right argument is defined as for fread. The display is asynchronous, that is, the J window is unlocked and J continues to execute. Run the following to view the script that runs when J starts.
 )
-fview jpath '~install/bin/profile.ijs'
+PREPARE
+(3 : 0) ''
+if. 4!:0 <'INSTALLROOT_z_'
+  do.   NB. Windows or Unix (hopefully).
+        f=.'jpath ''~bin/profile.ijs'''
+  else. NB. Android.
+        f=.'INSTALLROOT,''/bin/profile.ijs'''
+end.
+if. -.fexist ".f do. NB. Unknown.
+  NB. First script loaded should be project.ijs.
+  NB. But in case it's not, look for it.
+  NB. If not found just use first full path name.
+  f=.'''','''',~>'/profile.ijs'(]{~([:#])|[i.~[:([:jpathsep _12&{.)&>])4!:3 ''
+end.
+if. IFJHS
+  do.
+    smoutput 'NB. In JHS "open" creates a link to this script.' 
+    smoutput '   open ',f
+  else. smoutput'   fview ',f
+end.
+)
+PREPARE
 
 NB. =========================================================
 Lab Section fcopynew
@@ -478,36 +510,27 @@ NB. =========================================================
 Lab Section Overview
 File names can be specified in several forms. You can give the full path name or a relative name. Redirection and wildcards available in your operating system may be used as well.
 
-The verb jpath allows one to find the various J libraries with relative reference. Using jpath an application need not specify the full path to a library. System libraries are defined in the profile, and user libraries in the J Configuration under the Folders category. You may modify or add user libraries to the J system there.
-
-jpath with an argument with a leading ~ looks up the name in the folder tables. The name is case sensitive.
-
-Here is the full filename to the profile script which starts J.
+The verb jpath allows one to find the various J libraries with relative reference. Using jpath an application need not specify the full path to a library.
 )
-jpath '~install/bin/profile.ijs' NB.  The default profile.
 
 NB. =========================================================
 Lab Section Nouns and Verbs to find the Libraries
-The standard J profile creates two nouns to define the the J libraries, SystemFolders_j_ and UserFolders_j_. You can edit UserFolders_j_ with Edit/Configure/Folders.
+The standard J profile creates two nouns to define the the J libraries, SystemFolders_j_ and UserFolders_j_ (the names may change in future releases). You can edit UserFolders_j_ with Edit/Configure/Folders. Changes take effect when J restarts. See the remarks in the default profile.
 
-If you want to change them you must change them during initialization, not later. See the remarks in the default profile.
+The convention is that the relative names for system folders start with lower case letters where user names start with upper case.
 )
-NB. The relative names for various J system libraries are:
+NB. The relative names for various J system libraries:
 >{."1 SystemFolders_j_
 
 NB. =========================================================
 Lab Section
 What`s in the user library?
 )
-fdir jpath '~user/*.*'
+dir jpath '~user/*.*'
 
 NB. =========================================================
 Lab Section The J Profile
 At the bottom of the standard profile script are definitions for the nouns to access J libraries. Be sure to make backups of any initialization files you modify and be able to restore them using the operating system facilities, not J, as an error in initialization may make J inoperable.
-
-Execute the following line to look at the current profile.
-
-   fview jpath '~install/bin/profile.ijs'
 )
 
 NB. A couple more interesting names in the z locale:
@@ -518,7 +541,7 @@ NB. =========================================================
 Lab Section
 There is one more directory of interest - the current working directory. Normally it is the same as the J system directory; however, it can be specified to be somewhere else by the script or icon starting J and can be changed by a J application.
 
-It is managed by the foreign conjunctions 1!:43 to query the current working directory and 1!:44 to set it.
+It is queried by the foreign conjunction 1!:43 and set by 1!:44 .
 )
 1!:43''
 
@@ -557,3 +580,4 @@ A summary of the primary file verbs:
 PREPARE Clean up.
 ferase 'labfile.txt'
 PREPARE ___________
+

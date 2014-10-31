@@ -130,19 +130,19 @@ Verb goo is defined with an error as follows, TXT is not defined:
 
   goo=: 3 : 0
   wd 'pc myform closeok'
-  wd 'xywh 10 10 100 12;cc text edit'
-  txt=. TXT, ' edit'
-  wd 'set text *',txt
-  wd 'pas 5 5;pshow'
+  wd 'cc ted edit'
+  txt=. TXT, ' there'
+  wd 'set ted text *',txt
+  wd 'pshow;pcenter'
   )
 )
 PREPARE
 goo=: 3 : 0
 wd 'pc myform closeok'
-wd 'xywh 10 10 100 12;cc text edit'
-txt=. TXT, ' edit'
-wd 'set text *',txt
-wd 'pas 5 5;pshow'
+wd 'cc ted edit'
+txt=. TXT, ' there'
+wd 'set ted text *',txt
+wd 'pshow;pcenter'
 )
 erase <'TXT'
 PREPARE
@@ -163,7 +163,7 @@ NB. =========================================================
 Lab Section
 Define TXT, for example as below, then press the Refresh button:
 
-   TXT=: 'Rupert Bean'
+   TXT=: 'hello'
 
 Press Run to resume and complete execution.
 )
@@ -227,7 +227,7 @@ Debug toolbar buttons:
    Stop Manager - a dialog for setting stops
 
 Function keys:
-   Ctrl+F9        - toggle stop on cursor line
+   F9             - toggle stop on cursor line
    Ctrl+Shift+F9  - remove all stops
 
 Verb dbstop, which sets stops on all lines in a definition.

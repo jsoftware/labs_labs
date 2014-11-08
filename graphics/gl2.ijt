@@ -509,7 +509,7 @@ glpolygon 0 0 200 200 100 0 0 100 200 100
 
 readpixels=: 3 : 0
 glsel GHANDLE    NB. isigraph target
-alpha17 glqpixels y  NB. get pixels
+glqpixels y  NB. get pixels
 )
 SCRIPT
 PREPARE
@@ -517,9 +517,9 @@ gl2lab_update''
 PREPARE
 gl2lab''
 pixels=: readpixels 0 0 200 200 NB. get pixels in rectangle
-$pixels NB. each pixel is an integer RGB value
-~.pixels NB. nub has blue,white, and red pixels
-256 256 256#:~.pixels
+$pixels NB. each pixel is an integer ARGB value
+~.pixels NB. nub has blue,white,red and alpha pixels
+256 256 256 256#:~.pixels
 
 NB. =========================================================
 Lab Section

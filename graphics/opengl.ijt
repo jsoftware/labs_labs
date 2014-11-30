@@ -151,7 +151,7 @@ target__ogl selects the OpenGL object opengl control as the target for gl3 comma
 
 NB. =========================================================
 Lab Section
-Sometimes you want the pixels from the drawing. These could perhaps be saved as a bmp file or used for printing.
+Sometimes you want the pixels from the drawing. These could perhaps be saved as a png file or used for printing.
 
 get_pixels creates an OpenGL object, creates a pixel buffer render context with alloc, draws, destroys the object, and returns the pixels.
 

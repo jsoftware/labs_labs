@@ -32,10 +32,10 @@ NOTE:  This lab uses the following ODBC datasources.  If these datasoures are no
 DSN     FILE, DIRECTORY or DATABASE
 ---------------------------------------------
 jdata   FoxPro or dBase driver
-        \j4\system\examples/data
+        /j4/system/examples/data
 
 jaccess ACCESS driver
-        \j4\system\examples/data/jdata.mdb
+        /j4/system/examples/data/jdata.mdb
 )
 NB. check registrations - will be list of 1's
 NB. if all DSN's are registered.

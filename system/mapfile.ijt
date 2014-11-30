@@ -18,7 +18,7 @@ NB. =========================================================
 Lab Section
 )
 require'data/jmf'        NB. map file utilities loaded in jmf
-fn=: jpath '~temp\t.txt'
+fn=: jpath '~temp/t.txt'
 'testing testing 1 2 3'  fwrite fn
 fread fn
 
@@ -202,7 +202,7 @@ createjmf parameters are the file name and the maximum size in bytes for the dat
 
 The jmf header is initialized as an empty integer list.
 )
-jdatafn=: jpath '~temp\jdata.jmf'
+jdatafn=: jpath '~temp/jdata.jmf'
 createjmf_jmf_ jdatafn;1000  NB. 1000 bytes for data
 dir jdatafn
 
@@ -551,7 +551,7 @@ map will have to explicitly provide header information.
 NB. =========================================================
 Lab Section
 )
-datafn=: jpath '~temp\data.xxx'
+datafn=: jpath '~temp/data.xxx'
 'the time has come' fwrite datafn
 
 NB. =========================================================

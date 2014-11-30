@@ -6,7 +6,7 @@
 /* File created by MIDL compiler version 5.01.0164 */
 /* at Thu Jun 22 11:55:16 2000
  */
-/* Compiler settings for default\jdll.idl:
+/* Compiler settings for default/jdll.idl:
     Os (OptLev=s), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
 */

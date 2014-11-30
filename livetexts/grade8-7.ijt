@@ -18,7 +18,6 @@ select menu Studio|Advance. Press Up Arrow or Page Up to
 recall earlier material.
 )
 PREPARE
-NB. For MAC: load ':system:packages:graphics:bmp.ijs'
 
 load 'viewmat plot'
 PLOT=:plot@(;/@|:@([,{.))

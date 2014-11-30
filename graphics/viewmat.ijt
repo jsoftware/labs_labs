@@ -11,7 +11,7 @@ There are three utilities:
 
   viewrgb - view table of RGB integers
 
-  viewbmp - view bitmap file
+  viewpng - view bitmap file
 
 viewmat is the main utility, and is used by the other verbs.
 
@@ -124,7 +124,7 @@ readmat_jviewmat_ ''  NB. reads active viewmat window
 
 savemat_jviewmat_ ''  NB. saves active viewmat window
                       NB. argument is filename,
-                      NB. default ~temp\jviewmat.bmp
+                      NB. default ~temp/jviewmat.png
 
 closeall_jviewmat_ '' NB. close all viewmat windows
 
@@ -145,7 +145,7 @@ For example, read in a bitmap file. Each number is an RGB color integer.
 PREPARE
 closeall_jviewmat_ ''
 PREPARE
-a=: readbmp jpath '~addons/labs/labs/examples/data/toucan.bmp'
+a=: readpng jpath '~addons/labs/labs/examples/data/toucan.png'
 $a
 (<40;10) { a
 |.256 256 256 #: (<40;10) { a
@@ -157,7 +157,7 @@ Display the bitmap.
 Note that you can resize this image, but the quality is only as good as the initial data.
 )
 PREPARE
-a=. readbmp jpath '~addons/labs/labs/examples/data/toucan.bmp'
+a=. readpng jpath '~addons/labs/labs/examples/data/toucan.png'
 PREPARE
 viewrgb a
 
@@ -202,13 +202,13 @@ viewrgb MG {~ hp ^:6 HP
 viewrgb 2 scale MG {~ hp ^:6 HP
 
 NB. =========================================================
-Lab Section viewbmp
-The utility viewbmp will read a bitmap file and display it using
+Lab Section viewpng
+The utility viewpng will read a bitmap file and display it using
 viewrgb.
 
 For example:
 )
-viewbmp jpath '~addons/labs/labs/examples/data/jbox.bmp'
+viewpng jpath '~addons/labs/labs/examples/data/jbox.png'
 
 NB. =========================================================
 Lab Section

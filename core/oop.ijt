@@ -135,9 +135,9 @@ r
 )
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbc.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbc.ijs'
 PREPARE
-open jpath '~temp\pbc.ijs'
+open jpath '~temp/pbc.ijs'
 
 NB. =========================================================
 Lab Section
@@ -177,7 +177,7 @@ coreset''
 PREPARE
 conl 0  NB. list locale names
 
-load '~temp\pbc.ijs'
+load '~temp/pbc.ijs'
 
 conl 0  NB. notice new pbc locale
 
@@ -434,10 +434,10 @@ destroy_pbc_ f. y  NB. our parent's destroy
 getfirst=: verb def 'get {. keys'
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbcx.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbcx.ijs'
 PREPARE
-open jpath '~temp\pbcx.ijs'
-load '~temp\pbcx.ijs'
+open jpath '~temp/pbcx.ijs'
+load '~temp/pbcx.ijs'
 
 NB. =========================================================
 Lab Section
@@ -586,10 +586,10 @@ destroy=: codestroy
 get=: verb def 'sn=:>:sn'
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\psn.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/psn.ijs'
 PREPARE
-open jpath '~temp\psn.ijs'
-load '~temp\psn.ijs'
+open jpath '~temp/psn.ijs'
+load '~temp/psn.ijs'
 
 NB. =========================================================
 Lab Section
@@ -628,10 +628,10 @@ r
 )
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbq.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbq.ijs'
 PREPARE
-open jpath '~temp\pbq.ijs'
-load '~temp\pbq.ijs'
+open jpath '~temp/pbq.ijs'
+load '~temp/pbq.ijs'
 
 NB. =========================================================
 Lab Section
@@ -726,10 +726,10 @@ r
 )
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbs.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbs.ijs'
 PREPARE
-open jpath '~temp\pbs.ijs'
-load '~temp\pbs.ijs'
+open jpath '~temp/pbs.ijs'
+load '~temp/pbs.ijs'
 
 NB. =========================================================
 Lab Section

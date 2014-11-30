@@ -26,10 +26,10 @@ NOTE: to run this lab you must register the following data sources with the ODBC
  -----------------------------------------
 
  jdata   FoxPro or Dbase driver directory
-         \j5\system\examples/data/
+         /j5/system/examples/data/
 
  messier EXCEL driver and spreadsheet file
-         \j5\system\examples/data/messier.xls
+         /j5/system/examples/data/messier.xls
 
 )
 
@@ -91,10 +91,10 @@ Lab Section
 (readnoun) and (writenoun) read and write J noun files. There are no restrictions on the type of data that can be saved.  Any J array can be stored and retrieved.
 )
 NB. write array to file
-(5 5$(i. 2 2);'any data') writenoun jpath '~temp\any.ijn'
+(5 5$(i. 2 2);'any data') writenoun jpath '~temp/any.ijn'
 
 NB. read array from file
-readnoun jpath '~temp\any.ijn'
+readnoun jpath '~temp/any.ijn'
 
 NB. =========================================================
 Lab Section Inverting tdata
@@ -113,7 +113,7 @@ Lab Section
 Save the columns of tdata.
 )
 NB. define a save columns verb and use it
-savecols =: 13 : '(". y) writenoun jpath ''~temp\'',(y-.'' ''),''.ijn'''
+savecols =: 13 : '(". y) writenoun jpath ''~temp/'',(y-.'' ''),''.ijn'''
 
 NB. save all tdata columns
 savecols&> cols
@@ -124,14 +124,14 @@ List the contents of the save directory.  Each column of tdata will appear as a 
 )
 require 'dir'
 
-dir jpath '~temp\*.ijn'
+dir jpath '~temp/*.ijn'
 
 NB. =========================================================
 Lab Section Getting inverted data
 The data can be read back with readnoun.  This is basically the technique of inversion.  Writing entire columns of data as simple lists.
 )
 NB. get the sex and recompute the sex ratio
-dat =: readnoun jpath '~temp\sex.ijn'
+dat =: readnoun jpath '~temp/sex.ijn'
 
 (+/'M'=dat)%#dat =: ,dat  NB. data is not boxed
 

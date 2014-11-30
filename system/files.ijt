@@ -312,13 +312,13 @@ NB. =========================================================
 Lab Section fsize
 fsize returns the size of a file in bytes. By the way, this is the script file that defines the file verbs.
 )
-fsize jpath '~system\main\stdlib.ijs'
+fsize jpath '~system/main/stdlib.ijs'
 
 NB. =========================================================
 Lab Section fstamp
 fstamp returns the date and time a file is created in J timestamp format.
 )
-fstamp jpath '~system\main\files.ijs'
+fstamp jpath '~system/main/stdlib.ijs'
 
 NB. =========================================================
 Lab Section fss
@@ -499,7 +499,7 @@ Another interesting verb available in 1!: is:
 
    1!:20     File numbers and names of open files
 )
-]h=:fopen 'labfile.txt';jpath '~system\main\files.ijs'
+]h=:fopen 'labfile.txt';jpath '~system/main/stdlib.ijs'
 1!:20 ''
 fclose"0 h
 1!:20 ''

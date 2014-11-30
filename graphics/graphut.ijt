@@ -5,7 +5,7 @@ NB. =========================================================
 Lab Section Introduction
 This lab describes the graph utilities (Graph) included with J. These apply to Windows GDI graphics, not OpenGL graphics.
 
-GDI graphics are drawn in an isigraph control. A set of "gl2" commands, defined in script system\main\gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
+GDI graphics are drawn in an isigraph control. A set of "gl2" commands, defined in script system/main/gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
 
 The Graph utilities are a set of cover functions for the most commonly used gl2 commands, that simplify drawing into the control.
 )
@@ -67,8 +67,8 @@ glrect_jgl2_ (wh,wh) * 300 300 400 400 % 1000
 gl2demo_run''
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\gl2demo.ijs'
-open jpath '~temp\gl2demo.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/gl2demo.ijs'
+open jpath '~temp/gl2demo.ijs'
 NB. tile_jijs_''
 PREPARE
 
@@ -79,7 +79,7 @@ The next section draws the same square using Graph.
 PREPARE
 3 : 0''
 if. 0=wdisparent <'gl2demo' do.
-  load '~temp\gl2demo.ijs'
+  load '~temp/gl2demo.ijs'
 end.
 PREPARE
 
@@ -254,7 +254,7 @@ Lab Section
 Here are the remaining commands:
 
   gdadd        wrap gd add drawing command
-  gdbmp        save to bitmap file
+  gdpng        save to bitmap file
   gdclip       save to clipboard (windows only)
   gddraw       wrap gd drawing command
   gdemf        save to emf file (windows only)

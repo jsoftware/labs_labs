@@ -9,6 +9,11 @@ SCRIPT
 require'gl2'   NB. load gl2 definitions in jgl2 locale
 coinsert'jgl2' NB. allow use of gl2... without _jgl2_
 
+NB. temp fix
+setalpha_z_=: 16bff&$: : (4 : 0)
+((_32&(34 b.))^:IF64 _8 (32 b.) x)&(23 b.) 16bffffff (17 b.) y
+)
+
 GL2LAB=: 0 : 0
 pc gl2lab closeok;
 minwh 200 200;cc g isigraph;
@@ -37,7 +42,7 @@ SCRIPT
 PREPARE
 goto=: 3 : 'lab_jlab_ 0[NDX_jlab_=:(<.#SECTIONDATA_jlab_)<.0>.<:y'
 gl2boiler=: toHOST SCRIPT_jlab_
-gl2labijs=: <jpath '~temp\gl2lab.ijs'
+gl2labijs=: <jpath '~temp/gl2lab.ijs'
 gl2lab_update=: 3 : 0
 t=.gl2boiler,toHOST SCRIPT_jlab_
 t 1!:2 gl2labijs
@@ -531,11 +536,12 @@ Run gl2lab a few times to see the pixels change.
 )
 SCRIPT
 gl2lab_g_paint=: 3 : 0
-white=.256#.3#255
+NB. white with alpha channel
+white=. setalpha 256#.3#255
 NB. get indexes of non white pixels
 i=. (pixels~:white)#i.#pixels
 NB. replace those pixels with random colors
-newp=. (27 b.) & 16bffffff (?(#i)#white) i}pixels
+newp=. (?(#i)#white) i}pixels
 glpixels 10 10 200 200,newp
 )
 SCRIPT
@@ -546,10 +552,10 @@ gl2lab''
 
 NB. =========================================================
 Lab Section
-The pixels are saved as file gl2lab.bmp. Try using this bmp file in some other application such as word.
+The pixels are saved as file gl2lab.png. Try using this png file in some other application such as word.
 )
-require'bmp' NB. define writebmp
-(200 200$pixels) writebmp jpath'~temp\gl2lab.bmp'
+require'png' NB. define writepng
+(200 200$pixels) writepng jpath'~temp/gl2lab.png'
 
 NB. =========================================================
 Lab Section

@@ -415,7 +415,7 @@ To save another named window use
    formname  save  filename
 
 If the file name is not given it defaults to
-   jpath 'temp\graph.emf'
+   jpath 'temp/graph.emf'
 )
 
 NB. =========================================================
@@ -597,7 +597,7 @@ NB. =========================================================
 Lab Section Saving graphs
 To save a graph it is usually easiest to save it to a file.  It defaults to a file name of type  .emf  in windows.
 
-   save 'c:\temp\mydiagram'
+   save 'c:\temp/mydiagram'
 
 will save the file as a windows emf file in your temp directory.
 
@@ -806,8 +806,8 @@ addlabels'a'
 show a
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\turtledemo.ijs'
-open jpath '~temp\turtledemo.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/turtledemo.ijs'
+open jpath '~temp/turtledemo.ijs'
 
 tile_jijs_''
 PREPARE
@@ -816,7 +816,7 @@ NB. =========================================================
 Lab Section
 We have run the script and you can use the task bar to display the graph if it is not visible.
 )
-load < jpath '~temp\turtledemo.ijs'
+load < jpath '~temp/turtledemo.ijs'
 
 NB. =========================================================
 Lab Section

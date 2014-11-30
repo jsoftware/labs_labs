@@ -2,7 +2,7 @@ NB. servfnsw.ijs      - socket execution server
 NB.
 NB. This script sets up J as a socket execution server.
 NB.
-NB. For details see file: system\examples/socket/socket.txt
+NB. For details see file: system/examples/socket/socket.txt
 
 cocurrent 'z'
 

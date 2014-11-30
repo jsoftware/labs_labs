@@ -171,8 +171,8 @@ sum =: (+each)/
 Interc =: conjunction : '>@sum x Tfm each y'
 pind =:  <each @{@ ,~ @ <        NB. partitioning indices
 pmat =: pind@] {each <@[         NB. partitioned matrix
-require '~addons\math\lapack\lapack.ijs'
-require '~addons\math\lapack\dgeev.ijs'
+require '~addons/math/lapack/lapack.ijs'
+require '~addons/math/lapack/dgeev.ijs'
 eiv =: >@(1&{)@dgeev_jlapack_   NB. compute eigenvalues
 eivs =: eiv@(] ..tr)            NB. eivs G <-> eiv(G+tr G)%2
 conn =: |."1 @ ($ (#.^:_1) i.@(*/@$))        NB. connections
@@ -861,8 +861,8 @@ Remark. One eigenvalue of a 0-sum matrix G is always 0 since
 
 In J we can use the eigenvalue finder in the addon "lapack":
 )
-require '~addons\math\lapack\lapack.ijs'
-require '~addons\math\lapack\dgeev.ijs'
+require '~addons/math/lapack/lapack.ijs'
+require '~addons/math/lapack/dgeev.ijs'
 eiv =: >@(1&{)@dgeev_jlapack_   NB. compute eigenvalues
 eivs =: eiv@(] ..tr)            NB. eivs G <-> eiv(G+tr G)%2
 

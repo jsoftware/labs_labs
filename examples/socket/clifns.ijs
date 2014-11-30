@@ -1,6 +1,6 @@
 NB. clifns.ijs    - example of socket client
 NB.
-NB. for details see file: system\examples/socket/socket.txt
+NB. for details see file: system/examples/socket/socket.txt
 NB.
 NB.   sockopen        - open connection
 NB.
@@ -21,7 +21,7 @@ NB.   fromcode        - decode transmitted data
 NB.   tocode          - encode data for transmission
 
 load 'socket'
-load '~system\extras\migrate\socket.ijs'
+load '~system/extras/migrate/socket.ijs'
 cocurrent 'base'
 cocurrent 'z'
 

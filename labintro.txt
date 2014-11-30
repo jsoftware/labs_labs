@@ -86,5 +86,5 @@ NB. =========================================================
 Lab Section Lab Author
 The Lab Author system available from menu Studio|Author... allows you to build or edit labs.
 
-To experiment, select Studio|Author... and open up the lab system\author.ijt.
+To experiment, select Studio|Author... and open up the lab system/author.ijt.
 )

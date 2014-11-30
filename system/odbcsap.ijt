@@ -18,7 +18,7 @@ NB. =========================================================
 Lab Section A good spreadsheet layout for ODBC
 This lab uses the spreadsheet
 
-system\examples/data/expense.xls
+system/examples/data/expense.xls
 
 The next step checks to see if this spreadsheet is registered as an ODBC datasource.  If the spreadsheet is not registered use the ODBC control panel applet to register it with a DSN (data set name) of "expenses"
 )

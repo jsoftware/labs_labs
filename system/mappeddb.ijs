@@ -8,7 +8,7 @@ require 'data/jmf'
 ROWS=:    1e6    NB. 1 million records
 
 GROWTH=:  20          NB. extra records for file size
-PATH=:    jpath '~temp\vr\'  NB. path for VR database files
+PATH=:    jpath '~temp/vr/'  NB. path for VR database files
 COMFILE=: PATH,'comment'
 LICVALS=: '12345ABCDE'
 VR=:      'lic';'make';'color';'year';'fine';'firstname';'lastname';'comment'

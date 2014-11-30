@@ -1,6 +1,6 @@
 NB. servfns.ijs      - socket execution server
 NB.
-NB. see file: system\examples/socket/socket.txt for details
+NB. see file: system/examples/socket/socket.txt for details
 NB.
 NB. The server accepts commands in the following format:
 NB.
@@ -13,7 +13,7 @@ NB.  'get';'name'       - retrieves encoded value of name
 NB.  'set';'name';codes - sets name to encoded value
 
 load 'socket'
-load '~system\extras\migrate\socket.ijs'
+load '~system/extras/migrate/socket.ijs'
 
 cocurrent 'base'
 cocurrent 'z'

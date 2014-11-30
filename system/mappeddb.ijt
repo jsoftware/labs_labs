@@ -64,7 +64,7 @@ Some of the following steps may take many seconds to run. Access to the VR datab
 NB. =========================================================
 Lab Section
 The next step builds a file for the lic field:
- creates file temp/vr\lic.jmf
+ creates file temp/vr/lic.jmf
  maps name lic to the file
  sets values for lic for each row in the table
 

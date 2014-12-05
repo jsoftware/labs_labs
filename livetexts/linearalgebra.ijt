@@ -1827,8 +1827,8 @@ hex=:,c=:+.r   NB. Coords and ravelled coords of hexagon
 load 'graph'
 red=:255 0  0
 gdopen ''
-red gdpolygon hex
 gdshow''       NB. Esc to remove the plot and continue
+red gdpolygon hex
 
 NB. =========================================================
 Lab Section
@@ -1839,8 +1839,8 @@ rhex=:,+.r6*r
 2 digits hex ,:rhex
 
 gdopen ''
-red gdpolygon hex,:rhex
 gdshow''
+red gdpolygon hex,:rhex
 
 NB. =========================================================
 Lab Section 9. Normed Vector Spaces
@@ -2470,8 +2470,8 @@ hex=:+.(6%:_1)^2*i.6
 4 digits hex mp R 1r6p1
 load 'plot'
 gdopen''
-255 0 0 gdpolygon ,hex mp R 1r6p1
 gdshow''
+255 0 0 gdpolygon ,hex mp R 1r6p1
 
 NB. =========================================================
 Lab Section

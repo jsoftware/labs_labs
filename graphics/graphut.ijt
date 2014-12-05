@@ -130,9 +130,9 @@ All Graph utilities have names beginning gd, Graph Driver.
 There are 4 types of commands:
 
    gdopen          open a graph window
+   gdshow          show command
    gdcolor, etc.   state-setting commands, e.g. set color
    gdrect,  etc.   drawing commands
-   gdshow          show command
 )
 PREPARE
 closewindows_jijs_ ''
@@ -144,17 +144,17 @@ Lab Section
 To illustrate, here is a verbose way of drawing the square:
 )
 gdopen ''                 NB. open graph window
+gdshow''                  NB. show it
 gdcolor GREEN             NB. set color
 gdrect _0.4 _0.4 0.8 0.8  NB. define rectangle
-gdshow''                  NB. show it
 
 NB. =========================================================
 Lab Section
 To simplify this, note first that drawing commands such as gdrect take an optional left argument that is the color. So you could enter:
 )
 gdopen ''                 NB. open graph window
-YELLOW gdrect _0.4 _0.4 0.8 0.8  NB. define rectangle
 gdshow''                  NB. show it
+YELLOW gdrect _0.4 _0.4 0.8 0.8  NB. define rectangle
 
 NB. =========================================================
 Lab Section
@@ -183,23 +183,23 @@ If a non-empty argument is given to gdopen, it is the name of the parent window.
 
 Move the "def" window away to reveal the "abc" window.
 )
-gdopen 'abc'
-gdshow AQUA gdrect _0.4 _0.4 0.8 0.8
+gdshow gdopen 'abc'
+AQUA gdrect _0.4 _0.4 0.8 0.8
 
-gdopen 'def'
-gdshow TEAL gdpolygon ,0.7 * (cos,.sin) 2p1 * int01 5
+gdshow gdopen 'def'
+TEAL gdpolygon ,0.7 * (cos,.sin) 2p1 * int01 5
 
 NB. =========================================================
 Lab Section
 Use gdpencolor to set pen color, and gdcolor to set the brush color.
 )
 gdopen''
+gdshow''
 gdcolor GREEN
 gdrect01 0.1 0.1 0.2 0.4
 gdpen 10 0
 gdpencolor RED
 gdlines ,0.7 * (cos,.sin) 4p1 * int01 5
-gdshow''
 
 NB. =========================================================
 Lab Section
@@ -213,12 +213,12 @@ The arguments to gdtext are:
 where alignment is 0=left,1=center,2=right
 )
 gdopen''
+gdshow''
 gdfont 'arial 12 bold'
 gdtextcolor RED
 gdtext01 0.5 0.7;1;'red centered'
 BLUE gdtext01 0.5 0.5;0;'blue left'
 GREEN gdtext01 0.5 0.3;2;'green right'
-gdshow''
 
 NB. =========================================================
 Lab Section

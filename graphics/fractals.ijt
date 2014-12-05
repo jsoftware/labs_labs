@@ -72,8 +72,8 @@ Note that the right argument to gdpolyon should be a list of points. A matrix wo
 Now try drawing a blue hexagon (6 sides) before continuing the lab.
 )
 gdopen ''
-RED gdpolygon ,+. r. 2p1*(i.5)%5
 gdshow''
+RED gdpolygon ,+. r. 2p1*(i.5)%5
 
 NB. =========================================================
 Lab Section
@@ -86,8 +86,8 @@ Try varying the 2p1 multiplier to produce different shapes.
 ((i.5)%5) ; int01 5
 
 gdopen ''
-BLUE gdpolygon ,+. r. 6p1 * int01 11
 gdshow''
+BLUE gdpolygon ,+. r. 6p1 * int01 11
 
 NB. =========================================================
 Lab Section Simplify Code
@@ -104,8 +104,8 @@ Lab Section
 Next, the sequence:
 
    gdopen''
-   gdpolygon data
    gdshow''
+   gdpolygon data
 
 can be written in a single line, as:
 
@@ -119,8 +119,8 @@ Lab Section
 For example, the line of code run below is equivalent to:
 
   gdopen''
-  TEAL gdpolygon ,7 polygon 15
   gdshow''
+  TEAL gdpolygon ,7 polygon 15
 )
 TEAL gdpolygon gddraw ,7 polygon 15
 
@@ -142,9 +142,9 @@ See if you can reproduce the "lab" figure.
 )
 PREPARE
 gdopen 'fvjlab';'lab'
+gdshow''
 YELLOW gdpolygon ,2 polygon 7
 GREEN gdpolygon 0.62 * ,3 polygon 7
-gdshow''
 PREPARE
 
 NB. =========================================================
@@ -307,8 +307,8 @@ Can you reproduce the "lab" example?
 PREPARE
 t=: steps 0 2p1 1000
 gdopen 'lab'
-gdlines ,0.9 * (cos@(5&*) ,. sin@(8&*)) t
 gdshow''
+gdlines ,0.9 * (cos@(5&*) ,. sin@(8&*)) t
 PREPARE
 
 NB. =========================================================
@@ -433,8 +433,8 @@ Can you reproduce the lab figure?
 )
 PREPARE
 gdopen 'fvjlab';'lab'
-RED gdpolygon , refine ^:4 [ 3 polygon 4
 gdshow''
+RED gdpolygon , refine ^:4 [ 3 polygon 4
 PREPARE
 
 NB. =========================================================

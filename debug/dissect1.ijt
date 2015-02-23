@@ -1,0 +1,389 @@
+LABTITLE=: 'Dissect I'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Chapter Intro
+NB. =========================================================
+Lab Section What is it?
+Dissect is an aid to analyzing J sentences.
+
+It graphically displays the execution of a J sentence in a
+way that makes it easier to see what's going on. It is
+particularly valuable in finding the cause of an error.
+)
+require 'debug/dissect'
+
+NB. =========================================================
+Lab Chapter 1st Example
+NB. =========================================================
+Lab Section Display
+Let's take a look at what dissect displays.
+)
+PREPARE
+dissectonce =: 3 : 0
+4!:55 <'dissect_base_'
+handle =: 2 dissect y
+0 0 $0
+)
+dissect =: dissectonce
+PREPARE
+dissect '100 200 + i.2 3'
+
+NB. =========================================================
+Lab Section How a noun is displayed
+The J text of sentence under consideration is shown at the top.
+
+Execution flows from the top of the diagram to the bottom.
+
+The '2 3' list is the first block. As in all noun blocks, the top line is its shape, and under that is its value. That the value is '2 3', not '23', is indicated by the background shading. Other noun displays also use this space saving trick.
+)
+
+NB. =========================================================
+Lab Section How a verb is displayed
+The first block is input to the i. verb.
+
+The top line of the verb block is the verb name and its rank. Under that is the result of the execution of the verb. Observe that i. has a monadic rank of 1 and the result of its operation on the noun 2 3 has shape 2 3 and value 0 1 2 ,: 3 4 5 .
+)
+
+NB. =========================================================
+Lab Section
+The '100 200' noun and the result of the i. verb are input to the + verb. The left and right ranks of the dyadic + are shown beside the + symbol, and below that are the shape and value of the result of its execution. That result, since it is the last result, is the final result of the sentence.
+
+The rank of the i. verb is in normal font but the ranks of the + verb are in bold italics. That indicates that the rank of the i. verb is 'inactive', in that it does not subdivide its input into operand cells, and both ranks of the + verb are 'active', because they both subdivide their inputs into operand cells.
+)
+
+NB. =========================================================
+Lab Section Tooltips
+Hover the cursor over elements of the diagram to see associated tooltips. You can change the level of detail in the tooltips using the menu option Tooltips|Detail. You can change how quickly the tooltips appear using the menu option Tooltips|Delay.
+)
+
+NB. =========================================================
+Lab Section The inputs for a particular result cell
+Select a cell of the final result by clicking on it. The block expands to display which cell you selected under the result shape. If you selected '204', '1 1' appears.
+
+In the input blocks we see the input cells that went into that final result cell outlined in green.
+
+In the sentence display at the top of the window, we see the + verb in green, because the result of that verb has been selected.
+)
+
+NB. =========================================================
+Lab Chapter Hidden intermediate results
+NB. =========================================================
+Lab Section Which results are hidden?
+Certain intermediate results are not displayed because they might not fit into an array. They can be displayed individually as inputs to a later result.
+
+The result cells of the verb v in u@v, u&v or u&.v can have different shapes or even different types. Those results are hidden until you select (by clicking on it) a cell of the u verb's result. Then the result cell(s) of v that contribute to the result cell you selected are displayed.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '#@> ;: ''there is a tide'''
+
+
+NB. =========================================================
+Lab Section See the hidden results
+Select one of the final result cells. One of result cells of the > verb is displayed. It is the one used in producing the final result cell you selected. Observe that the result you clicked on is the # of items in the visible result cell of >.
+
+
+The 'a' in the result is in bold italics to alert you to the fact that although it looks like an atom, it is a 1-element list.
+)
+
+NB. =========================================================
+Lab Chapter Another example of hidden results
+NB. =========================================================
+Lab Section When results are hidden
+When an intermediate result is in a frame it can be shown, because every cell must have the same type and shape. If there is no frame for the intermediate result, the cells could be incompatible, as here.
+
+Click on the 2 in the final result and dissect displays the corresponding intermediate result, 'ab'. The other intermediate result is a 3-atom numeric list. The two intermediate results cells have different shapes and types; they can not be shown together in the same result.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '#@> ''ab'';1 2 3'
+
+NB. =========================================================
+Lab Chapter Diagnosing errors
+NB. =========================================================
+Lab Section Display of erroneous sentence
+The sentence shown below, adding some numbers to the average of some other numbers, raises a length error. Dissect can help help us to see what's wrong.
+
+The error is flagged on the + verb with the bright red word 'agreement'.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+NB. Add 6 5 3 to average of 3 9 6 */ 1 5 9 2
+dissect '6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2'
+
+NB. =========================================================
+Lab Section Color cues
+Hover the cursor over the red 'agreement' block. The tooltip refers you to the ranks of the operands of the + verb.
+The operands do not 'agree', in that the left frame is 3 and the right frame is 4; i. e. + is trying to add a list of 3 numbers to a list of 4 numbers.
+)
+
+NB. =========================================================
+Lab Chapter More color cues
+NB. =========================================================
+Lab Section Shapes
+Dissect gives you more information with the colors of the various elements.
+
+A noun block always shows the noun's shape in white type on a darker background. The first block in the display illustrates this.
+
+A verb block shows the shape of its result in two parts, either of which may be empty. The frame into which result cells are assembled is in black type on a lighter background and the shape of a result cell is in white type on a dark background. The shape of the whole result is the concatenation of the frame shape and the result cell shape.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '(i.3) +"1"2 i.3 4 3'
+
+NB. =========================================================
+Lab Section Rank stack
+The reason there is a stack of 3 ranks for the + verb is that the results of 3 verbs are being shown in the same block: +"1"2, +"1, and +.  Selection applies to those verbs in turn, including a final selection that selects a single cell of + for highlighting.
+
+Note that some of the ranks in the rank stack are in bold italics. 
+If the rank in the rank stack actually affects the result (i. e. if the frame is nonempty), it is displayed as bold-italic.  Otherwise it is displayed normal, and is informational only.
+)
+
+NB. =========================================================
+Lab Section Highlighting inputs to a result cell
+When a verb is executed on multiple cells, and the results are assembled into a final result, the entire result is displayed.  You may select a cell to highlight its inputs.
+
+A selected result cell is colored the same color as its inputs and the associated rank(s) in the rank stack, and the verb in the sentence display at the top of the window.
+
+Click once on a result of the +"1"2 verb. The result cell you select changes color to match the verb that produced it, +"1. The cells of the inputs that went into it are outlined in the same color.
+
+Click again in the same place to select a smaller cell. The color of that cell matches the the verb that produced it, +, and the inputs that produced it.
+)
+
+NB. =========================================================
+Lab Section Frame and result cell shape
+Click the << button at the upper left corner to put the display back into its initial configuration.
+
+The shape of the noun result of a verb is the frame of the operands catenated with the shape of a result cell. In the shape of the result the frame is shown in black and the result cell shape is in white.
+
+Note that the shape of the + result is for the +"2"1 verb. Its frame shape is 3 and the result cell shape is 4 3.
+
+Now select a cell. The shape is now for the +"1 verb. Its frame shape is 3 4 and the result cell shape is 3.
+
+Select again in the same place. The shape is now for the + (rank 0) verb. Its frame shape is 3 4 3 and the result cell shape is empty.
+)
+
+NB. =========================================================
+Lab Chapter Large Values
+NB. =========================================================
+Lab Section Large Values
+Large Values
+
+This is similar to the previous example, but the results are too large to fit on the screen.
+
+To scroll the whole display within the window, click any empty point on the screen and drag it.
+
+The Sizes menu allows changes to how much of a result is shown.
+
+You can use the scroll bars to see the part of a result that's out of sight. You can also right click anywhere in the result to bring up a window devoted entirely to the display of its value. You may scroll around this window and make selections, consequences of which will be shown on the main view.
+
+Right-clicking the data in the expanded window will close it.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '(i.3) +"1"2 i.12 40 3'
+
+NB. =========================================================
+Lab Chapter Dimensions in the noun display
+NB. =========================================================
+Lab Section Blue lines
+A noun with more than two dimensions will display items of 3rd through nth dimension separated by increasingly thick blue lines.
+
+Here, the 2x2 tables are separated by thin blue lines. The 2x2x2 bricks are separated by thicker blue lines. The 2x2x2x2 hyperbricks are separated by even thicker blue lines, etc.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect 'i. 2 2 2 2 2 2'
+
+NB. =========================================================
+Lab Chapter Undisplayed Elements
+NB. =========================================================
+Lab Section Reflex ~
+Some adverbs, and the hook, and the fork are not explicitly shown. Their action shows up in the 'wiring' of the diagram.
+
+The ~ is not in the diagram, but it has caused a reversal of the inputs to the % verb.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '10 %~ 5'
+
+NB. =========================================================
+Lab Chapter More undisplayed elements
+NB. =========================================================
+Lab Section Atop @
+The @ appears nowhere in the diagram, but its effect is shown in that 3 4 is appended (,) to 1 2, and that result is input to the monadic box (<).
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '1 2 <@, 3 4'
+
+NB. =========================================================
+Lab Chapter @ vs @:
+NB. =========================================================
+Lab Section Rank
+The verb u@v has the ranks of v; the verb u@:v has infinite ranks (i.e., each operand is one big cell). The rank of *: (square) is 0, so each atom of <@*: is boxed. The whole result of <@:*: is in one box.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '(<@*: i.3);<@:*: i.3'
+
+NB. =========================================================
+Lab Chapter Fork
+NB. =========================================================
+Lab Section Diagram of a fork
+A fork is shown in the sequence of operation; The results of +. and # are input for the % verb.
+
+Select (click) the result of +/ to see the intermediate additions that contributed to it.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '(+/%#) 20 22 24 35 40 46'
+
+NB. =========================================================
+Lab Chapter Fork Continued
+NB. =========================================================
+Lab Section Rank
+Note the ranks of the verbs in the two forks.
+
+A fork has infinite rank so +/%# on a 3 4 5 brick computes a 4x5 table which is the average of the three tables which are items of of the brick.
+
+Specifying that the fork operates on rows ("1) causes it to compute a 3x4 table of row averages.
+
+Note that the tines of the fork (+/ and #) use the fork rank but the the shaft of the fork (%) keeps its rank.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '((+/%#)a);(+/%#)"1 a'[a=:i. 3 4 5
+
+NB. =========================================================
+Lab Chapter Failed Fork
+NB. =========================================================
+Lab Section Order of Execution
+If +/%# were interpreted as a fork, the result would be the average of the list of numbers, but instead, the right-left evaluation first executes # on the list, then % on that result, then +/ on that result.
+
+The diagram makes it easy to see what went wrong.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '+/%# 24 22 31 40 46'
+
+NB. =========================================================
+Lab Chapter Under (&.:)
+NB. =========================================================
+Lab Section Standard Deviation example of using &.:
+Calculations done under a transformation are easy to express in J. Standard deviation is the average of the differences from the mean under the transformation of squaring.
+The Dissect diagram shows both operations, squaring and square root.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+]values =: 10?100
+]mean =: (+/%#) values
+NB. Population standard deviation
+dissect '(+/ % #)&.:*: mean - values'
+
+NB. =========================================================
+Lab Chapter Under (&.)
+NB. =========================================================
+Lab Section each (&.<)
+The predefined adverb 'each' opens a box, performs its verb, then reboxes the result.
+In effect, it makes its verb operate inside the box.
+The Dissect diagram shows only the effect, the verb operating inside the box.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '{:&.> ''Nixon'';''Carter'';''Reagan'''
+
+NB. =========================================================
+Lab Chapter Fills Example 1
+NB. =========================================================
+Lab Section Open
+When cells of different shapes are joined into a result, the short ones are padded out with fill values. Fill values are blanks or zeroes, appropriately for type, unless specified with the !. conjunction. Fill is indicated by single crosshatching.
+
+When a result is requires fill, the shape after fill is shown, with the shape before fill in parentheses.
+
+Here, opening (<) a 4x2 table of boxes creates a 4x2 table of lists, the longest of which is 15 characters, so the shorter ones are padded to that length.
+
+The diagram shows that the fills were added in the open (>) verb; as far as the ravel (,) verb knows, the spaces were always there.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+]names =: _2 ]\ ;: 'George Washington John Adams Thomas Jefferson Joe Rumpelstiltskin'
+dissect ',"2 > names'
+
+NB. =========================================================
+Lab Chapter Fills Example 2
+NB. =========================================================
+Lab Section Raze
+Raze (;) opens the boxed strings and catenates them. This is done one line at a time, as specified by ("1).
+
+Fill characters are added to make all the lines the same length.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect ';"1 names'
+
+NB. =========================================================
+Lab Chapter Fills Example 3
+NB. =========================================================
+Lab Section Clever use of primitive :;
+The obverse (^:_1) of the 'words' verb (;:) opens the boxed words and puts them into a character string, separated by spaces. This is done one line at a time, as specified by ("1).
+
+This gives the same result as the last example (;"1 names) except the 'words' (;:) obverse verb separates words with a space.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect ';:^:_1"1 names'
+
+NB. =========================================================
+Lab Chapter Leading Unit Axis
+NB. =========================================================
+Lab Section J display vs Dissect display
+A noun with a leading 1 its shape is a potential source of error. It is a list of one item, and the item can be any shape. Examples are a one-atom list and a one-row table.
+
+In the J session they look the same as they would without the leading 1 in the axis. Note that the nouns a, b and c look the same in the J session although their shapes are, respectively, empty, 1 and 1 1.
+
+Dissect calls attention to such nouns by displaying their values in bold italic font.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+a=:42 [b=:,:42 [c=:,:,:42
+($a);($b);$c
+a;b;c
+dissect 'a;b;c'

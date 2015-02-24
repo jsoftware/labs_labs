@@ -31,7 +31,7 @@ dissect '100 200 + i.2 3'
 
 NB. =========================================================
 Lab Section How a noun is displayed
-The J text of sentence under consideration is shown at the top.
+The J text of the sentence under consideration is shown at the top.
 
 Execution flows from the top of the diagram to the bottom.
 
@@ -49,7 +49,7 @@ NB. =========================================================
 Lab Section
 The '100 200' noun and the result of the i. verb are input to the + verb. The left and right ranks of the dyadic + are shown beside the + symbol, and below that are the shape and value of the result of its execution. That result, since it is the last result, is the final result of the sentence.
 
-The rank of the i. verb is in normal font but the ranks of the + verb are in bold italics. That indicates that the rank of the i. verb is 'inactive', in that it does not subdivide its input into operand cells, and both ranks of the + verb are 'active', because they both subdivide their inputs into operand cells.
+The rank of the i. verb is in regular font but the ranks of the + verb are in bold italics. That indicates that the rank of the i. verb is 'inactive', in that it does not subdivide its input into argument cells, and both ranks of the + verb are 'active', because they both subdivide their inputs into argument cells.
 )
 
 NB. =========================================================
@@ -120,8 +120,8 @@ dissect '6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2'
 
 NB. =========================================================
 Lab Section Color cues
-Hover the cursor over the red 'agreement' block. The tooltip refers you to the ranks of the operands of the + verb.
-The operands do not 'agree', in that the left frame is 3 and the right frame is 4; i. e. + is trying to add a list of 3 numbers to a list of 4 numbers.
+Hover the cursor over the red 'agreement' block. The tooltip refers you to the ranks of the arguments of the + verb.
+The arguments do not 'agree', in that the left frame is 3 and the right frame is 4; i. e. + is trying to add a list of 3 numbers to a list of 4 numbers.
 )
 
 NB. =========================================================
@@ -145,7 +145,7 @@ Lab Section Rank stack
 The reason there is a stack of 3 ranks for the + verb is that the results of 3 verbs are being shown in the same block: +"1"2, +"1, and +.  Selection applies to those verbs in turn, including a final selection that selects a single cell of + for highlighting.
 
 Note that some of the ranks in the rank stack are in bold italics. 
-If the rank in the rank stack actually affects the result (i. e. if the frame is nonempty), it is displayed as bold-italic.  Otherwise it is displayed normal, and is informational only.
+If the rank in the rank stack actually affects the result (i. e. if the frame is nonempty), it is displayed as bold-italic.  Otherwise it is displayed regular, and is informational only.
 )
 
 NB. =========================================================
@@ -163,7 +163,7 @@ NB. =========================================================
 Lab Section Frame and result cell shape
 Click the << button at the upper left corner to put the display back into its initial configuration.
 
-The shape of the noun result of a verb is the frame of the operands catenated with the shape of a result cell. In the shape of the result the frame is shown in black and the result cell shape is in white.
+The shape of the noun result of a verb is the frame of the arguments catenated with the shape of a result cell. In the shape of the result the frame is shown in black and the result cell shape is in white.
 
 Note that the shape of the + result is for the +"2"1 verb. Its frame shape is 3 and the result cell shape is 4 3.
 
@@ -238,7 +238,7 @@ NB. =========================================================
 Lab Chapter @ vs @:
 NB. =========================================================
 Lab Section Rank
-The verb u@v has the ranks of v; the verb u@:v has infinite ranks (i.e., each operand is one big cell). The rank of *: (square) is 0, so each atom of <@*: is boxed. The whole result of <@:*: is in one box.
+The verb u@v has the ranks of v; the verb u@:v has infinite ranks (i.e., each argument is one big cell). The rank of *: (square) is 0, so each atom of <@*: is boxed. The whole result of <@:*: is in one box.
 )
 PREPARE
 destroy__handle''
@@ -326,7 +326,7 @@ NB. =========================================================
 Lab Chapter Fills Example 1
 NB. =========================================================
 Lab Section Open
-When cells of different shapes are joined into a result, the short ones are padded out with fill values. Fill values are blanks or zeroes, appropriately for type, unless specified with the !. conjunction. Fill is indicated by single crosshatching.
+When cells of different shapes are joined into a result, the short ones are padded out with fill values. Fill values are blanks, zeroes, or empty boxes, appropriately for type. Fill is indicated by single crosshatching.
 
 When a result is requires fill, the shape after fill is shown, with the shape before fill in parentheses.
 
@@ -373,7 +373,7 @@ NB. =========================================================
 Lab Chapter Leading Unit Axis
 NB. =========================================================
 Lab Section J display vs Dissect display
-A noun with a leading 1 its shape is a potential source of error. It is a list of one item, and the item can be any shape. Examples are a one-atom list and a one-row table.
+A noun with a leading 1 its shape is a potential source of error. It is a list of one item, and the item can have any shape. Examples are a one-atom list and a one-row table.
 
 In the J session they look the same as they would without the leading 1 in the axis. Note that the nouns a, b and c look the same in the J session although their shapes are, respectively, empty, 1 and 1 1.
 
@@ -387,3 +387,4 @@ a=:42 [b=:,:42 [c=:,:,:42
 ($a);($b);$c
 a;b;c
 dissect 'a;b;c'
+

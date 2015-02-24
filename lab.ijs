@@ -196,7 +196,7 @@ t=. toJ 1!:11 y;0 100
 ". (t i. LF) {. t
 )
 ADVANCE=: 0 : 0
-To advance the lab, select menu Studio|Advance or the
+To advance the lab, select menu Help|Studio|Advance or the
 corresponding shortcut.
 )
 

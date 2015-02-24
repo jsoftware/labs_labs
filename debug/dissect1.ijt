@@ -7,8 +7,7 @@ NB. =========================================================
 Lab Section What is it?
 Dissect is an aid to analyzing J sentences.
 
-It graphically displays the execution of a J sentence in a
-way that makes it easier to see what's going on. It is
+It graphically displays the execution of a J sentence to make it easier to see what's going on. It is
 particularly valuable in finding the cause of an error.
 )
 require 'debug/dissect'
@@ -42,26 +41,28 @@ NB. =========================================================
 Lab Section How a verb is displayed
 The first block is input to the i. verb.
 
-The top line of the verb block is the verb name and its rank. Under that is the result of the execution of the verb. Observe that i. has a monadic rank of 1 and the result of its operation on the noun 2 3 has shape 2 3 and value 0 1 2 ,: 3 4 5 .
+The top line of the verb block is the verb name and its rank. Under that is the result of the execution of the verb. Observe that i. has a monadic rank of 1 and the result of its operation on the noun 2 3 has shape 2 3 and its value is the two-row table 0 1 2 ,: 3 4 5 .
 )
 
 NB. =========================================================
 Lab Section
 The '100 200' noun and the result of the i. verb are input to the + verb. The left and right ranks of the dyadic + are shown beside the + symbol, and below that are the shape and value of the result of its execution. That result, since it is the last result, is the final result of the sentence.
 
-The rank of the i. verb is in regular font but the ranks of the + verb are in bold italics. That indicates that the rank of the i. verb is 'inactive', in that it does not subdivide its input into argument cells, and both ranks of the + verb are 'active', because they both subdivide their inputs into argument cells.
+The rank of the i. verb (1) is in regular font but the ranks of the + verb (0 0) are in large bold italics. That indicates that the rank of the i. verb is 'inactive', in that it does not subdivide its input into argument cells, and both ranks of the + verb are 'active', because they both subdivide their inputs into argument cells.
 )
 
 NB. =========================================================
-Lab Section Tooltips
+Lab Section Tooltips and Status Line
 Hover the cursor over elements of the diagram to see associated tooltips. You can change the level of detail in the tooltips using the menu option Tooltips|Detail. You can change how quickly the tooltips appear using the menu option Tooltips|Delay.
+
+The Status Line, which is above the main display, to the right of the > button, gives an immediate summary of the information under the cursor.
 )
 
 NB. =========================================================
 Lab Section The inputs for a particular result cell
 Select a cell of the final result by clicking on it. The block expands to display which cell you selected under the result shape. If you selected '204', '1 1' appears.
 
-In the input blocks we see the input cells that went into that final result cell outlined in green.
+In the input blocks we see the input cells that went into that final result cell outlined in green.  If you selected '204', these will be the cells containing '200' and '4'.
 
 In the sentence display at the top of the window, we see the + verb in green, because the result of that verb has been selected.
 )
@@ -72,7 +73,7 @@ NB. =========================================================
 Lab Section Which results are hidden?
 Certain intermediate results are not displayed because they might not fit into an array. They can be displayed individually as inputs to a later result.
 
-The result cells of the verb v in u@v, u&v or u&.v can have different shapes or even different types. Those results are hidden until you select (by clicking on it) a cell of the u verb's result. Then the result cell(s) of v that contribute to the result cell you selected are displayed.
+The result cells of the verb v in u@v, u&v or u&.v can have different shapes or even different types. Those results are hidden until you select (by clicking on it) a cell of the u verb's result. Then the result cell of v that contributes to the result cell you selected are displayed.
 )
 PREPARE
 destroy__handle''
@@ -84,8 +85,10 @@ dissect '#@> ;: ''there is a tide'''
 NB. =========================================================
 Lab Section See the hidden results
 Select one of the final result cells. One of result cells of the > verb is displayed. It is the one used in producing the final result cell you selected. Observe that the result you clicked on is the # of items in the visible result cell of >.
+)
 
-
+NB. =========================================================
+Lab Section Notice the one-atom list
 The 'a' in the result is in bold italics to alert you to the fact that although it looks like an atom, it is a 1-element list.
 )
 
@@ -93,9 +96,9 @@ NB. =========================================================
 Lab Chapter Another example of hidden results
 NB. =========================================================
 Lab Section When results are hidden
-When an intermediate result is in a frame it can be shown, because every cell must have the same type and shape. If there is no frame for the intermediate result, the cells could be incompatible, as here.
+When an intermediate result is in a frame it can be displayed, because every cell must have the same type and shape. If there is no frame for the intermediate result, the cells could be incompatible, as here.
 
-Click on the 2 in the final result and dissect displays the corresponding intermediate result, 'ab'. The other intermediate result is a 3-atom numeric list. The two intermediate results cells have different shapes and types; they can not be shown together in the same result.
+Click on the 2 in the final result and dissect displays the corresponding intermediate result, 'ab'. The other intermediate result is a 3-atom numeric list. The two intermediate results cells have different shapes and types; they can not be joined together in the same array.
 )
 PREPARE
 destroy__handle''
@@ -107,7 +110,7 @@ NB. =========================================================
 Lab Chapter Diagnosing errors
 NB. =========================================================
 Lab Section Display of erroneous sentence
-The sentence shown below, adding some numbers to the average of some other numbers, raises a length error. Dissect can help help us to see what's wrong.
+The sentence shown below, adding some numbers to the average of some other numbers, raises a length error. Dissect can help us to see what's wrong.
 
 The error is flagged on the + verb with the bright red word 'agreement'.
 )
@@ -138,19 +141,21 @@ PREPARE
 destroy__handle''
 dissect =: dissectonce
 PREPARE
-dissect '(i.3) +"1"2 i.3 4 3'
+dissect '(i.5) +"1"2 i.3 4 5'
 
 NB. =========================================================
 Lab Section Rank stack
-The reason there is a stack of 3 ranks for the + verb is that the results of 3 verbs are being shown in the same block: +"1"2, +"1, and +.  Selection applies to those verbs in turn, including a final selection that selects a single cell of + for highlighting.
+Verb blocks contain a line showing the verb and its ranks.  This line may be preceded by lines for other modifiers, such as ", that are attached to the verb.  The verb-line plus all its modifiers is called the rank stack.
 
-Note that some of the ranks in the rank stack are in bold italics. 
-If the rank in the rank stack actually affects the result (i. e. if the frame is nonempty), it is displayed as bold-italic.  Otherwise it is displayed regular, and is informational only.
+The reason there is a stack of 3 ranks for the + verb in this example is that the results of 3 verbs are being shown in the same block: +"1"2, +"1, and +.  Selection applies to those verbs in turn, including a final selection that selects a single cell of + for highlighting.
+
+Note that some of the ranks in the rank stack are in large bold italics. 
+If the rank in the rank stack actually affects the result (i. e. if the frame is nonempty), it is displayed as large-bold-italic.  Otherwise it is displayed regular, and is informational only.
 )
 
 NB. =========================================================
 Lab Section Highlighting inputs to a result cell
-When a verb is executed on multiple cells, and the results are assembled into a final result, the entire result is displayed.  You may select a cell to highlight its inputs.
+When a verb is executed on multiple cells, and the result-cells are assembled into a final result, the entire result is displayed.  You may select a result-cell to highlight it and the inputs that produced it.
 
 A selected result cell is colored the same color as its inputs and the associated rank(s) in the rank stack, and the verb in the sentence display at the top of the window.
 
@@ -163,13 +168,26 @@ NB. =========================================================
 Lab Section Frame and result cell shape
 Click the << button at the upper left corner to put the display back into its initial configuration.
 
-The shape of the noun result of a verb is the frame of the arguments catenated with the shape of a result cell. In the shape of the result the frame is shown in black and the result cell shape is in white.
+The shape of the noun result of a verb is the frame of the arguments catenated with the shape of a result cell. In the shape of the result, the result cell shape is the last part of the shape, displayed with a purple background and white text; the rest of the shape is the frame of the result, displayed with black text on a background color that corresponds to the selection level of the verb that created the frame.
 
-Note that the shape of the + result is for the +"2"1 verb. Its frame shape is 3 and the result cell shape is 4 3.
+Note that the shape of the + result is for the +"1"2 verb. Its frame is 3 and the result cell shape is 4 5.
+)
 
-Now select a cell. The shape is now for the +"1 verb. Its frame shape is 3 4 and the result cell shape is 3.
+NB. =========================================================
+Lab Section Selection
+Now select a result-cell by clicking on it. The shape is now for the +"1 verb. Its frame is 3 4 and the result cell shape is 5.
 
-Select again in the same place. The shape is now for the + (rank 0) verb. Its frame shape is 3 4 3 and the result cell shape is empty.
+Click again in the same place to select a sub-result-cell of the previously selected result-cell. The shape is now for the + (rank 0) verb. Its frame is 3 4 5 and the result-cell shape is empty (as shown by the sliver of a purple block).
+
+The frame comes from three different verbs, as can be seen from its coloring.  Each part of the frame has the color of the verb that produced it:
+
+The first verb, +"1"2, has white background, produces the entire result, and has frame 3.
+
+The second verb, +"1, has green brackground, produces the selected 4x5 table, and has frame 4.
+
+The third verb, +, has magenta background, produces the selected list, and has frame 5.
+
+The selection line, below the shape, gives the indexes of the selections you made.  It shows two values, one for each time you clicked.  If you click again inside the magenta area you will see a third selection appear.
 )
 
 NB. =========================================================
@@ -184,7 +202,9 @@ To scroll the whole display within the window, click any empty point on the scre
 
 The Sizes menu allows changes to how much of a result is shown.
 
-You can use the scroll bars to see the part of a result that's out of sight. You can also right click anywhere in the result to bring up a window devoted entirely to the display of its value. You may scroll around this window and make selections, consequences of which will be shown on the main view.
+You can use the scroll bars to see all parts of a result.
+
+You can also right click anywhere in the result to bring up a window devoted entirely to the display of its value. You may scroll around this window and make selections, consequences of which will be shown on the main view.
 
 Right-clicking the data in the expanded window will close it.
 )
@@ -200,7 +220,7 @@ NB. =========================================================
 Lab Section Blue lines
 A noun with more than two dimensions will display items of 3rd through nth dimension separated by increasingly thick blue lines.
 
-Here, the 2x2 tables are separated by thin blue lines. The 2x2x2 bricks are separated by thicker blue lines. The 2x2x2x2 hyperbricks are separated by even thicker blue lines, etc.
+Here, the 2x2 tables are separated by thin blue lines. The 2x2x2x2 hyperbricks are separated by thicker blue lines.  2x2x2x2x2x2 hyperbricks would be separated by even thicker blue lines, etc.
 )
 PREPARE
 destroy__handle''
@@ -266,9 +286,9 @@ NB. =========================================================
 Lab Section Rank
 Note the ranks of the verbs in the two forks.
 
-A fork has infinite rank so +/%# on a 3 4 5 brick computes a 4x5 table which is the average of the three tables which are items of of the brick.
+A fork has infinite rank so +/%# on a 3 4 5 brick computes a 4x5 table which is the average of the three tables which are items of of the brick.  This is shown on the left-hand side of the display.
 
-Specifying that the fork operates on rows ("1) causes it to compute a 3x4 table of row averages.
+Specifying that the fork operates on rows ("1) causes it to compute a 3x4 table of row averages.  This is shown on the right-hand side of the display.  Click on a result row in the right-hand % verb to see how the row was calculated.
 
 Note that the tines of the fork (+/ and #) use the fork rank but the the shaft of the fork (%) keeps its rank.
 )
@@ -328,9 +348,9 @@ NB. =========================================================
 Lab Section Open
 When cells of different shapes are joined into a result, the short ones are padded out with fill values. Fill values are blanks, zeroes, or empty boxes, appropriately for type. Fill is indicated by single crosshatching.
 
-When a result is requires fill, the shape after fill is shown, with the shape before fill in parentheses.
+When a result requires fill, the shape after fill is shown in parentheses.  The parentheses are a signifier of fill.
 
-Here, opening (<) a 4x2 table of boxes creates a 4x2 table of lists, the longest of which is 15 characters, so the shorter ones are padded to that length.
+Here, opening (>) a 5x2 table of boxes creates a 5x2 table of lists, the longest of which is 15 characters, so the shorter ones are padded to that length.
 
 The diagram shows that the fills were added in the open (>) verb; as far as the ravel (,) verb knows, the spaces were always there.
 )
@@ -338,8 +358,32 @@ PREPARE
 destroy__handle''
 dissect =: dissectonce
 PREPARE
-]names =: _2 ]\ ;: 'George Washington John Adams Thomas Jefferson Joe Rumpelstiltskin'
+]names =: ('W';'') ,~ _2 ]\ ;: 'George Washington John Adams Thomas Jefferson Joe Rumpelstiltskin'
 dissect ',"2 > names'
+
+NB. =========================================================
+Lab Section Selection when there is fill
+Click on the name Washington in the result of the > verb and notice the shape line.
+
+It now shows 10(15) in the result-shape.  This indicates that you selected a cell whose result had shape 10, but was extended to shape 15 by fill.  The parentheses around the filled shape still indicate that the overall result was filled.
+
+Click on the name W in the result of the > verb.
+
+This cell produced an atom.  The word 'atom' is used in the shape to distinguish this display from the unselected case.  The parentheses around the filled shape still indicate that the overall result was filled.
+)
+
+NB. =========================================================
+Lab Section Empty Arrays
+Looking at the top block (which displays the noun 'names'), notice the bottom-right box.
+
+The solid dark rectangle represents an empty list.  It is given a visible representation so that you can click on it.
+
+Any array that contains a 0 in its shape is empty.  An empty array is displayed as an array of dark rectangles whose shape is the shape of the array up to the point where the 0 was encountered.
+
+So, an empty list (shape=0) is displayed as rectangles with empty shape, i. e. a single-stom rectangle.
+
+An empty array of shape 3 0 2 is display as a list of 3 rectangles.  These rectangles may be selected individually.
+)
 
 NB. =========================================================
 Lab Chapter Fills Example 2
@@ -373,7 +417,7 @@ NB. =========================================================
 Lab Chapter Leading Unit Axis
 NB. =========================================================
 Lab Section J display vs Dissect display
-A noun with a leading 1 its shape is a potential source of error. It is a list of one item, and the item can have any shape. Examples are a one-atom list and a one-row table.
+A noun with a leading 1 in its shape is a potential source of confusion. It is a list of one item, and the item can have any shape. Examples are a one-atom list and a one-row table.
 
 In the J session they look the same as they would without the leading 1 in the axis. Note that the nouns a, b and c look the same in the J session although their shapes are, respectively, empty, 1 and 1 1.
 

@@ -56,13 +56,6 @@ The rank of the i. verb (1) is in regular font but the ranks of the + verb (0 0)
 )
 
 NB. =========================================================
-Lab Section Tooltips and Status Line
-Hover the cursor over elements of the diagram to see associated tooltips. You can change the level of detail in the tooltips using the menu option Tooltips|Detail. You can change how quickly the tooltips appear using the menu option Tooltips|Delay.
-
-The Status Line, which is above the main display, to the right of the > button, gives an immediate summary of the information under the cursor.
-)
-
-NB. =========================================================
 Lab Section The inputs for a particular result cell
 Select a cell of the final result by clicking on it. The block expands to display which cell you selected under the result shape. If you selected '204', '1 1' appears.
 
@@ -70,6 +63,33 @@ In the input blocks we see the input cells that went into that final result cell
 
 In the sentence display at the top of the window, we see the + verb in green, because the result of that verb has been selected.
 )
+
+NB. =========================================================
+Lab Section Tooltips and Status Line
+Hover the cursor over elements of the diagram to see associated tooltips. You can change the level of detail in the tooltips using the menu option Tooltips|Detail. You can change how quickly the tooltips appear using the menu option Tooltips|Delay.
+
+The Status Line, which is above the main display, to the right of the > button, gives an immediate summary of the information under the cursor.
+
+NB. =========================================================
+Lab Section Tooltips and Status Line ct'd
+As you explore the elements of the display shown, notice the status line, and then the tooltip that is displayed:
+
+1. Hover over the result-atom 10 at the end of the final result.  The tooltip shows the verb and its shape, and the path to the value 10.  The path tells the sequence of selections and box-openings needed to find a given atom in a noun.  Here, to find the value 10 you select box number 2, open it, and then select atom number 5 of the contents.
+
+2. Hover over the verb > .  Hovering over the verb gives a detailed description of which results are displayed in the block.
+
+3. Hover over the " .  The " line is inserted at the point in the computation where it affects the rank of argument cells.  The tooltip shows what overall verb that represents.
+
+4. Hover over the +: .  The tooltip doesn't tell you much until a single argument-cell has been selected.
+
+5. Now go and click on the result-atom 10 at the end of the final result.  This selects a single argument-cell.  Observe that the tooltip for the > and +: verbs now give more information.
+
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '<@:+:@:i."0 (4 5 6)'
 
 NB. =========================================================
 Lab Chapter Hidden intermediate results
@@ -157,17 +177,50 @@ dissect '#@> ''ab'';1 2 3'
 NB. =========================================================
 Lab Chapter Diagnosing errors
 NB. =========================================================
-Lab Section Display of erroneous sentence
+Lab Section Displaying Errors
+When your sentence has an error, dissect automatically homes in on the error and leaves the display as if you had selected the path of the error at every possible point.
+
+Here, the failure occurred when the sentence tried to execute
+
+>: 'a'
+
+because multiplying the character by 2 is not allowed.
+
+The cell where the error was encountered is indicated with double-crosshatching, and cells that were unexecuted after the error are shown with reverse crosshatching.
+
+The selection lines beneath the shape lines show you the path to the error, and the arguments in error are highlighted with colored boxing.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+>:@>  1;'a';3  NB. Uninformative session error meessage
+dissect '>:@>  1;''a'';3'
+
+NB. =========================================================
+Lab Section Agreement Errors
 The sentence shown below, adding some numbers to the average of some other numbers, raises a length error. Dissect can help us to see what's wrong.
 
-The error is flagged on the + verb with the bright red word 'agreement'.
+The error is flagged on the + verb with the bright red word 'agreement'.  Dissect uses this in place of the less specific 'length error' to indicate execution of a dyad on arguments with incompatible frames.
 )
 PREPARE
 destroy__handle''
 dissect =: dissectonce
 PREPARE
 NB. Add 6 5 3 to average of 3 9 6 */ 1 5 9 2
+6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2
 dissect '6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2'
+
+NB. =========================================================
+Lab Section Framing Errors
+Sometimes a verb executes correctly on all its cells, but the results of those cells are incompatible and cannot be assembled into a single array.  The J session reports this as a 'domain error'.  Dissect calls it by the name 'framing error' and denotes it with special dashed boxing around the incompatible cells. 
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+> 1;'a';2 3
+dissect '> 1;''a'';2 3'
 
 NB. =========================================================
 Lab Section Color cues
@@ -528,3 +581,4 @@ a=:42 [b=:,:42 [c=:,:,:42
 ($a);($b);$c
 a;b;c
 dissect 'a;b;c'
+

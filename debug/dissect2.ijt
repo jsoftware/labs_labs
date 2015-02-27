@@ -1,0 +1,254 @@
+LABTITLE=: 'Dissect II'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Chapter Rounding using Under(&.)
+NB. =========================================================
+Lab Section Round to nearest 10th
+Here we execute (floor atop adding 0.5) under the transformation 'times 10' to get a result with one place after the decimal point instead of an integer.
+
+The Under conjunction (&.) is not in the diagram, but is shown in the sequence of operations:
+1) Multiply by 10
+2) Apply the verb <.@(0.5&+
+3) Divide by 10
+
+Applying the verb after the transformation 10&* in step 1 and reversing the transformation with 10&*^_1 in step 3 are the effect of the &.(10&*) adverb. (A conjunction and a verb form an adverb.)
+)
+PREPARE
+dissectonce =: 3 : 0
+4!:55 <'dissect_base_'
+handle =: 2 dissect y
+0 0 $0
+)
+dissect =: dissectonce
+PREPARE
+require 'debug/dissect'
+dissect '<.@(0.5&+)&.(10&*) 1.23 2.35 3.54 4.66 5.22'
+
+NB. =========================================================
+Lab Chapter Intermediate Results and Highlighting
+NB. =========================================================
+Lab Section Sum (+/)
+The initial display shows none of the intermediate results of the summation (+/).
+
+Select (click) the result of +/. That selection causes two things: 
+1) The +/ verb in the sentence at the top of the display window is highlighted.
+2) A new box in the diagram appears, displaying the intermediate results of +/.
+
+Selecting a cell of the intermediate results highlights the addends that went into it.
+
+Select the '7' in the intermediate result and the '3' & '4' in the +/ verb's input are highlighted.
+
+Select the '9' and the '7' in the intermediate result is highlighted, along with the '2' in the input.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '+/ i. 5'
+
+NB. =========================================================
+Lab Chapter More Intermediate Results
+NB. =========================================================
+Lab Section infix (\)
+The displayed sentence inserts between each opened box of q a verb that adds the reduces the right argument by taking the largest number in each infix of length 2, then adds that reduced argument to the left argument, then boxes the result.
+
+Only the final result (23) is shown at first. Its value in bold italics alerts you to the fact that it has a leading unit axis. Note the shape (1); the result of the sentence is a one-element list.
+
+Select the 23 result.
+Select the 10 13 15 result in the + expansion block to see that its addends are 2 4 6 from the original argument and 8 9 9 which are the largest numbers in each of 8 5, 5 9, and 9 3, the length-2 infixes of 8 5 9 3.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+q=: 3;7 4;2 4 6;8 5 9 3
+dissect '(+ 2&(>./\))&.>/ q'
+
+NB. =========================================================
+Lab Chapter Power (^:)
+NB. =========================================================
+Lab Section Power as an if statement
+In the Power conjunction form u^:v y, y is the argument for both the u verb and the v verb. The result of v y is the number of times to execute u. Here, the v verb is {:~:'.', which will produce 0 if the last character of y is a period, and 1 if it is not.
+
+The u verb here is ',&'.', append a period.
+
+Thus this sentence can be read as 'If y does not end in a period, append one'.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect ',&''.''^:({:~:''.'') ''This is a sentence'''
+
+NB. =========================================================
+Lab Chapter do-while
+NB. =========================================================
+Lab Section How is this do-while?
+The adverb (^:a:) causes its verb to be executed multiple times, with each result used for input to the next execution, stopping when the result doesn't change. It means "do while the result is changing". All the results are collected into an array, and the original value of y is collected as the first item of the result.
+
+The expression (1&= + 2&|) returns 0 for even numbers, 1 for odd numbers >1, and 2 for the number 1.
+
+So the agenda (@.) will choose a verb from the gerund (-:`(>:@(3&*))`1: which will halve even numbers, triple and increment odd numbers > 1, and return 1 if the input is 1.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '(-:`(>:@(3&*))`1: @. (1&= + 2&|))^:a: 9'
+
+NB. =========================================================
+Lab Section The Dissect display
+Select a result cell to raise an expansion block with the intermediate results. Note that execution stopped when a result of 1 caused the next execution to return the same result, and that the final execution that caused the stop did not contribute its result to the final result.
+
+Select an intermediate result. The verb agenda chose to produce it is displayed and the input to that verb is highlighted.
+
+NB. =========================================================
+Lab Chapter Level At (L:)
+NB. =========================================================
+Lab Section Level refers to boxing level
+A leaf of y is a noun inside y that itself has no nested contents.
+
+A leaf is either empty or unboxed.
+
+u L:0 y creates a copy of y in which each leaf has been replaced by the result of applying u to the leaf.
+
+Select 84.7 to see the division that resulted in it.
+Now select 254 to see the intermediate summation results.
+
+Note that all boxes at the deepest level of nesting are taken, although some are nested more deeply than others.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+]students =: ('Fred';'Joe');<('Alice';'Bob';'Charlie')
+]grades =: (90 72;80 85 89);<(100 98;70;60 65 60)
+dissect '(+/ % #)L:0 grades'
+
+NB. =========================================================
+Lab Chapter Spread (S:)
+NB. =========================================================
+Lab Section Level Grades
+u S:0 y applies verb u to each leaf of y, creating an array whose items are the results of the leaves, with framing fill added as needed.
+
+This result is like the previous one using Level At (L:), except the boxing structure is  lost in the result.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+(< S:0 students),.<@(+/ % #)S:0 grades
+dissect '(+/ % #)S:0 grades'
+
+NB. =========================================================
+Lab Section Level Students
+A fork was applied to grades to obtain an average. For students, we just use S:0 to remove the boxing.
+
+Fred and Joe were in more deeply nested boxes than Alice, Bob and Charlie. They're all completely unboxed in the result.
+
+Note the space fills to make each row the same length.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+]S:0 students
+
+NB. =========================================================
+Lab Chapter Recursion
+NB. =========================================================
+Lab Section Factorial
+The verb 1:`(] * $:@<:)@.* computes tha factorial of y using the recursive definition of factorial: If n=0, n!=1; if n>0  n!=n*(n-1)!.
+
+The last recursive execution of the verb is shown, where 5*24=120. Select the result of the $: verb to display all the results of the separate recursive executions in a new box. Select a single recursion result to highlight its iputs. 
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '1:`(] * $:@<:)@.* 5'
+
+NB. =========================================================
+Lab Chapter Partitions
+NB. =========================================================
+Lab Section Cookies
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+table =: ".&.>@;:;._2 (0 : 0)
+'Alice' 'Thin Mint' 20
+'Alice' 'Samoas'  7
+'Betty' 'Samoas' 32
+'Betty' 'Shortbread' 21
+'Clara' 'Thin Mint' 5
+'Clara' 'Samoas' 12
+'Debbie' 'Shortbread' 54
+'Debbie' 'Samoas' 21
+'Debbie' 'Shortbread' 23
+'Emma' 'Thin Mint' 14
+) 
+PREPARE
+table
+dissect '(1 {"1 table) (~.@[ ,. +/&.:>/.) 2 {"1 table' 
+NB. =========================================================
+Lab Chapter Hook
+NB. =========================================================
+Lab Section Take 1st 2 items, but never more than in array
+The noun-verb-verb fork 2 <. # gives the lesser of 2 and the number of items in the right argument.
+
+NuVoc tells us 'The sequence noun-verb-verb, not followed by a noun, produces a NVV fork which is like a regular fork except that the noun simply produces its value regardless of the arguments to the fork.'
+
+Then the hook ({.~ (2 <. #)) takes that number of items from y. 
+
+The Primer explains hook like this: '(f g)y evaluates as	y f g y'. Here, f is take ({.) and g is the fork (2 <. #).
+
+Note that the words fork and hook do not appear in the diagram, but the inputs to each verb are as described.
+)
+PREPARE
+destroy__handle''
+dissect =: dissectonce
+PREPARE
+dissect '({.~ 2 <. #) ''abcd'''
+
+NB. =========================================================
+Lab Chapter Mapping Dissect to PF Keys 
+NB. =========================================================
+Lab Section J6.02
+The following code lets you use PF keys to invoke Dissect.
+(J6.02 only) 
+
+PF4 to dissects the line under the cursor, and PF5 to dissects last failing sentence.
+
+To put this code in your startup script, edit your startup script through menu option Edit|Configure|Startup|Open. After opening the startup script, uncheck Read Only in the Edit menu. Then copy the J sentences in this chapter to your startup script, and save it.
+
+Change the f4 and f5 in the last two lines to use different keys, if you want.
+)
+cocurrent 'jijs'
+NB. y is 0 to dissect last error, '' to dissect selection
+rundissectline =: 3 : 0
+if. -. (<'dissect') e. 18!:1 (0) do. return. end.
+save 1
+if. 0-:y do. runimmx1 'dissect 0' else. runimmx1@('dissect '&,)@quote^:(*@#) getline'' end.
+)
+
+jijs_f4_fkey =: rundissectline
+jijs_f5_fkey =: rundissectline bind 0
+NB. =========================================================
+Lab Section J8.03 and later
+
+The following code lets you use PF keys to invoke Dissect.
+(J8.03 and later) 
+
+Put the following lines into the Edit>Configure>User Keys window:
+
+F4;1;Dissect Line;dissect@finddissectline_dissect_ 0
+F6;1;Dissect Last Error;dissect@finddissectline_dissect_ 1
+F7;1;Dissect Clipboard;dissect@finddissectline_dissect_ 2
+
+Here F4, F6, and F7 are the keys selected for Dissect:
+
+F4 runs dissect on the line under the cursor
+F6 runs dissect on the last line that produced an error
+F7 runs dissect on the text that is on the clipboard

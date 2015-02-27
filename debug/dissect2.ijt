@@ -213,6 +213,122 @@ PREPARE
 dissect '({.~ 2 <. #) ''abcd'''
 
 NB. =========================================================
+Lab Chapter Debugger
+NB. =========================================================
+Lab Section The J Debugger
+J Debug is described in its own Lab.  It is part of the J IDE.
+This discussion assumes you understand how to use Debug.
+
+To start Debug, you press crtl-K which brings up the Debug Menu.
+)
+PREPARE
+load 'debug'
+jdb_open_jdebug_ 0
+PREPARE
+require 'debug'
+NB. we have simulated pressing ctrl-K
+
+NB. =========================================================
+Lab Section Debug Menu
+Two debugger buttons use Dissect.  They have pictures reminiscent of Dissect's display.  To see their titles, first click in the top bar of the Debug Menu to give it focus, and then hover over the buttons.  The two Dissect buttons are titled
+
+Dissect current/cursor line
+
+and
+
+Automatically dissect on stop
+)
+NB. Find the Dissect buttons in the Debug Menu
+
+NB. =========================================================
+Lab Section A Buggy Program
+To see the debugger in action, we need a program with a bug in it.
+)
+testcode =: 3 : 0
+name =. ;: 'able baker charlie'
+ynames =. ;: y
+ysort =. /:~ ynames
+yinname =. (ysort e. name) # name
+#yinname
+)
+NB. =========================================================
+Lab Section Debug Stop
+When we run the program, it fails.  The debugger springs into action.  It shows us which line failed.  But why did it fail?
+)
+NB. When the debug window pops up, press the Dissect current/cursor line button
+testcode 'john baker'
+
+NB. =========================================================
+Lab Section Dissect current/cursor line
+When you pressed the Dissect current/cursor line in the Debug Menu, the debugger launched Dissect on the current line, which is the line that failed.  You can see what went wrong:
+
+(ysort e. name) 
+
+calculated a Boolean value for each name in ysort, but the you used that to select from name, which has the wrong length.
+
+NB. =========================================================
+Lab Section Dissect current/cursor line ctd
+We close the debug window for you, and then we
+fix the program as follows:
+)
+PREPARE
+jdb_clear_jdebug_ ''
+PREPARE
+testcode =: 3 : 0
+name =. ;: 'able baker charlie'
+ynames =. ;: y
+ysort =. /:~ ynames
+yinname =. (ysort e. name) # ysort
+#yinname
+)
+
+NB. =========================================================
+Lab Section Automatically dissect on stop
+Rather than running your program till it breaks, you can follow it step by step and see the execution of each line.  To automate this process, press the Automatically dissect on stop button on the Debug Menu.
+
+Automatically dissect on stop is a mode setting.  You can see when it is engaged from its sunken shading.
+)
+NB. Make sure you have turned on Autodissect mode on the Debug Menu
+
+NB. =========================================================
+Lab Section Set a stop on the first line
+When Automatically dissect on stop is engaged, Dissect will run automatically every time the debugger is activated.  To get a first activation of the debugger, set a Debug Stop at the beginning of testcode.
+
+So we keep our focus on Dissect, we will set this stop for you.
+)
+PREPARE
+1 jdb_stopsetone_jdebug_ 'testcode';0;0
+jdb_stopwrite_jdebug_ ''
+PREPARE
+NB. We have simulated setting a stop at line 0 of testcode
+
+NB. =========================================================
+Lab Section Run the program and take the first stop
+Now we run the program.  See that it stops on the first line, and that it automatically runs Dissect on that line.  The line has not yet been executed when the debugger is entered.
+
+Dissect is showing you what will happen when the line IS executed.
+)
+testcode 'john baker'
+
+NB. =========================================================
+Lab Section Single-step through the program
+Repeatedly press 'Step Over' on the Debug Menu (it's the third button from the left).
+
+Every time you press Step Over, one line is executed and the debugger is reentered.  Every time the debugger is reentered, Dissect shows the line to be executed.
+
+When Autodissect is engaged, Dissect is run whenever the debugger is entered, whether because of error, or single-step, or running to a stop.
+)
+
+NB. =========================================================
+Lab Section Assignment statements
+Did you notice anything unusual in the Dissect displays as you were single-stepping through the program?
+
+When Dissect is called from the debugger, assignment statements are ignored.  The Dissect display is informational only.  The dissected line will be executed when the program resumes.  Therefore, side-effects such as assignments should be avoided.
+
+Side-effects in verbs called by your sentence cannot be avoided; you should avoid dissecting lines that have side-effects.
+)
+
+NB. =========================================================
 Lab Chapter Mapping Dissect to PF Keys 
 NB. =========================================================
 Lab Section J6.02

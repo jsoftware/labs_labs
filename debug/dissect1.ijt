@@ -21,10 +21,24 @@ Let's take a look at what dissect displays.
 You may have to move the Dissect display window, if it is hidden behind this one.
 )
 PREPARE
+dissectoncect =: 1
+dissecthandle =: 0$a:
 dissectonce =: 3 : 0
 4!:55 <'dissect_base_'
-handle =: 2 dissect y
+dissecthandle =: dissecthandle , 2 dissect y
+if. 0 < dissectoncect =: <: dissectoncect do.
+  dissect =: dissectonce
+end.
 0 0 $0
+)
+dissectclose =: 3 : 0
+for_l. dissecthandle do.
+  try.
+    destroy__l ''
+  catch.
+  end.
+end.
+dissecthandle =: 0$a:
 )
 dissect =: dissectonce
 PREPARE
@@ -86,7 +100,7 @@ As you explore the elements of the display shown, notice the status line, and th
 
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '<@:+:@:i."0 (4 5 6)'
@@ -102,7 +116,7 @@ The result cells of the verb v in u@v, u&v or u&.v can have different shapes or 
 In the example here, the intermediate results of the open (>) verb are different shapes and will be displayed one at a time when you select cells of the final result. Select a result cell of the # verb and the intermediate result of > that contributes to it is displayed.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '#@> ;: ''there is a tide'''
@@ -153,7 +167,7 @@ The sentence here shows four examples.
 +/ is the end of a compound and all its results must be assembled into a single array, much as with > .
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '+/@:(#"1) > ;:''Joe Sam Ted'''
@@ -169,7 +183,7 @@ Note that the left and right ranks of ; are shown as 1 1 instead of _ _. Dissect
 If you want to know the intrinsic rank of a verb rather than the effective rank, hover the cursor over the verb to see a Tooltip that tells you.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '#@> ''ab'';1 2 3'
@@ -191,7 +205,7 @@ The cell where the error was encountered is indicated with double-crosshatching,
 The selection lines beneath the shape lines show you the path to the error, and the arguments in error are highlighted with colored boxing.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 >:@>  1;'a';3  NB. Uninformative session error meessage
@@ -204,7 +218,7 @@ The sentence shown below, adding some numbers to the average of some other numbe
 The error is flagged on the + verb with the bright red word 'agreement'.  Dissect uses this in place of the less specific 'length error' to indicate execution of a dyad on arguments with incompatible frames.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 NB. Add 6 5 3 to average of 3 9 6 */ 1 5 9 2
@@ -216,7 +230,7 @@ Lab Section Framing Errors
 Sometimes a verb executes correctly on all its cells, but the results of those cells are incompatible and cannot be assembled into a single array.  The J session reports this as a 'domain error'.  Dissect calls it by the name 'framing error' and denotes it with special dashed boxing around the incompatible cells. 
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 > 1;'a';2 3
@@ -246,7 +260,7 @@ A noun block always shows the noun's shape in white type on a darker background.
 A verb block shows the shape of its result in two parts, either of which may be empty. The frame into which result cells are assembled is in black type on a lighter background and the shape of a result cell is in white type on a dark background. The shape of the whole result is the concatenation of the frame shape and the result cell shape.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '(i.5) +"1"2 i.3 4 5'
@@ -321,7 +335,7 @@ You can also right click anywhere in the result to bring up a window devoted ent
 Right-clicking the data in the expanded window will close it.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '(i.3) +"1"2 i.12 40 3'
@@ -335,7 +349,7 @@ A noun with more than two dimensions will display items of 3rd through nth dimen
 Here, the 2x2 tables are arranged into 2x2x2x2 hyperbricks.  With each hyperbrick, the original 2x2 tables are separated by thin blue lines. The 2x2x2x2 hyperbricks are then arranged into a 2x2x2x2x2x2 array, with the component 2x2x2x2 hyperbricks separated by thicker blue lines.  An array of such 2x2x2x2x2x2 hyperbricks would be separated by even thicker blue lines, etc.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect 'i. 2 2 2 2 2 2'
@@ -349,7 +363,7 @@ Some adverbs, and the hook, and the fork are not explicitly shown. Their action 
 The ~ is not in the diagram, but it has caused a reversal of the inputs to the % verb.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '10 %~ 5'
@@ -361,7 +375,7 @@ Lab Section Atop @
 The @ appears nowhere in the diagram, but its effect is shown in that 3 4 is appended (,) to 1 2, and that result is input to the monadic box (<).
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '1 2 <@, 3 4'
@@ -388,7 +402,7 @@ u@:v - u operates once on the whole result of v
 The difference between Compose (&) and Appose (&:) is similar.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '(<@*: i.3);<@:*: i.3'
@@ -404,7 +418,7 @@ Select the result of +/ to raise an expansion block that displays the intermedia
 Select the intermediate result 145 and see the arguments to + that produced it highlighted. They are the previous intrmediate result 121 and the input atom 24. 
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '(+/%#) 20 22 24 35 40 46'
@@ -420,7 +434,7 @@ A fork has infinite rank so +/%# on a 3 4 5 brick computes a 4x5 table which is 
 Specifying that the fork operates on rows ("1) causes it to compute a 3x4 table of row averages.  This is shown on the right-hand side of the display.  Click on a result row in the right-hand % verb to see how the row was calculated.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '((+/%#)a);((+/%#)"1 a)'[a=:i. 3 4 5
@@ -449,7 +463,7 @@ If +/%# were interpreted as a fork, the result would be the average of the list 
 The diagram makes it easy to see what went wrong.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '+/%# 24 22 31 40 46'
@@ -470,7 +484,7 @@ The square root, though not mentioned in the J sentence, is implied by the defin
 3) Inverse transformation on the result of 2)
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 ]values =: 10?100
@@ -487,7 +501,7 @@ In effect, it makes its verb operate inside the box.
 The Dissect diagram shows only the effect, the verb operating inside the box.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '{:&.> ''Nixon'';''Carter'';''Reagan'''
@@ -505,7 +519,7 @@ Here, opening (>) a 5x2 table of boxes creates a 5x2 table of lists, the longest
 The diagram shows that the fills were added in the open (>) verb; as far as the ravel (,) verb knows, the spaces were always there.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 ]names =: ('W';'') ,~ _2 ]\ ;: 'George Washington John Adams Thomas Jefferson Joe Rumpelstiltskin'
@@ -544,7 +558,7 @@ Raze (;) opens the boxed strings and concatenates them. This is done one line at
 Fill characters are added to make all the lines the same length.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect ';"1 names'
@@ -558,7 +572,7 @@ The obverse (^:_1) of the 'words' verb (;:) opens the boxed words and puts them 
 This gives the same result as the last example (;"1 names) except the 'words' (;:) obverse verb separates words with a space.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect ';:^:_1"1 names'
@@ -574,7 +588,7 @@ In the J session they look the same as they would without the leading unit axis.
 Dissect calls attention to such nouns by displaying their values in bold italic font.
 )
 PREPARE
-destroy__handle''
+dissectclose''
 dissect =: dissectonce
 PREPARE
 a=:42 [b=:,:42 [c=:,:,:42

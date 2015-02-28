@@ -52,13 +52,13 @@ The original block containing the result being expanded remains, with its displa
 
 There are four types of expansion blocks, which we will cover in turn.  They are:
 
-u/ y  This inserts the verb u between items of y, causing u to be repeatedly executed.  The expansion block allows you to select an application of u for examination.
+u/ y  This inserts the verb u between the items of y, causing u to be repeatedly executed.  The expansion block allows you to select an application of u for examination.
 
 [x] u^:v y  This executes u repeatedly, depending on the value of v.  The expansion block allows you to select an application of u for examination.
 
 $:  Recursion causes an entire verb to be reexecuted.  The expansion block allows you to select a single recursion level for examination.
 
-[x] u/. y  (Here /. stands for any of the partitioning modifiers /. \ \. ;.)  u is repeatedly executed on subsets of y.  The expansion block shows the computation of a selected subset.
+[x] u/. y  (Here /. stands for any of the partitioning modifiers /. \ \. ;.)  u is repeatedly executed on subsets of y.  The expansion block shows the computation on a selected subset.
 )
 PREPARE
 dissectclose''
@@ -72,15 +72,15 @@ Select (click) the result of +/ . That selection causes two things:
 
 1) The +/ verb in the sentence at the top of the display window is highlighted.
 
-2) A new block in the diagram appears, displaying the intermediate results of +/.
+2) A new block in the diagram appears, displaying the intermediate results of +/ .
 
 3) The original block is tagged as 'Final'.
 
 Selecting a cell of the intermediate results highlights the addends that went into it.
 
-Select the '7' in the intermediate result and the '3' & '4' in the +/ verb's input are highlighted.
+Select the '7' in the expansion block and the '3' & '4' in the +/ verb's input are highlighted.
 
-Select the '9' and the '7' in the intermediate result is highlighted, along with the '2' in the input.
+Select the '9' and the '7' (the previous intermediate result in +/) is highlighted, along with the '2' in the input.
 )
 PREPARE
 dissect =: dissectonce
@@ -97,7 +97,9 @@ The u verb here is ,&'.', append a period.
 
 Thus this sentence can be read as 'If y does not end in a period, append one'.
 
-In the Dissect display, the v part of u^:v enters the block from the right, indicating that it is a control input and not part of the top-to-bottom data flow.
+The displays show 2 examples, one that adds the final period and one that doesn't.  The computation of v decides what to do.  There is less to do when v produces 0.
+
+In the Dissect displays, the v part of u^:v enters the block from the right, indicating that it is a control input and not part of the top-to-bottom data flow.
 )
 PREPARE
 dissectclose''
@@ -121,7 +123,7 @@ dissect '''.'' ,~^:(~: {:) ''This is a sentence'''
 
 NB. =========================================================
 Lab Section Power as do-while
-u^:_ causes u to be executed multiple times, with each result used for input to the next execution, stopping when the result doesn't change. It means "do while the result is changing". The result is the final stable result.
+u^:_ causes u to be executed multiple times, with each result used for input to the next execution, stopping when the result doesn't change. It means "do while the result is changing". The overall result of u^:_ result is the final stable result of u.
 
 The expression (1&= + 2&|) returns 0 for even numbers, 1 for odd numbers >1, and 2 for the number 1.
 
@@ -155,7 +157,7 @@ Now select the result whose value is 26.  The computation of this value is detai
 
 2. The wiring shows the result of the power block looping back into the computation of the next power.
 
-3. Because a single result is selected, the agenda gets an expansion block of its own (tagged as 'Final').  Off to its right is the computation of the gerund index (0 here), and feeding into it is the computation of that gerund, which is simply -: .
+3. Because a single result is selected, the agenda gets an expansion block of its own.  The result of agenda is tagged 'Final'.  Feeding in at its right is the computation of the gerund index (0 here), and feeding into it from above is the computation of that gerund, which is simply -: .
 
 4. The selection line shows that this is the 9th application of the verb u .
 )
@@ -178,7 +180,7 @@ u L:0 y creates a copy of y in which each leaf has been replaced by the result o
 
 Here we have a gradebook for two classes.  There are two nouns, students and grades.
 
-The display shows the operation of averaging each student's grades.
+The display shows the operation of averaging each student's grades.  The students' names are not used in this display.
 
 Select 84.7 to see the division that resulted in it.
 Now select 254 to see the intermediate summation results.
@@ -211,7 +213,7 @@ NB. =========================================================
 Lab Section Students
 We applied a fork to grades to obtain an average. To collect the students' names, we just use S:0 to remove the boxing.
 
-Note the space fills to make each row the same length.
+Note the spaces added as fill to make each row the same length.
 )
 PREPARE
 dissectclose''
@@ -326,10 +328,10 @@ Select a result cell of the verb (+/&.:>/.) to highlight the inputs that produce
 NB. =========================================================
 Lab Chapter Hook
 NB. =========================================================
-Lab Section Take 1st 2 items, but never more than in array
-The noun-verb-verb fork 2 <. # gives the lesser of 2 and the number of items in the right argument.
-
+Lab Section Hooks and NVV forks
 The sequence noun-verb-verb, not followed by a noun, produces a NVV fork which is like a regular fork except that the noun simply produces its value regardless of the arguments to the fork.
+
+The NVV fork ((2 <. #) y) gives the lesser of 2 and the number of items in y.
 
 Then the hook ({.~ (2 <. #)) takes that number of items from y. 
 
@@ -401,7 +403,7 @@ calculated a Boolean value for each name in ysort, but the you used that to sele
 
 NB. =========================================================
 Lab Section Dissect current/cursor line ctd
-We close the debug window for you, and then we
+We clear the debug window for you, and then we
 fix the program as follows:
 )
 PREPARE

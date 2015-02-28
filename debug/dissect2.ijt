@@ -151,7 +151,7 @@ The selection line in the expansion block, just beneath the shape line, tells th
 
 When the expansion block comes to life it selects iteration number 0.  Because this is the original y, there is no computation at all to show.
 
-Now select the result whose value is 26.  The computation of this value is detailed.  Note the following features:
+Now, in the expansion block, select the result whose value is 26.  The computation of this value is detailed.  Note the following features:
 
 1. The result 26 is computed from the previous result of u, which is 52.  The 52 is highlighted to show that it is the input to the computation of the next power.
 

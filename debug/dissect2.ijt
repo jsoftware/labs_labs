@@ -255,6 +255,29 @@ PREPARE
 dissect '1:`(] * $:@<:)@.* 5'
 
 NB. =========================================================
+Lab Section Debugging Recursion
+The sentence in this example performs recursion, opening each box of the input until it gets to a leaf node (where the test (0<L.) produces 0), at which point it increments the value of the leaf.
+
+(>:L:0 is an easier way to write this but our interest is in the recursion.)
+
+In this case the recursion failed because one of the leaves had a nonnumeric value, and as always Dissect starts us off looking right at the error.
+
+The block labeled Recursions shows the results of all the recursions.  These results are listed in the order in which the recursive verb started.  Because of the error, not all the recursions that started actually finished.  In fact, only two did.
+
+The failure point, indicated by double-crosshatching, is the last recursion that started, number 6.  The block at the top shows the 
+input to the recursion level being examined.
+
+Click around the other recursion levels, both those that finished and those that didn't.  Use the crosshatching to see the error path, and note that the inputs to each recursion level are shown when you select a result.
+
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+t =: 1 2 3;<4 5;<<'a';6 7
+dissect '>:`($:&.>)@.(0<L.) t' 
+
+NB. =========================================================
 Lab Chapter Partitions
 NB. =========================================================
 Lab Section Infix x u\ y

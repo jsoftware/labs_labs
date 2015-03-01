@@ -50,14 +50,16 @@ The J text of the sentence under consideration is shown at the top.
 
 Execution flows from the top of the diagram to the bottom.
 
-The '2 3' list is the first block. The top line is its shape, and under that is its value. That the value is '2 3', not '23', is indicated by the background shading. Other noun displays also use this space saving trick.
+The '2 3' list is the first block. The top line is its shape, and under that is its value. That the value is '2 3', not '23', is indicated by the background shading. Other noun displays also use this space-saving trick.
 )
 
 NB. =========================================================
 Lab Section How a verb is displayed
 The first block is input to the i. verb.
 
-The top line of the verb block is the verb name and the rank of the cells it was applied on. Under that is the result of the execution of the verb. Observe that i. has a monadic rank of 1 and the result of its operation on the noun 2 3 has shape 2 3 and its value is the two-row table 0 1 2 ,: 3 4 5 .
+The top line of the verb block is the verb name and the rank of the cells it was applied on. Under that is the shape of the result of the execution of the verb. At the bottom of the block is the result of the verb.
+
+Observe that i. has a monadic rank of 1 and the result of its operation on the noun 2 3 has shape 2 3 and its value is the two-row table 0 1 2 ,: 3 4 5 .
 )
 
 NB. =========================================================
@@ -263,7 +265,7 @@ PREPARE
 dissectclose''
 dissect =: dissectonce
 PREPARE
-dissect '(i.5) +"1"2 i.3 4 5'
+dissect '(>:@:i.5) +"1"2 i.3 4 5'
 
 NB. =========================================================
 Lab Section Rank stack
@@ -275,6 +277,17 @@ Te first verb executed in the final result box is +"1"2. You can see the whole v
 
 Note that some of the ranks in the rank stack are in large bold italics. 
 If the rank in the rank stack actually affects the result (i. e. if the frame is nonempty), it is displayed as large-bold-italic.  Otherwise it is displayed regular, and is informational only.
+)
+
+NB. =========================================================
+Lab Section Display options for the rank stack
+The Preferences menu has two options that affect the display of the rank stack.
+
+Preferences|Show full compound-names causes the rank stack to show the full compound verb rather than the modifier that produced it.  Select that option and see the difference in the display.
+
+Preferences|Show @ @: etc causes lines to be added to the rank stack for the structural modifiers (@ @: & &:) which are usually omitted because the wiring shows their presence.  Select that option and see the line added to the display.
+
+These options may help you get oriented to the Dissect display, especially when you are new to it.
 )
 
 NB. =========================================================
@@ -507,10 +520,14 @@ PREPARE
 dissect '{:&.> ''Nixon'';''Carter'';''Reagan'''
 
 NB. =========================================================
-Lab Chapter Fills Example 1
+Lab Chapter Framing Fills and Fill Cells
 NB. =========================================================
-Lab Section Open
-When cells of different shapes are joined into a result, the short ones are padded out with fill values. Fill values are blanks, zeroes, or empty boxes, appropriately for type. Fill is indicated by single crosshatching.
+Lab Section Framing Fill Example 1 - Open
+When a verb acts on multiple cells, the result-cells must be assembled into a single array.
+
+When result-cells of different shapes are assembled, the short ones must be padded out to match the size of the larger.  The added padding is called framing fill.
+
+Framing fill is blank, zero, or an empty box (a:), appropriately for type. Dissect marks framing fill by single crosshatching over the fill value.
 
 When a result requires fill, the shape after fill is shown in parentheses.  The parentheses are a signifier of fill.
 
@@ -550,9 +567,7 @@ An empty array of shape 3 0 2 is display as a list of 3 rectangles.  These recta
 )
 
 NB. =========================================================
-Lab Chapter Fills Example 2
-NB. =========================================================
-Lab Section Raze
+Lab Section Example 2 - Raze
 Raze (;) opens the boxed strings and concatenates them. This is done one line at a time, as specified by ("1).
 
 Fill characters are added to make all the lines the same length.
@@ -564,9 +579,7 @@ PREPARE
 dissect ';"1 names'
 
 NB. =========================================================
-Lab Chapter Fills Example 3
-NB. =========================================================
-Lab Section Clever use of primitive :;
+Lab Section Example 3 - Clever use of primitive :;
 The obverse (^:_1) of the 'words' verb (;:) opens the boxed words and puts them into a character string, separated by spaces. This is done one line at a time, as specified by ("1).
 
 This gives the same result as the last example (;"1 names) except the 'words' (;:) obverse verb separates words with a space.
@@ -576,6 +589,43 @@ dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect ';:^:_1"1 names'
+
+NB. =========================================================
+Lab Section Other fill 1 - Verb fill
+Framing fill, which is added during assembly of multiple result-cells, should not be confused with verb fill, which is added by some verbs as part of their normal operation.
+
+(x , y) for example will add fill if the items of x and y have different shapes, but this is all part of the operation of the (,) verb which has infinite rank and produces a single result-cell.
+
+Verbs that insert verb fill usually allow you to specify the atom to be used for the fill.  Dissect does not mark verb fill in any way.
+
+In the display, the values of 999 are verb fill.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '3 4 ,: 1 2 3 4 5'
+
+NB. =========================================================
+Lab Section Other fill 2 - Fill cells
+The word 'fill' has another meaning, when used in the phrase 'fill cell'.
+
+If a verb has a 0 in the frame, there are no cells for it to operate on.  In this case, a single cell is created, containing only fills, and the verb is executed on the fill-cell.  The shape and type of the result are used to give the result of the verb.  (this result will always be empty, because the frame of the verb contains 0, so the actual result-values from the execution on the fill-cell are immaterial).
+
+In the example, execution on the fill-cell produced the string
+
+value: 0 0 0 0
+
+which has shape 14, so the shape of the overall verb-result is
+3 0 14.
+
+You can use the Preferences menu to have Dissect mark the places where fill-cells are created and operated on.  Turn on that switch, and see that Dissect puts * in the shape line and rank stack.  The tooltips for these blocks explain that they show that a fill-cell was used.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '(''value: '' , ":)"1 i. 3 0 4'
 
 NB. =========================================================
 Lab Chapter Leading Unit Axis

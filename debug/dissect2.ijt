@@ -2,20 +2,22 @@ LABTITLE=: 'Dissect II'
 LABFOCUS=: 1
 
 NB. =========================================================
-Lab Chapter Under(&.)
+Lab Chapter Intermediate Results: Expansion Blocks
 NB. =========================================================
-Lab Section Round to nearest 10th
-Here we execute (floor atop adding 0.5) under the transformation 'times 10' to get a result with one place after the decimal point instead of an integer.
+Lab Section Expansion Blocks
+Many J primitives perform repeated or hidden calculations to produce the results you see.  Dissect allows you to look at these calculations.  When you select a result, a new block is created to show the extra information.  This block is called an 'expansion block'.
 
-The Under conjunction (&.) is not in the diagram, but is shown in the sequence of operations:
+The original block containing the result being expanded remains, with its display tagged as 'Final' to indicate that the expansion is active.
 
-1) Multiply by 10
+There are four types of expansion blocks, which we will cover in turn.  They are:
 
-2) Apply the verb <.@(0.5&+)
+u/ y  This inserts the verb u between the items of y, causing u to be repeatedly executed.  The expansion block allows you to select an application of u for examination.
 
-3) Divide by 10
+[x] u^:v y  This executes u repeatedly, depending on the value of v.  The expansion block allows you to select an application of u for examination.
 
-Applying the verb after the transformation 10&* in step 1 and reversing the transformation with 10&*^_1 in step 3 are the effect of the &.(10&*) adverb. (A conjunction and a verb form an adverb.)
+$:  Recursion causes an entire verb to be reexecuted.  The expansion block allows you to select a single recursion level for examination.
+
+[x] u/. y  (Here /. stands for any of the partitioning modifiers /. \ \. ;.)  u is repeatedly executed on subsets of y.  The expansion block shows the computation on a selected subset.
 )
 PREPARE
 dissectoncect =: 1
@@ -40,29 +42,6 @@ dissecthandle =: 0$a:
 dissect =: dissectonce
 PREPARE
 require 'debug/dissect'
-dissect '<.@(0.5&+)&.(10&*) 1.23 2.35 3.54 4.66 5.22'
-
-NB. =========================================================
-Lab Chapter Intermediate Results: Expansion Blocks
-NB. =========================================================
-Lab Section Expansion Blocks
-Many J primitives perform repeated or hidden calculations to produce the results you see.  Dissect allows you to look at these calculations.  When you select a result, a new block is created to show the extra information.  This block is called an 'expansion block'.
-
-The original block containing the result being expanded remains, with its display tagged as 'Final' to indicate that the expansion is active.
-
-There are four types of expansion blocks, which we will cover in turn.  They are:
-
-u/ y  This inserts the verb u between the items of y, causing u to be repeatedly executed.  The expansion block allows you to select an application of u for examination.
-
-[x] u^:v y  This executes u repeatedly, depending on the value of v.  The expansion block allows you to select an application of u for examination.
-
-$:  Recursion causes an entire verb to be reexecuted.  The expansion block allows you to select a single recursion level for examination.
-
-[x] u/. y  (Here /. stands for any of the partitioning modifiers /. \ \. ;.)  u is repeatedly executed on subsets of y.  The expansion block shows the computation on a selected subset.
-)
-PREPARE
-dissectclose''
-PREPARE
 
 NB. =========================================================
 Lab Section Expansion of u/ y

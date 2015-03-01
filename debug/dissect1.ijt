@@ -296,7 +296,7 @@ The Preferences menu has two options that affect the display of the rank stack.
 
 Preferences|Show full compound-names causes the rank stack to show the full compound verb rather than the modifier that produced it.  Select that option and see the difference in the display.
 
-Preferences|Show @ @: etc causes lines to be added to the rank stack for the structural modifiers (@ @: & &:) which are usually omitted because the wiring shows their presence.  Select that option and see the line added to the display.
+Preferences|Show @ @: etc causes lines to be added to the rank stack for the structural modifiers (@ @: & &: &. &.:) which are usually omitted because the wiring shows their presence.  Select that option and see the line added to the display.
 
 These options may help you get oriented to the Dissect display, especially when you are new to it.
 )
@@ -502,7 +502,7 @@ dissect '+/%# 24 22 31 40 46'
 NB. =========================================================
 Lab Chapter Under (&.: and &.)
 NB. =========================================================
-Lab Section Standard Deviation example of using &.:
+Lab Section Standard Deviation using &.:
 Calculations done under a transformation are easy to express in J. Standard deviation is the average of the differences from the mean under the transformation of squaring.
 The Dissect diagram shows both operations, squaring(*:) and square root(*:^:_1). *:^:_1 denotes the inverse of *: .
 
@@ -522,6 +522,26 @@ PREPARE
 ]mean =: (+/%#) values
 NB. Population standard deviation
 dissect '(+/ % #)&.:*: mean - values'
+
+NB. =========================================================
+Lab Section Round to nearest 10th using &.
+Here we execute (floor atop adding 0.5) under the transformation 'times 10' to get a result with one place after the decimal point instead of an integer.
+
+The Under conjunction (&.) is not in the diagram, but is shown in the sequence of operations:
+
+1) Multiply by 10
+
+2) Apply the verb <.@(0.5&+)
+
+3) Divide by 10
+
+Applying the verb after the transformation 10&* in step 1 and reversing the transformation with 10&*^_1 in step 3 are the effect of the &.(10&*) adverb. (A conjunction and a verb form an adverb.)
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '<.@(0.5&+)&.(10&*) 1.23 2.35 3.54 4.66 5.22'
 
 NB. =========================================================
 Lab Section each (&.>)

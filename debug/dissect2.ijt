@@ -9,7 +9,7 @@ Many J primitives perform repeated or hidden calculations to produce the results
 
 The original block containing the result being expanded remains, with its display tagged as 'Final' to indicate that the expansion is active.
 
-There are four types of expansion blocks, which we will cover in turn.  They are:
+There are five types of expansion blocks, which we will cover in turn.  They are:
 
 u/ y  This inserts the verb u between the items of y, causing u to be repeatedly executed.  The expansion block allows you to select an application of u for examination.
 
@@ -18,6 +18,8 @@ u/ y  This inserts the verb u between the items of y, causing u to be repeatedly
 $:  Recursion causes an entire verb to be reexecuted.  The expansion block allows you to select a single recursion level for examination.
 
 [x] u/. y  (Here /. stands for any of the partitioning modifiers /. \ \. ;.)  u is repeatedly executed on subsets of y.  The expansion block shows the computation on a selected subset.
+
+[x] u@.v y  Until a single result is selected, no verb u can be displayed.  When a result is selected, the expansion block shows the computation of u.
 )
 PREPARE
 dissectoncect =: 1
@@ -57,7 +59,9 @@ Select (click) the result of +/ . When you do:
 
 Selecting a cell of the intermediate results highlights the addends that went into it.
 
-Select the '7' in the expansion block and the '3' & '4' in the +/ verb's input are highlighted.
+Initially the final result (10) is selected and the cells that were used to calculate it are highlighted - 0, the first item of the input, and 10, the previous intermediate result of +/ .  Also, the wiring shows that a result of +/ loops back to be an input to the next computation.
+
+Select the '7' in the expansion block and the '3' & '4' in the +/ verb's input are highlighted.  The wiring is corrected to show that this first computation does not use a result of +/ .
 
 Select the '9' and the '7' (the previous intermediate result in +/) is highlighted, along with the '2' in the input.
 )

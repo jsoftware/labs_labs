@@ -88,6 +88,25 @@ PREPARE
 dissect '+/ i. 5'
 
 NB. =========================================================
+Lab Section u/ on 2
+Sometimes, when you know that y has exactly 2 items, you write u/ y so that you can refer to the first item of y as [ and the second one as ] .
+
+The diagram shows an example.  The verb (> * *:@])/ means "the square of the second item of y, but 0 if the first item is not greater than the second".
+
+Click on a result atom to select it, and then click again to get an expansion block showing the computation.
+
+Does an expansion block seem a bit too extravagant when there are just 2 items?
+
+If so, select Preferences|show u/ on 2 items as dyad.  Dissect will suppress the expansion block.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+]t =: 3 2 $ 1 5 5 6 7 2
+dissect '(> * *:@])/"1 t'
+
+NB. =========================================================
 Lab Chapter Power (^:)
 NB. =========================================================
 Lab Section Power as an if statement

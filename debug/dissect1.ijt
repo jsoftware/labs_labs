@@ -130,7 +130,7 @@ Select one of the final result-cells. The corresponding result-cell of the > ver
 
 NB. =========================================================
 Lab Section Notice the one-atom list
-The 'a' in the result is in bold italics to alert you to the fact that although it looks like an atom, it is a 1-element list.
+The 'a' in the result of (:;) is in bold italics to alert you to the fact that although it looks like an atom, it is a 1-element list.
 )
 
 NB. =========================================================
@@ -284,9 +284,11 @@ NB. =========================================================
 Lab Section Rank stack
 Verb blocks contain a line showing the verb and its ranks.  This line may be preceded by lines for other modifiers, such as ", that are attached to the verb.  The verb-line plus all its modifiers is called the rank stack.
 
-The reason there is a stack of 3 ranks for the + verb in this example is that the results of 3 verbs are being shown in the same block: +"1"2, +"1, and +.  Selection applies to those verbs in turn, including a final selection that selects a single cell of + for highlighting.
+The reason there is a stack of 3 ranks for the + verb in this example is that the results of 3 verbs are being shown in the same block: +"1"2, +"1, and +.  Selection will apply to those verbs in turn, including a final selection that selects a single cell of + for highlighting.
 
-Te first verb executed in the final result box is +"1"2. You can see the whole verb by reading the rank stack from the bottom up. If you would rather see the whole +"1"2 at the top of the rank stack, check menu item Preferences|Show full compound names.
+Te first verb executed in the final result box is +"1"2. 
+
+(You can see the verbs that start in a block by reading the rank stack from the bottom up.  To see which verbs end in a block, hover over the verb at the bottom of the rank stack and read the tooltip.)
 
 Note that some of the ranks in the rank stack are in large bold italics. 
 If the rank in the rank stack actually affects the result (i. e. if the frame is nonempty), it is displayed as large-bold-italic.  Otherwise it is displayed regular, and is informational only.
@@ -485,7 +487,7 @@ PREPARE
 dissect '+/%# 24 22 31 40 46'
 
 NB. =========================================================
-Lab Chapter Under (&.:)
+Lab Chapter Under (&.: and &.)
 NB. =========================================================
 Lab Section Standard Deviation example of using &.:
 Calculations done under a transformation are easy to express in J. Standard deviation is the average of the differences from the mean under the transformation of squaring.
@@ -508,8 +510,6 @@ PREPARE
 NB. Population standard deviation
 dissect '(+/ % #)&.:*: mean - values'
 
-NB. =========================================================
-Lab Chapter Under (&.)
 NB. =========================================================
 Lab Section each (&.>)
 The predefined adverb 'each' opens a box, performs its verb, then reboxes the result.
@@ -607,7 +607,7 @@ PREPARE
 dissectclose''
 dissect =: dissectonce
 PREPARE
-dissect '3 4 ,: 1 2 3 4 5'
+dissect '3 4 ,:!.(999) 1 2 3 4 5'
 
 NB. =========================================================
 Lab Section Other fill 2 - Fill cells

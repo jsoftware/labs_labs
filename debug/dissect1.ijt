@@ -129,11 +129,6 @@ Select one of the final result-cells. The corresponding result-cell of the > ver
 )
 
 NB. =========================================================
-Lab Section Notice the one-atom list
-The 'a' in the result of (:;) is in bold italics to alert you to the fact that although it looks like an atom, it is a 1-element list.
-)
-
-NB. =========================================================
 Lab Section What is a frame?
 In the display of a verb result, Dissect shows the shape in two parts, the frame and the shape of a result-cell.
 
@@ -227,6 +222,9 @@ Lab Section Agreement Errors
 The sentence shown below, adding some numbers to the average of some other numbers, raises a length error. Dissect can help us to see what's wrong.
 
 The error is flagged on the + verb with the bright red word 'agreement'.  Dissect uses this in place of the less specific 'length error' to indicate execution of a dyad on arguments with incompatible frames.
+
+Hover the cursor over the red 'agreement' block. The tooltip refers you to the ranks of the arguments of the + verb.
+The arguments do not 'agree', in that the left frame is 3 and the right frame is 4; i. e. + is trying to add a list of 3 numbers to a list of 4 numbers.
 )
 PREPARE
 dissectclose''
@@ -237,27 +235,25 @@ NB. Add 6 5 3 to average of 3 9 6 */ 1 5 9 2
 dissect '6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2'
 
 NB. =========================================================
+Lab Chapter Color and Font Cues
+NB. =========================================================
 Lab Section Color cues
-Hover the cursor over the red 'agreement' block. The tooltip refers you to the ranks of the arguments of the + verb.
-The arguments do not 'agree', in that the left frame is 3 and the right frame is 4; i. e. + is trying to add a list of 3 numbers to a list of 4 numbers.
-
-The top line of a noun block is the shape of the noun on a blue background.
-
-The top line of a verb block is the name of the verb on a magenta background, flanked by its ranks on a white background.
-Under that is a noun block holding its result. The shape of the result is in two parts, either of which may be empty: the frame in black on a white background and the shape of a result-cell in white on a blue background.
-
 If a verb raises an error, it will be capped by the error name in white on a bright red background, and its result block may be incomplete.
+
+The top line of a noun block is the name of the noun, if it has one, followed by a line showing the shape of the noun on a blue background.
+
+A verb block has a line giving name of the verb in large type on a burgundy background, flanked by its ranks on a white background.
+Under that is a noun block holding the verb's result and its shape. The shape of the result is in two parts, either of which may be empty: the frame in black on a white background and the shape of a result-cell in white on a blue background.
+
 )
 
 NB. =========================================================
-Lab Chapter More color cues
-NB. =========================================================
-Lab Section Shapes
+Lab Section Colors in the shape
 Dissect uses color to give you information about the various elements.
 
 A noun block always shows the noun's shape in white type on a darker background. The uppermost blocks in the display illustrate this.  If the noun has a name, its name appears above the shape, as with the noun named l.
 
-A verb block shows the shape of its result in two parts, either of which may be empty. The frame into which result-cells are assembled is in black type on a lighter background and the shape of a result-cell is in white type on a dark background. The shape of the whole result is the concatenation of the frame shape and the result-cell shape.
+A verb block shows the shape of its result in two parts, either of which may be empty. The frame into which result-cells are assembled is in black type on a lighter background and the shape of a result-cell is in white type on a purple background. The shape of the whole result is the concatenation of the frame shape and the result-cell shape.
 )
 PREPARE
 dissectclose''
@@ -268,7 +264,7 @@ dissect '(>:@:i. l) +"1"2 i. 3 4 5'
 
 NB. =========================================================
 Lab Section Determinate values
-Did you notice something missing?  Look again to see it.
+Did you notice something missing?  Look again to find it.
 
 The computation of (i. 3 4 5) is not shown - only the result.
 
@@ -319,7 +315,7 @@ Each time you click in the same place you move the display to a deeper selection
 )
 
 NB. =========================================================
-Lab Section Frame and result-cell shape
+Lab Section Colors in the frame and result-cell shape
 Click the << button at the upper left corner to put the display back into its initial configuration.
 
 The shape of the noun result of a verb is the frame of the arguments concatenated with the shape of a result-cell. In the shape of the result, the result-cell shape is the last part of the shape, displayed with a purple background and white text; the rest of the shape is the frame of the result, displayed with black text on a background color that corresponds to the selection level of the verb that created the frame.
@@ -343,6 +339,23 @@ The third verb, +, has magenta background, produces the selected list, and has f
 
 The selection line, below the shape, gives the indexes of the selections you made.  It shows two values, one for each time you clicked.  If you click again inside the magenta area you will see a third selection appear.
 )
+
+NB. =========================================================
+Lab Section Nouns with unit leading axis
+A noun with a leading 1 in its shape is a potential source of confusion. It is a list of one item, and the item can have any shape. Examples are a one-atom list and a one-row table.
+
+In the J session they look the same as they would without the leading unit axis. Note that the nouns a, b and c look the same in the J session although their shapes are, respectively, empty, 1 and 1 1.
+
+Dissect calls attention to such nouns by displaying their values in bold italic font.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+a=:42 [b=:,:42 [c=:,:,:42
+($a);($b);$c
+a;b;c
+dissect 'a;b;c'
 
 NB. =========================================================
 Lab Chapter Large Values
@@ -629,23 +642,4 @@ dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect '(''value: '' , ":)"1 i. 3 0 4'
-
-NB. =========================================================
-Lab Chapter Leading Unit Axis
-NB. =========================================================
-Lab Section J display vs Dissect display
-A noun with a leading 1 in its shape is a potential source of confusion. It is a list of one item, and the item can have any shape. Examples are a one-atom list and a one-row table.
-
-In the J session they look the same as they would without the leading unit axis. Note that the nouns a, b and c look the same in the J session although their shapes are, respectively, empty, 1 and 1 1.
-
-Dissect calls attention to such nouns by displaying their values in bold italic font.
-)
-PREPARE
-dissectclose''
-dissect =: dissectonce
-PREPARE
-a=:42 [b=:,:42 [c=:,:,:42
-($a);($b);$c
-a;b;c
-dissect 'a;b;c'
 

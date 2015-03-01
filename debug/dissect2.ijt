@@ -93,9 +93,9 @@ NB. =========================================================
 Lab Chapter Power (^:)
 NB. =========================================================
 Lab Section Power as an if statement
-In the Power conjunction form u^:v y, y is the argument for both the u verb and the v verb. The result of v y is the number of times to execute u. Here, the v verb is '.'~:{:, which will produce 0 if the last character of y is a period, and 1 if it is not.
+In the Power conjunction form u^:v y, y is the argument for both the u verb and the v verb. The result of v y is the number of times to execute u. Here, the v verb is ('.'~:{:), which will produce 0 if the last character of y is a period, and 1 if it is not.
 
-The u verb here is ,&'.', append a period.
+The u verb here is (,&'.'), append a period.
 
 Thus this sentence can be read as 'If y does not end in a period, append one'.
 
@@ -166,7 +166,7 @@ Now, in the expansion block, select the result whose value is 26.  The computati
 
 NB. =========================================================
 Lab Section The expansion block for ^: c't'd
-Now select the result 40.  Now the previous power produced an odd result, so the second gerund is selected, and its display is shown.
+Select the result 40.  Now the previous power produced an odd result, so the second gerund is selected, and its display is shown.
 )
 
 

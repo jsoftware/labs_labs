@@ -173,7 +173,7 @@ If there is no frame for the intermediate result, the cells could be incompatibl
 
 Click on the 2 in the final result and dissect displays the corresponding intermediate result, 'ab'. The other intermediate result is a 3-atom numeric list. The two intermediate results cells have different shapes and types; they can not be joined together in the same array.
 
-Note that the left and right ranks of ; are shown as 1 1 instead of _ _. Dissect displays the effective ranks of verbs instead of the actual ranks.  The effective rank is the rank of the actual argument cells the verb operates on. In this case ; is operating on lists, so its effective ranks are 1 1.
+Note that the left and right ranks of ; are shown as 1 1 instead of _ _. Dissect displays the effective ranks of verbs instead of the intrinsic ranks.  The effective rank is the rank of the argument cells the verb operates on in this this time. Here,  ; is operating on lists, so its effective ranks are 1 1.
 
 If you want to know the intrinsic rank of a verb rather than the effective rank, hover the cursor over the verb to see a Tooltip that tells you.
 )
@@ -202,8 +202,10 @@ The selection lines beneath the shape lines show you the path to the error, and 
 PREPARE
 dissectclose''
 dissect =: dissectonce
+smoutput '   >:@> 1;''a'';3'
+smoutput '|domain error'
+smoutput '|       >:@>1;''a'';3' 
 PREPARE
->:@>  1;'a';3  NB. Uninformative session error meessage
 dissect '>:@>  1;''a'';3'
 
 NB. =========================================================
@@ -213,8 +215,10 @@ Sometimes a verb executes correctly on all its cells, but the results of those c
 PREPARE
 dissectclose''
 dissect =: dissectonce
+smoutput '   > 1;''a'';2 3'
+smoutput '|domain error'
+smoutput '|       > 1;''a'';2 3' 
 PREPARE
-> 1;'a';2 3
 dissect '> 1;''a'';2 3'
 
 NB. =========================================================
@@ -229,9 +233,11 @@ The arguments do not 'agree', in that the left frame is 3 and the right frame is
 PREPARE
 dissectclose''
 dissect =: dissectonce
+smoutput 'NB. Add 6 5 3 to average of 3 9 6 */ 1 5 9 2'
+smoutput '   6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2'
+smoutput '|length  error'
+smoutput '|       6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2' 
 PREPARE
-NB. Add 6 5 3 to average of 3 9 6 */ 1 5 9 2
-6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2
 dissect '6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2'
 
 NB. =========================================================
@@ -244,7 +250,6 @@ The top line of a noun block is the name of the noun, if it has one, followed by
 
 A verb block has a line giving name of the verb in large type on a burgundy background, flanked by its ranks on a white background.
 Under that is a noun block holding the verb's result and its shape. The shape of the result is in two parts, either of which may be empty: the frame in black on a white background and the shape of a result-cell in white on a blue background.
-
 )
 
 NB. =========================================================
@@ -450,7 +455,7 @@ A fork is shown in the sequence of operation; The results of +/ and # are input 
 
 Select the result of +/ to raise an expansion block that displays the intermediate additions that contributed to it. The intermediate results of / are not shown unless you ask for them by selecting the end result.
 
-Select the intermediate result 145 and see the arguments to + that produced it highlighted. They are the previous intrmediate result 121 and the input atom 24. 
+Select the intermediate result 145 and see the arguments to + that produced it highlighted. They are the previous intermediate result 121 and the input atom 24. 
 )
 PREPARE
 dissectclose''
@@ -500,10 +505,41 @@ PREPARE
 dissect '+/%# 24 22 31 40 46'
 
 NB. =========================================================
-Lab Chapter Under (&.: and &.)
+Lab Chapter Under (&. and &.:)
+NB. =========================================================
+Lab Section Caesar cipher using Under (&.)
+A Caesar cipher is a type of substitution cipher in which each letter in the plaintext is replaced by a letter a fixed number of positions away. Our example uses a left shift of 1, so that 'a' is replaced by 'z', 'b' is replaced by 'a', etc.
+
+It's called a Caesar cipher because Julius Caesar used it.
+
+Calculations done under a transformation are easy to express in J. The sentence u&.v y applies verb u to y in the domain of v. 
+
+That is accomplished in three steps:
+
+1. Transform argument
+
+2. Perform operation on transformed values
+
+3. Inverse transformation on the result of step 2
+
+Our example does the Caesar encryption by subtracting 1 from each letter of the message in the domain of indexes into the alphabet.
+
+The verb '<:&.(alphabet&i.)) looks up the index in alphabet for each letter in y, subtracts 1 from each of those indexes, and uses the new indexes to take letters from the alphabet to produce the final result.
+
+The coded text produced is the argument text with each letter shifted one place to the left in the alphabet.
+
+Note that the Under conjunction (&.) is in the sentence, but not in the diagram. The diagram shows its action in the Index (i.) and inverse Index (i.^_1) verbs.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+alphabet =: 'abcdefghijklmnopqrstuvwxyz' 
+dissect '<:&.(alphabet&i.) ''attackatdawn'''
+
 NB. =========================================================
 Lab Section Standard Deviation using &.:
-Calculations done under a transformation are easy to express in J. Standard deviation is the average of the differences from the mean under the transformation of squaring.
+Standard deviation is the average of the differences from the mean under the transformation of squaring.
 The Dissect diagram shows both operations, squaring(*:) and square root(*:^:_1). *:^:_1 denotes the inverse of *: .
 
 The square root, though not mentioned in the J sentence, is implied by the definition of Under(&.:)
@@ -513,35 +549,25 @@ The square root, though not mentioned in the J sentence, is implied by the defin
 2) Perform operation on transformed values
 
 3) Inverse transformation on the result of 2)
+
+There are two diagram windows, one using &.: and the other (mistakenly) using &. . 
+
+Observe that u&.:v has infinite rank; it operates on the entire argument at once, but u&.v has the rank of v (0 in this case, where v is *:).
+
+((+/ % #)&.:*: mean - values) produces the standard deviation.
+
+((+/ % #)&.*: mean - values) applies the average on each number separately, which has no effect, so you are left with the individual numbers.
 )
 PREPARE
 dissectclose''
 dissect =: dissectonce
+dissectoncect =: 2
 PREPARE
 ]values =: 10?100
 ]mean =: (+/%#) values
 NB. Population standard deviation
 dissect '(+/ % #)&.:*: mean - values'
-
-NB. =========================================================
-Lab Section Round to nearest 10th using &.
-Here we execute (floor atop adding 0.5) under the transformation 'times 10' to get a result with one place after the decimal point instead of an integer.
-
-The Under conjunction (&.) is not in the diagram, but is shown in the sequence of operations:
-
-1) Multiply by 10
-
-2) Apply the verb <.@(0.5&+)
-
-3) Divide by 10
-
-Applying the verb after the transformation 10&* in step 1 and reversing the transformation with 10&*^_1 in step 3 are the effect of the &.(10&*) adverb. (A conjunction and a verb form an adverb.)
-)
-PREPARE
-dissectclose''
-dissect =: dissectonce
-PREPARE
-dissect '<.@(0.5&+)&.(10&*) 1.23 2.35 3.54 4.66 5.22'
+dissect '(+/ % #)&. *: mean - values' NB.doesn't work
 
 NB. =========================================================
 Lab Section each (&.>)

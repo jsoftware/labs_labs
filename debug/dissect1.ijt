@@ -689,3 +689,40 @@ dissect =: dissectonce
 PREPARE
 dissect '(''value: '' , ":)"1 i. 3 0 4'
 
+NB. =========================================================
+Lab Section Other fill 2 ctd - Fill cells with error
+When the execution on a fill-cell has an error, execution of the sentence continues as if the execution had produced the value 0.
+
+Two example windows are shown.  In the first sentence, the fill-cell is 0, and execution on it produces a 3-atom list; so the overall result has shape 0 3.
+
+In the second sentence, the fill-cell is ' ' and the execution on the fill-cell fails.  This makes the final result have shape 0.
+
+In the dissected second sentence, go to Preferences as enable detail for fill-cell processing.  You will see where the error occurred and which result used the 0 error-value.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+dissectoncect =: 2
+PREPARE
+dissect '([: i. 3 + ])"0 (0$0)'
+dissect '([: i. 3 + ])"0 '''''
+
+NB. =========================================================
+Lab Chapter Recovering From Errors
+NB. =========================================================
+Lab Section Adverse u :: v
+u :: v executes the verb u first.  If u succeeds, its result is used.  If u fails, v is executed to produce the result.
+
+In the dissected sentence, you will see whichever result was used.  If v was used, and you want to see why u failed, click on the result to see the expansion of u.
+
+If u :: v was applied with a rank, so that the displayed result has more than one cell, you must first select a cell before examining its computation.
+
+In the example, click on the 'a' result in the final block.  That selects it.  Then click again to see that u failed trying to increment the character value.  When u failed, # made a second copy of the character.
+
+Next, select the 4 result in the final block.  Try clicking again.  You see the message indicating that no further selection can be made, because v was not executed and 4 is the entire result.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '>: :: (2&#) &.> 1;''a'';3'

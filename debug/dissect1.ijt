@@ -601,6 +601,8 @@ When a result requires fill, the shape after fill is shown in parentheses.  The 
 
 Here, opening (>) a 5x2 table of boxes creates a 5x2 table of lists, the longest of which is 15 characters, so the shorter ones are padded to that length.
 
+The result-shape is displayed as (15(15)).  The parenthesized value is the actual shape after fill.  The value before the parentheses shows the shape of the selected result before fill, if there is a selected result; otherwise it shows the result-shape.  Here, since no result-cell has been selected, the filled shape is repeated.
+
 The diagram shows that the fills were added in the open (>) verb; as far as the ravel (,) verb knows, the spaces were always there.
 )
 PREPARE
@@ -618,7 +620,7 @@ It now shows (10(15)) in the result-shape.  This indicates that you selected a c
 
 Click on the name (W) in the result of the (>) verb.
 
-This cell produced an atom.  The word 'atom' is used in the shape to distinguish this display from the unselected case.  The parentheses around the filled shape still indicate that the overall result was filled.
+This cell produced an atom.  The shape of an atom is empty.  This shape - empty, which is invisible - is displayed before the parentheses.  The parentheses around the filled shape still indicate that the overall result was filled.
 )
 
 NB. =========================================================
@@ -631,7 +633,7 @@ Any array that contains a 0 in its shape is empty.  An empty array is displayed 
 
 So, an empty list [shape=0] is displayed as rectangles with empty shape, i. e. a single-atom rectangle.
 
-An empty array of shape (3 0 2) is display as a list of 3 rectangles.  These rectangles may be selected individually.
+An empty array of shape (3 0 2) would be displayed as a list of 3 rectangles.  These rectangles would be individually selectable.
 )
 
 NB. =========================================================
@@ -657,6 +659,54 @@ dissectclose''
 dissect =: dissectonce
 PREPARE
 dissect ';:^:_1"1 names'
+
+NB. =========================================================
+Lab Section Multilevel framing fill
+Framing fill may be added whenever result-cells are assembled into a single array.  A block may exhibit framing fill at several levels, as in the example shown.
+
+Dissect shows fill with crosshatching, but ONLY for cells that have been selected.
+
+Before pondering the display of this example, take the time to understand the sentence.
+
+The verb (i."0"1) is applied to the noun (2 2 $ 1 4 1 8) .
+
+This means that the verb (i."0) will be applied to the two 1-cells of the noun, namely the lists (1 4) and (1 8) .
+
+When (i."0) is applied to (1 4), the verb (i.) will be applied twice: first to (1) producing the list (0), and second to (4) producing the list (0 1 2 3) .
+
+Then these lists will be assembled into a table with shape (2 4).  Framing fill must be added at this stage.
+
+Similarly, when (i."0) is applied to (1 8), the result will be a table with shape (2 8) [after the necessary fill].
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect 'i."0"1 (2 2 $ 1 4 1 8)'
+
+NB. =========================================================
+Lab Section Multilevel framing fill ctd
+Now examine the display of this sentence.
+
+The final result is shown as having frame (2) and result-cell-shape (2 8) giving the result-shape of (2 2 8).  The parentheses around the result-cell-shape indicate that fill was applied.
+
+Before you click on any cells, only the highest level of selection is active.  This is the level of the result-cells of the verb (i."0"1) .  Fill is shown with crosshatching, but only for this topmost level.  You can see that fill was added when the 2x4 table was joined to the 2x8 table.
+
+Now click on the left-hand side of the result of (i.) .  This selects result-cell 0, with the following visible effects:
+
+1) The selected index appears in the line under the shape.
+
+2) The shape line now reads (2 2(2) 4(8)) .  The parenthesized shapes still show the shape of the final result after fill, but the shapes before the parentheses indicate that result-cell 0 at the top selection level produced a 2x4 array.
+
+3) The selected result-cell is shown in green.
+
+4) Crosshatching now appears over three zeros in the green cell to show where framing fill was added when the two lists were joined.
+)
+
+NB. =========================================================
+Lab Section Multilevel framing fill ctd
+Finally, click again on the top row of the green block.  Now the result shows the result-cell-shape of the selection at the green selection level, namely (1) .
+)
 
 NB. =========================================================
 Lab Section Other fill 1 - Verb fill

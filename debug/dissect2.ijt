@@ -5,21 +5,23 @@ NB. =========================================================
 Lab Chapter Intermediate Results: Expansion Blocks
 NB. =========================================================
 Lab Section Expansion Blocks
+NOTE: In this lab, parentheses are used to indicate J code.
+
 Many J primitives perform repeated or hidden calculations to produce the results you see.  Dissect allows you to look at these calculations.  When you select a result, a new block is created to show the extra information.  This block is called an 'expansion block'.
 
 The original block containing the result being expanded remains, with its display tagged as 'Final' to indicate that the expansion is active.
 
 There are five types of expansion blocks, which we will cover in turn.  They are:
 
-u/ y  This inserts the verb u between the items of y, causing u to be repeatedly executed.  The expansion block allows you to select an application of u for examination.
+(u/ y)  This inserts the verb (u) between the items of (y), causing (u) to be repeatedly executed.  The expansion block allows you to select an application of (u) for examination.
 
-[x] u^:v y  This executes u repeatedly, depending on the value of v.  The expansion block allows you to select an application of u for examination.
+([x] u^:v y)  This executes (u) repeatedly, depending on the value of (v).  The expansion block allows you to select an application of (u) for examination.
 
-$:  Recursion causes an entire verb to be reexecuted.  The expansion block allows you to select a single recursion level for examination.
+($:)  Recursion causes an entire verb to be reexecuted.  The expansion block allows you to select a single recursion level for examination.
 
-[x] u/. y  (Here /. stands for any of the partitioning modifiers /. \ \. ;.)  u is repeatedly executed on subsets of y.  The expansion block shows the computation on a selected subset.
+([x] u/. y)  [Here (/.) stands for any of the partitioning modifiers (/. \ \. ;.)]  (u) is repeatedly executed on subsets of (y) .  The expansion block shows the computation on a selected subset.
 
-[x] u@.v y  Until a single result is selected, no verb u can be displayed.  When a result is selected, the expansion block shows the computation of u.
+([x] u@.v y)  Until a single result is selected, no verb (u) can be displayed.  When a result is selected, the expansion block shows the computation of the selected (u) .
 )
 PREPARE
 dissectoncect =: 1
@@ -46,24 +48,24 @@ PREPARE
 require 'debug/dissect'
 
 NB. =========================================================
-Lab Section Expansion of u/ y
-The initial display shows none of the intermediate results of the summation (+/).
+Lab Section Expansion of (u/ y)
+The initial display shows none of the intermediate results of the summation (+/) .
 
-Select (click) the result of +/ . When you do:
+Select [click] the result of (+/) . When you do:
 
-1) The +/ verb in the sentence at the top of the display window is highlighted.
+1) The (+/) verb in the sentence at the top of the display window is highlighted.
 
-2) A new block in the diagram appears, displaying the intermediate results of +/ .
+2) A new block in the diagram appears, displaying the intermediate results of (+/) .
 
 3) The original block is tagged as 'Final'.
 
 Selecting a cell of the intermediate results highlights the addends that went into it.
 
-Initially the final result (10) is selected and the cells that were used to calculate it are highlighted - 0, the first item of the input, and 10, the previous intermediate result of +/ .  Also, the wiring shows that a result of +/ loops back to be an input to the next computation.
+Initially the final result (10) is selected and the cells that were used to calculate it are highlighted - (0), the first item of the input, and (10), the previous intermediate result of (+/) .  Also, the wiring shows that a result of (+/) loops back to be an input to the next computation.
 
-Select the '7' in the expansion block and the '3' & '4' in the +/ verb's input are highlighted.  The wiring is corrected to show that this first computation does not use a result of +/ .
+Select the (7) in the expansion block. The (3) and (4) in the (+/) verb's input are highlighted.  The wiring is corrected to show that this first computation does not use a result of (+/) .
 
-Select the '9' and the '7' (the previous intermediate result in +/) is highlighted, along with the '2' in the input.
+Select the (9) . The (7) [the previous intermediate result in (+/)] is highlighted, along with the (2) in the input.
 )
 PREPARE
 dissect =: dissectonce
@@ -72,9 +74,9 @@ dissect '+/ i. 5'
 
 NB. =========================================================
 Lab Section u/ on 2
-Sometimes, when you know that y has exactly 2 items, you write u/ y so that you can refer to the first item of y as [ and the second one as ] .
+Sometimes, when you know that (y) has exactly 2 items, you write (u/ y) so that you can refer to the first item of (y) as ([) and the second one as (]) .
 
-The diagram shows an example.  The verb (> * *:@])/ means "the square of the second item of y, but 0 if the first item is not greater than the second".
+The diagram shows an example.  The verb ((> * *:@])/) means "the square of the second item of y, but 0 if the first item is not greater than the second".
 
 Click on a result atom to select it, and then click again to get an expansion block showing the computation.
 
@@ -93,15 +95,15 @@ NB. =========================================================
 Lab Chapter Power (^:)
 NB. =========================================================
 Lab Section Power as an if statement
-In the Power conjunction form u^:v y, y is the argument for both the u verb and the v verb. The result of v y is the number of times to execute u. Here, the v verb is ('.'~:{:), which will produce 0 if the last character of y is a period, and 1 if it is not.
+In the Power conjunction form ([x] u^:v y), (y) is the argument for both the (u) verb and the (v) verb. The result of ([x] v y) is the number of times to execute (u) . Here, the (v) verb is ('.'~:{:), which will produce 0 if the last character of (y) is a period, and 1 if it is not.
 
-The u verb here is (,&'.'), append a period.
+The (u) verb here is (,&'.'), whose function is to append a period.
 
-Thus this sentence can be read as 'If y does not end in a period, append one'.
+Thus this sentence can be read as 'If (y) does not end in a period, append one'.
 
-The displays show 2 examples, one that adds the final period and one that doesn't.  The computation of v decides what to do.  There is less to do when v produces 0.
+The displays show two examples, one that adds the final period and one that doesn't.  The computation of (v) decides what to do.  There is less to do when (v) produces (0) .
 
-In the Dissect displays, the v part of u^:v enters the block from the right, indicating that it is a control input and not part of the top-to-bottom data flow.
+In the Dissect displays, the (v) part of (u^:v) enters the block from the right, indicating that it is a control input and not part of the top-to-bottom data flow.
 )
 PREPARE
 dissectclose''
@@ -113,7 +115,7 @@ dissect ',&''.''^:(''.''~:{:) ''This is a better sentence.'''
 
 NB. =========================================================
 Lab Section Alternative dyad form
-If u^:v has a left argument, that argument is supplied to u and v.
+If (u^:v) has a left argument, that argument is supplied to (u) and (v).
 
 We could use this form to rewrite the append-missing-period verb.
 )
@@ -125,11 +127,11 @@ dissect '''.'' ,~^:(~: {:) ''This is a sentence'''
 
 NB. =========================================================
 Lab Section Power as do-while
-u^:_ causes u to be executed multiple times, with each result used for input to the next execution, stopping when the result doesn't change. It means "do while the result is changing". The overall result of u^:_ result is the final stable result of u.
+(u^:_) causes (u) to be executed multiple times, with each result used for input to the next execution, stopping when the result doesn't change. It means "do while the result is changing". The overall result of (u^:_) is the final stable result of (u) .
 
-The expression (1&= + 2&|) returns 0 for even numbers, 1 for odd numbers >1, and 2 for the number 1.
+The expression ((1&= + 2&|)) returns (0) for even numbers, (1) for odd numbers >1, and (2) for the number 1.
 
-So the agenda (@.) will choose a verb from the gerund (-:`(>:@(3&*))`1: which will halve even numbers, triple and increment odd numbers > 1, and return 1 if the input is 1.
+So the agenda (@.) will choose a verb from the gerund (-:`(>:@(3&*))`1:) which will halve even numbers, triple and increment odd numbers > 1, and return 1 if the input is 1.
 
 The Collatz conjecture states that if you start with any integer and do this operation often enough, you will end up at 1.
 
@@ -146,39 +148,39 @@ PREPARE
 dissect '(-:`(>:@(3&*))`1: @. (1&= + 2&|))^:_ (9)'
 
 NB. =========================================================
-Lab Section The expansion block for ^:
+Lab Section The expansion block for (^:)
 Select the result to raise an expansion block with the intermediate results. This block shows the results of each application of the verb, in order.  Note that execution stopped when a result of 1 caused the next execution to return the same result.
 
-The selection line in the expansion block, just beneath the shape line, tells the iteration number of the result whose computation is detailed.  The first result in the expansion block, iteration number 0, is the original y.
+The selection line in the expansion block, just beneath the shape line, tells the iteration number of the result whose computation is detailed.  The first result in the expansion block, iteration number 0, is the original (y).
 
-When the expansion block comes to life it selects iteration number 0.  Because this is the original y, there is no computation at all to show.
+When the expansion block comes to life it selects iteration number 0.  Because this is the original (y), there is no computation at all to show.
 
-Now, in the expansion block, select the result whose value is 26.  The computation of this value is detailed.  Note the following features:
+Now, in the expansion block, select the result whose value is (26).  The computation of this value is detailed.  Note the following features:
 
-1. The result 26 is computed from the previous result of u, which is 52.  The 52 is highlighted to show that it is the input to the computation of the next power.
+1. The result (26) is computed from the previous result of (u), which is (52).  The (52) is highlighted to show that it is the input to the computation of the next power.
 
 2. The wiring shows the result of the power block looping back into the computation of the next power.
 
-3. Because a single result is selected, the agenda gets an expansion block of its own.  The result of agenda is tagged 'Final'.  Feeding in at its right is the computation of the gerund index (0 here), and feeding into it from above is the computation of that gerund, which is simply -: .
+3. Because a single result is selected, the agenda gets an expansion block of its own.  The result of agenda is tagged 'Final'.  Feeding in at its right is the computation of the gerund index [0 here], and feeding into it from above is the computation of that gerund, which is simply (-:) .
 
-4. The selection line shows that this is the 9th application of the verb u .
+4. The selection line shows that this is the 9th application of the verb (u) .
 )
 
 NB. =========================================================
 Lab Section The expansion block for ^: c't'd
-Select the result 40.  Now the previous power produced an odd result, so the second gerund is selected, and its display is shown.
+Select the result (40).  Now the previous power produced an odd result, so the second gerund is selected, and its display is shown.
 )
 
 
 NB. =========================================================
 Lab Chapter Operations Inside Boxed Structures
 NB. =========================================================
-Lab Section L: - operate inside the structure
-A leaf of y is a noun inside y that itself has no nested contents.
+Lab Section (L:) - operate inside the structure
+A leaf of (y) is a noun inside (y) that itself has no nested contents.
 
 A leaf is always either empty or unboxed.
 
-u L:0 y creates a copy of y in which each leaf has been replaced by the result of applying u to the leaf.
+(u L:0 y) creates a copy of (y) in which each leaf has been replaced by the result of applying (u) to the leaf.
 
 Here we have a gradebook for two classes.  There are two nouns, students and grades.
 
@@ -196,14 +198,14 @@ PREPARE
 dissect '(+/ % #)L:0 grades'
 
 NB. =========================================================
-Lab Section S: - collect results into an array
-u S:0 y applies verb u to each leaf of y, creating an array whose items are the results of the leaves, with framing fill added as needed.
+Lab Section (S:) collect results into an array
+(u S:0 y) applies verb (u) to each leaf of (y), creating an array whose items are the results of the leaves, with framing fill added as needed.
 
 This result is like the previous one using Level At (L:), except that the results are brought out into an array rather than replacing the leaves in the boxed structure.
 
-Note that the S: line is inserted into the rank stack at the beginning of the computation it applies to.  That computation doesn't finish until the < block.
+Note that the (S:) line is inserted into the rank stack at the beginning of the computation it applies to.  That computation doesn't finish until the (<) block.
 
-Hover over the < blocks. The tooltip explains that the S: verb completes there.
+Hover over the (<) blocks. The tooltip explains that the (S:) verb completes there.
 )
 PREPARE
 dissectclose''
@@ -213,7 +215,7 @@ dissect '(< S:0 students),.<@(+/ % #)S:0 grades'
 
 NB. =========================================================
 Lab Section Students
-We applied a fork to grades to obtain an average. To collect the students' names, we just use S:0 to remove the boxing.
+We applied a fork to grades to obtain an average. To collect the students' names, we just use (S:0) to remove the boxing.
 
 Note the spaces added as fill to make each row the same length.
 )
@@ -227,9 +229,9 @@ NB. =========================================================
 Lab Chapter Recursion
 NB. =========================================================
 Lab Section Factorial
-The verb 1:`(] * $:@<:)@.* computes tha factorial of y using the recursive definition of factorial: If n=0, n!=1; if n>0  n!=n*(n-1)!.
+The verb (1:`(] * $:@<:)@.*) computes tha factorial of (y) using the recursive definition of factorial: If n=0, n!=1; if n>0, n!=n*(n-1)!.
 
-The last recursive execution of the verb is shown, where 5*24=120. Select the result of the $: verb to display all the results of the separate recursive executions in a new box. Select a single recursion result to show the computation at that recursion level. 
+The last recursive execution of the verb is shown, where 5*24=120. Select the result of the ($:) verb to display all the results of the separate recursive executions in a new box. Select a single recursion result to show the computation at that recursion level. 
 )
 PREPARE
 dissectclose''
@@ -239,16 +241,15 @@ dissect '1:`(] * $:@<:)@.* 5'
 
 NB. =========================================================
 Lab Section Debugging Recursion
-The sentence in this example performs recursion, opening each box of the input until it gets to a leaf node (where the test (0<L.) produces 0), at which point it increments the value of the leaf.
+The sentence in this example performs recursion, opening each box of the input until it gets to a leaf node [where the test (0<L.) produces (0)], at which point it increments the value of the leaf.
 
-(>:L:0 is an easier way to write this but our interest is in the recursion.)
+[(>:L:0) is an easier way to write this but our interest is in the recursion.]
 
 In this case the recursion failed because one of the leaves had a nonnumeric value, and as always Dissect starts us off looking right at the error.
 
 The block labeled Recursions shows the results of all the recursions.  These results are listed in the order in which the recursive verb started.  Because of the error, not all the recursions that started actually finished.  In fact, only two did.
 
-The failure point, indicated by double-crosshatching, is the last recursion that started, number 6.  The block at the top shows the 
-input to the recursion level being examined.
+The failure point, indicated by double-crosshatching, is the last recursion that started, number 6.  The block at the top shows the input to the recursion level being examined.
 
 Click around the other recursion levels, both those that finished and those that didn't.  Use the crosshatching to see the error path, and note that the inputs to each recursion level are shown when you select a result.
 
@@ -263,12 +264,12 @@ dissect '>:`($:&.>)@.(0<L.) t'
 NB. =========================================================
 Lab Chapter Partitions
 NB. =========================================================
-Lab Section Infix x u\ y
+Lab Section Infix (x u\ y)
 This sentence uses the infix modifier to box each adjacent pair of items of the list.  It is an example of expansion blocks for partitions.
 
 Select a cell of the result.  Immediately
 
-1) The block containing the result of <\ is tagged as 'Final'
+1) The block containing the result of (<\) is tagged as 'Final'
 
 2) An expansion block is created showing the calculation of the selected result-cell
 
@@ -284,7 +285,7 @@ dissect '2 <\ 3 1 4 1 5 9'
 
 NB. =========================================================
 Lab Section Other partitions
-The other partitioning modifiers are similar to u\ .  Here are examples of several of them.  Click around in the results to see how the individual partitions are calculated.
+The other partitioning modifiers are similar to (u\) .  Here are examples of several of them.  Click around in the results to see how the individual partitions are calculated.
 )
 PREPARE
 dissectclose''
@@ -298,15 +299,15 @@ dissect '''banana'' </. 1 2 3 4 5 6' NB. Box partitions
 
 NB. =========================================================
 Lab Section Infix in a more complex sentence
-The displayed sentence inserts between each opened box of q a verb that reduces the right argument by taking the largest number in each infix of length 2, then adds that reduced argument to the left argument, then boxes the result.
+The displayed sentence inserts between each opened box of (q) a verb that reduces the right argument by taking the largest number in each infix of length 2, then adds that reduced argument to the left argument, then boxes the result.
 
 Only the final result (23) is shown at first. Its value in bold italics alerts you to the fact that it has a leading unit axis. Note the shape (1); the result of the sentence is a one-element list.
 
-Select the 23 result. Now select, in the expansion block, the box containing 10 13 15. Click again to select the list in the box. Its highlighted addends are 2 4 6 from the original argument and 8 9 9 which are the largest numbers in each of 8 5, 5 9, and 9 3, the length-2 infixes of 8 5 9 3.
+Select the (23) result. Now select, in the expansion block, the box containing (10 13 15) . Click again to select the list in the box. Its highlighted addends are (2 4 6) from the original argument and (8 9 9) which are the largest numbers in each of (8 5), (5 9), and (9 3), the length-2 infixes of (8 5 9 3) .
 
-Now click once more to select the 13. The addends that produced 13 are highlighted - they are the 4 in q and the middle 9 the result of (>./\)&.>.
+Now click once more to select the (13) . The addends that produced (13) are highlighted - they are the (4) in (q) and the middle (9) in the result of ((>./\)&.>) .
 
-Now click on that 9 to raise another expansion block to display it as an intermediate result, and to highlight the length-2 partition in the last box of q that produced it.
+Now click on that (9) to raise another expansion block to display it as an intermediate result, and to highlight the length-2 partition in the last box of (q) that produced it.
 )
 PREPARE
 dissectclose''
@@ -343,11 +344,11 @@ NB. =========================================================
 Lab Section Explanation
 (~.@[ ,. +/&.:>/.) is a hook. Its arguments are the boxed list of cookie types from the table (1 {"1 table) and the boxed list of corresponding sales numbers, also from the table (2 {"1 table).
 
-The hook stitches (,.) the nub of cookie types (~.@[) to the sum of corresponding sales (+/&.:>/.).
+The hook stitches (,.) the nub of cookie types (~.@[) to the sum of corresponding sales (+/&.:>/.) .
 
 The verb (+/&.:>/.) is the sum (+/) under open (&.:>) of partitions of sales numbers with the same cookie type (/.).
 
-Select a result cell of the verb (+/&.:>/.) to highlight the inputs that produced it. For example, select 72 to highlight all the 'Samoas' cells in its left argument and the corresponding sales numbers in its right argument.
+Select a result cell of the verb (+/&.:>/.) to highlight the inputs that produced it. For example, select (72) to highlight all the 'Samoas' cells in its left argument and the corresponding sales numbers in its right argument.
 )
  
 NB. =========================================================
@@ -356,11 +357,11 @@ NB. =========================================================
 Lab Section Hooks and NVV forks
 The sequence noun-verb-verb, not followed by a noun, produces a NVV fork which is like a regular fork except that the noun simply produces its value regardless of the arguments to the fork.
 
-The NVV fork ((2 <. #) y) gives the lesser of 2 and the number of items in y.
+The NVV fork ((2 <. #) y) gives the lesser of (2) and the number of items in (y) .
 
 Then the hook ({.~ (2 <. #)) takes that number of items from y. 
 
-The hook (f g)y evaluates as y f g y. Here, f is take ({.) and g is the fork (2 <. #).
+The hook ((f g) y) evaluates as (y f g y) . Here, (f) is take ({.) and (g) is the fork (2 <. #).
 
 Note that the words fork and hook do not appear in the diagram, but the inputs to each verb are as described.
 )
@@ -424,7 +425,7 @@ When you pressed the Dissect current/cursor line in the Debug Menu, the debugger
 
 (ysort e. name) 
 
-calculated a Boolean value for each name in ysort, but the you used that to select from name, which has the wrong length.
+calculated a Boolean value for each name in (ysort), but the you used that to select from (name), which has the wrong length.
 
 NB. =========================================================
 Lab Section Dissect current/cursor line ctd
@@ -472,7 +473,7 @@ testcode 'john baker'
 
 NB. =========================================================
 Lab Section Single-step through the program
-Repeatedly press 'Step Over' on the Debug Menu (it's the third button from the left).
+Repeatedly press 'Step Over' on the Debug Menu [it's the third button from the left].
 
 Every time you press Step Over, one line is executed and the debugger is reentered.  Every time the debugger is reentered, Dissect shows the line to be executed.
 
@@ -498,5 +499,5 @@ Lab Section J Wiki
 The J Wiki has instructions for mapping Dissect to PF keys at http://www.jsoftware.com/jwiki/Vocabulary/Dissect#Labs
 near the end of the page.
 
-The intructions J6.02 are different from the instructions for J8.03 and later.
+The intructions for J6.02 are different from the instructions for J8.03 and later.
 )

@@ -72,7 +72,18 @@ dissect =: dissectonce
 PREPARE
 dissect '+/ i. 5'
 
-NB. =========================================================
+NNB. =========================================================
+Lab Section Removing the Expansion
+Click again on the (10) in the Final block.
+
+The expansion block is removed.
+
+This is true for expansion blocks generally: when you click again on the result that is being expanded, the expansion block is removed.
+
+Clicking the < or << buttons is another way to remove the expansion block.
+)
+
+B. =========================================================
 Lab Section u/ on 2
 Sometimes, when you know that (y) has exactly 2 items, you write (u/ y) so that you can refer to the first item of (y) as ([) and the second one as (]) .
 
@@ -169,69 +180,23 @@ Now, in the expansion block, select the result whose value is (26).  The computa
 NB. =========================================================
 Lab Section The expansion block for ^: c't'd
 Select the result (40).  Now the previous power produced an odd result, so the second gerund is selected, and its display is shown.
+
+To remove the expansion block, click again on the result (1) of the Final block.
 )
-
-
-NB. =========================================================
-Lab Chapter Operations Inside Boxed Structures
-NB. =========================================================
-Lab Section (L:) - operate inside the structure
-A leaf of (y) is a noun inside (y) that itself has no nested contents.
-
-A leaf is always either empty or unboxed.
-
-(u L:0 y) creates a copy of (y) in which each leaf has been replaced by the result of applying (u) to the leaf.
-
-Here we have a gradebook for two classes.  There are two nouns, students and grades.
-
-The display shows the operation of averaging each student's grades.  The students' names are not used in this display.
-
-Select 84.7 to see the division that resulted in it.
-Now select 254 to see the intermediate summation results.
-)
-PREPARE
-dissectclose''
-dissect =: dissectonce
-PREPARE
-]students =: ('Fred';'Joe');<('Alice';'Bob';'Charlie')
-]grades =: (90 72;80 85 89);<(100 98;70;60 65 60)
-dissect '(+/ % #)L:0 grades'
-
-NB. =========================================================
-Lab Section (S:) collect results into an array
-(u S:0 y) applies verb (u) to each leaf of (y), creating an array whose items are the results of the leaves, with framing fill added as needed.
-
-This result is like the previous one using Level At (L:), except that the results are brought out into an array rather than replacing the leaves in the boxed structure.
-
-Note that the (S:) line is inserted into the rank stack at the beginning of the computation it applies to.  That computation doesn't finish until the (<) block.
-
-Hover over the (<) blocks. The tooltip explains that the (S:) verb completes there.
-)
-PREPARE
-dissectclose''
-dissect =: dissectonce
-PREPARE
-dissect '(< S:0 students),.<@(+/ % #)S:0 grades'
-
-NB. =========================================================
-Lab Section Students
-We applied a fork to grades to obtain an average. To collect the students' names, we just use (S:0) to remove the boxing.
-
-Note the spaces added as fill to make each row the same length.
-)
-PREPARE
-dissectclose''
-dissect =: dissectonce
-PREPARE
-dissect ']S:0 students'
 
 NB. =========================================================
 Lab Chapter Recursion
 NB. =========================================================
 Lab Section Factorial
-The verb (1:`(] * $:@<:)@.*) computes tha factorial of (y) using the recursive definition of factorial: If n=0, n!=1; if n>0, n!=n*(n-1)!.
+The verb (1:`(] * $:@<:)@.*) computes the factorial of (y) using the recursive definition of factorial: If n=0, n!=1; if n>0, n!=n*(n-1)!.
 
-The last recursive execution of the verb is shown, where 5*24=120. Select the result of the ($:) verb to display all the results of the separate recursive executions in a new box. Select a single recursion result to show the computation at that recursion level. 
+The result shown is the result of the original sentence.  The execution of the sentence performs operations both before and after the recursion, which occurs at the execution of the ($:) block.
+
+The display shows the topmost level of recursion.  This means that you see the overall inputs to the sentence and the final result.  The ($:) block shows the result that is returned by the recursive execution.  Of the several recursive executions of the overall verb (1:`(] * $:@<:)@.*), this is the first recursion to start and the last to finish.
+
+To see other recursion levels, select the result of the ($:) block.  This creates an expansion block showing the results of each recursion, and initially selects the recursion level that produced the result of ($:) that you selected.  The display shows the recursion level that led to the selected result, including the inputs to that recursion level and the computation before and after any recursions performed by that level.
+
+To remove the expansion block, click on the result of 'Result after all recursions'.  This is the only time when an expansion block is removed by clicking on a different result from the one that created it.
 )
 PREPARE
 dissectclose''
@@ -240,7 +205,7 @@ PREPARE
 dissect '1:`(] * $:@<:)@.* 5'
 
 NB. =========================================================
-Lab Section Debugging Recursion
+Lab Section Examining recursion
 The sentence in this example performs recursion, opening each box of the input until it gets to a leaf node [where the test (0<L.) produces (0)], at which point it increments the value of the leaf.
 
 [(>:L:0) is an easier way to write this but our interest is in the recursion.]
@@ -267,15 +232,19 @@ NB. =========================================================
 Lab Section Infix (x u\ y)
 This sentence uses the infix modifier to box each adjacent pair of items of the list.  It is an example of expansion blocks for partitions.
 
-Select a cell of the result.  Immediately
+Select the cell (1 4) of the result of (<\) .  Immediately
 
-1) The block containing the result of (<\) is tagged as 'Final'
+1) The block containing the result of (<\) is tagged as 'Final'.
 
-2) An expansion block is created showing the calculation of the selected result-cell
+2) An expansion block is created showing the calculation of the selected result-cell.
 
 3) The inputs that contributed to the selected result are highlighted.
 
-Select different result-cells and see the changes in the input highlighting and the computation.
+An expansion block for a partition shows the calculation of a single result-cell.  Selecting a different cell of the same result will leave the expansion block, showing the newly-selected computation.
+
+Select the cell (4 1) of the result of (<\) . Observe the change to the highlighting and selection.
+
+Clicking on the result-cell that is currently being expanded will remove the expansion block.  Click again on the cell (4 1) of the result of (<\) to remove the expansion block.
 )
 PREPARE
 dissectclose''
@@ -286,6 +255,8 @@ dissect '2 <\ 3 1 4 1 5 9'
 NB. =========================================================
 Lab Section Other partitions
 The other partitioning modifiers are similar to (u\) .  Here are examples of several of them.  Click around in the results to see how the individual partitions are calculated.
+
+The highlighting, which shows the portions of the arguments that contribute to each selected result, is especially illuminating.
 )
 PREPARE
 dissectclose''
@@ -342,15 +313,68 @@ dissect '(1 {"1 table) (~.@[ ,. +/&.:>/.) 2 {"1 table'
 
 NB. =========================================================
 Lab Section Explanation
-(~.@[ ,. +/&.:>/.) is a hook. Its arguments are the boxed list of cookie types from the table (1 {"1 table) and the boxed list of corresponding sales numbers, also from the table (2 {"1 table).
+(~.@[ ,. +/&.:>/.) is a fork. Its arguments are the boxed list of cookie types from the table (1 {"1 table) and the boxed list of corresponding sales numbers, also from the table (2 {"1 table).
 
-The hook stitches (,.) the nub of cookie types (~.@[) to the sum of corresponding sales (+/&.:>/.) .
+The fork stitches (,.) the nub of cookie types (~.@[) to the sum of corresponding sales (+/&.:>/.) .
 
 The verb (+/&.:>/.) is the sum (+/) under open (&.:>) of partitions of sales numbers with the same cookie type (/.).
 
 Select a result cell of the verb (+/&.:>/.) to highlight the inputs that produced it. For example, select (72) to highlight all the 'Samoas' cells in its left argument and the corresponding sales numbers in its right argument.
 )
  
+NB. =========================================================
+Lab Chapter Operations Inside Boxed Structures
+NB. =========================================================
+Lab Section (L:) - operate inside the structure
+A leaf of (y) is a noun inside (y) that itself has no nested contents.
+
+A leaf is always either empty or unboxed.
+
+(u L:0 y) creates a copy of (y) in which each leaf has been replaced by the result of applying (u) to the leaf.
+
+Here we have a gradebook for two classes.  There are two nouns, students and grades.
+
+The display shows the operation of averaging each student's grades.  The students' names are not used in this display.
+
+Select 84.7 to see the division that resulted in it.
+Now select 254 to see the intermediate summation results.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+]students =: ('Fred';'Joe');<('Alice';'Bob';'Charlie')
+]grades =: (90 72;80 85 89);<(100 98;70;60 65 60)
+dissect '(+/ % #)L:0 grades'
+
+NB. =========================================================
+Lab Section (S:) collect results into an array
+(u S:0 y) applies verb (u) to each leaf of (y), creating an array whose items are the results of the leaves, with framing fill added as needed.
+
+This result is like the previous one using Level At (L:), except that the results are brought out into an array rather than replacing the leaves in the boxed structure.
+
+Note that the (S:) line is inserted into the rank stack at the beginning of the computation it applies to.  That computation doesn't finish until the (<) block.
+
+Hover over the (<) blocks. The tooltip explains that the (S:) verb completes there.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '(< S:0 students),.<@(+/ % #)S:0 grades'
+
+NB. =========================================================
+Lab Section Students
+We applied a fork to grades to obtain an average. To collect the students' names, we just use (S:0) to remove the boxing.
+
+Note the spaces added as fill to make each row the same length.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect ']S:0 students'
+
 NB. =========================================================
 Lab Chapter Hook
 NB. =========================================================

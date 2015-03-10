@@ -80,6 +80,8 @@ Select a cell of the final result by clicking on it. The block expands to displa
 In the input blocks we see the input cells that went into that final result-cell outlined in green.  If you selected (204), these will be the cells containing (200) and (4).
 
 In the sentence display at the top of the window, we see the (+) verb in green, because the result of that verb has been selected.
+
+The < and > buttons just below the menu undo and redo selections.  The << button undoes all selections that you have made, bringing back the original display.  << is especially useful when the sentence failed, because then the initial display shows you the point of error.
 )
 
 NB. =========================================================
@@ -93,6 +95,8 @@ Lab Section Tooltips and Status Line ct'd
 As you explore the elements of the display shown, notice the status line, and then the tooltip that is displayed:
 
 1. Hover over the result-atom (10) at the end of the final result.  The tooltip shows the verb and its shape, and the path to the value (10).  The path tells the sequence of selections and box-openings needed to find a given atom in a noun.  Here, to find the value (10) you select box number 2, open it, and then select atom number 5 of the contents.
+
+Except when you are hovering over a block representing an empty array, the type and value are also shown.
 
 2. Hover over the verb (<) .  Hovering over the verb gives a detailed description of which results are displayed in the block.
 
@@ -248,7 +252,7 @@ NB. =========================================================
 Lab Section Color cues
 If a verb raises an error, it will be capped by the error name in white on a bright red background, and its result block may be incomplete.
 
-The top line of a noun block is the name of the noun, if it has one, followed by a line showing the shape of the noun on a blue background.
+The top line of a noun block is the name of the noun, if it has one, followed by a line showing the shape of the noun on a purple background.
 
 A verb block has a line giving name of the verb in large type on a burgundy background, flanked by its ranks on a white background.
 Under that is a noun block holding the verb's result and its shape. The shape of the result is in two parts, either of which may be empty: the frame in black on a white background and the shape of a result-cell in white on a blue background.
@@ -289,7 +293,7 @@ Verb blocks contain a line showing the verb and its ranks.  This line may be pre
 
 The reason there is a stack of 3 ranks for the (+) verb in this example is that the results of 3 verbs are being shown in the same block: (+"1"2), (+"1), and (+).  Selection will apply to those verbs in turn, including a final selection that selects a single cell of (+) for highlighting.
 
-Te first verb executed in the final result box is (+"1"2) . 
+The first verb executed in the final result box is (+"1"2) . 
 
 [You can see the verbs that start in a block by reading the rank stack from the bottom up.  To see which verbs end in a block, hover over the verb at the bottom of the rank stack and read the tooltip.]
 
@@ -309,16 +313,59 @@ These options may help you get oriented to the Dissect display, especially when 
 )
 
 NB. =========================================================
-Lab Section Highlighting inputs to a result-cell
+Lab Section Selection Levels
 When a verb is executed on multiple cells, and the result-cells are assembled into a final result, the entire result is displayed.  You may select a result-cell to highlight it and the inputs that produced it.
 
-A selected result-cell is colored the same color as its inputs and the associated rank[s] in the rank stack, and the verb in the sentence display at the top of the window.
+Such clicking on a result-cell is called selection.
 
-Click once on a result of the (+"1"2) verb. The result-cell you select changes color to match the verb that produced it, (+"1) . The cells of the inputs that went into it are outlined in the same color.
+In this display, results of 3 verbs are being shown in the same block: (+"1"2), (+"1), and (+). The overall result contain multiple result-cells of (+"1"2); each of those result-cells contains multiple result-cells of (+"1), and each result-cell of (+"1) contains multiple atoms, the result-cells of (+).
 
-Click again in the same place to select a smaller cell. The color of that cell matches the the verb that produced it, (+), and the inputs that produced it.
+To select a result-cell of (+), you must click 3 times on the desired atom, to select successively smaller result-cells.  We will discuss this presently.
 
-Each time you click in the same place you move the display to a deeper selection level. In result of the (+"1"2) verb, the selection level advances from table to line to atom.
+The first click makes a selection at selection-level 1.
+
+Each click within a previously-selected result-cell opens up a new selection level.
+)
+
+NB. =========================================================
+Lab Section One selection at a time
+Clicks in the result follow these rules:
+
+1) A click not inside a previously-selected result-cell starts a new selection at selection level 1.
+
+2) A click inside a previously-selected result-cell is assigned a selection level one higher than the previously-selected one, and selects a result-cell of the next verb that finishes in the block.
+
+3) A click in a region containing a single result-cell is ignored with a message. This could happen because a verb has only one cell, or because you have made enough selections on the block to qualify the result as far as is possible.
+
+4) One one selection at a time may be active at each selection level.  Selection at a level automatically removes any previous selection at an equal or higher level.
+)
+
+NB. =========================================================
+Lab Section Coloring of selection levels; highlighting
+Each selection level is associated with a color.
+
+A selected result-cell, the associated rank[s] in the rank stack, and the verb in the sentence display at the top of the window are all colored with the selection-level's color.
+
+The inputs that produced the result-cell are highlighted by a box drawn around the cells in the selection-level's color.
+
+The most-recently-selected result-cell is marked with a heavy black outline.
+
+When you select a result-cell that does not contain any smaller result-cells, the coloring of the selected cell does not change.  The selection is indicated by the heavy black outline, but the unchanged color indicates that no more selection is possible.
+)
+
+NB. =========================================================
+Lab Section A tour of selection
+Click once on result (30) of the (+"1"2) block. This selects a result of (+"1"2) which is a 4x5 table.  The selected result-cell changes color to match the verb that produced it, (+"1"2) . The cells of the inputs that went contributed to the result are outlined in the same color.  The selected result-cell is outlined in black.
+
+Click on result (50) of the (+"1"2) block. The previous selection is removed, replaced by selection of the right-hand result-cell.
+
+Now click on result (46) of the (+"1"2) block. Since this is a reselection inside a selected result-cell, it selects a result-cell of the next verb, (+"1).  This result is a 5-atom list.  The color of that cell matches the the verb that produced it, (+"1), and the inputs that contributed to it.
+
+Now click on (46) again. This selects a result of the last verb in the sequence, (+). This selection is an atom, as shown by the black outline of the selected cell.  No finer-detailed selections are possible, so the color of the cell (46) is not changed.  The verb (+) in the sentence is shaded with the color of the selection level, as are the atoms of the arguments [(1) and (45)] that contribute to the result (46).
+
+Click (46) again.  Did you see a little message pop up?  Click and hold (46).  The message tells you that there are no more results to select. You could have known that from the fact that (46) was not given a new color.
+
+Finally, click on the result (8).  This start a new selection at level 1, and all the previous selections are forgotten.
 )
 
 NB. =========================================================
@@ -331,8 +378,8 @@ Note that the shape of the overall result is for the (+"1"2) verb. Its frame is 
 )
 
 NB. =========================================================
-Lab Section Selection
-Now select a result-cell by clicking on it. The shape is now for the (+"1) verb. Its frame is (3 4) and the result-cell shape is (5).
+Lab Section Selection in the shape/selection lines
+Now select a result-cell by clicking on it. The shape line now shows the frame of the (+"1) verb. Its frame is (3 4) and the result-cell shape is (5).
 
 Click again in the same place to select a sub-result-cell of the previously selected result-cell. The shape is now for the (+) [rank 0] verb. Its frame is (3 4 5) and the result-cell shape is empty [as shown by the sliver of a purple block].
 
@@ -437,6 +484,7 @@ In (u@:v), (v) is executed against all its cells, and then those are assembled i
 In (u@v), each result-cell of (v) is passed to (u). The individual results of (v) are never assembled into a single array [indeed, they may be incompatible], so they are not displayed under (v) . The best you can do is pick one of them and see it. It has a different color because it's at a different selection level.
 
 Summary:
+
 (u@v)  - (u) operates separately on each result-cell of (v)
 
 (u@:v) - (u) operates once on the whole result of (v)
@@ -473,7 +521,7 @@ Here are two different forks; the difference is that rank is specified for one o
 
 A fork has infinite rank so (+/%#) on a (3 4 5) brick computes a 4x5 table which is the average of the three tables which are items of of the brick.  This is shown on the left-hand side of the display.
 
-Specifying that the fork operates on rows ("1) causes it to compute a 3x4 table of row averages.  This is shown on the right-hand side of the display.  Click on a result row in the right-hand (%) verb to see how the row was calculated.
+Specifying that the fork operates on rows ("1) causes it to compute a 3x4 table of row averages.  This is shown on the right-hand side of the display.  Click on a result atom in the right-hand (%) verb to see how the atom was calculated.
 )
 PREPARE
 dissectclose''
@@ -618,9 +666,11 @@ Click on the name (Washington) in the result of the (>) verb and notice the shap
 
 It now shows (10(15)) in the result-shape.  This indicates that you selected a cell whose result had shape (10), but was extended to shape (15) by fill.  The parentheses around the filled shape still indicate that the overall result was filled.
 
-Click on the name (W) in the result of the (>) verb.
+Click on the row containing the name (W) in the result of the (>) verb.  This selects that row, and highlights the input that produced it: the box in (names) containing the atom (W).
 
-This cell produced an atom.  The shape of an atom is empty.  This shape - empty, which is invisible - is displayed before the parentheses.  The parentheses around the filled shape still indicate that the overall result was filled.
+Opening this cell produced an atom, (W).  This atom was filled with 14 more spaces to match the shape of the other items of the assembled result.  You can see the fill in the crosshatching of the selected result.
+
+Yo can also see the fill in the result portion of shape line [that's the part with the purple background].  This cell produced an atom.  The shape of an atom is empty.  This shape - empty, which is invisible - is displayed before the parentheses.  The parentheses around the filled result-cell-shape still indicate that the overall result was filled.
 )
 
 NB. =========================================================

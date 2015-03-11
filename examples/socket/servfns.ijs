@@ -194,7 +194,7 @@ if. IFWINDOW do.
     write1 1 pick REQ
     wd 'pshow'
   else.
-    wd 'pshow sw_hide'
+    wd 'pshow hide'
   end.
   empty''
 else.

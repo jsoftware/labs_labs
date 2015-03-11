@@ -16,9 +16,9 @@ NB. =========================================================
 NB. display form:
 WPSERVER=: 0 : 0
 pc server;pn "J Server";
-xywh 4 4 112 11;cc e0 edit ws_border rightmove;
-xywh 4 17 150 48;cc e1 editm ws_border rightmove bottommove;
-xywh 120 3 34 11;cc cancel button leftmove rightmove;cn "Close";
+xywh 4 4 112 11;cc e0 edit;
+xywh 4 17 150 48;cc e1 editm;
+xywh 120 3 34 11;cc cancel button;cn "Close";
 pas 2 1;pcenter;
 rem form end;
 )

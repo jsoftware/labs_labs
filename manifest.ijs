@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.93'
+VERSION=: '1.0.94'
 
 FILES=: 0 : 0
 autolab.ijs
@@ -26,4 +26,4 @@ math/
 system/
 )
 
-RELEASE=: 'j803'
+RELEASE=: 'j803 j804'

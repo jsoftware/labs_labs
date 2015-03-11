@@ -232,18 +232,18 @@ NB. =========================================================
 Lab Section Compose (&) vs Appose (&:)
 Arrange these two Dissect windows side-by-side for easy comparison.
 
-The composition (>:&>) passes the contents of each opened box of its argument to (>:). When Increment (>:) gets to the character value it raises a domain error. 
+The composition (+&>) passes the contents of each opened box of its arguments to (+). When (+) gets to the character value it raises a domain error. 
 
-The apposition (>:&:>) opens the boxes and collects their contents into a single array before passing the result to (>:).
-The framing error is raised when the results are put into the  array, because numbers and characters are not compatible as items of a single array.
+The apposition (+&:>) opens the boxes of each argument and collects their contents into a single array before passing the result to (+).
+Here the framing error is raised because the boxes contain a mix of characters and numbers and cannot be assembled into a single array.  This error is raised before (+) executes at all.
 )
 PREPARE
 dissectclose''
 dissectoncect =: 2
 dissect =: dissectonce
 PREPARE
-dissect '>:&> 1;''a'';3'
-dissect '>:&:> 1;''a'';3'
+dissect '1 +&> 1;''a'';3'
+dissect '1 +&:> 1;''a'';3'
 
 NB. =========================================================
 Lab Section Agreement Errors

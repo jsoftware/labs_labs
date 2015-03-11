@@ -117,7 +117,8 @@ NB. =========================================================
 Lab Chapter Hidden intermediate results
 NB. =========================================================
 Lab Section Which results are not initially displayed?
-Certain intermediate results are not at first displayed because they might not be compatible as items of a single array. They can be displayed individually as inputs to a later result.
+Certain intermediate results are not at first displayed because they might not be compatible as items of a single array.
+They can be displayed individually as inputs to a later result.
 
 The result-cells of the verb (v) in (u@v), (u&v) or (u&.v) can have different shapes or even different types, and could consequently be impossible to display in an array.
 
@@ -140,7 +141,7 @@ In the display of a verb result, Dissect shows the shape in two parts, the frame
 
 For monads, it goes like this:
 
-The rank r of the cells that will be operated on is the smaller of the rank of the verb and the rank of the argument.  For the important case of a verb infinite rank, according to this rule r will always be the rank of the argument, which is another way of saying that the verb applies to the operand in its entirety.
+The rank r of the cells that will be operated on is the smaller of the rank of the verb and the rank of the argument. For the important case of a verb of infinite rank, according to this rule r will always be the rank of the argument, which is another way of saying that the verb applies to the operand in its entirety.
 
 In general, you can think of the argument as an array of r-cells. The shape of the argument can then be written (f,r). (f) is the frame.
 
@@ -179,7 +180,7 @@ If there is no frame for the intermediate result, the cells could be incompatibl
 
 Click on the (2) in the final result and dissect displays the corresponding intermediate result, (ab). The other intermediate result is a 3-atom numeric list. The two intermediate results cells have different shapes and types; they can not be joined together in the same array.
 
-Note that the left and right ranks of (;) are shown as (1 1) instead of (_ _) . Dissect displays the effective ranks of verbs instead of the intrinsic ranks.  The effective rank is the rank of the argument cells the verb operates on in this this time. Here,  (;) is operating on lists, so its effective ranks are (1 1).
+Note that the left and right ranks of (;) are shown as (1 1) instead of (_ _) . Dissect displays the effective ranks of verbs instead of the intrinsic ranks.  The effective rank is the rank of the argument cells the verb operates on this time. Here, (;) is operating on lists, so its effective ranks are (1 1).
 
 If you want to know the intrinsic rank of a verb rather than the effective rank, hover the cursor over the verb to see a Tooltip that tells you.
 )
@@ -228,6 +229,23 @@ PREPARE
 dissect '> 1;''a'';2 3'
 
 NB. =========================================================
+Lab Section Compose (&) vs Appose (&:)
+Arrange these two Dissect windows side-by-side for easy comparison.
+
+The composition (>:&>) passes the contents of each opened box of its argument to (>:). When Increment (>:) gets to the character value it raises a domain error. 
+
+The apposition (>:&:>) opens the boxes and collects their contents into a single array before passing the result to (>:).
+The framing error is raised when the results are put into the  array, because numbers and characters are not compatible as items of a single array.
+)
+PREPARE
+dissectclose''
+dissectoncect =: 2
+dissect =: dissectonce
+PREPARE
+dissect '>:&> 1;''a'';3'
+dissect '>:&:> 1;''a'';3'
+
+NB. =========================================================
 Lab Section Agreement Errors
 The sentence shown below, adding some numbers to the average of some other numbers, raises a length error. Dissect can help us to see what's wrong.
 
@@ -238,6 +256,7 @@ The arguments do not 'agree', in that the left frame is (3) and the right frame 
 )
 PREPARE
 dissectclose''
+dissectoncect =: 1
 dissect =: dissectonce
 smoutput 'NB. Add 6 5 3 to average of 3 9 6 */ 1 5 9 2'
 smoutput '   6 5 3 ([ + (+/ % #)@]) 3 9 6 */ 1 5 9 2'
@@ -271,6 +290,7 @@ dissectclose''
 dissect =: dissectonce
 PREPARE
 l =: 5
+
 dissect '(>:@:i. l) +"1"2 i. 3 4 5'
 
 NB. =========================================================
@@ -286,14 +306,13 @@ When any part of your sentence depends on a name, such as (l) here, Dissect assu
 To see the computation of a determinate block, select its result.  Here, select the result of the top-right block.
 You now see the noun (3 4 5) and the verb (i.) that produced the array.
 )
-
 NB. =========================================================
 Lab Section Rank stack
 Verb blocks contain a line showing the verb and its ranks.  This line may be preceded by lines for other modifiers, such as ("), that are attached to the verb.  The verb-line plus all its modifiers is called the rank stack.
 
 The reason there is a stack of 3 ranks for the (+) verb in this example is that the results of 3 verbs are being shown in the same block: (+"1"2), (+"1), and (+).  Selection will apply to those verbs in turn, including a final selection that selects a single cell of (+) for highlighting.
 
-The first verb executed in the final result box is (+"1"2) . 
+The first verb executed in the final result box is (+"1"2) .
 
 [You can see the verbs that start in a block by reading the rank stack from the bottom up.  To see which verbs end in a block, hover over the verb at the bottom of the rank stack and read the tooltip.]
 
@@ -415,9 +434,8 @@ NB. =========================================================
 Lab Chapter Large Values
 NB. =========================================================
 Lab Section Large Values
-Large Values
 
-This is similar to the previous example, but the results are too large to fit on the screen.
+This is similar to a previous example, but the results are too large to fit on the screen.
 
 To scroll the whole display within the window, click any empty point on the screen and drag it.
 
@@ -631,6 +649,7 @@ The Dissect diagram shows only the effect, the verb operating inside the box.
 )
 PREPARE
 dissectclose''
+dissectoncect =: 1
 dissect =: dissectonce
 PREPARE
 dissect '{: each ''Nixon'';''Carter'';''Reagan'''
@@ -830,5 +849,6 @@ Next, select the (4) result in the final block.  Try clicking again.  You see th
 PREPARE
 dissectclose''
 dissect =: dissectonce
+dissectoncect =: 1
 PREPARE
 dissect '>: :: (2&#) &.> 1;''a'';3'

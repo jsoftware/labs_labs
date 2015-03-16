@@ -63,8 +63,6 @@ labs/labs/general/jturtleuser.ijt
 labs/labs/general/nn1.ijt
 labs/labs/graphics/gl2.ijt
 labs/labs/graphics/plotjhs.ijt
-labs/labs/graphics/opengl.ijt
-labs/labs/graphics/openglut.ijt
 labs/labs/system/apps.ijt
 labs/labs/system/callback.ijt
 labs/labs/system/dllwrite.ijt

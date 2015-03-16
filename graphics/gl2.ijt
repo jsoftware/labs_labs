@@ -9,11 +9,6 @@ SCRIPT
 require'gl2'   NB. load gl2 definitions in jgl2 locale
 coinsert'jgl2' NB. allow use of gl2... without _jgl2_
 
-NB. temp fix
-setalpha_z_=: 16bff&$: : (4 : 0)
-((_32&(34 b.))^:IF64 _8 (32 b.) x)&(23 b.) 16bffffff (17 b.) y
-)
-
 GL2LAB=: 0 : 0
 pc gl2lab closeok;
 minwh 200 200;cc g isigraph;

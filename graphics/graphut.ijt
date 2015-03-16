@@ -3,7 +3,7 @@ LABDEPENDS=: 'graph numeric trig'
 
 NB. =========================================================
 Lab Section Introduction
-This lab describes the graph utilities (Graph) included with J. These apply to Windows GDI graphics, not OpenGL graphics.
+This lab describes the graph utilities (Graph) included with J.
 
 GDI graphics are drawn in an isigraph control. A set of "gl2" commands, defined in script system/main/gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
 
@@ -48,7 +48,7 @@ Lab Section
 SCRIPT
 GL2DEMO=: 0 : 0
 pc gl2demo closeok;
-minwh 200 200;cc g isigraph;
+minwh 200 200;cc g isigraph flush;
 pas 0 0;
 )
 
@@ -243,7 +243,6 @@ Here are the drawing commands. Each has a matching verb ending in "01".
   gdpixel      draw pixel
   gdpolygon    draw polygon
   gdrect       draw rectangle
-  gdroundr     draw rounded rectangle
   gdtext       draw text
 
 The arguments are the same as for the corresponding gl... verb, e.g. gdrect has the same argument as glrect. See the online help, User Manual - Window Driver Command Reference.
@@ -257,7 +256,6 @@ Here are the remaining commands:
   gdpng        save to bitmap file
   gdclip       save to clipboard (windows only)
   gddraw       wrap gd drawing command
-  gdemf        save to emf file (windows only)
   gdopen       open/clear graphics window
   gdshow       show graph
 )

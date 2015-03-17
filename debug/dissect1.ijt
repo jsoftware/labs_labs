@@ -833,22 +833,56 @@ dissect '([: i. 3 + ])"0 (0$0)'
 dissect '([: i. 3 + ])"0 '''''
 
 NB. =========================================================
-Lab Chapter Recovering From Errors
+Lab Chapter Other Primitives
 NB. =========================================================
-Lab Section Adverse (u :: v)
-(u :: v) executes the verb (u) first.  If (u) succeeds, its result is used.  If (u) fails, (v) is executed to produce the result.
+Lab Section Amend (x m} y) and Composite Item (m} y)
+(x m} y) creates a copy of (y) in which the atoms specified by (m) have been replaced with atoms of (x).
 
-In the dissected sentence, you will see whichever result was used.  If (v) was used, and you want to see why (u) failed, click on the result to see the expansion of (u) .
+In the example, the (m) value comes from the right into the block labeled (m}).  It contains the selectors that spedicfy what parts of (y) are to be replaced.
 
-If (u :: v) was applied with a rank, so that the displayed result has more than one cell, you must first select a cell before examining its computation.
+Click on (100) in the result of (m}).  Observe that the highlighting shows that this result came from (x) under control of the first selector of (m).
 
-In the example, click on the (a) result in the final block.  That selects it.  Then click again to see that (u) failed trying to increment the character value.  When (u) failed, (#) made a second copy of the character.
-
-Next, select the (4) result in the final block.  Try clicking again.  You see the tooltip message indicating that no further selection can be made, because (v) was not executed and (4) is the entire result.
+Click on (500) in the result of (m), and then (22).  In each case see that the highlighting indicates the source of the result.
 )
 PREPARE
 dissectclose''
 dissect =: dissectonce
-dissectoncect =: 1
 PREPARE
-dissect '>: :: (2&#) &.> 1;''a'';3'
+dissect '(100 * i. 2 3) ((2;3 4 5);<(4 2 3;1))} i. 5 6'
+
+NB. =========================================================
+Lab Section Errors in Amend
+Dissect gives a more detailed report of errors occurring in (m}) than the J session does.
+
+In the example, the J session reports 'domain error'.  Dissect shows 'incompatible selectors'.  Hover over the red error block for a description of what this means.
+
+The highlighted portion of (m) shows a selector that is incompatible with another.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+selector =. (2;3 4 5);(4 2 3;1);<(1 0 2;4 1) 
+dissect '(100 * i. 2 3) selector} i. 5 6'
+
+NB. =========================================================
+Lab Chapter Putting results onto the clipboard
+NB. =========================================================
+Lab Section The clipboard
+Right-click the shape line (4 3) of the result of (+:).  You see the brief message 'result copied to clipboard'.
+
+Now go to the J execution window and press ctrl-V (or Edit|Paste).
+
+The J-executable form of the final result was placed onto the clipboard.
+
+Now left-click in the result of (i."0) to select the next-to-last row [whose value is (0 1 2 0)].  Observe that a selection line appears below the shape line.
+
+Right-click in the selection line in the number (2).  Then go to the J session and verify that the value (0 1 2) has been put onto the clipboard.  This is the selected result-cell of (i."0) before fill was added.
+
+Right-clicking on the shape line will still put the entire result onto the clipboard. 
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '+: i."0 (1 2 3 4)'

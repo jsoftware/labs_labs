@@ -11,11 +11,13 @@ Many J primitives perform repeated or hidden calculations to produce the results
 
 The original block containing the result being expanded remains, with its display tagged as 'Final' to indicate that the expansion is active.
 
-There are five types of expansion blocks, which we will cover in turn.  They are:
+There are 6 types of expansion blocks, which we will cover in turn.  They are:
 
 (u/ y)  This inserts the verb (u) between the items of (y), causing (u) to be repeatedly executed.  The expansion block allows you to select an application of (u) for examination.
 
 ([x] u^:v y)  This executes (u) repeatedly, depending on the value of (v).  The expansion block allows you to select an application of (u) for examination.
+
+([x] u ::v y)  This is the same as executing (u), but if (u) fails, (v) is executed to provide the result.
 
 ($:)  Recursion causes an entire verb to be reexecuted.  The expansion block allows you to select a single recursion level for examination.
 
@@ -183,6 +185,27 @@ Select the result (40).  Now the previous power produced an odd result, so the s
 
 To remove the expansion block, click again on the result (1) of the Final block.
 )
+
+NB. =========================================================
+Lab Chapter Expansion of 
+NB. =========================================================
+Lab Section Adverse (u :: v)
+(u :: v) executes the verb (u) first.  If (u) succeeds, its result is used.  If (u) fails, (v) is executed to produce the result.
+
+In the dissected sentence, you will see whichever result was used.  If (v) was used, and you want to see why (u) failed, click on the result to see the computation of (u) .  The computation of (v) will be shown in an expansion block, with the overall result of (u ::v) tagged as Final.
+
+If (u :: v) was applied with a rank, so that the displayed result has more than one cell, you must first select a cell before examining its computation.
+
+In the example, click on the (a) result in the final block.  That selects it.  Then click again to see that (u) failed trying to increment the character value.  When (u) failed, (#) made a second copy of the character.
+
+Next, select the (4) result in the final block.  Try clicking again.  You see the tooltip message indicating that no further selection can be made, because (v) was not executed and (4) is the entire result.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+dissectoncect =: 1
+PREPARE
+dissect '>: :: (2&#) &.> 1;''a'';3'
 
 NB. =========================================================
 Lab Chapter Recursion

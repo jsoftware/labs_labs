@@ -835,6 +835,20 @@ dissect '([: i. 3 + ])"0 '''''
 NB. =========================================================
 Lab Chapter Other Primitives
 NB. =========================================================
+Lab Section Niladic verbs (_9:)-(9:) and (m"_)
+The verbs (_9:) through  (9:) always produce the given value, regardless of their arguments.  They are said to be 'niladic'.
+
+Strictly speaking, these verbs are executed with arguments, but since the arguments do not affect the result, dissect does not display the arguments.
+
+In the display, select a line of the final result.  The results of (":) and ('.'"_) are shown.  The inputs to ('.'"_) are omitted.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '(''Line: '' , ": , ''.''"_)"0 i. 5'
+
+NB. =========================================================
 Lab Section Amend (x m} y) and Composite Item (m} y)
 (x m} y) creates a copy of (y) in which the atoms specified by (m) have been replaced with atoms of (x).
 

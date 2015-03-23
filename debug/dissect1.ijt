@@ -90,6 +90,8 @@ Hover the cursor over elements of the diagram to see associated tooltips. You ca
 
 The Status Line, which is above the main display, to the right of the > button, gives an immediate summary of the information under the cursor.
 
+If you choose Tutorial mode in Tooltips|Detail, the tooltip text might not fit in the dissect window if your sentence is short.  In that case, resize the window to show the tooltip.
+
 NB. =========================================================
 Lab Section Tooltips and Status Line ct'd
 As you explore the elements of the display shown, notice the status line, and then the tooltip that is displayed:

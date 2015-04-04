@@ -339,7 +339,7 @@ Hovering over a row in the rank stack will give information about the verb the l
 
 The last row in the rank stack [shown in an enlarged font] is always the name of the final verb whose result shows in the data area.  To see a complete list of the verbs that end in the block, hover over the last line and read the tooltip.
 
-On J8 and later, right-clicking on a line in the rank stack will launch a brower request to show the appropriate page of NuVoc.  Try it here: right click on the big (+) and on then on one of the lines containing (").
+On J8 and later, right-clicking on a line in the rank stack will show the appropriate page of NuVoc in your browser.  Try it here: right click on the big (+) and on then on one of the lines containing (").
 
 Other pages you can pull up are the main Dissect documentation page, with F1, and the main NuVoc page, with shift+F1.
 )

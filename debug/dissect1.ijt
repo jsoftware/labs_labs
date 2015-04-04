@@ -316,8 +316,6 @@ The reason there is a stack of 3 ranks for the (+) verb in this example is that 
 
 The first verb executed in the final result box is (+"1"2) .
 
-[You can see the verbs that start in a block by reading the rank stack from the bottom up.  To see which verbs end in a block, hover over the verb at the bottom of the rank stack and read the tooltip.]
-
 Note that some of the ranks in the rank stack are in large bold italics. 
 If the rank in the rank stack actually affects the result [i. e. if the frame is nonempty], it is displayed as large-bold-italic.  Otherwise it is displayed regular, and is informational only.
 )
@@ -331,6 +329,19 @@ Preferences|Show full compound-names causes the rank stack to show the full comp
 Preferences|Show @ @: etc causes lines to be added to the rank stack for the structural modifiers (@ @: & &: &. &.:) which are usually omitted because the wiring shows their presence.  Select that option and see the line added to the display.
 
 These options may help you get oriented to the Dissect display, especially when you are new to it.
+)
+
+NB. =========================================================
+Lab Section Getting help about the rank stack
+You can see the verbs that start in a block by reading the rank stack from the bottom up.  
+
+Hovering over a row in the rank stack will give information about the verb the line represents.
+
+The last row in the rank stack [shown in an enlarged font] is always the name of the final verb whose result shows in the data area.  To see a complete list of the verbs that end in the block, hover over the last line and read the tooltip.
+
+On J8 and later, right-clicking on a line in the rank stack will launch a brower request to show the appropriate page of NuVoc.  Try it here: right click on the big (+) and on then on one of the lines containing (").
+
+Other pages you can pull up are the main Dissect documentation page, with F1, and the main NuVoc page, with shift+F1.
 )
 
 NB. =========================================================
@@ -414,6 +425,20 @@ The third verb, +, has magenta background, produces the selected list, and has f
 
 The selection line, below the shape, gives the indexes of the selections you made.  It shows two values, one for each time you clicked.  If you click again inside the magenta area you will see a third selection appear.
 )
+
+NB. =========================================================
+Lab Section Selection using arrow keys
+Click on the (527) block in the final result.  You see the usual selection and highlighting boxes.
+
+Now use the arrow keys to move around.  Observe that the selection moves accordingly, with the proper highlighting.
+
+The arrow keys move the selection within a 2x2 array of result-cells.
+)
+PREPARE
+dissectclose''
+dissect =: dissectonce
+PREPARE
+dissect '(100 * i. 3 4) + i. 3 4 5'
 
 NB. =========================================================
 Lab Section Nouns with unit leading axis

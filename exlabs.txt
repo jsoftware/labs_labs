@@ -47,9 +47,6 @@ labs/labs/graphics/d3.ijt
 
 # ---------------------------------------------
 EXALL=: 0 : 0
-general/jod/jodlabs/jodbest.ijt
-general/jod/jodlabs/joddump.ijt
-general/jod/jodlabs/jodintro.ijt
 general/sfl/sfl.ijt
 graphics/fvj3/labs/bafrmid.ijt
 graphics/fvj3/labs/chaotica3.ijt

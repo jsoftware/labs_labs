@@ -26,6 +26,7 @@ There are 6 types of expansion blocks, which we will cover in turn.  They are:
 ([x] u@.v y)  Until a single result is selected, no verb (u) can be displayed.  When a result is selected, the expansion block shows the computation of the selected (u) .
 )
 PREPARE
+load 'debug/dissect'
 dissectoncect =: 1
 dissecthandle =: 0$a:
 dissectonce =: 3 : 0

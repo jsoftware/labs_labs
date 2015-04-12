@@ -12,17 +12,8 @@ particularly valuable in finding the cause of an error.
 
 NOTE: In this lab, parentheses are used to indicate J code.
 )
-require 'debug/dissect'
-
-NB. =========================================================
-Lab Chapter 1st Example
-NB. =========================================================
-Lab Section Display
-Let's take a look at what dissect displays.
-
-You may have to move the Dissect display window, if it is hidden behind this one.
-)
 PREPARE
+load 'debug/dissect'
 dissectoncect =: 1
 dissecthandle =: 0$a:
 dissectonce =: 3 : 0
@@ -44,6 +35,16 @@ dissecthandle =: 0$a:
 )
 dissect =: dissectonce
 PREPARE
+require 'debug/dissect'
+
+NB. =========================================================
+Lab Chapter 1st Example
+NB. =========================================================
+Lab Section Display
+Let's take a look at what dissect displays.
+
+You may have to move the Dissect display window, if it is hidden behind this one.
+)
 dissect '100 200 + i.2 3'
 
 NB. =========================================================
@@ -57,7 +58,7 @@ The (2 3) list is the first block. The top line is its shape, and under that is 
 
 NB. =========================================================
 Lab Section How a verb is displayed
-The first block is input to the i. verb.
+The first block is input to the (i.) verb.
 
 The top line of the verb block is the verb name and the rank of the cells it was applied on. Under that is the shape of the result of the execution of the verb. At the bottom of the block is the result of the verb.
 
@@ -421,7 +422,7 @@ The first verb, (+"1"2), has white background, produces the entire result, and h
 
 The second verb, (+"1), has green background, produces the selected 4x5 table, and has frame (3 4).
 
-The third verb, +, has magenta background, produces the selected list, and has frame (3 4 5) .
+The third verb, (+), has magenta background, produces the selected list, and has frame (3 4 5) .
 
 The selection line, below the shape, gives the indexes of the selections you made.  It shows two values, one for each time you clicked.  If you click again inside the magenta area you will see a third selection appear.
 )

@@ -44,11 +44,11 @@ NB. process the markup, returning actions and displayable script
 if. '' -: $ 'acttbl text' =. prepscript y do.
   smoutput 'error processing script - ' , acttbl {:: '';'no )) found'
 else.
-  NB. Load the script into the edit window
-  _1 1 loadedittab text
-  NB. Start/restart the debugger
+  NB. Start/restart the debugger before text is loaded
   jdb_clear_jdebug_''
   jdb_open_jdebug_ ''
+  NB. Load the script into the edit window
+  _1 1 loadedittab text
   NB. Load the actions into the debugger - after verbs are loaded
   jdb_extstops_jdebug_ acttbl
 end.

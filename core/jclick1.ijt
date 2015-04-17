@@ -49,8 +49,6 @@ NB. typed them in by hand.
 NB. Each tab in the edit window is associated with a file, whose
 NB. name can be seen in the tab.  Loading a tab first writes the
 NB. contents of the tab to the file, then loads the file.
-
-NB. You need to go back to the term window to enter ctrl+J.
 )
 PREPARE
 NB. =========================================================
@@ -101,9 +99,9 @@ NB. =========================================================
 Lab Section The debug window at a stop
 Look again at the debug window.  It has come to life.  It has three panes now.
 
-The top pane shows the lines of the definition that is running.
+The top pane shows the lines of the definition that is running.  The > shows the next line to be executed.  The * shows that there is a stop on that line.
 
-The middle pane shows information about the line that will be executed next.
+The middle pane shows the call stack: the programs that were called on the way to the line being debugged.  In this case, most of them are in the Labs Manager.
 
 The bottom pane shows the values of names that will be referred to in the sentence.
 
@@ -141,7 +139,7 @@ An atom is a noun that is not an array.  It can be of any type: a single number,
 As you step through this lab using ctrl-J, the lab will give a brief discussion of each line and automatically move the debugger through the lines.  Your job is to click around the dissect window and develop an idea for what's going on.
 )
 PREPARE
-opendebscript A   =: 0 : 0
+opendebscript 0 : 0
 NB. Word Count
 
 NB. y is a filename
@@ -202,7 +200,7 @@ Executing wc means reading the sentences of its definition one by one and execut
 
 Before execution starts, the value of the noun that appeared to the right of (wc) is assigned to the name (y).  If there had been a noun to the left of (wc), its value would have been assigned to the name (x).
 
-[Since there are only one of two arguments to a J verb, there is no need for a declaration of parameters: the arguments just go by the names (x) and (y).]
+[Since there are only one or two arguments to a J verb, there is no need for a declaration of parameters: the arguments just go by the names (x) and (y).]
 
 In the first line, the contents of the file are read and assigned to the name (filedata).
 
@@ -221,6 +219,7 @@ NB. =========================================================
 Lab Section Program 1 Count bytes
 (#) is a verb that tells how many items are in its argument.
 )
+debugstep''
 
 NB. =========================================================
 Lab Section Program 1 Count lines
@@ -232,6 +231,7 @@ The J way to find this is to compare each character of filedata against LF: this
 
 Note that the Boolean value for a true comparison is the number 1; false is 0.  The results of comparisons can be added and multiplied just like any other number.
 )
+debugstep''
 
 NB. =========================================================
 Lab Section Program 1 Classify whitespace
@@ -241,11 +241,13 @@ Since we are going to recognize a word as a whitespace followed by a non-whitesp
 
 The name (ws) holds the whitespace information.
 )
+debugstep''
 
 NB. =========================================================
 Lab Section Program 1 Count words
 A word is whitespace followed by a non-whitespace.  We create a rotated list, where each whitespace value is moved one position towards the beginning of the list.  Then we combine the original and rotated lists using logical operations to find the places where words start.  Then we add up the number of word-starts.
 )
+debugstep''
 
 NB. =========================================================
 Lab Section Program 1 Result
@@ -253,7 +255,12 @@ The result of the last line of the verb becomes the result of the overall verb.
 
 Here we combine the counts to produce the desired result.
 )
+debugstep''
 
+NB. =========================================================
+Lab Section Program 1 finished
+)
+debugstop''
 
 
 

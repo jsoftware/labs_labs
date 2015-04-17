@@ -1,0 +1,259 @@
+LABTITLE=: 'J By Point & Click I'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Chapter Intro: The J Session
+NB. =========================================================
+Lab Section Term window
+In this lab you will teach yourself J by watching J code run and by exploring the documentation.
+
+You will have five windows into your J session.  The first is the window you are looking at.  It is called the term window.  You type sentences here to have them executed, and the results are typed back here.
+
+Type the string
+
+   1+2+3+4+5
+
+into this window and press ENTER.  The result will be typed below your input.
+
+To advance to the next section, come back to this term window and press ctrl+J.
+
+NOTE: In this lab, parentheses are used to indicate J code.
+)
+PREPARE
+load '~addons/labs/labs/core/jpcfmt.ijs'
+PREPARE
+
+NB. =========================================================
+Lab Section Edit window
+Your second window into J is the edit window, shown here.
+
+The edit window is a tabbed text editor for J source code.
+
+In normal use you will open a tab for a file using the File|Open menu.  This lab will manage the tabs for you as you progress.
+)
+PREPARE
+_1 0 loadedittab 0 : 0
+NB. Since J is interpreted, there is no compilation step for J
+NB. programs.  If you have program definitions that you want to
+NB. execute, you load them by pressing the green arrow above (or
+NB. by pressing ctrl+L).
+
+NB. A file containing J sentences, like this one, is called a
+NB. script.  All the sentences in this script are comments,
+NB. which start with NB.
+
+NB. Loading a script feeds the lines of the script one by one
+NB. into the term window, where they are executed as if you had
+NB. typed them in by hand.
+
+NB. Each tab in the edit window is associated with a file, whose
+NB. name can be seen in the tab.  Loading a tab first writes the
+NB. contents of the tab to the file, then loads the file.
+
+NB. You need to go back to the term window to enter ctrl+J.
+)
+PREPARE
+NB. =========================================================
+Lab Section Debug window
+The third window is the debug window.  Right now it's just a little bar in the upper-right of your screen.  It will get bigger when it has something to say.
+
+In normal use you summon up the debug window by pressing ctrl+K.  This lab will manage the debugger for you.
+)
+PREPARE
+jdb_open_jdebug_ ''
+PREPARE
+NB. =========================================================
+Lab Section Dissect window
+We have loaded a script into the edit window, and set a stop in the debugger.  Then we ran a program, which executed until it hit the stop.
+
+Hitting the stop brought up the colorful dissect window.  A single sentence in J can do an enormous amount of computation, so much that you need to see it all laid out at once to understand it.
+
+The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
+)
+PREPARE
+opendebscript 0 : 0
+NB. Find shortest name
+NB. y is a list of boxes, each containing a string
+NB. Result is (unboxed ) shortest string
+findshortestname =: verb define
+NB.~stop 1
+NB.~title 3	Find Shortest Name
+NB. get length of each string
+NB.~title1 0	Get lengths
+NB.~link1 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB.~link2 0	Arrays	http://www.jsoftware.com/jwiki/Vocabulary/ArrayProcessing
+NB.~link3 0	Modifiers	http://www.jsoftware.com/jwiki/Vocabulary/Modifiers
+lengths =. #@> y
+NB. Find smallest length, and its index
+NB.~stop
+NB.~title1 0	Get index of smallest length
+smallindex =. lengths i. <./ lengths
+NB. Extract that string to give the result
+NB.~title1 0	Select smallest string
+NB.~link1
+smallindex {:: y
+))
+) 
+PREPARE
+findshortestname 'Jeb';'Hillary';'George';'Bill'
+
+NB. =========================================================
+Lab Section The debug window at a stop
+Look again at the debug window.  It has come to life.  It has three panes now.
+
+The top pane shows the lines of the definition that is running.
+
+The middle pane shows information about the line that will be executed next.
+
+The bottom pane shows the values of names that will be referred to in the sentence.
+
+The dissect window shows you what will happen when the sentence is executed.
+)
+
+NB. =========================================================
+Lab Section Your browser
+You will be getting most of your information about J through your browser.  The dissect window has fields that you can click on to get more information:
+
+At the top-left of the dissect display is a list of links on topics relevant to the example.  Click to read.
+
+In the display of the executing sentence, the top of each block shows what is executed in the block, in white type on a burgundy background.  If you click on these blocks your browser will show you the relevant documentation.
+
+Click around in the dissect window to see what you can bring up in your browser.
+
+You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
+)
+NB. =========================================================
+Lab Chapter J Basics
+NB. =========================================================
+Lab Section Program 1 - Word, Character, and Line Count
+Here is a program to count characters, words, and lines in a file.
+
+Before you try to analyze it, learn the essential terms of J.  Click on the link in the first dissect screen.
+
+In J, a noun is a piece of data, and a verb is a function that operates on one or two nouns.
+
+Nouns have shapes - corresponding to dimensions in other languages.  The the dissect display, the shape of a noun appears above its value.
+
+Nouns have types - numeric, character, and boxed.  The special boxed type is a container that holds other nouns.
+
+An atom is a noun that is not an array.  It can be of any type: a single number, a single character, or a single box.
+
+As you step through this lab using ctrl-J, the lab will give a brief discussion of each line and automatically move the debugger through the lines.  Your job is to click around the dissect window and develop an idea for what's going on.
+)
+PREPARE
+opendebscript A   =: 0 : 0
+NB. Word Count
+
+NB. y is a filename
+NB. Result is a list:
+NB. (#bytes),(#words),(#lines)
+NB. where a word is defined as a non-whitespace preceded
+NB.  by a whitespace
+wc =: verb define
+NB.~stop 1
+NB.~title 3	Word Count
+NB. Box the filename and Read the file
+NB.~title1 0	Read the file
+NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
+NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB.~link1 0	Files	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+filedata =. 1!:1 <y
+NB. Count characters
+NB.~title1 0	Count bytes
+NB.~link1
+cc =. #filedata
+NB. Count lines
+NB.~title1 0	Count lines
+NB.~link2 0	Arrays	http://www.jsoftware.com/jwiki/Vocabulary/ArrayProcessing
+lc =. +/ LF = filedata
+NB. Classify each character as whitespace or not
+NB.  add a whitespace to the beginning to ensure first word counted
+NB.~title1 0	Classify whitespace
+ws =. 1 , filedata e. ' ',TAB,CR,LF
+NB. Count nonwhite preceded by white
+NB.~title1 0	Count words
+wc =. +/ ws *. -. 1 |. ws
+NB. Return results
+NB.~title1 0	Result
+NB.~link0
+NB.~link2
+cc,wc,lc
+))
+) 
+PREPARE
+wc jpath '~addons/labs/labs/core/jclick1.ijt'
+
+NB. =========================================================
+Lab Section Program 1 Invoking wc
+The program was started by executing the sentence
+
+wc jpath '~addons/labs/labs/core/jclick1.ijt'
+
+In this sentence, the quoted string is a noun and the names (wc) and (jpath) are verbs.  [(wc) is the verb we are analyzing; (jpath) is a library verb that translates the '~addons' to the path to your Addons directory.]
+
+All J sentences are executed right-to-left.  A verb is executed by giving its name followed by a noun on its right.  The noun becomes an argument to the verb - and if there is a noun to the verb's left, that noun becomes a second argument to the verb.  [A verb always takes one or two arguments.]
+
+In this case, (jpath) does not have a noun to its left, so it is executed with the string as its sole argument.  The result from (jpath) then becomes the sole argument of (wc) which is executed next.
+)
+
+NB. =========================================================
+Lab Section Program 1 Read the file
+Executing wc means reading the sentences of its definition one by one and executing them.
+
+Before execution starts, the value of the noun that appeared to the right of (wc) is assigned to the name (y).  If there had been a noun to the left of (wc), its value would have been assigned to the name (x).
+
+[Since there are only one of two arguments to a J verb, there is no need for a declaration of parameters: the arguments just go by the names (x) and (y).]
+
+In the first line, the contents of the file are read and assigned to the name (filedata).
+
+(=.) performs assignment to a private name, i. e. a name used only inside the verb.
+
+(1!:1) is a verb that reads a file.  It requires that the filename be boxed.
+
+(<) is a verb that puts its argument into a box.
+
+When the line finishes, (filedata) is a noun that contains a one-dimensional array of characters.
+
+A one-dimensional array is called a list.  (filedata) is a list of characters.
+)
+
+NB. =========================================================
+Lab Section Program 1 Count bytes
+(#) is a verb that tells how many items are in its argument.
+)
+
+NB. =========================================================
+Lab Section Program 1 Count lines
+Every line ends with a linefeed [LF character], so the number of lines is the number of LFs.
+
+The J way to find this is to compare each character of filedata against LF: this produces a Boolean value, 0 or 1, for each character; then add up the numbers to see how many 1s there were.
+
+(+/) is a verb that adds all the items of its argument.
+
+Note that the Boolean value for a true comparison is the number 1; false is 0.  The results of comparisons can be added and multiplied just like any other number.
+)
+
+NB. =========================================================
+Lab Section Program 1 Classify whitespace
+Whitespace is any of space, TAB, LF, and CR.  We create a list containing those characters, and then check each character of (filedata) to see if it is whitespace.  Again, the result is a Boolean list, 1 if the character is whitespace.
+
+Since we are going to recognize a word as a whitespace followed by a non-whitespace, we prepend a 1 to the list so that if the first character is non-whitespace it will be recognized as starting a word.  [Observe in the dissect screen that the length of the list grows by 1.]
+
+The name (ws) holds the whitespace information.
+)
+
+NB. =========================================================
+Lab Section Program 1 Count words
+A word is whitespace followed by a non-whitespace.  We create a rotated list, where each whitespace value is moved one position towards the beginning of the list.  Then we combine the original and rotated lists using logical operations to find the places where words start.  Then we add up the number of word-starts.
+)
+
+NB. =========================================================
+Lab Section Program 1 Result
+The result of the last line of the verb becomes the result of the overall verb.
+
+Here we combine the counts to produce the desired result.
+)
+
+
+
+

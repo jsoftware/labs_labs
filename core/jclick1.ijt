@@ -185,7 +185,7 @@ NB. =========================================================
 Lab Section Program 1 Invoking wc
 The program was started by executing the sentence
 
-wc jpath '~addons/labs/labs/core/jclick1.ijt'
+wc jpath '~addons/labs/labs/core/lorem.txt'
 
 In this sentence, the quoted string is a noun and the names (wc) and (jpath) are verbs.  [(wc) is the verb we are analyzing; (jpath) is a library verb that translates the '~addons' to the path to your Addons directory.]
 

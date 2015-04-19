@@ -55,8 +55,9 @@ end.
 0 0$0
 )
 
+NB. single-step the debugger, by emulating the stepover button
 debugstep =: 3 : 0
-immexj 'jdebug_stepover_run_jdebug_$0'
+jdebug_stepover_button_jdebug_''
 )
 
 debugstop =: 3 : 0

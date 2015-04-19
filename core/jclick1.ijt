@@ -179,7 +179,7 @@ cc,wc,lc
 ))
 ) 
 PREPARE
-wc jpath '~addons/labs/labs/core/jclick1.ijt'
+wc jpath '~addons/labs/labs/core/lorem.txt'
 
 NB. =========================================================
 Lab Section Program 1 Invoking wc

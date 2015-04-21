@@ -5,7 +5,7 @@ cat=: ,&,.&.|:
 commaseps=: 2 }. ;@:(', '&,&.>)
 deb=: #~ (+. 1: |. (> </\))@(' '&~:)
 dtb=: #~ [: +./\. ' '&~:
-info=: wdinfo @ ('Labs'&;)
+info=: sminfo @ ('Labs'&;)
 getfontsize=: 13 : '{.1{._1 -.~ _1 ". y'
 pathname=: 3 : '(b#y);(-.b=.+./\.y=PATHSEP)#y'
 a=. ''''

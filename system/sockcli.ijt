@@ -10,7 +10,7 @@ ASSERT=: 3 : 0
 )
 toserver=: 3 : 0
 m=. y,((0<#y)#LF2),'Dismiss this dialog, switch to the server session, and continue the lab there.'
-wdinfo 'Client';m
+sminfo 'Client';m
 )
 PREPARE
 

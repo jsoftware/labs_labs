@@ -4,14 +4,15 @@ require 'regex'
 
 NB. Markup language for scripts
 NB.
-NB. Normal scripts, but with )) rather than ) to end definitions
+NB. Scripts are normal J scripts, but with )) rather than ) to end definitions
 NB.  (so the script can fit in a lab inside 0: 0)
 NB.
 NB. Action lines begin with NB.~ and have brittle fixed format:
 NB. NB.~actionnameSPvalue
 NB. actionname is one of: stop auto title link titlen linkn
 NB.    where n is a digit 0-9
-NB.  stop - set debug stop.  Value is 0 or 1 (default 0)
+NB.  stop - set debug stop.  Value is a class which can be used
+NB.    in subsequent debugchangestops to enable/disable stop
 NB.  auto - autodissect this line if stepped to.  Value is 0 or 1 (default 1)
 NB.  title - title to use when the debugger dissects this line.
 NB.   value is font size adjustmentTABtitle
@@ -31,6 +32,14 @@ NB. They allow for multiple titles/links to be active.
 NB.
 NB. An action is active only in the definition and valence in which it appeared.
 
+NB. Routines that a lab can use:
+NB. opendebscript - apply markup and load script, stops, etc.
+NB.   y is the script with markup
+NB. debugstep'' - run stepover in the debugger
+NB. debugstop'' - clear the debugger
+NB. debugchangestops - enable/disable stops.  y is the class(es) from stop markup commands,
+NB.   either a string or a (list of) boxed strings
+NB.   x is 0 to clear stops, 1 to set stops, 2 to toggle stops
 
 NB. Process script y into an edit tab
 NB. y is a script, in markup form (dissect/debug lines start with NB.~
@@ -60,8 +69,20 @@ debugstep =: 3 : 0
 jdebug_stepover_button_jdebug_''
 )
 
+NB. Clear debugger
 debugstop =: 3 : 0
 jdb_clear_jdebug_''
+)
+
+NB. x is 0 to clear, 1, to set, 2 to toggle stops
+NB. y is class(es) to change
+debugchangestops =: 4 : 0
+assert. x e. 0 1 2
+classes =. boxopen y
+if. #stopmods =. (<x) (<a:;0)} (#~ classes e.~ {."1) labdebugstops do.
+  jdb_extstops_jdebug_ <stopmods
+end.
+0 0$0
 )
 
 NB. Put a script into an edit window
@@ -83,6 +104,8 @@ NB. Prepare a script for analysis
 NB. y is text (a verb or a script)
 NB. NB.~ comments indicate debug/dissect controls
 NB. Result is (control info for debug);(text of the script) or scalar retcode if error
+NB. We keep the global name 'labdebugstops' which is the stop
+NB. class followed by the stop data (action;name;locale;valence;lines) for each stop
 prepscript =: 3 : 0
 NB. Convert script to table of prefix;start;locale;body
 pslb =. splitscript y
@@ -97,12 +120,19 @@ dyaddef =. _1 ~: (<0 0)&{::@(exppattd&rxmatch)@> 1 {"1 pslb
 NB. Convert each valence to stopinfo;debug info;text (LF form)
 NB.  where debug info is table of (action;lines)
 bodies =. extractstops&.> 3 {"1 pslb
-NB. Get the list of stops for each valence in each definition;
-NB. append valence to give valence;lines.  Run together
-NB. to produce single table of valence;lines
-if. # stops =. dyaddef (  ( (] ,.~ <"0@(>. i.@#)) 0&{"1@])  )&.> bodies do.
-  NB. Put into stops to make name;locale;valence;lines.  Then add action (action is always 1, =add)
-  stops =. (<1) ,. ; nameloc ,"1&.> stops
+NB. Get the table of class;line for each valence in each definition;
+NB. append valence to give class;line;valence.  Run together
+NB. to produce single table of class;line;valence
+if. # stops =. dyaddef (  ( ;@(] (,. <)&.> (>. i.@#)) 0&{"1 )  )&.> bodies do.
+  NB. Put into stops to make name;locale;class;line;valence.  Then add action (action is always 1, =add)
+  NB. Run into single table of name;locale;class;line;valence
+  stops =. ; nameloc ,"1&.> stops
+  NB. Reorder to saved order: class;name;locale;valence;line
+  labdebugstops =: 2 0 1 4 3 {"1 stops
+  NB. Create return value, which is 1;name;locale;valence;lines
+  NB. for each line with a stop
+  NB. Coalesce lines with same stop
+  stops =. (<1) ,. (1 2 3&{"1 (~.@[ ,. <@;/.) 4&{"1) labdebugstops
   NB. Remove lines with no stops
   stops =. (#~  a: ~: 4&{"1) stops
 else. stops =. 0 4$a:
@@ -136,6 +166,7 @@ getexpnameloc =: 3 : 0"1
 NB. y is text of a single valence (as boxed lines)
 NB. Result is  stoplines;debug info;text (LF form)
 NB.  where debug info is table of (action;lines)
+NB.  stoplines is a table of (stopclass;line)
 extractstops =: 3 : 0@>
 NB. Convert each line to action;value (for exec/comment, empty)
 actval =. (($0)&;)`(' ' (taketo ; takeafter) 4&}.@}:)@.('NB.~'-:4&{.)@> y  NB. discard LF from action lines
@@ -159,8 +190,9 @@ NB. Remove numeric suffixes from actions
 actvalline =. (-.&'0123456789'&.> 0 {"1 actvalline) (<a:;0)} actvalline
 NB. Coalesce line numbers for identical action+body
 actvalline =. (((<0;0 1)&{ , <@;@:(2&{"1))/.~   0 1&{"1) actvalline
+
 NB. Collect all line numbers for the stop action and remove stop actions from the table
-stops =. ; 2&{"1 (#~  ('stop';,'1') -:"1 (0 1)&{"1) actvalline
+stops =. 1 2&{"1 (#~  (<'stop') = 0&{"1) actvalline
 actvalline =. (#~  (<'stop') ~: 0&{"1) actvalline
 NB. Grouping by line numbers, convert from action;body;linenums to (action;body);linenums
 acttbl =. ((<@:(0 1&{"1) , (<0 2)&{)/.~  2&{"1) actvalline
@@ -219,7 +251,7 @@ NB.~title1 3	Find Largest Divisor
 NB.~auto 0
 num =. y
 NB. Find divisors
-NB.~stop 1
+NB.~stop largediv
 NB.~auto 1
 NB.~title2 0	Find Divisors
 NB.~link1 0	q:	http://Vocabulary/qco
@@ -233,7 +265,7 @@ largest =. {: divisors
 NB. Read file y and see if x is inside it
 checkfile =: 4 : 0
 fname =. y
-NB.~stop 1
+NB.~stop checkfile
 NB.~link 0	File Foreigns	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
 NB.~title0 3	Check In File
 fd =. 1!:1 <y
@@ -246,7 +278,7 @@ repeatedletter =: 3 : 0
 NB.~title 3	Bivalent Verb
 2 repeatedletter y
 :
-NB.~stop 1
+NB.~stop repeat
 NB.~title 3	Check for repeated letter
 +./ x (-: 1&|.)\ y
 ))

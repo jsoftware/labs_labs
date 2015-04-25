@@ -121,7 +121,7 @@ Click around in the dissect window to see what you can bring up in your browser.
 You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
 )
 NB. =========================================================
-Lab Chapter J Basics
+Lab Chapter J Basics 1
 NB. =========================================================
 Lab Section Program 1 - Word, Character, and Line Count
 Here is a program to count characters, words, and lines in a file.
@@ -262,5 +262,342 @@ Lab Section Program 1 finished
 )
 debugstop''
 
+NB. =========================================================
+Lab Chapter J Basics 2
+NB. =========================================================
+Lab Section Program 2 - Read CSV file
+A CSV file is a representation of a spreadsheet.  The name stands for 'comma-separated values', and indicates that fields are separated by commas.
+
+The edit window shows the sample CSV file we will work with.
+
+The program we want will read in a CSV file and convert it to a form usable in J.
+)
+open jpath '~addons/labs/labs/core/example.csv'
+NB. =========================================================
+Lab Section Program 2 Designing the program
+The first decision is the input and output of the program.
+
+For maximum flexibility, the input will be the text of the file.  Each line will be terminated with LF.  On some operating systems there may be CR characters which we will discard.
+
+The result will be a collection of fields, each of which is a string.  But these fields cannot be assembled as is into a single array, because J arrays require that each item have the same shape and type.  If a short string is joined to a long string in a single array, the short string will be padded with spaces.
+
+When you need a heterogeneous array, you use boxing.  A box is treated as an atom, but it has contents that can have any shape or type.  If you want an array of different-sized strings, put each one in a box first and then make an array of the boxes.
+
+Similarly, each line of the CSV file might contain a different number of fields, so the lines must not be joined into a single array.  Each line must be boxed first.
+
+So, the result will be a list of boxes, one for each line of the CSV file; each boxes will contain a list of boxes, one for each field in the line.
+)
+
+NB. =========================================================
+Lab Section Program 2 Design cont'd: quotes
+Reading the details at
+http://en.wikipedia.org/wiki/Comma-separated_values
+reveals that double-quote ["] characters are used to enclose fields that contain special characters, and that the special characters are " itself, comma, and LF [linefeed or end-of-line].
+
+Since LF may appear in a quoted field, we must not start the program by splitting the data at each LF character.  Rather, at each stage of processing we need to treat a special character as special only if it is preceded by an odd number of " characters.
+
+The final program is shown in the edit window.
+)
+PREPARE
+opendebscript 0 : 0
+NB. y is text of a CSV file
+NB. Result is list of boxes, one per line
+NB.  Each box contains a list of boxes, one per field, containing a string
+NB. Fields quoted with " are allowed.  Quoted fields may contain any character including LF.
+NB. To put " in a quoted field, escape it by using two quotes "" .
+NB. The enclosing ", and any escaping ", are removed in the result.
+splitcsv =: verb define
+NB.~stop splitcsv
+NB.~title 3	Convert CSV File
+NB.~title1 0	Remove CR & check for ending LF
+NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
+NB.~link2 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
+NB.~link3 0	Other control words	http://www.jsoftware.com/help/dictionary/ctrl.htm
+NB. Remove CR characters; if file doesn't end with LF, add LF
+if. LF ~: {: csvdata =. y -. CR do.
+  csvdata =. csvdata , LF
+end.
+NB. Split file on sections ending with unquoted LF; box each section, discarding the LF
+NB.~title1 0	Split into lines
+NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
+NB.~link2
+NB.~link3
+lines =. (LF unescapeddelimpos csvdata) <;._2 csvdata
+NB. Process each line and return the result
+NB.~title1 0	Split each line
+NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
+NB.~link2 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+splitline each lines
+))
+
+NB. y is text, x is a delimiter string
+NB. Result is a Boolean list, one per character of y, with
+NB. 1 in the places where the delimiter is found, but
+NB. only places that are preceded by an even number of " characters
+unescapeddelimpos =: dyad define
+NB.~stop delim
+NB.~title 3	Convert CSV File
+NB.~title1 0	Calculate parity of " characters
+NB.~link1 0	shift	http://www.jsoftware.com/jwiki/Vocabulary/bardot#monadicfit
+NB. Get the even-odd parity of " characters including
+NB. current char; shift right 1 to make it parity of preceding
+parity =. |.!.0 ~:/\ '"' = y
+NB. Find delimiters, ignore any that have odd parity
+NB.~link1
+(-. parity) *. x E. y
+))
+
+NB. y is the text of a comma-delimited line
+NB. result is list of boxed fields
+NB. Fields containing comma or " must be enclosed in " characters.
+NB. Enclosing " characters are removed from the field value.
+NB. A " character is escaped inside a string by doubling it
+splitline =: verb define
+NB.~stop splitline
+NB.~title 3	Convert CSV File
+NB.~title1 0	Split line on unquoted commas
+NB.~link1 0	Intervals	http://www.jsoftware.com/jwiki/Vocabulary/semidot1#dyadic
+NB. Split the line on comma delimiters, discarding them.  Add
+NB. a trailing delimiter to delimit the last field
+boxedfields =. ((',' unescapeddelimpos y),1) <;._2 y,' '
+NB.~title1 0	Split line on unquoted commas
+NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link1 0	Dynamic If	http://www.jsoftware.com/jwiki/Vocabulary/hatco#IfDyad
+NB.~link2 0	Fork	http://www.jsoftware.com/jwiki/Vocabulary/fork
+NB. If any field begins with ", delete the first and last characters
+boxedfields =. }.@}:^:('"'={.) each boxedfields
+NB.~title1 0	Remove escaped quotes
+NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link1
+NB.~link2
+NB. Remove escaped quotes, which are positions of "" that
+NB. have even parity
+(-. each '""'&unescapeddelimpos each boxedfields) # each boxedfields
+))
+)
+PREPARE
+
+NB. =========================================================
+Lab Section Program 2 Audit input
+The first thing to do is to check the input: remove any CR characters that the operating system put in, and make sure the file ends with LF.
+)
+splitcsv 1!:1 < jpath '~addons\labs\labs\core\example.csv'
+
+NB. =========================================================
+Lab Section Program 2 Split into lines
+(;._2) is a partitioning modifier.  It is applied to a verb to its left.  The whole compound is then (u;._2) where (u) is any verb you like.
+
+Here, the verb is (<) which means each partition will be pput into a box.
+
+The verb (<;._2) is executed here with a left and a right argument.  The left argument has a 1 in the position of each unquoted LF character; the right argument is the file data; the result is to box each line.
+
+Let's see how that mask of LF positions was calculated.
+)
+debugstep''
+NB. =========================================================
+Lab Section Program 2 Find parity of " characters
+('"' = y) creates a 1 for each LF and a 0 for each non-LF.
+
+(~:/\) is another partitioning modifier: (u\ y) executes (u) on prefixes of y of increasing length: first on just the first item of y, then on the first 2 items, then the first 3, and so on, collecting the results from the prefixes together into its final result.
+
+Here the (u) is (~:/).  (~:/ y) inserts (~:) between items of (y).  So,
+(~:/ 1 0) = (1 ~: 0) = (1)
+(~:/ 1 0 1) = (1 ~: 0 ~: 1) = (0)
+and generally (~:/ y) is 1 if (y) contains an odd number of 1s.
+
+Thus, (~:/\ y) computes, for each item of (y), 1 if there are an odd number of 1s before or including that item.
+
+(|.!.0 y) shifts (y) one position to the right, bringing in a 0 to the vacated position.  So the result is 1 if an item of (y) is preceded by an odd number of 1s.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 2 Find unquoted delimiters
+(x E. y) produces a result with the shape of (y), with 1 at points in (y) that match (x), and 0 elsewhere.
+
+(-. y) is Boolean negation.
+
+(x *. y) is Boolean AND.
+
+So this line produces a 1 in the location of every delimiter (x) [LF in this case], except in positions that are preceded by an odd number of " characters.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 2 Split each line
+Now each line has been put into its own box.  All that remains is to process each line, splitting it at commas.
+
+The verb (splitline) will do that for one line.  To apply (splitline) to the contents of each boxed line, we use the (each) modifier.  (each) is an adverb, which means that it applies to the verb to its left.  (splitline each y) will open each atom of (y), apply (splitline) to the contents, and then put the result into a box.  In other words, (splitline each y) applies (splitline) inside each box of (y).
+
+We will follow splitline through one execution. 
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 2 Split the line at commas
+We calculate the position of unquoted commas, and split the line there.  This is similar to the way we split the file into lines.
+
+We are careful to add an extra ending delimiter to the line, so that even if it doesn't end with a comma, the last characters will be put into a box.
+)
+0 debugchangestops 'delim'
+debugstep''
+
+NB. =========================================================
+Lab Section Program 2 Remove outer quotes
+Any field that begins with a " character should have the outer " characters removed.  They must be the first and last characters.
+
+Again we use (each) to operate inside the boxes for the fields.
+
+The sequence (u^:v y), where (u) and (v) are verbs, is the Dynamic If sequence.  It means 'do (u) IF (v) produces 1, but not if (v) produces 0'.  So, if (v) produces 0, the result of (u^:v y) is (y), while if (v) produces 1, the result is (u y).
+
+In other words, the result is (y) but with (u) applied to it if (v) produced TRUE.
+
+The Dynamic If is better than an (if.-do.-end.) sequence because Dynamic If is an expression rather than a statement, and can be applied to each item of an array with different results from the test-verb (v).  Here, the decision of whether to remove the " characters is made for each box independently.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 2 Remove escaped quotes
+Any sequence of "" characters represents an escaped quote.  We find these, and the create a mask of all the characters that are NOT escaped quotes.  We give this mask to the verb (x # y) to preserve any character that was not an escaped quote.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 2 Finish up
+All that remains is to apply the formatting verb to each line.
+)
+0 debugchangestops 'splitline'
+debugstep''
+debugstop''
+
+
+
+NB. =========================================================
+Lab Chapter J Basics 3
+NB. =========================================================
+Lab Section Program 3 - Five Number Summary
+The Five Number Summary is a rough-and-ready way of characterizing a dataset.  It is described at 
+http://en.wikipedia.org/wiki/Five-number_summary
+
+Our input will be the name of a CSV file created by a spreadsheet program.  The first row will contain titles, and subsequent rows will contain one dataset per row.  The titles will contain one title 'Data'.  That column, and all following columns, are the numeric observations for the dataset.  All columns before the 'Data' column are descriptive labels for the dataset, which will be copied over into the output.
+
+Our output will be a CSV file.  The first line will be copied from the input, except that the 'Data' column and after will be replaced with headers for the Five Number Summary.  Subsequent lines will contain the descriptive labels, followed by the Five Number Summary for each row.
+
+The program is shown in the edit window.
+)
+PREPARE
+opendebscript 0 : 0
+NB. Five Number Summary
+NB. y is filename (string) of a CSV file
+NB.  We read in the file and break it into comma-delimited fields
+NB.  The first line is headers
+NB.    The 'Data' header marks the start of the observations
+NB.  Remaining lines are datasets
+NB.    Columns before 'Data' are labels, which are preserved
+NB.    in the output
+NB.    Columns starting with 'Data' are replaced by the
+NB.    Five Figure Summary
+NB.    Empty values are ignored
+NB. Result is comma-delimited string, suitable for writing
+NB.  to a CSV file; or empty string, if there was an error
+fivenumbercsv =: verb define
+NB.~stop fivenum
+NB.~title 3	Five Number Summary of CSV File
+NB.~title1 0	Read and convert the file
+NB.~link0 0	Five Number Summary	http://en.wikipedia.org/wiki/Five-number_summary
+NB.~link1 0	I/O Verbs	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB. Read the file, convert to CSV format
+boxedfields =. splitcsv 1!:1 < jpath y
+NB.~title1 0	Take first line
+NB.~link1
+NB. Extract header line
+header =. > {. boxedfields
+NB.~title1 0	Find position of 'Data'
+NB. Find position of 'Data' header (error if omitted)
+datax =. header i. <'Data'
+NB.~title1 0	Exit if no 'Data'
+if. datax = #header do. '' return. end.
+NB.~title1 0	Remove empties, convert to numeric
+NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB. Remove empties; convert the data to numeric (__ if invalid data); leave data as numeric list
+datafields =. __&".@> each  (-.&a:) each datax }. each }. boxedfields
+NB.~title1 0	Check for errors in conversion
+NB.~link1 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
+if. __ e. ; datafields do. '' return. end.
+NB.~title1 0	Calculate FNS
+NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB. Take the five-number summary of each line
+NB. This returns 5 numbers or none for each line
+NB.  (none if there are no numbers)
+fns =. fivenumbersumm each datafields
+NB.~title1 0	Calculate FNS
+NB.~link1
+NB. Append headers to summaries, and summaries to line labels.
+NB. Convert numbers to string form
+reslines =. (datax {.&> boxedfields) ,. ('Min';'Q1';'Median';'Q3';'Max') , <@":"0@> fns
+NB.~title1 0	Format result as CSV
+NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link2 0	Fork	http://www.jsoftware.com/jwiki/Vocabulary/fork
+NB. Convert each row to CSV, append LF, run lines together
+; <@(LF _1} ;)"1 (addquote each reslines) , each ','
+))
+
+NB. y is a string
+NB. result s the same string, but any " characters are doubled,
+NB. and if the string contains , or " it is enclosed in "
+addquote =: verb define
+NB.~stop addquote
+NB.~title 3	Convert field to CSV format
+NB.~title1 0	Escape embedded quotes
+NB. Double any " characters
+escquotes =. (>: '"' = y) # y
+NB.~title1 0	Test for special character
+NB.~link0 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
+NB. Enclose in quotes if value contains special character
+if. +./ (',"',LF) e. y do.
+NB.~title1 0	Enclose line in quotes
+NB.~link0
+  escquotes =. '"' , escquotes , '"'
+end.
+escquotes
+))
+
+
+NB. y is a list of numbers
+NB. Result is Five Number Summary (a list of 5 numbers)
+NB. but if there are no numbers in y, return empty numeric list
+fivenumbersumm =: verb define
+NB.~stop fivenumsumm
+NB.~title 3	Five Number Summary
+NB.~title1 0	Check for empty input
+NB.~link0 0	Five Number Summary	http://en.wikipedia.org/wiki/Five-number_summary
+if. 0 = #y do. 0$0 return. end.
+NB.~title1 0	Calculate percentile positions
+NB. Calculate indices of the 5 percentiles
+index =. (<:#y) * 0 0.25 0.5 0.75 1
+NB.~title1 0	Calculate weighting for upper value
+NB. The integer part of the index is the lower number to use
+fetchlo =. <. index
+NB.~title1 0	Calculate weighting for upper & lower values
+NB. The fractional part of the index is the amount of the
+NB. upper number to use; 1-that is the amount of the lower number to use.
+NB. For example, an index of 4.25 will take 0.75 times value 4
+NB. and 0.25 times value 5
+NB. Create (upper weight,lower weight) for each result: a 5x2 table
+weights =. (,.   -.) (index - fetchlo)
+NB.~title1 0	Sort inputs, fetch value, weight
+NB.~link1 0	Sort	http://www.jsoftware.com/jwiki/Vocabulary/slashco#dyadic
+NB.~link2 0	Table	http://www.jsoftware.com/jwiki/Vocabulary/slash#dyadic
+NB. Sort the inputs into order.
+NB. Fetch (upper value, lower value) for each result, multiply by
+NB. weight, and add.  We have to add on an extra value at the end
+NB. for the last (=maximum) result (it will have a weight of 0)
++/"1 weights * (fetchlo +/ 1 0) { (/:~y),0
+))
+)
+PREPARE
+
+
+fivenumbercsv 1!:1 < jpath '~addons\labs\labs\core\fivenum.csv'
 
 

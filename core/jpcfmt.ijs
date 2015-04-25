@@ -168,37 +168,43 @@ NB. Result is  stoplines;debug info;text (LF form)
 NB.  where debug info is table of (action;lines)
 NB.  stoplines is a table of (stopclass;line)
 extractstops =: 3 : 0@>
+NB. Set defaults in case of missing elements
+stops =. 0 2$a:
+acttbl =. 0 2$a:
+text =. y
 NB. Convert each line to action;value (for exec/comment, empty)
-actval =. (($0)&;)`(' ' (taketo ; takeafter) 4&}.@}:)@.('NB.~'-:4&{.)@> y  NB. discard LF from action lines
-NB. Audit actions (auto, stop, title[n], link[n])
-okact =. a:,(;: 'stop auto') , (;:'title link') ([ , [: , ,&.>/) '0123456789'
-if. # invact =. ({."1 actval) -. okact do.
-  ('invalid actions: ' , ;:^:_1 invact) 13!:8 (1)
+if. #actval =. (($0)&;)`(' ' (taketo ; takeafter) 4&}.@}:)@.('NB.~'-:4&{.)@> y do. NB. discard LF from action lines
+  NB. Audit actions (auto, stop, title[n], link[n])
+  okact =. a:,(;: 'stop auto') , (;:'title link') ([ , [: , ,&.>/) '0123456789'
+  if. # invact =. ({."1 actval) -. okact do.
+    ('invalid actions: ' , ;:^:_1 invact) 13!:8 (1)
+  end.
+  NB. Group by sections ending with exec/comment (discard anything after the last)
+  actvalbyexeline =. (a: = {."1 actval) <;.2 actval
+  NB. Roll the actions through the lines.  For each line, keep only the most recent
+  NB. of each type of action.
+  actvalbyexeline =. ({:@[ ,~ (#~ ~:&.|.@:({."1))@(,~)&}:)&.>/\.&.|. actvalbyexeline
+  NB. Put numbers into executable lines, and delete all actions on comment lines
+  actvalbyexeline =. (i.#actvalbyexeline) (<@[ (<_1 0)} ])`(_1&{.@])@.('NB.' -: 3 {. (0&{::)@;:@(_1 1&{::)@])&.> actvalbyexeline
+  NB. Take only actions, and append line #
+  actvalline =. ; (}: ,. (<_1 0)&{)&.> actvalbyexeline
+  NB. Delete actions with empty body
+  if. #actvalline =. (#~  *@#@>@(1&{"1)) actvalline do.
+    NB. Remove numeric suffixes from actions
+    actvalline =. (-.&'0123456789'&.> 0 {"1 actvalline) (<a:;0)} actvalline
+    NB. Coalesce line numbers for identical action+body
+    actvalline =. (((<0;0 1)&{ , <@;@:(2&{"1))/.~   0 1&{"1) actvalline
+
+    NB. Collect all line numbers for the stop action and remove stop actions from the table
+    stops =. 1 2&{"1 (#~  (<'stop') = 0&{"1) actvalline
+    actvalline =. (#~  (<'stop') ~: 0&{"1) actvalline
+    NB. Grouping by line numbers, convert from action;body;linenums to (action;body);linenums
+    acttbl =. ((<@:(0 1&{"1) , (<0 2)&{)/.~  2&{"1) actvalline
+  end.
+
+  NB. Collect all exec/comments, roll them into text
+  text =. ; (<_1 1)&{@> actvalbyexeline
 end.
-NB. Group by sections ending with exec/comment (discard anything after the last)
-actvalbyexeline =. (a: = {."1 actval) <;.2 actval
-NB. Roll the actions through the lines.  For each line, keep only the most recent
-NB. of each type of action.
-actvalbyexeline =. ({:@[ ,~ (#~ ~:&.|.@:({."1))@(,~)&}:)&.>/\.&.|. actvalbyexeline
-NB. Put numbers into executable lines, and delete all actions on comment lines
-actvalbyexeline =. (i.#actvalbyexeline) (<@[ (<_1 0)} ])`(_1&{.@])@.('NB.' -: 3 {. (0&{::)@;:@(_1 1&{::)@])&.> actvalbyexeline
-NB. Take only actions, and append line #
-actvalline =. ; (}: ,. (<_1 0)&{)&.> actvalbyexeline
-NB. Delete actions with empty body
-actvalline =. (#~  *@#@>@(1&{"1)) actvalline
-NB. Remove numeric suffixes from actions
-actvalline =. (-.&'0123456789'&.> 0 {"1 actvalline) (<a:;0)} actvalline
-NB. Coalesce line numbers for identical action+body
-actvalline =. (((<0;0 1)&{ , <@;@:(2&{"1))/.~   0 1&{"1) actvalline
-
-NB. Collect all line numbers for the stop action and remove stop actions from the table
-stops =. 1 2&{"1 (#~  (<'stop') = 0&{"1) actvalline
-actvalline =. (#~  (<'stop') ~: 0&{"1) actvalline
-NB. Grouping by line numbers, convert from action;body;linenums to (action;body);linenums
-acttbl =. ((<@:(0 1&{"1) , (<0 2)&{)/.~  2&{"1) actvalline
-
-NB. Collect all exec/comments, roll them into text
-text =. ; (<_1 1)&{@> actvalbyexeline
 
 NB. Return the stoplist, action table, and the executable lines in LF form
 stops;acttbl;text

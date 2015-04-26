@@ -51,9 +51,10 @@ NB. is loaded into the debugger; the text is put into an edit tab.
 opendebscript =: 3 : 0
 NB. process the markup, returning actions and displayable script
 if. '' -: $ 'acttbl text' =. prepscript y do.
-  smoutput 'error processing script - ' , acttbl {:: '';'no )) found'
+  smoutput 'error processing script - ' , acttbl {:: '';'no ) found'
 else.
   NB. Start/restart the debugger before text is loaded
+  if. 0 > 4!:0 <'STOPS_jdebug_' do. jdb_open_jdebug_'' end.
   jdb_clear_jdebug_''
   jdb_open_jdebug_ ''
   NB. Load the script into the edit window
@@ -68,6 +69,12 @@ NB. single-step the debugger, by emulating the stepover button
 debugstep =: 3 : 0
 jdebug_stepover_button_jdebug_''
 )
+
+NB. Run to completion
+debugrun =: 3 : 0
+jdebug_run_button_jdebug_''
+)
+
 
 NB. Clear debugger
 debugstop =: 3 : 0
@@ -243,7 +250,7 @@ nstartmsk =. _1 ~: (<0 0)&{::@(exppattn&rxmatch)@> explines=. (#~   '''' ~: {.@>
 NB. Then everything else, and make sure nouns are included
 estartmsk =. 1 (_1)} nstartmsk +. _1 ~: (<0 0)&{::@(exppatt&rxmatch)@> explines
 NB. Find end-of-definition lines
-endmsk =. 1 (_1)} (<'))',LF) = lines
+endmsk =. 1 (_1)} (')' = {.@>@{.@;:)@> lines
 NB. For each end, split the definition into prefix;start;body.  Remove )) from body
 psb =. endmsk ({.@I.@:>@:({."1) (;@{. ; { (,<) }:@}.@}.) {:"1);.2 estartmsk ;"0 lines
 NB. Check each body for multiple valences

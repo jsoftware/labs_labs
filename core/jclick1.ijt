@@ -299,82 +299,7 @@ Since LF may appear in a quoted field, we must not start the program by splittin
 The final program is shown in the edit window.
 )
 PREPARE
-opendebscript 0 : 0
-NB. y is text of a CSV file
-NB. Result is list of boxes, one per line
-NB.  Each box contains a list of boxes, one per field, containing a string
-NB. Fields quoted with " are allowed.  Quoted fields may contain any character including LF.
-NB. To put " in a quoted field, escape it by using two quotes "" .
-NB. The enclosing ", and any escaping ", are removed in the result.
-splitcsv =: verb define
-NB.~stop splitcsv
-NB.~title 3	Convert CSV File
-NB.~title1 0	Remove CR & check for ending LF
-NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
-NB.~link2 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
-NB.~link3 0	Other control words	http://www.jsoftware.com/help/dictionary/ctrl.htm
-NB. Remove CR characters; if file doesn't end with LF, add LF
-if. LF ~: {: csvdata =. y -. CR do.
-  csvdata =. csvdata , LF
-end.
-NB. Split file on sections ending with unquoted LF; box each section, discarding the LF
-NB.~title1 0	Split into lines
-NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
-NB.~link2
-NB.~link3
-lines =. (LF unescapeddelimpos csvdata) <;._2 csvdata
-NB. Process each line and return the result
-NB.~title1 0	Split each line
-NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
-NB.~link2 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
-splitline each lines
-))
-
-NB. y is text, x is a delimiter string
-NB. Result is a Boolean list, one per character of y, with
-NB. 1 in the places where the delimiter is found, but
-NB. only places that are preceded by an even number of " characters
-unescapeddelimpos =: dyad define
-NB.~stop delim
-NB.~title 3	Convert CSV File
-NB.~title1 0	Calculate parity of " characters
-NB.~link1 0	shift	http://www.jsoftware.com/jwiki/Vocabulary/bardot#monadicfit
-NB. Get the even-odd parity of " characters including
-NB. current char; shift right 1 to make it parity of preceding
-parity =. |.!.0 ~:/\ '"' = y
-NB. Find delimiters, ignore any that have odd parity
-NB.~link1
-(-. parity) *. x E. y
-))
-
-NB. y is the text of a comma-delimited line
-NB. result is list of boxed fields
-NB. Fields containing comma or " must be enclosed in " characters.
-NB. Enclosing " characters are removed from the field value.
-NB. A " character is escaped inside a string by doubling it
-splitline =: verb define
-NB.~stop splitline
-NB.~title 3	Convert CSV File
-NB.~title1 0	Split line on unquoted commas
-NB.~link1 0	Intervals	http://www.jsoftware.com/jwiki/Vocabulary/semidot1#dyadic
-NB. Split the line on comma delimiters, discarding them.  Add
-NB. a trailing delimiter to delimit the last field
-boxedfields =. ((',' unescapeddelimpos y),1) <;._2 y,' '
-NB.~title1 0	Split line on unquoted commas
-NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
-NB.~link1 0	Dynamic If	http://www.jsoftware.com/jwiki/Vocabulary/hatco#IfDyad
-NB.~link2 0	Fork	http://www.jsoftware.com/jwiki/Vocabulary/fork
-NB. If any field begins with ", delete the first and last characters
-boxedfields =. }.@}:^:('"'={.) each boxedfields
-NB.~title1 0	Remove escaped quotes
-NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
-NB.~link1
-NB.~link2
-NB. Remove escaped quotes, which are positions of "" that
-NB. have even parity
-(-. each '""'&unescapeddelimpos each boxedfields) # each boxedfields
-))
-)
+opendebscript 1!:1 < jpath '~addons\labs\labs\core\splitcsv.ijs'
 PREPARE
 
 NB. =========================================================
@@ -400,14 +325,15 @@ Lab Section Program 2 Find parity of " characters
 
 (~:/\) is another partitioning modifier: (u\ y) executes (u) on prefixes of y of increasing length: first on just the first item of y, then on the first 2 items, then the first 3, and so on, collecting the results from the prefixes together into its final result.
 
-Here the (u) is (~:/).  (~:/ y) inserts (~:) between items of (y).  So,
-(~:/ 1 0) = (1 ~: 0) = (1)
-(~:/ 1 0 1) = (1 ~: 0 ~: 1) = (0)
-and generally (~:/ y) is 1 if (y) contains an odd number of 1s.
+Here the (u) is (+/), which adds up the items of its argument.
 
-Thus, (~:/\ y) computes, for each item of (y), 1 if there are an odd number of 1s before or including that item.
+Thus, (+/\ y) computes, for each item of (y), the total number of " characters up to and including that item.
+
+(x | y) takes the remainder of dividing (y) by (x); (2 | y) produces 1 if (y) is odd, 0 if (y) is even.
 
 (|.!.0 y) shifts (y) one position to the right, bringing in a 0 to the vacated position.  So the result is 1 if an item of (y) is preceded by an odd number of 1s.
+
+[Note: experienced J programmers would use (~:/\) rather than (2 | +/\)] 
 )
 debugstep''
 
@@ -420,6 +346,8 @@ Lab Section Program 2 Find unquoted delimiters
 (x *. y) is Boolean AND.
 
 So this line produces a 1 in the location of every delimiter (x) [LF in this case], except in positions that are preceded by an odd number of " characters.
+
+[Rather than ((-. parity) *. y) we could have used (parity < y).] 
 )
 debugstep''
 
@@ -465,9 +393,11 @@ debugstep''
 NB. =========================================================
 Lab Section Program 2 Finish up
 All that remains is to apply the formatting verb to each line.
+
+The result of the verb is shown.
 )
-0 debugchangestops 'splitline'
-debugstep''
+0 debugchangestops ;: 'splitline splitcsv'
+debugrun''
 debugstop''
 
 
@@ -520,7 +450,7 @@ if. datax = #header do. '' return. end.
 NB.~title1 0	Remove empties, convert to numeric
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
 NB. Remove empties; convert the data to numeric (__ if invalid data); leave data as numeric list
-datafields =. __&".@> each  (-.&a:) each datax }. each }. boxedfields
+datafields =. {.@(__&".)@> each  (-.&a:) each datax }. each }. boxedfields
 NB.~title1 0	Check for errors in conversion
 NB.~link1 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
 if. __ e. ; datafields do. '' return. end.
@@ -530,11 +460,11 @@ NB. Take the five-number summary of each line
 NB. This returns 5 numbers or none for each line
 NB.  (none if there are no numbers)
 fns =. fivenumbersumm each datafields
-NB.~title1 0	Calculate FNS
+NB.~title1 0	Join headers & labels to FNS
 NB.~link1
 NB. Append headers to summaries, and summaries to line labels.
 NB. Convert numbers to string form
-reslines =. (datax {.&> boxedfields) ,. ('Min';'Q1';'Median';'Q3';'Max') , <@":"0@> fns
+reslines =. (datax {.&> boxedfields) ,. ('Min';'Q1';'Median';'Q3';'Max') , ":each@> fns
 NB.~title1 0	Format result as CSV
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
 NB.~link2 0	Fork	http://www.jsoftware.com/jwiki/Vocabulary/fork
@@ -575,7 +505,7 @@ if. 0 = #y do. 0$0 return. end.
 NB.~title1 0	Calculate percentile positions
 NB. Calculate indices of the 5 percentiles
 index =. (<:#y) * 0 0.25 0.5 0.75 1
-NB.~title1 0	Calculate weighting for upper value
+NB.~title1 0	Calculate index of lower value
 NB. The integer part of the index is the lower number to use
 fetchlo =. <. index
 NB.~title1 0	Calculate weighting for upper & lower values
@@ -596,8 +526,220 @@ NB. for the last (=maximum) result (it will have a weight of 0)
 ))
 )
 PREPARE
+load '~addons\labs\labs\core\splitcsv.ijs'
+
+NB. =========================================================
+Lab Section Program 3 Read the CSV file
+First we read the file, and then use the splitcsv program we wrote earlier to parse it.
+
+(1!:1) is a verb, in fact a verb to read a file.  (!:) is a conjunction, meaning it takes two operands, which can be nouns or verbs, on its left and right, and produces any part of speech.
+
+This is different from a verb which takes one or two arguments which must be nouns, and produces a result that must be a noun.
+
+We have seen conjunctions before, for example in (<;._2) where the conjunction was (;.) and the operands were (<) and (_2), and the result (<;._2) was a verb that chopped up its (y) argument and put the pieces in boxes.
+
+The result of executing the conjunction [(;.) above] is usually a verb.  This result [(<;._2) above] is called the derived verb.  The derived verb will itself be executed when it is presented with arguments.
+
+The description of the conjunction in NuVoc is mainly a description of the derived verb.
 
 
-fivenumbercsv 1!:1 < jpath '~addons\labs\labs\core\fivenum.csv'
+The (!:) conjunction gives access to a grab-bag of useful features that are not important enough to get their own ASCII primitive.  Many of them perform actions that are considered outside the J language, such as operating-system requests, DLL calls, and file I/O.  Such actions are called "foreign".
+
+The foreign functions are accessed by number.  (!:) is invoked by giving it two numbers (m) and (n), as in (m!:n).  The numbers are arbitrary, but generally functions with the same value of (m) are somewhat related.  The supported values of (m) and (n) are shown in a NuVoc page.
+
+The foreign function used here, (1!:1), reads the file named by (y) and produces as result an array containing the bytes of the file.
 
 
+The library function (jpath) resolves the name ('~addons') to its location on your system.
+)
+fivenumbercsv '~addons\labs\labs\core\fivenum.csv'
+
+NB. =========================================================
+Lab Section Program 3 Extract header line
+Since the first line is special, containing headers, we pull it out by itself, and remove the outer boxing.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Locate 'Data' header
+We search in the headers to find 'Data', saving the index value at which it is found.
+
+If the value is not found, the result is the number of headers, which is one more than the last valid index.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Verify 'Data' present
+If the 'Data' field is not given, we have to abort with an error indication.
+
+The (return.) control word ends execution of a verb, just as if the verb ran to the end.  As always, the result of the last sentence executed becomes the result of the verb.  So, the sentence producing the return value, ('') here, is executed just before the (return.).
+
+But our data file contains 'Data', so the condition tests false (0) and we keep going.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Remove empties, convert to numeric
+(}. y) removes the first item of (y); in this case, it removes the header line, leaving all the data lines, each a list of boxed fields inside an outer box.
+
+(x }. y) removes the (x) leading items of (y).  Since we apply (each) to (}.), with (}. each), this operation is performed inside the boxes.  In other words, we delete the columns before the 'Data' column.
+
+(x -. y) deletes items of (x) that match (y).  We want to remove any empty fields, that is, we want to remove any fields in a line that match (a:) which is a box containing an empty list.
+
+But note: we can't simply write
+
+(lines -. each a:)
+
+because that would apply the (-.) to the contents of each argument - but we don't want the contents of (a:), we want the boxed (a:).  The solution is to create a verb
+
+(-.&a:)
+
+which means 'remove (a:) from (y)'.  (-.&a: y) is equivalent to (y -. a:).  The (&) bonds the noun (a:) to the verb (-.) to produce a new verb (-.&a:) in which the (a:) is automatically supplied as the right argument of (-.).  We apply this verb inside the boxes.
+
+Converting the boxed strings to unboxed numbers is similar.  The verb is
+
+({.@(__&".)@> each)
+
+(u@v y) means 'apply (v) to a cell of (y), then apply (u).'
+
+(__ ". y) means 'convert y from character to numeric, and if there is an error in the conversion, use (__) for the erroneous value'.  We use (&) as we did above to create a bonded verb that automatically supplies (__) as the left argument of (".).
+
+({. y) takes the first item of (y).  This is a protection against ill-formed fields that produce 0 or more than 1 number.
+
+Thus, the verb ({.@(__&".)@> each) means, 'go inside each box; then, open each box you find and convert the contents to numeric, using (__) as the value if there is a conversion error; and take only one number.'  The result inside each box will be a list of numbers rather than a list of boxes.
+
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Check for errors
+(datafields) is a list of boxes, each containing a list of numbers.  If any of these numbers is (__), there was an erroneous value and we need to abort.
+
+(; datafields) runs the contents of (datafields) together in one list.
+
+(__ e. y) returns 1 if (__) is found as an item of (y).
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Calculate Five Number Summary
+For each contents of (datafields), we want to calculate the Five Number Summary.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 FNS: check for empty input
+If there are no numbers, no reasonable summary is possible.  Return an empty result in that case.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 FNS: calculate percentile positions
+Each result value is a blend between two adjacent data values in the sorted input data.
+
+For example, if there are 6 values in (y), the median is the average of values 2 and 3 [the middle values].
+
+Generally, we calculate a value int.frac [it would be 2.5 in the example above] which means blend between values (int) and (int+1), giving weight (frac) to value (int+1) and weight (1-frac) to value (int).
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 FNS: index of lower value
+We save the integer parts of the int.frac values as the indexes to the lower blended values
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 FNS: weights of upper,lower values
+The weight for the upper value is the fractional part of the int.frac form, which we extract be subtracting away the integer part.
+
+Each number thus produced needs to be converted into a list of two numbers: (frac) needs to turn into (frac , 1-frac).
+
+The form (u v) where (u) and (v) are verbs is called a hook.  The two verbs adjacent have no normal meaning, so J defines that ((u v) y) means (y u v y).
+
+So here, ((,.  -.) frac) means (frac ,. -. frac).
+
+(-. y) means (1-y).
+
+(x ,. y) joins corresponding items of (x) and (y) together.
+
+The result is a 5x2 array of (frac , 1-frac) for each result number.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 FNS: Sort, fetch, and weight
+(/:~ y) sorts (y) into ascending order.  We have to append one more unused value, since the maximum value is always going to have the index (last.0) and will fetch values at (last) and (last+1)
+
+(fetchlo +/ 1 0) uses (+/) which produces an addition table, the 5x2 table where each row uses (fetchlo) and each column uses (1 0).
+
+The verb ({) extracts the 5x2 array of selected values.
+
+These values are multiplied by the calculated weights.
+
+Then the total is taken across each row, which for each result number adds the two contributing weighted values.  This gives the final five-number result.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Append headers and non-data columns
+At this point (fns) is a list of boxes, each containing a five-number summary (unless there were no numbers to begin with, in which case the contents are empty.
+
+First we want to convert this to a table of boxed strings, one for each number.  This means we want to remove the boxing around each box of (fns), and then, for each number, convert it to characters and box it so that the different-length numbers are not coerced into the same array.
+
+These lines, 5 numbers each, will be collected into a table of boxes, 5 columns wide.
+
+Any box of (fns) that was empty will not have 5 boxed numbers to contribute.  J will add empty boxes to fill out the array.  This empty box is called (a:) and is equivalent to (<0$0).  We will see a row with 5 empty fields.
+
+The verb to do all this is (":each@>) which unboxes each box and then applies (":), which converts numerics to string form, on each individual number, leaving the result in its own box.
+
+Next is to append headings to the five-number summary, using (,).
+
+Next, we preserve the part of the original input that was to the left of the data, using (datax {.&> boxedfields) which takes the first (datax) items from each contents of (boxedfields).  The (boxedfields) were in boxes because there were varying numbers of them per line, but now that we have squared off the array we can dispense with the outer boxing, leaving a table (datax) columns wide.
+
+Finally, we join the two tables together using (,.) which appends corresponding rows.
+)
+0 debugchangestops 'fivenumsumm'
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Format the result as CSV
+The final result will be a string with commas between fields and LF between lines.
+
+Fields containing special characters will have to be escaped and enclosed in " characters.  We delegate that to the verb (addquote) and we use (each) so that the string is properly formatted inside its own box.
+
+Next we add a comma after each field, converting (123.45) to (123.45,).  This produces all the comma delimiters, plus one extra one at the end of the line.
+
+Then we format each row, using the verb (<@(LF _1} ;)"1).  The ("1) indicates that the verb is to be applied to a 1-cell of the data, i. e. a single row of boxes.
+
+For each row, we perform (LF _1} ;) which uses (;) to run the contents of the boxes into a single string and then (_1}) to replace the last character with (LF).  This removes the extra unwanted comma and replaces it with the needed line-separator.
+
+Since the resulting strings have varying length, we enclose each one in a box.
+
+Finally, we use (;) to run all the lines together into the final result string.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Escape quote characters by doubling them
+Here we follow the execution of (addquote).
+
+First, we have to replace each " character by "" .   We do this be creating a list that contain 2 for each " character and 1 for each non-quote, and using (x # y) to create a string containing (x) copies of each item of (y).
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 Enclose in quotes if necessary
+We use (e.) to check each special character for inclusion in (y).  We then use (+./) to OR together those results, producing 1 if the field contained a special character.
+
+If the field did, we enclose it in quotes.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Program 3 completion
+The final result of (fivenumbercsv) is the string representing the CSV file.
+)
+0 debugchangestops ;:'addquote fivenum'
+debugrun''
+debugstop''

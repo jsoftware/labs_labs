@@ -2,7 +2,7 @@ LABTITLE=: 'J By Point & Click I'
 LABFOCUS=: 1
 
 NB. =========================================================
-Lab Chapter Intro: The J Session
+Lab Chapter The J Session
 NB. =========================================================
 Lab Section Term window
 In this lab you will teach yourself J by watching J code run and by exploring the documentation.
@@ -121,9 +121,9 @@ Click around in the dissect window to see what you can bring up in your browser.
 You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
 )
 NB. =========================================================
-Lab Chapter J Basics 1
+Lab Chapter Word, Character, and Line Count
 NB. =========================================================
-Lab Section Program 1 - Word, Character, and Line Count
+Lab Section The Program
 Here is a program to count characters, words, and lines in a file.
 
 Before you try to analyze it, learn the essential terms of J.  Click on the link in the first dissect screen.
@@ -170,7 +170,7 @@ NB.~title1 0	Classify whitespace
 ws =. 1 , filedata e. ' ',TAB,CR,LF
 NB. Count nonwhite preceded by white
 NB.~title1 0	Count words
-wc =. +/ ws *. -. 1 |. ws
+wc =. +/ ws > 1 |. ws
 NB. Return results
 NB.~title1 0	Result
 NB.~link0
@@ -182,7 +182,7 @@ PREPARE
 wc jpath '~addons/labs/labs/core/lorem.txt'
 
 NB. =========================================================
-Lab Section Program 1 Invoking wc
+Lab Section Invoking wc
 The program was started by executing the sentence
 
 wc jpath '~addons/labs/labs/core/lorem.txt'
@@ -195,7 +195,7 @@ In this case, (jpath) does not have a noun to its left, so it is executed with t
 )
 
 NB. =========================================================
-Lab Section Program 1 Read the file
+Lab Section Read the file
 Executing wc means reading the sentences of its definition one by one and executing them.
 
 Before execution starts, the value of the noun that appeared to the right of (wc) is assigned to the name (y).  If there had been a noun to the left of (wc), its value would have been assigned to the name (x).
@@ -216,13 +216,13 @@ A one-dimensional array is called a list.  (filedata) is a list of characters.
 )
 
 NB. =========================================================
-Lab Section Program 1 Count bytes
+Lab Section Count bytes
 (#) is a verb that tells how many items are in its argument.
 )
 debugstep''
 
 NB. =========================================================
-Lab Section Program 1 Count lines
+Lab Section Count lines
 Every line ends with a linefeed [LF character], so the number of lines is the number of LFs.
 
 The J way to find this is to compare each character of filedata against LF: this produces a Boolean value, 0 or 1, for each character; then add up the numbers to see how many 1s there were.
@@ -234,7 +234,7 @@ Note that the Boolean value for a true comparison is the number 1; false is 0.  
 debugstep''
 
 NB. =========================================================
-Lab Section Program 1 Classify whitespace
+Lab Section Classify whitespace
 Whitespace is any of space, TAB, LF, and CR.  We create a list containing those characters, and then check each character of (filedata) to see if it is whitespace.  Again, the result is a Boolean list, 1 if the character is whitespace.
 
 Since we are going to recognize a word as a whitespace followed by a non-whitespace, we prepend a 1 to the list so that if the first character is non-whitespace it will be recognized as starting a word.  [Observe in the dissect screen that the length of the list grows by 1.]
@@ -244,13 +244,13 @@ The name (ws) holds the whitespace information.
 debugstep''
 
 NB. =========================================================
-Lab Section Program 1 Count words
-A word is whitespace followed by a non-whitespace.  We create a rotated list, where each whitespace value is moved one position towards the beginning of the list.  Then we combine the original and rotated lists using logical operations to find the places where words start.  Then we add up the number of word-starts.
+Lab Section Count words
+A word is whitespace followed by a non-whitespace.  We create a rotated list, where each whitespace value is moved one position towards the beginning of the list.  The start of a word is a place where the whitespace list is 1 and the rotated list is 0, in other words when the whitespace list is greater than the rotated list.  Then we add up the number of word-starts.
 )
 debugstep''
 
 NB. =========================================================
-Lab Section Program 1 Result
+Lab Section Result
 The result of the last line of the verb becomes the result of the overall verb.
 
 Here we combine the counts to produce the desired result.
@@ -258,15 +258,134 @@ Here we combine the counts to produce the desired result.
 debugstep''
 
 NB. =========================================================
-Lab Section Program 1 finished
+Lab Section completion
 )
 debugstop''
 
 NB. =========================================================
-Lab Chapter J Basics 2
+Lab Chapter Where are the loops?
 NB. =========================================================
-Lab Section Program 2 - Read CSV file
-A CSV file is a representation of a spreadsheet.  The name stands for 'comma-separated values', and indicates that fields are separated by commas.
+Lab Section The Zen of J
+The J program to count words and characters is very different from a corresponding program in a scalar language.  The J programmer thinks about the problem as a whole, rather than immediately considering individual characters, counters, and loops.
+
+For example, to find the places where words start, we didn't say, "look at every position and see if there is whitespace before and non-whitespace after."  Instead, we said, "create a value for each character that indicates whitespace; create another that indicates following whitespace; words start where the first is 1 and the second is 0."
+
+Both of those approaches imply loops, but the first is more customized than the second.  The first approach is a loop over the concept of "position" which requires a specific computation at each position, and it really requires a loop index to keep the computation straight.
+
+The second approach doesn't depend on "position".  It loops over portions of the data, performing an operation on each.  It can be described in terms of the data alone.
+
+This is the J point of view.
+
+Ken Iverson, after a lifetime of thinking about computation, selected a set of ways of looking at data that allow succinct yet complete descriptions of how to view, arrange, and manipulate data.  That's J.
+)
+NB. =========================================================
+Lab Section The organization of nouns
+The most important way data is organized is along coordinate axes.  An operation on an entire array is usually broken into a set of operations on parts of the array.  For example, comparing two characters is an operation on atoms, but if two strings are compared, the (=) verb is automatically applied between corresponding atoms.
+
+The list of lengths of coordinate axes is called the "shape" of a noun.  The verb ($) produces the shape of its argument.
+
+The number of axes is called the "rank" of the noun.  The rank is therefore the length of the shape.  The verb (#) produces the number of items in a noun, and (# $ y) gives the rank of the noun (y).
+
+A "k-cell" of an array is a subarray of rank k, taking a slice along the last k axes.
+
+For example, a 1-cell of a table is a row of the table: a list taken by a slice along the last axis.
+
+A 1-cell of a 3-dimensional array is a row of one of the tables that make up the array.
+
+A 0-cell is always an atom.
+
+An array can be thought of as an array of its cells, in different ways: A 3x2x4 array can be thought of as a single brikc, or as 3 tables, each 2x4; or as a 3x2 array of lists, each of length 4; or as a 3x2x4 array of atoms.
+
+The picture shows these different interpretations.  The verb (|.) reverses the order of the items of its argument.  (|."3) reverses the order inside the 3-cells, that is, it reverses the order of the 2-cells [tables]; (|."2) reverses the order of lists within each 2-cell; (|."1) reverses the order of atoms in each list; (|."0) does nothing because reversing an atom doesn't change anything.
+
+As the processing flows from top to bottom you can see the action of the different verbs.  Click in a result to see what the argument- and result-cells were.
+)
+PREPARE
+opendebscript 0 : 0
+cells =: verb define
+NB.~stop 1
+NB.~title 3	3-, 2-, 1-, and 0-cells
+|."3 |."2 |."1 |."0 y
+))
+)
+PREPARE
+'abc' = 'aca'
+cells 3 2 4 $ 'abcdefghijklmnopqrstuvwx'
+
+NB. =========================================================
+Lab Section The rank of verbs
+Every noun has a rank - the number of axes.
+
+An array can be construed as an array of cells of lower rank.
+
+You can control how a verb is executed by specifying the rank of the cells it will operate on.  You do this by following the verb with ("n) where (n) is the rank of the cells you want the verb to be applied to.  (u"n) is a "derived verb" that operates like (u), but it is applied to n-cells.
+
+(n) is said to be the "rank" of (u"n).  The word "rank" has different meanings when applied to nouns and verbs.
+
+We used (|.n) to create the display of cells.  Cells of different ranks were reversed.
+)
+
+NB. =========================================================
+Lab Section Left and right rank
+If a verb takes two arguments, a rank can be specified for each.  (u"1 2) means that (u) is applied between 1-cells [i. e. lists] of (x) and 2-cells [i. e. tables] of (y).
+
+Exercises:
+Experiment with the verb (x |. y).  It rotates the array (y) left/up (x) positions.  Use the array (c) defined below.
+
+Then, use (c), (|.), and (") to create the array
+
+toti
+emul
+esto 
+)
+debugstop''
+]c =: 3 4 $ 'otitlemustoe'
+
+NB. =========================================================
+Lab Section Assembly of results
+Here's the solution.  Click on results to see how result-cells were generated.
+
+The execution of a verb automatically implies execution on multiple cells, depending on the rank of the verb.  These cells will have been ordered as an array, and the results of the execution are ordered the same way.  This ordering, which is taken from the leading axes of the argument-shape and becomes the leading axes of the result-shape, is called the "frame".
+
+In the example shown, the verb (|.) is executed 3 times, with a frame of (3).  Each result is a list [of 4 characters], so the overall result is a list of lists, with shape (3 4).
+
+The verb (+/) takes the total of the items of its argument.  What verb would add up the items in each row of an array?  What shape would the result have if it were applied to the array (d) shown below?
+)
+dl =: 2 dissect '3 1 3 |."0 1 c'
+]d =: i. 4 5
+
+NB. =========================================================
+Lab Section Implicit verb rank
+The argument had 4 rows, and each is totaled to produce an atom, so the shape of the result is (4).
+
+Every J primitive has an "implicit rank" - the rank that is used if the verb is not modified by ("n).  You need to learn the rank when you learn a new verb, just as you need to learn the gender of a new Latin or German noun.
+
+When a verb is applied to a noun whose rank exceeds the implicit rank, the verb is automatically applied to cells with the implicit rank, and the results are assembled.
+
+A verb can have infinite implicit rank, which means that it always applies to its argument in its entirety.  Verbs created by (verb define) have infinite rank.
+
+In general, a verb is responsible for handling any argument whose rank is less than or equal to the implicit rank.  Thus, the (%.) verb, which operates on tables [as matrices], has implicit rank 2 and is defined to operate on lists too.  The arithmetic verbs such as (+) have rank 0, i. e. they operate on atoms, and their application to larger arrays is entirely through the rank mechanism discussed above.
+
+Verbs that operate on an entire array, such as ($) which gives its shape or (|.) which reverses the order of items, have infinite rank.
+)
+destroy__dl''
+dl =: 2 dissect '+/"1 d'
+
+NB. =========================================================
+Lab Section Other loops
+The rank mechanism provides way of matching computation to data: by applying a verb to cells of the appropriate size.
+
+J has about a dozen other ways to rearrange data for computation.  We will examine these in later chapters, and with examples as we go along.
+)
+destroy__dl''
+
+
+
+NB. =========================================================
+Lab Chapter Read CSV file
+NB. =========================================================
+Lab Section CSV files
+A CSV file is a representation of a spreadsheet.  The name stands for 'comma-separated values', and indicates that fields are separated by commas, and lines by LF [newline or end-of-line] characters.
 
 The edit window shows the sample CSV file we will work with.
 
@@ -274,7 +393,7 @@ The program we want will read in a CSV file and convert it to a form usable in J
 )
 open jpath '~addons/labs/labs/core/example.csv'
 NB. =========================================================
-Lab Section Program 2 Designing the program
+Lab Section Designing the program
 The first decision is the input and output of the program.
 
 For maximum flexibility, the input will be the text of the file.  Each line will be terminated with LF.  On some operating systems there may be CR characters which we will discard.
@@ -289,7 +408,7 @@ So, the result will be a list of boxes, one for each line of the CSV file; each 
 )
 
 NB. =========================================================
-Lab Section Program 2 Design cont'd: quotes
+Lab Section Design cont'd: quotes
 Reading the details at
 http://en.wikipedia.org/wiki/Comma-separated_values
 reveals that double-quote ["] characters are used to enclose fields that contain special characters, and that the special characters are " itself, comma, and LF [linefeed or end-of-line].
@@ -303,16 +422,16 @@ opendebscript 1!:1 < jpath '~addons\labs\labs\core\splitcsv.ijs'
 PREPARE
 
 NB. =========================================================
-Lab Section Program 2 Audit input
+Lab Section Audit input
 The first thing to do is to check the input: remove any CR characters that the operating system put in, and make sure the file ends with LF.
 )
 splitcsv 1!:1 < jpath '~addons\labs\labs\core\example.csv'
 
 NB. =========================================================
-Lab Section Program 2 Split into lines
-(;._2) is a partitioning modifier.  It is applied to a verb to its left.  The whole compound is then (u;._2) where (u) is any verb you like.
+Lab Section Split into lines
+(;._2) is a partitioning modifier.  It is applied to a verb to its left.  The whole compound is then (u;._2) where (u) is any verb you like.  (u) will be applied on selected portions of the right argument.  Each such selected portion is called a partition.
 
-Here, the verb is (<) which means each partition will be pput into a box.
+Here, the verb is (<) which means each partition will be put into a box.
 
 The verb (<;._2) is executed here with a left and a right argument.  The left argument has a 1 in the position of each unquoted LF character; the right argument is the file data; the result is to box each line.
 
@@ -320,7 +439,7 @@ Let's see how that mask of LF positions was calculated.
 )
 debugstep''
 NB. =========================================================
-Lab Section Program 2 Find parity of " characters
+Lab Section Find parity of " characters
 ('"' = y) creates a 1 for each LF and a 0 for each non-LF.
 
 (~:/\) is another partitioning modifier: (u\ y) executes (u) on prefixes of y of increasing length: first on just the first item of y, then on the first 2 items, then the first 3, and so on, collecting the results from the prefixes together into its final result.
@@ -338,7 +457,7 @@ Thus, (+/\ y) computes, for each item of (y), the total number of " characters u
 debugstep''
 
 NB. =========================================================
-Lab Section Program 2 Find unquoted delimiters
+Lab Section Find unquoted delimiters
 (x E. y) produces a result with the shape of (y), with 1 at points in (y) that match (x), and 0 elsewhere.
 
 (-. y) is Boolean negation.
@@ -352,7 +471,7 @@ So this line produces a 1 in the location of every delimiter (x) [LF in this cas
 debugstep''
 
 NB. =========================================================
-Lab Section Program 2 Split each line
+Lab Section Split each line
 Now each line has been put into its own box.  All that remains is to process each line, splitting it at commas.
 
 The verb (splitline) will do that for one line.  To apply (splitline) to the contents of each boxed line, we use the (each) modifier.  (each) is an adverb, which means that it applies to the verb to its left.  (splitline each y) will open each atom of (y), apply (splitline) to the contents, and then put the result into a box.  In other words, (splitline each y) applies (splitline) inside each box of (y).
@@ -362,7 +481,7 @@ We will follow splitline through one execution.
 debugstep''
 
 NB. =========================================================
-Lab Section Program 2 Split the line at commas
+Lab Section Split the line at commas
 We calculate the position of unquoted commas, and split the line there.  This is similar to the way we split the file into lines.
 
 We are careful to add an extra ending delimiter to the line, so that even if it doesn't end with a comma, the last characters will be put into a box.
@@ -371,12 +490,12 @@ We are careful to add an extra ending delimiter to the line, so that even if it 
 debugstep''
 
 NB. =========================================================
-Lab Section Program 2 Remove outer quotes
+Lab Section Remove outer quotes
 Any field that begins with a " character should have the outer " characters removed.  They must be the first and last characters.
 
 Again we use (each) to operate inside the boxes for the fields.
 
-The sequence (u^:v y), where (u) and (v) are verbs, is the Dynamic If sequence.  It means 'do (u) IF (v) produces 1, but not if (v) produces 0'.  So, if (v) produces 0, the result of (u^:v y) is (y), while if (v) produces 1, the result is (u y).
+The sequence (u^:v y), where (u) and (v) are verbs, is the Dynamic If sequence.  It means 'apply (u) IF (v) produces 1, but not if (v) produces 0'.  So, if (v) produces 0, the result of (u^:v y) is (y), while if (v) produces 1, the result is (u y).
 
 In other words, the result is (y) but with (u) applied to it if (v) produced TRUE.
 
@@ -385,13 +504,13 @@ The Dynamic If is better than an (if.-do.-end.) sequence because Dynamic If is a
 debugstep''
 
 NB. =========================================================
-Lab Section Program 2 Remove escaped quotes
+Lab Section Remove escaped quotes
 Any sequence of "" characters represents an escaped quote.  We find these, and the create a mask of all the characters that are NOT escaped quotes.  We give this mask to the verb (x # y) to preserve any character that was not an escaped quote.
 )
 debugstep''
 
 NB. =========================================================
-Lab Section Program 2 Finish up
+Lab Section Finish up
 All that remains is to apply the formatting verb to each line.
 
 The result of the verb is shown.
@@ -403,9 +522,9 @@ debugstop''
 
 
 NB. =========================================================
-Lab Chapter J Basics 3
+Lab Chapter Five Number Summary
 NB. =========================================================
-Lab Section Program 3 - Five Number Summary
+Lab Section The Program
 The Five Number Summary is a rough-and-ready way of characterizing a dataset.  It is described at 
 http://en.wikipedia.org/wiki/Five-number_summary
 
@@ -529,7 +648,7 @@ PREPARE
 load '~addons\labs\labs\core\splitcsv.ijs'
 
 NB. =========================================================
-Lab Section Program 3 Read the CSV file
+Lab Section Read the CSV file
 First we read the file, and then use the splitcsv program we wrote earlier to parse it.
 
 (1!:1) is a verb, in fact a verb to read a file.  (!:) is a conjunction, meaning it takes two operands, which can be nouns or verbs, on its left and right, and produces any part of speech.
@@ -555,13 +674,13 @@ The library function (jpath) resolves the name ('~addons') to its location on yo
 fivenumbercsv '~addons\labs\labs\core\fivenum.csv'
 
 NB. =========================================================
-Lab Section Program 3 Extract header line
+Lab Section Extract header line
 Since the first line is special, containing headers, we pull it out by itself, and remove the outer boxing.
 )
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Locate 'Data' header
+Lab Section Locate 'Data' header
 We search in the headers to find 'Data', saving the index value at which it is found.
 
 If the value is not found, the result is the number of headers, which is one more than the last valid index.
@@ -569,7 +688,7 @@ If the value is not found, the result is the number of headers, which is one mor
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Verify 'Data' present
+Lab Section Verify 'Data' present
 If the 'Data' field is not given, we have to abort with an error indication.
 
 The (return.) control word ends execution of a verb, just as if the verb ran to the end.  As always, the result of the last sentence executed becomes the result of the verb.  So, the sentence producing the return value, ('') here, is executed just before the (return.).
@@ -579,7 +698,7 @@ But our data file contains 'Data', so the condition tests false (0) and we keep 
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Remove empties, convert to numeric
+Lab Section Remove empties, convert to numeric
 (}. y) removes the first item of (y); in this case, it removes the header line, leaving all the data lines, each a list of boxed fields inside an outer box.
 
 (x }. y) removes the (x) leading items of (y).  Since we apply (each) to (}.), with (}. each), this operation is performed inside the boxes.  In other words, we delete the columns before the 'Data' column.
@@ -612,7 +731,7 @@ Thus, the verb ({.@(__&".)@> each) means, 'go inside each box; then, open each b
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Check for errors
+Lab Section Check for errors
 (datafields) is a list of boxes, each containing a list of numbers.  If any of these numbers is (__), there was an erroneous value and we need to abort.
 
 (; datafields) runs the contents of (datafields) together in one list.
@@ -622,19 +741,19 @@ Lab Section Program 3 Check for errors
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Calculate Five Number Summary
+Lab Section Calculate Five Number Summary
 For each contents of (datafields), we want to calculate the Five Number Summary.
 )
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 FNS: check for empty input
+Lab Section FNS: check for empty input
 If there are no numbers, no reasonable summary is possible.  Return an empty result in that case.
 )
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 FNS: calculate percentile positions
+Lab Section FNS: calculate percentile positions
 Each result value is a blend between two adjacent data values in the sorted input data.
 
 For example, if there are 6 values in (y), the median is the average of values 2 and 3 [the middle values].
@@ -644,13 +763,13 @@ Generally, we calculate a value int.frac [it would be 2.5 in the example above] 
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 FNS: index of lower value
+Lab Section FNS: index of lower value
 We save the integer parts of the int.frac values as the indexes to the lower blended values
 )
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 FNS: weights of upper,lower values
+Lab Section FNS: weights of upper,lower values
 The weight for the upper value is the fractional part of the int.frac form, which we extract be subtracting away the integer part.
 
 Each number thus produced needs to be converted into a list of two numbers: (frac) needs to turn into (frac , 1-frac).
@@ -668,7 +787,7 @@ The result is a 5x2 array of (frac , 1-frac) for each result number.
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 FNS: Sort, fetch, and weight
+Lab Section FNS: Sort, fetch, and weight
 (/:~ y) sorts (y) into ascending order.  We have to append one more unused value, since the maximum value is always going to have the index (last.0) and will fetch values at (last) and (last+1)
 
 (fetchlo +/ 1 0) uses (+/) which produces an addition table, the 5x2 table where each row uses (fetchlo) and each column uses (1 0).
@@ -682,7 +801,7 @@ Then the total is taken across each row, which for each result number adds the t
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Append headers and non-data columns
+Lab Section Append headers and non-data columns
 At this point (fns) is a list of boxes, each containing a five-number summary (unless there were no numbers to begin with, in which case the contents are empty.
 
 First we want to convert this to a table of boxed strings, one for each number.  This means we want to remove the boxing around each box of (fns), and then, for each number, convert it to characters and box it so that the different-length numbers are not coerced into the same array.
@@ -703,7 +822,7 @@ Finally, we join the two tables together using (,.) which appends corresponding 
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Format the result as CSV
+Lab Section Format the result as CSV
 The final result will be a string with commas between fields and LF between lines.
 
 Fields containing special characters will have to be escaped and enclosed in " characters.  We delegate that to the verb (addquote) and we use (each) so that the string is properly formatted inside its own box.
@@ -721,7 +840,7 @@ Finally, we use (;) to run all the lines together into the final result string.
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Escape quote characters by doubling them
+Lab Section Escape quote characters by doubling them
 Here we follow the execution of (addquote).
 
 First, we have to replace each " character by "" .   We do this be creating a list that contain 2 for each " character and 1 for each non-quote, and using (x # y) to create a string containing (x) copies of each item of (y).
@@ -729,7 +848,7 @@ First, we have to replace each " character by "" .   We do this be creating a li
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 Enclose in quotes if necessary
+Lab Section Enclose in quotes if necessary
 We use (e.) to check each special character for inclusion in (y).  We then use (+./) to OR together those results, producing 1 if the field contained a special character.
 
 If the field did, we enclose it in quotes.
@@ -737,7 +856,7 @@ If the field did, we enclose it in quotes.
 debugstep''
 
 NB. =========================================================
-Lab Section Program 3 completion
+Lab Section completion
 The final result of (fivenumbercsv) is the string representing the CSV file.
 )
 0 debugchangestops ;:'addquote fivenum'

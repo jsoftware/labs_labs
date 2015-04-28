@@ -21,6 +21,42 @@ NOTE: In this lab, parentheses are used to indicate J code.
 )
 PREPARE
 load '~addons/labs/labs/core/jpcfmt.ijs'
+
+NB. Fix up user's config file
+desiredkeyvals =: ';'&(taketo ; takeafter);._2 (0 : 0)
+F2;1;Dissect Line;dissect@finddissectline_dissect_ 0
+F3;1;Dissect Last Error;dissect@finddissectline_dissect_ 1
+F4;1;Lint;lintwindow_lint_''
+)
+fkeystatus =: 3 : 0''
+fkeyinfo =. 0$a:
+cfiled =. 1!:1 cfile =. < jpath '~config/userkeys.cfg'
+if. LF ~: {:cfiled do. cfiled =. cfiled , LF end.
+NB. get existing keyname;values
+keynameval =. ';'&(taketo ; takeafter);._2 cfiled -. CR
+NB. for each desired value, get the key assigned currently
+keyassigns =. keynameval i.&:(1&{"1) desiredkeyvals
+NB. For the values not yet assigned, see if the keys are
+NB. available
+if. +./ assignedmask =. keyassigns < #keynameval do.
+  fkeyinfo =. fkeyinfo , ((0 {"1 keynameval) {~ assignedmask # keyassigns) ('You can use ' , [ , ' for ' , ])&.> ';' ([ taketo takeafter)&.> assignedmask # 1 {"1 desiredkeyvals
+end.
+
+keysneeded =. (keyassigns = #keynameval) # (0 {"1 desiredkeyvals)
+if. #availkeys =. keysneeded -. 0 {"1 keynameval do.
+  NB. Get the string to use for the new keys
+  newvals =. (availkeys e.~ 0 {"1 desiredkeyvals) # desiredkeyvals
+  NB. Get strings to add to config
+  newconfigs =. ; (0&{ , ';' ; (<LF) ,~ 1&{)"1 newvals
+  NB. Rewrite config file
+  (cfiled , newconfigs) 1!:2 cfile
+  NB. Tell user what we did
+  newkeys =. 0 {"1 newvals
+  newactions =. ';' ([ taketo takeafter)&.> 1 {"1 newvals
+  fkeyinfo =. fkeyinfo , newkeys ('After restarting J, you can use ' , [ , ' for ' , ])&.> newactions
+end.
+fkeyinfo
+)
 PREPARE
 
 NB. =========================================================
@@ -67,9 +103,15 @@ We have loaded a script into the edit window, and set a stop in the debugger.  T
 Hitting the stop brought up the colorful dissect window.  A single sentence in J can do an enormous amount of computation, so much that you need to see it all laid out at once to understand it.
 
 The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
+
+You can dissect sentences that you write.  Normally you will do this by clicking on the line [in either the term or edit window] and pressing the function key that has been assigned the Dissect Line function.
+
+Or, you can press the Dissect Last Error function key to dissect the last failing sentence, without having to click on it.
 )
 PREPARE
+
 opendebscript 0 : 0
+smoutput@>^:(*@#) fkeystatus
 NB. Find shortest name
 NB. y is a list of boxes, each containing a string
 NB. Result is (unboxed ) shortest string

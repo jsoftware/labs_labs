@@ -59,7 +59,7 @@ else.
   jdb_open_jdebug_ ''
   NB. Load the script into the edit window
   _1 1 loadedittab text
-  NB. Load the actions into the debugger - after verbs are loaded
+  NB. Load the actions into the debugger - after verbs are loaded.
   jdb_extstops_jdebug_ acttbl
 end.
 0 0$0
@@ -103,7 +103,13 @@ loadedittab =: 4 : 0
 'tab run fn' =. (,   (_1;1;'') }.~ #) <"0^:(0=L.) x
 open '~addons/labs/labs/core/emptyfile.ijs'
 wd 'sm set edit text ',DEL,y
-if. run do. 0!:100 y end. NB. needed till load command provided
+if. run do.
+  NB. Make sure comments are preserved for debugger
+  comments =. 9!:40''
+  9!:41 (1)
+  0!:100 y
+  9!:41 comments
+end. NB. needed till load command provided
 0
 )
 

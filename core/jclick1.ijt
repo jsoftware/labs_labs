@@ -347,7 +347,7 @@ opendebscript 0 : 0
 cells =: verb define
 NB.~stop 1
 NB.~title 3	3-, 2-, 1-, and 0-cells
-|."3 |."2 |."1 |."0 y
+|."0 |."1 |."2 |."3 y
 ))
 )
 PREPARE
@@ -374,12 +374,14 @@ If a verb takes two arguments, a rank can be specified for each.  (u"1 2) means 
 Exercises:
 Experiment with the verb (x |. y).  It rotates the array (y) left/up (x) positions.  Use the array (c) defined below.
 
-Then, use (c), (|.), and (") to create the array
-
-toti
-emul
-esto 
+Then, use (c), (|.), and (") to create the array shown below.
 )
+PREPARE
+smoutput 'Desired result:'
+smoutput 'toti'
+smoutput 'emul'
+smoutput 'esto '
+PREPARE
 debugstop''
 ]c =: 3 4 $ 'otitlemustoe'
 
@@ -414,14 +416,86 @@ destroy__dl''
 dl =: 2 dissect '+/"1 d'
 
 NB. =========================================================
+Lab Section Choosing a rank for your verb
+The rank is an important part of a verb.  When you write a verb, you should assign it the proper rank so that it naturally operates on objects of the correct size.
+
+Suppose we want a small statistical verb that will return the number of observations, mean, and sample standard deviation for a list of numbers.
+
+What should its rank be?  The key is that it operates on a list of numbers.  That means it should have rank 1.
+
+The verb is shown.  See in the edit window that we defined the verb with
+
+stats =: verb define"1
+
+to indicate that the verb works on lists.
+
+We ran the verb on a 3-line table of numbers, but as you can see J automatically broke up the table and feeds the numbers into (stats) one list at a time.
+
+Observe, as we stop at the first execution of (stats), that the (y) argument is just the first list from (data).
+)
+PREPARE
+opendebscript 0 : 0
+NB. Create count, mean, and sample standard deviation for a list
+stats =: verb define"1
+NB.~stop stats
+NB.~title 3	Stats
+NB. Get number of observations
+NB.~title1 0	Calculate n
+count =. #y
+NB. Calculate mean
+NB.~title1 0	Calculate mean
+mean =. (+/y) % count
+NB.~title1 0	Calculate sample standard deviation
+NB.~link0 0	Standard deviation	http://en.wikipedia.org/wiki/Standard_deviation#Corrected_sample_standard_deviation
+NB. Calculate sample standard deviation
+stddev =. (%: +/ *: (y - mean)) % (count - 1)
+NB.~title1 0	Return results
+NB.~link0
+NB. Return results
+count,mean,stddev
+))
+) 
+PREPARE
+destroy__dl''
+]data =: 3 5 $ 50 64 8 99 92 86 19 75 96 37 50 92 41 33 35
+stats data
+
+NB. =========================================================
+Lab Section Calculate mean
+We are stepping through the calculation for the first list.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Calculate sample standard deviation
+We are stepping through the calculation for the first list.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Return result
+We are stepping through the calculation for the first list.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Execute on the second list
+Now J automatically starts the verb (stats) running on the second list.  See that (y) has changed to be the second list of (data).
+
+When you advance the lab, we will remove the debug staops and let the sentence run to completion.  You can see that the results from the 3 executions are assembled into the result table.
+)
+debugstep''
+
+
+NB. =========================================================
 Lab Section Other loops
 The rank mechanism provides way of matching computation to data: by applying a verb to cells of the appropriate size.
 
 J has about a dozen other ways to rearrange data for computation.  We will examine these in later chapters, and with examples as we go along.
 )
-destroy__dl''
-
-
+0 debugchangestops ;:'stats'
+debugrun''
+debugstop''
 
 NB. =========================================================
 Lab Chapter Read CSV file

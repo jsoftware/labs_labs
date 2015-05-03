@@ -9,11 +9,12 @@ NB.  (so the script can fit in a lab inside 0: 0)
 NB.
 NB. Action lines begin with NB.~ and have brittle fixed format:
 NB. NB.~actionnameSPvalue
-NB. actionname is one of: stop auto title link titlen linkn
+NB. actionname is one of: stop auto datasize title link titlen linkn
 NB.    where n is a digit 0-9
 NB.  stop - set debug stop.  Value is a class which can be used
 NB.    in subsequent debugchangestops to enable/disable stop
 NB.  auto - autodissect this line if stepped to.  Value is 0 or 1 (default 1)
+NB.  datasize - max size of noun value, in percent of screen, vert then horiz.  example: datasize 20 30
 NB.  title - title to use when the debugger dissects this line.
 NB.   value is font size adjustmentTABtitle
 NB.     example: NB.~title 3	Fine the mean
@@ -65,14 +66,21 @@ end.
 0 0$0
 )
 
-NB. single-step the debugger, by emulating the stepover button
+NB. single-step the debugger, by emulating the stepover button.
+NB. NOP if debugger inactive
 debugstep =: 3 : 0
-jdebug_stepover_button_jdebug_''
+if. -. jdb_inactive_jdebug_'' do.
+  jdebug_stepover_button_jdebug_''
+end.
+0 0$0
 )
 
-NB. Run to completion
+NB. Run to completion.  NOP if debugger inactive
 debugrun =: 3 : 0
-jdebug_run_button_jdebug_''
+if. -. jdb_inactive_jdebug_'' do.
+  jdebug_run_button_jdebug_''
+end.
+0 0$0
 )
 
 
@@ -187,8 +195,8 @@ acttbl =. 0 2$a:
 text =. y
 NB. Convert each line to action;value (for exec/comment, empty)
 if. #actval =. (($0)&;)`(' ' (taketo ; takeafter) 4&}.@}:)@.('NB.~'-:4&{.)@> y do. NB. discard LF from action lines
-  NB. Audit actions (auto, stop, title[n], link[n])
-  okact =. a:,(;: 'stop auto') , (;:'title link') ([ , [: , ,&.>/) '0123456789'
+  NB. Audit actions (auto, stop, datasize, title[n], link[n])
+  okact =. a:,(;: 'stop auto datasize') , (;:'title link') ([ , [: , ,&.>/) '0123456789'
   if. # invact =. ({."1 actval) -. okact do.
     ('invalid actions: ' , ;:^:_1 invact) 13!:8 (1)
   end.

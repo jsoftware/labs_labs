@@ -11,6 +11,7 @@ NB.~title1 0	Remove CR & check for ending LF
 NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
 NB.~link2 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
 NB.~link3 0	Other control words	http://www.jsoftware.com/help/dictionary/ctrl.htm
+NB.~datasize 10 20
 NB. Remove CR characters; if file doesn't end with LF, add LF
 if. LF ~: {: csvdata =. y -. CR do.
   csvdata =. csvdata , LF
@@ -37,6 +38,7 @@ NB.~stop delim
 NB.~title 3	Convert CSV File
 NB.~title1 0	Calculate parity of " characters
 NB.~link1 0	shift	http://www.jsoftware.com/jwiki/Vocabulary/bardot#monadicfit
+NB.~datasize 10 20
 NB. Get the even-odd parity of " characters including
 NB. current char; shift right 1 to make it parity of preceding
 parity =. (|.!.0) 2 | +/\ '"' = y
@@ -56,6 +58,7 @@ NB.~stop splitline
 NB.~title 3	Convert CSV File
 NB.~title1 0	Split line on unquoted commas
 NB.~link1 0	Intervals	http://www.jsoftware.com/jwiki/Vocabulary/semidot1#dyadic
+NB.~datasize 10 20
 NB. Split the line on comma delimiters, discarding them.  Add
 NB. a trailing delimiter to delimit the last field
 boxedfields =. ((',' udlp y),1) <;._2 y,' '

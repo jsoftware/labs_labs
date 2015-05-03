@@ -170,6 +170,8 @@ Click around in the dissect window to see what you can bring up in your browser.
 
 You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
 )
+debugrun''
+debugstop''
 
 NB. =========================================================
 Lab Section Expert J
@@ -181,7 +183,6 @@ Just so you can see what you have to look forward to, this lab will show you the
 
 Yes, that one line is the whole program!
 )
-debugstop''
 NB. y is list of boxed names, result is unboxed shortest name
 findshortestname =: {::~   (i. <./)@:(#@>)
 
@@ -222,6 +223,7 @@ NB.~title1 0	Read the file
 NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
 NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
 NB.~link1 0	Files	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB.~datasize 10 10
 filedata =. 1!:1 <y
 NB. Count characters
 NB.~title1 0	Count bytes
@@ -330,7 +332,7 @@ NB. =========================================================
 Lab Section completion
 The program finishes, displaying its result.
 )
-debugstep''
+debugrun''
 debugstop''
 
 NB. =========================================================
@@ -536,10 +538,10 @@ debugstop''
 
 NB. =========================================================
 Lab Section expert version
-This expert version is more expert than most.
+This expert version is more expert than the previous ones.
 )
 NB. y is a list, result is count,mean,samplestddev
-stats =: ((#@[ , ] , ((% <:@#)~ +/&.:*:)) +/ % #)"1
+stats =: (( #@[ , ] , (+/&.:*:@:- % <:@#@[) ) +/ % #)"1
 
 stats data
 
@@ -769,6 +771,7 @@ NB.~title1 0	Exit if no 'Data'
 if. datax = #header do. '' return. end.
 NB.~title1 0	Remove empties, convert to numeric
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~datasize 20 20
 NB. Remove empties; convert the data to numeric (__ if invalid data); leave data as numeric list
 datafields =. {.@(__&".)@> each  (-.&a:) each datax }. each }. boxedfields
 NB.~title1 0	Check for errors in conversion
@@ -776,12 +779,14 @@ NB.~link1 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
 if. __ e. ; datafields do. '' return. end.
 NB.~title1 0	Calculate FNS
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~datasize
 NB. Take the five-number summary of each line
 NB. This returns 5 numbers or none for each line
 NB.  (none if there are no numbers)
 fns =. fivenumbersumm each datafields
 NB.~title1 0	Join headers & labels to FNS
 NB.~link1
+NB.~datasize 10 20
 NB. Append headers to summaries, and summaries to line labels.
 NB. Convert numbers to string form
 reslines =. (datax {.&> boxedfields) ,. ('Min';'Q1';'Median';'Q3';'Max') , ":each@> fns

@@ -7,13 +7,17 @@ NB. =========================================================
 Lab Section Term window
 In this lab you will teach yourself J by watching J code run and by exploring the documentation.
 
-You will have five windows into your J session.  The first is the window you are looking at.  It is called the term window.  You type sentences here to have them executed, and the results are typed back here.
+You will have five windows into your J session.  The first is the window you are looking at now.  It is called the term window.  You type sentences here to have them executed, and the results are typed back here.
+
+Sentences to be executed must always be in the last line of the term window.  J types a prompt of 3 spaces so that you can see what you typed and what J replied.
+
+For a sentence to be executed, it must be in the last line of the term window AND you must press ENTER somewhere in the line.  Just copying text into the term window doesn't execute it.  To execute multiple lines, use Run|Clipboard.
 
 Type the string
 
    1+2+3+4+5
 
-into this window and press ENTER.  The result will be typed below your input.
+into the last line of this window and press ENTER.  The result will be typed below your input.
 
 To advance to the next section, come back to this term window and press ctrl+J.
 
@@ -66,6 +70,8 @@ Your second window into J is the edit window, shown here.
 The edit window is a tabbed text editor for J source code.
 
 In normal use you will open a tab for a file using the File|Open menu.  This lab will manage the tabs for you as you progress.
+
+Read the text in the edit window.
 )
 PREPARE
 _1 0 loadedittab 0 : 0
@@ -104,7 +110,9 @@ Hitting the stop brought up the colorful dissect window.  A single sentence in J
 
 The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
 
-You can dissect sentences that you write.  Normally you will do this by clicking on the line [in either the term or edit window] and pressing the function key that has been assigned the Dissect Line function.
+You should now size and arrange your windows into comfortable positions.  The dissect window will vary in size depending on the sentence.
+
+You can dissect your own sentences too.  Normally you will do this by clicking on the line [in either the term or edit window] and pressing the function key that has been assigned the Dissect Line function.
 
 Or, you can press the Dissect Last Error function key to dissect the last failing sentence, without having to click on it.
 )
@@ -162,6 +170,23 @@ Click around in the dissect window to see what you can bring up in your browser.
 
 You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
 )
+
+NB. =========================================================
+Lab Section Expert J
+When you're learning J, you pick it up little by little.  You add a primitive, see a new trick, start stretching your mind to see programs as a whole rather than as a bunch of assignment statements.
+
+Eventually, when you become an expert, you can put your new knowledge and your new mindset together to produce extremely concise programs.
+
+Just so you can see what you have to look forward to, this lab will show you the complete expert versions of the programs we write.  You may analyze them if you like, but that's up to you.  Our reason for including them is to keep you interested in learning J.
+
+Yes, that one line is the whole program!
+)
+debugstop''
+NB. y is list of boxed names, result is unboxed shortest name
+findshortestname =: {::~   (i. <./)@:(#@>)
+
+findshortestname 'Jeb';'Hillary';'George';'Bill'
+
 NB. =========================================================
 Lab Chapter Word, Character, and Line Count
 NB. =========================================================
@@ -272,6 +297,8 @@ The J way to find this is to compare each character of filedata against LF: this
 (+/) is a verb that adds all the items of its argument.
 
 Note that the Boolean value for a true comparison is the number 1; false is 0.  The results of comparisons can be added and multiplied just like any other number.
+
+[Treating Boolean values as integers simplifies many expressions.  Computer scientists call it the "Iverson bracket" after its inventor Ken Iverson, also the inventor of J.]
 )
 debugstep''
 
@@ -301,8 +328,21 @@ debugstep''
 
 NB. =========================================================
 Lab Section completion
+The program finishes, displaying its result.
 )
+debugstep''
 debugstop''
+
+NB. =========================================================
+Lab Section the expert version
+Again we show you the expert version of the program.
+)
+NB. y is filename; result is (#bytes),(#lines),(#words)
+WS =: ' ',TAB,CR,LF  NB. whitespace
+wc =: (# , +/@:=&LF ,~ +/@(}: > }.)@(1 , e.&WS) )@:(1!:1)@<
+
+wc jpath '~addons/labs/labs/core/lorem.txt'
+
 
 NB. =========================================================
 Lab Chapter Where are the loops?
@@ -482,10 +522,26 @@ NB. =========================================================
 Lab Section Execute on the second list
 Now J automatically starts the verb (stats) running on the second list.  See that (y) has changed to be the second list of (data).
 
-When you advance the lab, we will remove the debug staops and let the sentence run to completion.  You can see that the results from the 3 executions are assembled into the result table.
+When you advance the lab, we will remove the debug stops and let the sentence run to completion.  You can see that the results from the 3 executions are assembled into the result table.
 )
 debugstep''
 
+
+NB. =========================================================
+Lab Section completion and display of final result
+)
+0 debugchangestops ;:'stats'
+debugrun''
+debugstop''
+
+NB. =========================================================
+Lab Section expert version
+This expert version is more expert than most.
+)
+NB. y is a list, result is count,mean,samplestddev
+stats =: ((#@[ , ] , ((% <:@#)~ +/&.:*:)) +/ % #)"1
+
+stats data
 
 NB. =========================================================
 Lab Section Other loops
@@ -493,10 +549,6 @@ The rank mechanism provides way of matching computation to data: by applying a v
 
 J has about a dozen other ways to rearrange data for computation.  We will examine these in later chapters, and with examples as we go along.
 )
-0 debugchangestops ;:'stats'
-debugrun''
-debugstop''
-
 NB. =========================================================
 Lab Chapter Read CSV file
 NB. =========================================================
@@ -626,7 +678,7 @@ Any sequence of "" characters represents an escaped quote.  We find these, and t
 debugstep''
 
 NB. =========================================================
-Lab Section Finish up
+Lab Section completion and final result
 All that remains is to apply the formatting verb to each line.
 
 The result of the verb is shown.
@@ -635,6 +687,39 @@ The result of the verb is shown.
 debugrun''
 debugstop''
 
+NB. =========================================================
+Lab Section expert version
+The short version follows the same plan as the longer one.  The comments are much longer than the code.  That's good practice in J.
+)
+NB. y is text, x is a delimiter string
+NB. Result is a Boolean list, one per character of y, with
+NB. 1 in the places where the delimiter is found, but
+NB. only places that are preceded by an even number of " characters
+udlp =: E. (*. -.) |.!.0@(~:/\)@('"'&=)@]
+
+NB. Execute verb u on sections delimited by unescaped x, adding x
+NB. if it's not at the end
+ondelim =: adverb define
+:
+(u;._2~ x&udlp) x ,~^:(~: {:) y
+)
+
+NB. y is text of a CSV file
+NB. Result is list of boxes, one per line
+NB.  Each box contains a list of boxes, one per field, containing a string
+NB. Fields quoted with " are allowed.  Quoted fields may contain any character including LF.
+NB. To put " in a quoted field, escape it by using two quotes "" .
+NB. The enclosing ", and any escaping ", are removed in the result.
+splitcsv =: [: LF&(<@splitline ondelim) -.&CR
+
+NB. y is the text of a comma-delimited line
+NB. result is list of boxed fields
+NB. Fields containing comma or " must be enclosed in " characters.
+NB. Enclosing " characters are removed from the field value.
+NB. A " character is escaped inside a string by doubling it
+splitline =: (#~ -.@('""'&udlp)) @ (}.@}:^:('"'={.)) each @ (','&(< ondelim))
+
+splitcsv 1!:1 < jpath '~addons\labs\labs\core\example.csv'
 
 
 NB. =========================================================
@@ -972,8 +1057,10 @@ If the field did, we enclose it in quotes.
 debugstep''
 
 NB. =========================================================
-Lab Section completion
+Lab Section completion, and the expert version
 The final result of (fivenumbercsv) is the string representing the CSV file.
+
+An expert would be satisfied with the code we wrote.
 )
 0 debugchangestops ;:'addquote fivenum'
 debugrun''

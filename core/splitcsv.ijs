@@ -20,7 +20,7 @@ NB.~title1 0	Split into lines
 NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
 NB.~link2
 NB.~link3
-lines =. (LF unescapeddelimpos csvdata) <;._2 csvdata
+lines =. (LF udlp csvdata) <;._2 csvdata
 NB. Process each line and return the result
 NB.~title1 0	Split each line
 NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
@@ -32,7 +32,7 @@ NB. y is text, x is a delimiter string
 NB. Result is a Boolean list, one per character of y, with
 NB. 1 in the places where the delimiter is found, but
 NB. only places that are preceded by an even number of " characters
-unescapeddelimpos =: dyad define
+udlp =: dyad define
 NB.~stop delim
 NB.~title 3	Convert CSV File
 NB.~title1 0	Calculate parity of " characters
@@ -58,7 +58,7 @@ NB.~title1 0	Split line on unquoted commas
 NB.~link1 0	Intervals	http://www.jsoftware.com/jwiki/Vocabulary/semidot1#dyadic
 NB. Split the line on comma delimiters, discarding them.  Add
 NB. a trailing delimiter to delimit the last field
-boxedfields =. ((',' unescapeddelimpos y),1) <;._2 y,' '
+boxedfields =. ((',' udlp y),1) <;._2 y,' '
 NB.~title1 0	Split line on unquoted commas
 NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
 NB.~link1 0	Dynamic If	http://www.jsoftware.com/jwiki/Vocabulary/hatco#IfDyad
@@ -71,6 +71,6 @@ NB.~link1
 NB.~link2
 NB. Remove escaped quotes, which are positions of "" that
 NB. have even parity
-(-. each '""'&unescapeddelimpos each boxedfields) # each boxedfields
+(-. each '""'&udlp each boxedfields) # each boxedfields
 )
 

@@ -75,7 +75,7 @@ end.
 0 0$0
 )
 
-NB. Run to completion.  NOP if debugger inactive
+NB. Run to next stop if any.  NOP if debugger inactive
 debugrun =: 3 : 0
 if. -. jdb_inactive_jdebug_'' do.
   jdebug_run_button_jdebug_''
@@ -83,11 +83,13 @@ end.
 0 0$0
 )
 
-
 NB. Clear debugger
 debugstop =: 3 : 0
 jdb_clear_jdebug_''
 )
+
+NB. Run, then clear
+debugrunstop =: debugstop@debugrun
 
 NB. x is 0 to clear, 1, to set, 2 to toggle stops
 NB. y is class(es) to change

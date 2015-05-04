@@ -170,8 +170,7 @@ Click around in the dissect window to see what you can bring up in your browser.
 
 You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
 )
-debugrun''
-debugstop''
+debugrunstop''
 
 NB. =========================================================
 Lab Section Expert J
@@ -332,8 +331,7 @@ NB. =========================================================
 Lab Section completion
 The program finishes, displaying its result.
 )
-debugrun''
-debugstop''
+debugrunstop''
 
 NB. =========================================================
 Lab Section the expert version
@@ -356,9 +354,9 @@ For example, to find the places where words start, we didn't say, "look at every
 
 Both of those approaches imply loops, but the first is more customized than the second.  The first approach is a loop over the concept of "position" which requires a specific computation at each position, and it really requires a loop index to keep the computation straight.
 
-The second approach doesn't depend on "position".  It loops over portions of the data, performing an operation on each.  It can be described in terms of the data alone.
+The second approach doesn't depend on "position".  It splits the data into sections [individual characters in this case], and performs the same operation on each.  The J programmer specifies the operation and the size of the sections; the iteration is implied. 
 
-This is the J point of view.
+This is the J way of programming.  Say what to do and what to do it on, and let the interpreter worry about the details.
 
 Ken Iverson, after a lifetime of thinking about computation, selected a set of ways of looking at data that allow succinct yet complete descriptions of how to view, arrange, and manipulate data.  That's J.
 )
@@ -390,6 +388,8 @@ cells =: verb define
 NB.~stop 1
 NB.~title 3	3-, 2-, 1-, and 0-cells
 |."0 |."1 |."2 |."3 y
+NB.~stop
+0 0$0
 ))
 )
 PREPARE
@@ -424,7 +424,7 @@ smoutput 'toti'
 smoutput 'emul'
 smoutput 'esto '
 PREPARE
-debugstop''
+debugrunstop''
 ]c =: 3 4 $ 'otitlemustoe'
 
 NB. =========================================================
@@ -456,6 +456,7 @@ Verbs that operate on an entire array, such as ($) which gives its shape or (|.)
 )
 destroy__dl''
 dl =: 2 dissect '+/"1 d'
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Section Choosing a rank for your verb
@@ -476,6 +477,7 @@ We ran the verb on a 3-line table of numbers, but as you can see J automatically
 Observe, as we stop at the first execution of (stats), that the (y) argument is just the first list from (data).
 )
 PREPARE
+destroy__dl''
 opendebscript 0 : 0
 NB. Create count, mean, and sample standard deviation for a list
 stats =: verb define"1
@@ -498,7 +500,6 @@ count,mean,stddev
 ))
 ) 
 PREPARE
-destroy__dl''
 ]data =: 3 5 $ 50 64 8 99 92 86 19 75 96 37 50 92 41 33 35
 stats data
 
@@ -533,8 +534,7 @@ NB. =========================================================
 Lab Section completion and display of final result
 )
 0 debugchangestops ;:'stats'
-debugrun''
-debugstop''
+debugrunstop''
 
 NB. =========================================================
 Lab Section expert version
@@ -686,8 +686,7 @@ All that remains is to apply the formatting verb to each line.
 The result of the verb is shown.
 )
 0 debugchangestops ;: 'splitline splitcsv'
-debugrun''
-debugstop''
+debugrunstop''
 
 NB. =========================================================
 Lab Section expert version
@@ -1068,5 +1067,4 @@ The final result of (fivenumbercsv) is the string representing the CSV file.
 An expert would be satisfied with the code we wrote.
 )
 0 debugchangestops ;:'addquote fivenum'
-debugrun''
-debugstop''
+debugrunstop''

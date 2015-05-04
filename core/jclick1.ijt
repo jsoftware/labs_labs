@@ -36,8 +36,14 @@ fkeystatus =: 3 : 0''
 fkeyinfo =. 0$a:
 cfiled =. 1!:1 cfile =. < jpath '~config/userkeys.cfg'
 if. LF ~: {:cfiled do. cfiled =. cfiled , LF end.
+NB. Cut to lines
+lines =. <;._2 cfiled -. CR
+NB. discard comments
+lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines  
+NB. get delimiter for each line
+delims =. (,&';' {~ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+' i.&0@:e.~ deb)@> lines
 NB. get existing keyname;values
-keynameval =. ';'&(taketo ; takeafter);._2 cfiled -. CR
+keynameval =. delims (taketo ; takeafter)&> lines
 NB. for each desired value, get the key assigned currently
 keyassigns =. keynameval i.&:(1&{"1) desiredkeyvals
 NB. For the values not yet assigned, see if the keys are
@@ -81,7 +87,7 @@ NB. execute, you load them by pressing the green arrow above (or
 NB. by pressing ctrl+L).
 
 NB. A file containing J sentences, like this one, is called a
-NB. script.  All the sentences in this script are comments,
+NB. "script".  All the sentences in this script are comments,
 NB. which start with NB.
 
 NB. Loading a script feeds the lines of the script one by one
@@ -117,9 +123,8 @@ You can dissect your own sentences too.  Normally you will do this by clicking o
 Or, you can press the Dissect Last Error function key to dissect the last failing sentence, without having to click on it.
 )
 PREPARE
-
-opendebscript 0 : 0
 smoutput@>^:(*@#) fkeystatus
+opendebscript 0 : 0
 NB. Find shortest name
 NB. y is a list of boxes, each containing a string
 NB. Result is (unboxed ) shortest string
@@ -151,7 +156,7 @@ Look again at the debug window.  It has come to life.  It has three panes now.
 
 The top pane shows the lines of the definition that is running.  The > shows the next line to be executed.  The * shows that there is a stop on that line.
 
-The middle pane shows the call stack: the programs that were called on the way to the line being debugged.  In this case, most of them are in the Labs Manager.
+The middle pane shows the "call stack": the programs that were called on the way to the line being debugged.  In this case, most of them are in the Labs Manager.
 
 The bottom pane shows the values of names that will be referred to in the sentence.
 
@@ -266,7 +271,7 @@ NB. =========================================================
 Lab Section Read the file
 Executing wc means reading the sentences of its definition one by one and executing them.
 
-Before execution starts, the value of the noun that appeared to the right of (wc) is assigned to the name (y).  If there had been a noun to the left of (wc), its value would have been assigned to the name (x).
+Before execution starts, the value of the noun that appeared to the right of (wc) is assigned to the name (y).  If there had been a noun to the left of (wc), its value would also have been assigned to the name (x).
 
 [Since there are only one or two arguments to a J verb, there is no need for a declaration of parameters: the arguments just go by the names (x) and (y).]
 
@@ -358,7 +363,7 @@ The second approach doesn't depend on "position".  It splits the data into secti
 
 This is the J way of programming.  Say what to do and what to do it on, and let the interpreter worry about the details.
 
-Ken Iverson, after a lifetime of thinking about computation, selected a set of ways of looking at data that allow succinct yet complete descriptions of how to view, arrange, and manipulate data.  That's J.
+Ken Iverson, in the culmination of a lifetime of thinking about computation, selected a set of ways of looking at data that allow succinct yet complete descriptions of how to view, arrange, and manipulate data.  That's J.
 )
 NB. =========================================================
 Lab Section The organization of nouns

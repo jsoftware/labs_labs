@@ -403,7 +403,7 @@ c2*q                           NB. weighted by c2
 
 +/c2*q
 
-on=: 4 : '+/ x * y&times ^: (i.#x) 1'
+on=. 4 : '+/ x * y&times ^: (i.#x) 1'
 
 c2 on c3
 

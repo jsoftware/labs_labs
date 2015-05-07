@@ -1,5 +1,5 @@
-load 'debug/dissect'
-load 'debug'
+require 'debug/dissect'
+require 'debug'
 require 'regex'
 
 NB. Markup language for scripts

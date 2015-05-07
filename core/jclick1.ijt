@@ -791,18 +791,18 @@ NB.~link1 0	Multiple Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assign
 NB.~auto 1
 NB.~check shape
 NB. Create the ship, randomly rotate, randomly transpose
-|:^:(?2) (- ? 11 - (1,ship)) |. 10 10 $!.0 ship $ id
+|:^:(?2) (- ? 11 - (1,ship)) |. 10 10 {. ,: ship $ id
 ))
 )
 PREPARE
 
 NB. =========================================================
 Lab Section Place all ships
-J supports the usual control structures, including if-then-else and do-while.  Most looping using other mechanisms.
+J supports the usual control structures, including if-then-else and do-while.  These are blunt instruments, applying to entire sentences.  Most of the time we will use J's verb modifiers which allow finer control.
 
-Here, we want to repeatedly deal boards until we get one that doesn't conflict.  This calls for the seldom-used "do-until" where you perform the body of the loop before the first test.
+Here, we want to repeatedly deal boards until we get one that doesn't conflict.  This calls for the seldom-used "do-until" where you perform the body of the loop before the first test.  There's no modifier to do that.
 
-In J this is the (whilst.)-(do.)-(end.) structure.  Note that the "control words" all end with a period, and are the only names that do.
+We use the (whilst.)-(do.)-(end.) structure.  Note that the "control words" all end with a period, and are the only names that do.
 
 "(whilst.)" stands for "while., but Skip the Test first time."  [You're supposed to chuckle now.]
 
@@ -825,7 +825,9 @@ This line places one ship.
 
 First, we use ($) to create the ship, a horizontal array with the correct length and value.
 
-Then we use ($!.0) to create a 10x10 array with the ship in the top-left corner.
+Then (,:) converts the list into a one-row table.
+
+Then ({.) creates a 10x10 array with the ship in the top-left corner.
 
 Then we use (?) to create a random position: in the vertical direction, a random value between 0 and 9; in the horizontal direction, a random value between 0 and the maximum starting position, which is 10 - the length of the ship, to keep the ship from falling off the right-hand edge.
 
@@ -833,7 +835,7 @@ Then we use (|.) to rotate the ship to the random position.  The rotation counts
 
 Finally, we use (|:) to interchange axes, making the placement vertical rather than horizontal.  We random either perform this operation or not, to get a random orientation.
 
-Note: the dissect display is taken from a separate execution of the sentence from the one that produces the result used in the program.  Since there are random number involved, the displayed value will be different from the one used in the program.
+Note: the dissect display is taken from a different execution of the sentence than the one that produces the result used in the program.  Since there are random numbers involved, the displayed value will be different from the one used in the program.
 )
 debugstep''
 

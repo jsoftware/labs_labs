@@ -9,12 +9,13 @@ NB.  (so the script can fit in a lab inside 0: 0)
 NB.
 NB. Action lines begin with NB.~ and have brittle fixed format:
 NB. NB.~actionnameSPvalue
-NB. actionname is one of: stop auto datasize title link titlen linkn
+NB. actionname is one of: stop auto datasize check title link titlen linkn
 NB.    where n is a digit 0-9
 NB.  stop - set debug stop.  Value is a class which can be used
 NB.    in subsequent debugchangestops to enable/disable stop
 NB.  auto - autodissect this line if stepped to.  Value is 0 or 1 (default 1)
 NB.  datasize - max size of noun value, in percent of screen, vert then horiz.  example: datasize 20 30
+NB.  check - dissect checking level, all (default), shape, error, no
 NB.  title - title to use when the debugger dissects this line.
 NB.   value is font size adjustmentTABtitle
 NB.     example: NB.~title 3	Fine the mean
@@ -197,8 +198,8 @@ acttbl =. 0 2$a:
 text =. y
 NB. Convert each line to action;value (for exec/comment, empty)
 if. #actval =. (($0)&;)`(' ' (taketo ; takeafter) 4&}.@}:)@.('NB.~'-:4&{.)@> y do. NB. discard LF from action lines
-  NB. Audit actions (auto, stop, datasize, title[n], link[n])
-  okact =. a:,(;: 'stop auto datasize') , (;:'title link') ([ , [: , ,&.>/) '0123456789'
+  NB. Audit actions (auto, stop, datasize, check, title[n], link[n])
+  okact =. a:,(;: 'stop auto datasize check') , (;:'title link') ([ , [: , ,&.>/) '0123456789'
   if. # invact =. ({."1 actval) -. okact do.
     ('invalid actions: ' , ;:^:_1 invact) 13!:8 (1)
   end.

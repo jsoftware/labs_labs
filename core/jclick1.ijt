@@ -727,6 +727,153 @@ splitline =: (#~ -.@('""'&udlp)) @ (}.@}:^:('"'={.)) each @ (','&(< ondelim))
 
 splitcsv 1!:1 < jpath '~addons\labs\labs\core\example.csv'
 
+NB. =========================================================
+Lab Chapter Random Battleship board
+NB. =========================================================
+Lab Section The game of Battleship
+The game of battleship is played on a 10x10 board.  A player has 5 ships of varying lengths that are placed horizontally or vertically on the board.  The game is described at
+
+http://en.wikipedia.org/wiki/Battleship_%28game%29
+
+The problem is to create a random starting position, with the 5 ships placed without overlap.
+
+The resulting board will be a 10x10 table indicating occupancy of each cell: 0 for an empty cell, or the number of the ship occupying the cell.
+)
+
+NB. =========================================================
+Lab Section Program design
+Since most of the board is empty, we will simply place ships at random and then check for overlap.  If there is an overlap, we will start over again.  We should get a valid board after a few tries.
+
+We will write a verb to place one ship given its length and ID.  We will call that verb for each ship, and then check for overlap.
+
+The program to produce the starting position is shown in the edit window.
+)
+PREPARE
+opendebscript 0 : 0
+SHIPLENID =: 5 4 3 3 2 ,. 1 2 3 4 5  NB. length and id of each ship
+NB. Random Battleship Board
+NB. y is a table, where each row is (ship length),(ship id)
+NB. Result is 10x10 board where each cell contains the id of a ship, or 0 if the cell is empty.
+NB. We deal random boards until we get one with no overlapping ships
+battleshipstart =: verb define
+NB.~stop battleship
+NB.~title 3	Random Battleship Board
+NB.~title1 0	Test for valid board
+NB.~link0 0	Battleship	http://en.wikipedia.org/wiki/Battleship_%28game%29
+NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB. Test for valid board
+whilst. 1 < >./ , +/ 0 ~: ships do.
+NB.~title1 0	Create all ships
+NB.~link1
+NB.~stop
+  NB. Place each ship into its own board
+  ships =. placeship y
+end.
+NB.~stop finish
+NB.~title1 0	Combine ships into single board
+NB. No overlaps in 'ships' - combine all ships into one board
++/ ships
+))
+
+NB. Place one ship
+NB. y is (length of ship),(id of ship)
+NB. Result is 10x10 array with the ship randomly placed
+placeship =: 3 : 0"1
+NB.~stop place
+NB.~auto 0
+NB.~title 3	Place One Ship
+NB.~title1 0	Split y into components
+NB.~link0 0	Battleship	http://en.wikipedia.org/wiki/Battleship_%28game%29
+NB. Split y into its parts
+'ship id' =. y
+NB.~title1 0	Place and move the ship
+NB.~link1 0	Multiple Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment#Multiple_Assignment
+NB.~auto 1
+NB.~check shape
+NB. Create the ship, randomly rotate, randomly transpose
+|:^:(?2) (- ? 11 - (1,ship)) |. 10 10 $!.0 ship $ id
+))
+)
+PREPARE
+
+NB. =========================================================
+Lab Section Place all ships
+J supports the usual control structures, including if-then-else and do-while.  Most looping using other mechanisms.
+
+Here, we want to repeatedly deal boards until we get one that doesn't conflict.  This calls for the seldom-used "do-until" where you perform the body of the loop before the first test.
+
+In J this is the (whilst.)-(do.)-(end.) structure.  Note that the "control words" all end with a period, and are the only names that do.
+
+"(whilst.)" stands for "while., but Skip the Test first time."  [You're supposed to chuckle now.]
+
+Execution thus starts with the line after the (do.). Since that line executes (placeship) 5 times, once for each ship, we will  pick up the action in the next section where we are placing a single ship.
+)
+
+NB. =========================================================
+Lab Section placeship - unpack y argument
+The syntax of J demands that every verb has 1 or 2 arguments, but we all know programs may need lots of parameters.
+
+When a verb needs more arguments, you simply pack them into a list before calling the verb, and have the verb unpack them first thing.
+
+Here, the (y) argument is a list of two arguments, so we assign it to two names, (size) and (id).
+)
+battleshipstart SHIPLENID
+
+NB. =========================================================
+Lab Section placeship - place the ship randomly
+This line places one ship.
+
+First, we use ($) to create the ship, a horizontal array with the correct length and value.
+
+Then we use ($!.0) to create a 10x10 array with the ship in the top-left corner.
+
+Then we use (?) to create a random position: in the vertical direction, a random value between 0 and 9; in the horizontal direction, a random value between 0 and the maximum starting position, which is 10 - the length of the ship, to keep the ship from falling off the right-hand edge.
+
+Then we use (|.) to rotate the ship to the random position.  The rotation counts are negative to perform rightward rotation.
+
+Finally, we use (|:) to interchange axes, making the placement vertical rather than horizontal.  We random either perform this operation or not, to get a random orientation.
+
+Note: the dissect display is taken from a separate execution of the sentence from the one that produces the result used in the program.  Since there are random number involved, the displayed value will be different from the one used in the program.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section check for valid placement
+After placing all the ships we have a brick, a 3-dimensional array containing 5 boards.  We check for a collision between ships.
+
+The idea is, we add the boards together and look for a place where the total is more than 1.
+
+First we convert all the nonzero ids to the value 1, by comparing them for inequality to 0 using (~:).
+
+Then we add all the boards together using (+/), producing a single board with  the sum at each position.
+
+Then we convert the table into a list using (,) so that when we find the largest item using (>./) we get the largest single number.
+
+We compare that value against 1.  If it is greater than 1, there was a collision and we have to build the board again.
+)
+0 debugchangestops 'place'
+debugstep''
+
+NB. =========================================================
+Lab Section combine boards to produce final result
+After a few tries we find a board with no conflict.  We add all the boards together to get the final result.
+)
+0 debugchangestops 'battleship'
+debugrun''
+
+NB. =========================================================
+Lab Section completion
+Here's the final result.
+)
+0 debugchangestops 'finish'
+debugrunstop''
+
+NB. =========================================================
+Lab Section expert version
+An expert would have no reason to sniff at our version.
+
+It is possible to write the program shorter but the version we have is pretty short and easy to maintain.
+)
 
 NB. =========================================================
 Lab Chapter Five Number Summary

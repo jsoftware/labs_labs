@@ -178,6 +178,32 @@ You are now ready to explore J.  To watch execution, use the leftmost debugger b
 debugrunstop''
 
 NB. =========================================================
+Lab Section Why learn J?
+A man wants a new suit, sp he goes to a tailor. The tailor takes his measurements and says “OK, come back in a week, I'll have the suit ready.” 
+
+In a week the man returns to the tailor shop. "Here’s your suit," says the tailor. 
+
+"Well, I’d like to try it on," says the customer. So he goes into the dressing room.  It’s all but impossible to get into the thing! Finally, he has it on, comes out, and looks in the mirror.
+
+He says to the tailor, "This suit is terrible! Look at this! The jacket sleeves are so long they’re flopping! But the shoulders are so narrow I can’t even breathe! The pants legs are baggy! But at the same time, the pants squeeze my hips!" On and on he complains. 
+
+"Wait a minute," says the tailor, interrupting him. "Here’s what you’ll do. You’ll go like this..." And the tailor shows him how to hold in his sleeves, hunch up his shoulders, tuck in the baggy pants with one hand, all at the same time, to "make it fit".
+
+A few minutes later the man emerges from the shop onto the street. He’s hobbling down the sidewalk, trying to walk while still holding his sleeve, hunching his shoulders, tucking the pants, etc, etc. 
+
+Two old ladies waiting for a bus across the street notice him as he struggles along. 
+
+"Dear me!!" says one of the ladies, shaking her head in pity. "Look at that poor crippled man!" 
+
+"Yes," says her companion. "But doesn’t his suit fit nice!"
+
+
+You've spent so much effort twisting your thought processes into loops and array indexes that you've lost sight of what you were trying to do: describe computation.  You've learned languages that were built for the computer's ease.  Now they "fit you" - really, you fit them.
+Loosen up!  Learn a language that describes what you want to do, not the bit-by-bit details of how to do it.  J.
+)
+
+
+NB. =========================================================
 Lab Section Expert J
 When you're learning J, you pick it up little by little.  You add a primitive, see a new trick, start stretching your mind to see programs as a whole rather than as a bunch of assignment statements.
 
@@ -365,6 +391,7 @@ This is the J way of programming.  Say what to do and what to do it on, and let 
 
 Ken Iverson, in the culmination of a lifetime of thinking about computation, selected a set of ways of looking at data that allow succinct yet complete descriptions of how to view, arrange, and manipulate data.  That's J.
 )
+
 NB. =========================================================
 Lab Section The organization of nouns
 The most important way data is organized is along coordinate axes.  An operation on an entire array is usually broken into a set of operations on parts of the array.  For example, comparing two characters is an operation on atoms, but if two strings are compared, the (=) verb is automatically applied between corresponding atoms.

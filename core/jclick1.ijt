@@ -178,16 +178,17 @@ You are now ready to explore J.  To watch execution, use the leftmost debugger b
 debugrunstop''
 
 NB. =========================================================
-Lab Section Why learn J?
-A man wants a new suit, sp he goes to a tailor. The tailor takes his measurements and says “OK, come back in a week, I'll have the suit ready.” 
+Lab Section A true story
+Why learn J?
+A man goes to a tailor for a suit. The tailor takes his measurements and says “OK, come back in a week, I'll have the suit ready.” 
 
 In a week the man returns to the tailor shop. "Here’s your suit," says the tailor. 
 
-"Well, I’d like to try it on," says the customer. So he goes into the dressing room.  It’s all but impossible to get into the thing! Finally, he has it on, comes out, and looks in the mirror.
+"Well, I’d like to try it on," says the customer. So he goes into the dressing room.  It’s all but impossible to get into the thing!  Finally, he has it on, comes out, and looks in the mirror.
 
-He says to the tailor, "This suit is terrible! Look at this! The jacket sleeves are so long they’re flopping! But the shoulders are so narrow I can’t even breathe! The pants legs are baggy! But at the same time, the pants squeeze my hips!" On and on he complains. 
+He complains to the tailor, "This suit is terrible! Look at this! The jacket sleeves are so long they’re flopping! But the shoulders are so narrow I can’t even breathe! The pants legs are baggy! But at the same time, the pants squeeze my hips!..."
 
-"Wait a minute," says the tailor, interrupting him. "Here’s what you’ll do. You’ll go like this..." And the tailor shows him how to hold in his sleeves, hunch up his shoulders, tuck in the baggy pants with one hand, all at the same time, to "make it fit".
+"Wait a minute," says the tailor, interrupting him. "There's nothing wrong with the suit, you just have to wear it right".  And the tailor shows him how to hold in his sleeves, hunch up his shoulders, tuck in the baggy pants with one hand, all at the same time, to "make it fit".
 
 A few minutes later the man emerges from the shop onto the street. He’s hobbling down the sidewalk, trying to walk while still holding his sleeve, hunching his shoulders, tucking the pants, etc, etc. 
 
@@ -195,13 +196,25 @@ Two old ladies waiting for a bus across the street notice him as he struggles al
 
 "Dear me!!" says one of the ladies, shaking her head in pity. "Look at that poor crippled man!" 
 
-"Yes," says her companion. "But doesn’t his suit fit nice!"
-
-
-You've spent so much effort twisting your thought processes into loops and array indexes that you've lost sight of what you were trying to do: describe computation.  You've learned languages that were built for the computer's ease.  Now they "fit you" - really, you fit them.
-Loosen up!  Learn a language that describes what you want to do, not the bit-by-bit details of how to do it.  J.
+"Sad," says her companion.  "But doesn’t his suit fit him nice!"
 )
+NB. =========================================================
+Lab Section Why learn J?
+You need a new suit.
 
+You wanted to use a computer to solve problems.  They taught you a "computer language", but it wasn't a way for you to describe your problem to a computer - it was a way for you to control a computer down at the lowest level, perhaps gingered up a bit by the latest buzzword such as "object-oriented programming".
+
+Then you spent years learning how to take problems and tear them apart and reimagine from the point of view of a machine that only knows how to add, fetch, and store.  Even if you perfectly well knew what you wanted to do, it was a challenge to tell the computer how to do it.
+
+And the saddest thing of all is, now you think these languages "fit you nice."  No.  You fit them.  You've twisted yourself so small we could pack you into a 32-bit integer.  You've spent so much effort denaturing your thought processes into loops and array indexes that you've lost sight of what you were trying to do: describe computation.
+
+It's time for you to straighten up!  Learn a language that describes what you want to do, not the bit-by-bit details of how to do it.  J.
+
+
+Ken Iverson put it this way: In J, when you want to move the army from Piladelphia to New York, you say just that: move the army from Philadelphia to New York.  In a scalar language, you say, Go to every soldier, and move that soldier to New York.
+
+If you want to move the army from Philadelphia to New York, and put the two leading divisions in the rear for rest, in J you just say that (it takes 5 characters).  In a scalar language you have to haul out loops, counters, and indexes - all for such a simple thing!
+)
 
 NB. =========================================================
 Lab Section Expert J
@@ -226,13 +239,13 @@ Here is a program to count characters, words, and lines in a file.
 
 Before you try to analyze it, learn the essential terms of J.  Click on the link in the first dissect screen.
 
-In J, a noun is a piece of data, and a verb is a function that operates on one or two nouns.
+In J, a "noun" is a piece of data, and a "verb" is a function that operates on one or two nouns.
 
-Nouns have shapes - corresponding to dimensions in other languages.  The the dissect display, the shape of a noun appears above its value.
+Nouns have "shape" - corresponding to dimensions in other languages.  The the dissect display, the shape of a noun appears above its value.
 
-Nouns have types - numeric, character, and boxed.  The special boxed type is a container that holds other nouns.
+Nouns have "type" - numeric, character, and boxed.  The special boxed type is a container that holds other nouns.  [Note that you don't have a worry about whether a number is integer or floating-point.  J will pick whichever is better.]
 
-An atom is a noun that is not an array.  It can be of any type: a single number, a single character, or a single box.
+An "atom" is a noun that is not an array.  It can be of any type: a single number, a single character, or a single box.
 
 As you step through this lab using ctrl-J, the lab will give a brief discussion of each line and automatically move the debugger through the lines.  Your job is to click around the dissect window and develop an idea for what's going on.
 )
@@ -311,7 +324,7 @@ In the first line, the contents of the file are read and assigned to the name (f
 
 When the line finishes, (filedata) is a noun that contains a one-dimensional array of characters.
 
-A one-dimensional array is called a list.  (filedata) is a list of characters.
+A one-dimensional array is called a "list".  (filedata) is a list of characters.
 )
 
 NB. =========================================================
@@ -394,7 +407,7 @@ Ken Iverson, in the culmination of a lifetime of thinking about computation, sel
 
 NB. =========================================================
 Lab Section The organization of nouns
-The most important way data is organized is along coordinate axes.  An operation on an entire array is usually broken into a set of operations on parts of the array.  For example, comparing two characters is an operation on atoms, but if two strings are compared, the (=) verb is automatically applied between corresponding atoms.
+The most important way data is organized is along coordinate "axes".  An operation on an entire array is usually broken into a set of operations on parts of the array.  For example, comparing two characters is an operation on atoms, but if two strings are compared, the (=) verb is automatically applied between corresponding atoms.
 
 The list of lengths of coordinate axes is called the "shape" of a noun.  The verb ($) produces the shape of its argument.
 
@@ -408,7 +421,7 @@ A 1-cell of a 3-dimensional array is a row of one of the tables that make up the
 
 A 0-cell is always an atom.
 
-An array can be thought of as an array of its cells, in different ways: A 3x2x4 array can be thought of as a single brikc, or as 3 tables, each 2x4; or as a 3x2 array of lists, each of length 4; or as a 3x2x4 array of atoms.
+An array can be thought of as an array of its cells, in different ways: A 3x2x4 array can be thought of as a single "brick", or as 3 "tables", each 2x4; or as a 3x2 array of lists, each of length 4; or as a 3x2x4 array of atoms.
 
 The picture shows these different interpretations.  The verb (|.) reverses the order of the items of its argument.  (|."3) reverses the order inside the 3-cells, that is, it reverses the order of the 2-cells [tables]; (|."2) reverses the order of lists within each 2-cell; (|."1) reverses the order of atoms in each list; (|."0) does nothing because reversing an atom doesn't change anything.
 
@@ -430,15 +443,18 @@ cells 3 2 4 $ 'abcdefghijklmnopqrstuvwx'
 
 NB. =========================================================
 Lab Section The rank of verbs
+To recap:
+
 Every noun has a rank - the number of axes.
 
 An array can be construed as an array of cells of lower rank.
 
+
 You can control how a verb is executed by specifying the rank of the cells it will operate on.  You do this by following the verb with ("n) where (n) is the rank of the cells you want the verb to be applied to.  (u"n) is a "derived verb" that operates like (u), but it is applied to n-cells.
 
-(n) is said to be the "rank" of (u"n).  The word "rank" has different meanings when applied to nouns and verbs.
+(n) is said to be the "rank" of the verb (u"n).  The word "rank" has different meanings when applied to nouns and verbs.
 
-We used (|.n) to create the display of cells.  Cells of different ranks were reversed.
+We used (|."n) to create the display of cells.  Cells of different ranks were reversed, depending on the value of (n).
 )
 
 NB. =========================================================
@@ -467,7 +483,7 @@ The execution of a verb automatically implies execution on multiple cells, depen
 
 In the example shown, the verb (|.) is executed 3 times, with a frame of (3).  Each result is a list [of 4 characters], so the overall result is a list of lists, with shape (3 4).
 
-The verb (+/) takes the total of the items of its argument.  What verb would add up the items in each row of an array?  What shape would the result have if it were applied to the array (d) shown below?
+The verb (+/) takes the total of the items of its argument.  What verb would add up the items in each row of an array?  What would be the shape of the result if (+/) were applied to the array (d) shown below?
 )
 dl =: 2 dissect '3 1 3 |."0 1 c'
 ]d =: i. 4 5
@@ -612,7 +628,9 @@ So, the result will be a list of boxes, one for each line of the CSV file; each 
 NB. =========================================================
 Lab Section Design cont'd: quotes
 Reading the details at
+
 http://en.wikipedia.org/wiki/Comma-separated_values
+
 reveals that double-quote ["] characters are used to enclose fields that contain special characters, and that the special characters are " itself, comma, and LF [linefeed or end-of-line].
 
 Since LF may appear in a quoted field, we must not start the program by splitting the data at each LF character.  Rather, at each stage of processing we need to treat a special character as special only if it is preceded by an odd number of " characters.
@@ -631,11 +649,13 @@ splitcsv 1!:1 < jpath '~addons\labs\labs\core\example.csv'
 
 NB. =========================================================
 Lab Section Split into lines
-(;._2) is a partitioning modifier.  It is applied to a verb to its left.  The whole compound is then (u;._2) where (u) is any verb you like.  (u) will be applied on selected portions of the right argument.  Each such selected portion is called a partition.
+(;._2) is a "partitioning modifier".  It is applied to a verb to its left to produce a "compound".  The whole compound - (u;._2) where (u) is any verb you like - is a new verb.  When the compound is executed, (u) will be applied on selected portions of the right argument to the compound.  Each such selected portion is called a "partition".
 
 Here, the verb is (<) which means each partition will be put into a box.
 
-The verb (<;._2) is executed here with a left and a right argument.  The left argument has a 1 in the position of each unquoted LF character; the right argument is the file data; the result is to box each line.
+The compound verb (<;._2) is executed here with a left and a right argument.  The left argument has a 1 in the position of each unquoted LF character; the right argument is the file data; the result is to box each line.
+
+The partitions will be those portions of the right argument that end at each 1 in the left argument, but not including the value corresponding to the 1.  [This is the definition of the partitioning modifier (;._2)].
 
 Let's see how that mask of LF positions was calculated.
 )
@@ -644,7 +664,7 @@ NB. =========================================================
 Lab Section Find parity of " characters
 ('"' = y) creates a 1 for each LF and a 0 for each non-LF.
 
-(~:/\) is another partitioning modifier: (u\ y) executes (u) on prefixes of y of increasing length: first on just the first item of y, then on the first 2 items, then the first 3, and so on, collecting the results from the prefixes together into its final result.
+(+/\) is another partitioning modifier: (u\ y) executes (u) on "prefixes" of y of increasing length: first on just the first item of y, then on the first 2 items, then the first 3, and so on, collecting the results from the prefixes together into its final result.
 
 Here the (u) is (+/), which adds up the items of its argument.
 
@@ -653,8 +673,6 @@ Thus, (+/\ y) computes, for each item of (y), the total number of " characters u
 (x | y) takes the remainder of dividing (y) by (x); (2 | y) produces 1 if (y) is odd, 0 if (y) is even.
 
 (|.!.0 y) shifts (y) one position to the right, bringing in a 0 to the vacated position.  So the result is 1 if an item of (y) is preceded by an odd number of 1s.
-
-[Note: experienced J programmers would use (~:/\) rather than (2 | +/\)] 
 )
 debugstep''
 
@@ -678,7 +696,7 @@ Now each line has been put into its own box.  All that remains is to process eac
 
 The verb (splitline) will do that for one line.  To apply (splitline) to the contents of each boxed line, we use the (each) modifier.  (each) is an adverb, which means that it applies to the verb to its left.  (splitline each y) will open each atom of (y), apply (splitline) to the contents, and then put the result into a box.  In other words, (splitline each y) applies (splitline) inside each box of (y).
 
-We will follow splitline through one execution. 
+We will follow (splitline) through one execution. 
 )
 debugstep''
 
@@ -697,7 +715,7 @@ Any field that begins with a " character should have the outer " characters remo
 
 Again we use (each) to operate inside the boxes for the fields.
 
-The sequence (u^:v y), where (u) and (v) are verbs, is the Dynamic If sequence.  It means 'apply (u) IF (v) produces 1, but not if (v) produces 0'.  So, if (v) produces 0, the result of (u^:v y) is (y), while if (v) produces 1, the result is (u y).
+The sequence (u^:v y), where (u) and (v) are verbs, is the "Dynamic If" sequence.  It means 'apply (u) IF (v) produces 1, but not if (v) produces 0'.  So, if (v) produces 0, the result of (u^:v y) is (y), while if (v) produces 1, the result is (u y).
 
 In other words, the result is (y) but with (u) applied to it if (v) produced TRUE.
 
@@ -728,7 +746,7 @@ NB. y is text, x is a delimiter string
 NB. Result is a Boolean list, one per character of y, with
 NB. 1 in the places where the delimiter is found, but
 NB. only places that are preceded by an even number of " characters
-udlp =: E. (*. -.) |.!.0@(~:/\)@('"'&=)@]
+udlp =: E. > |.!.0@(~:/\)@('"' = ])
 
 NB. Execute verb u on sections delimited by unescaped x, adding x
 NB. if it's not at the end
@@ -838,7 +856,7 @@ Execution thus starts with the line after the (do.). Since that line executes (p
 
 NB. =========================================================
 Lab Section placeship - unpack y argument
-The syntax of J demands that every verb has 1 or 2 arguments, but we all know programs may need lots of parameters.
+The syntax of J demands that every verb have 1 or 2 arguments, but we all know programs may need lots of parameters.
 
 When a verb needs more arguments, you simply pack them into a list before calling the verb, and have the verb unpack them first thing.
 
@@ -1037,15 +1055,15 @@ NB. =========================================================
 Lab Section Read the CSV file
 First we read the file, and then use the splitcsv program we wrote earlier to parse it.
 
-(1!:1) is a verb, in fact a verb to read a file.  (!:) is a conjunction, meaning it takes two operands, which can be nouns or verbs, on its left and right, and produces any part of speech.
+(1!:1) is a verb, in fact a verb to read a file.  (!:) is a "conjunction", meaning it takes two operands, which can be nouns or verbs, on its left and right, and produces any part of speech.
 
 This is different from a verb which takes one or two arguments which must be nouns, and produces a result that must be a noun.
 
 We have seen conjunctions before, for example in (<;._2) where the conjunction was (;.) and the operands were (<) and (_2), and the result (<;._2) was a verb that chopped up its (y) argument and put the pieces in boxes.
 
-The result of executing the conjunction [(;.) above] is usually a verb.  This result [(<;._2) above] is called the derived verb.  The derived verb will itself be executed when it is presented with arguments.
+The result of executing the conjunction [(;.) above] is usually a verb.  This result [(<;._2) above] is a compound, also called the "derived verb".  The derived verb will itself be executed when it is presented with arguments.
 
-The description of the conjunction in NuVoc is mainly a description of the derived verb.
+The description of a conjunction in NuVoc is mainly a description of the derived verb it produces.
 
 
 The (!:) conjunction gives access to a grab-bag of useful features that are not important enough to get their own ASCII primitive.  Many of them perform actions that are considered outside the J language, such as operating-system requests, DLL calls, and file I/O.  Such actions are called "foreign".
@@ -1150,13 +1168,13 @@ debugstep''
 
 NB. =========================================================
 Lab Section FNS: index of lower value
-We save the integer parts of the int.frac values as the indexes to the lower blended values
+We save the integer parts of the int.frac values as the indexes to the lower blended values.
 )
 debugstep''
 
 NB. =========================================================
 Lab Section FNS: weights of upper,lower values
-The weight for the upper value is the fractional part of the int.frac form, which we extract be subtracting away the integer part.
+The weight for the upper value is the fractional part of the int.frac form, which we extract by subtracting away the integer part.
 
 Each number thus produced needs to be converted into a list of two numbers: (frac) needs to turn into (frac , 1-frac).
 
@@ -1188,6 +1206,8 @@ debugstep''
 
 NB. =========================================================
 Lab Section Append headers and non-data columns
+If the dissect display doesn't fit on your screen, you can move it around by clicking and holding in any empty spot, and dragging the contents around.
+
 At this point (fns) is a list of boxes, each containing a five-number summary (unless there were no numbers to begin with, in which case the contents are empty.
 
 First we want to convert this to a table of boxed strings, one for each number.  This means we want to remove the boxing around each box of (fns), and then, for each number, convert it to characters and box it so that the different-length numbers are not coerced into the same array.

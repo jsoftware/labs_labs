@@ -38,10 +38,18 @@ NB. Routines that a lab can use:
 NB. opendebscript - apply markup and load script, stops, etc.
 NB.   y is the script with markup
 NB. debugstep'' - run stepover in the debugger
+NB. debugrun'' - run the debugger till next stop/completion
 NB. debugstop'' - clear the debugger
+NB. debugrunstop'' - run to next stop/completion, then clear the debugger
 NB. debugchangestops - enable/disable stops.  y is the class(es) from stop markup commands,
 NB.   either a string or a (list of) boxed strings
 NB.   x is 0 to clear stops, 1 to set stops, 2 to toggle stops
+
+NB. To see what options have been set for lines of the file, type
+NB. DISSECTOPTIONS_jdebug_
+NB. to see table of options;verbname;locale;valence;line#s
+NB. or STOPS_jdebug_
+NB. to see table of name;0;0;(monadic stop lines);(dyadic stop lines)
 
 NB. Process script y into an edit tab
 NB. y is a script, in markup form (dissect/debug lines start with NB.~

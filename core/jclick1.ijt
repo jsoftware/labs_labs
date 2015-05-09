@@ -19,7 +19,7 @@ Type the string
 
 into the last line of this window and press ENTER.  The result will be typed below your input.
 
-To advance to the next section, come back to this term window and press ctrl+J.
+To advance to the next section, press ctrl+J.
 
 NOTE: In this lab, parentheses are used to indicate J code.
 )
@@ -109,18 +109,17 @@ PREPARE
 jdb_open_jdebug_ ''
 PREPARE
 NB. =========================================================
-Lab Section Dissect window
+Lab Section The debug window at a stop
 We have loaded a script into the edit window, and set a stop in the debugger.  Then we ran a program, which executed until it hit the stop.
 
-Hitting the stop brought up the colorful dissect window.  A single sentence in J can do an enormous amount of computation, so much that you need to see it all laid out at once to understand it.
+Look again at the debug window.  It has come to life.  It has three panes now.
 
-The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
+The top pane shows the lines of the definition that is running.  The > shows the next line to be executed.  The * shows that there is a stop on that line.
 
-You should now size and arrange your windows into comfortable positions.  The dissect window will vary in size depending on the sentence.
+The middle pane shows the "call stack": the programs that were called on the way to the line being debugged.  In this case, most of them are in the Labs Manager.
 
-You can dissect your own sentences too.  Normally you will do this by clicking on the line [in either the term or edit window] and pressing the function key that has been assigned the Dissect Line function.
+The bottom pane shows the values of names that will be referred to in the sentence.
 
-Or, you can press the Dissect Last Error function key to dissect the last failing sentence, without having to click on it.
 )
 PREPARE
 smoutput@>^:(*@#) fkeystatus
@@ -151,16 +150,18 @@ PREPARE
 findshortestname 'Jeb';'Hillary';'George';'Bill'
 
 NB. =========================================================
-Lab Section The debug window at a stop
-Look again at the debug window.  It has come to life.  It has three panes now.
+Lab Section Dissect window
+Hitting the stop also brought up the colorful dissect window.  A single sentence in J can do an enormous amount of computation, so much that you need to see it all laid out at once to understand it.
 
-The top pane shows the lines of the definition that is running.  The > shows the next line to be executed.  The * shows that there is a stop on that line.
+The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
 
-The middle pane shows the "call stack": the programs that were called on the way to the line being debugged.  In this case, most of them are in the Labs Manager.
+You should now size and arrange your windows into comfortable positions.  The dissect window will vary in size depending on the sentence.
 
-The bottom pane shows the values of names that will be referred to in the sentence.
+You can dissect your own sentences too.  Normally you will do this by clicking on the line [in either the term or edit window] and pressing the function key that has been assigned the Dissect Line function.
 
-The dissect window shows you what will happen when the sentence is executed.
+Or, you can press the Dissect Last Error function key to dissect the last failing sentence, without having to click on it.
+
+When the dissect window is automatically triggered at a stop, it shows you what will happen when the sentence is executed.  [The debugger has to have been put into Autodissect mode, which we have done for you in this lab.]
 )
 
 NB. =========================================================
@@ -174,13 +175,13 @@ In the display of the executing sentence, the top of each block shows what is ex
 Click around in the dissect window to see what you can bring up in your browser.
 
 You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
+
+The sequence (NB.) starts a comment.  The (NB.) and everything following it on the same line are documentation and ignored during execution.
 )
-debugrunstop''
 
 NB. =========================================================
 Lab Section A true story
-Why learn J?
-A man goes to a tailor for a suit. The tailor takes his measurements and says “OK, come back in a week, I'll have the suit ready.” 
+A man goes to a tailor for a suit. The tailor takes his measurements and says "OK, come back in a week, I'll have the suit ready." 
 
 In a week the man returns to the tailor shop. "Here’s your suit," says the tailor. 
 
@@ -188,7 +189,7 @@ In a week the man returns to the tailor shop. "Here’s your suit," says the tailo
 
 He complains to the tailor, "This suit is terrible! Look at this! The jacket sleeves are so long they’re flopping! But the shoulders are so narrow I can’t even breathe! The pants legs are baggy! But at the same time, the pants squeeze my hips!..."
 
-"Wait a minute," says the tailor, interrupting him. "There's nothing wrong with the suit, you just have to wear it right".  And the tailor shows him how to hold in his sleeves, hunch up his shoulders, tuck in the baggy pants with one hand, all at the same time, to "make it fit".
+"Wait a minute," says the tailor, interrupting him. "There's nothing wrong with the suit, you just have to wear it right".  And the tailor shows him how to hold in his sleeves, hunch up his shoulders, tuck in the baggy pants with one hand, all at the same time.
 
 A few minutes later the man emerges from the shop onto the street. He’s hobbling down the sidewalk, trying to walk while still holding his sleeve, hunching his shoulders, tucking the pants, etc, etc. 
 
@@ -198,22 +199,24 @@ Two old ladies waiting for a bus across the street notice him as he struggles al
 
 "Sad," says her companion.  "But doesn’t his suit fit him nice!"
 )
+debugrunstop''
+
 NB. =========================================================
 Lab Section Why learn J?
 You need a new suit.
 
-You wanted to use a computer to solve problems.  They taught you a "computer language", but it wasn't a way for you to describe your problem to a computer - it was a way for you to control a computer down at the lowest level, perhaps gingered up a bit by the latest buzzword such as "object-oriented programming".
+You wanted to use a computer to solve problems.  They taught you a "computer language", but it wasn't a way for you to describe your problem to a computer - it was a way for you to control a computer down at its lowest level, perhaps gingered up a bit by the latest buzzword such as "object-oriented programming".
 
-Then you spent years learning how to take problems and tear them apart and reimagine from the point of view of a machine that only knows how to add, fetch, and store.  Even if you perfectly well knew what you wanted to do, it was a challenge to tell the computer how to do it.
+Then you spent years learning how to take problems, tear them apart, and reimagine from the point of view of a machine that only knows how to add, fetch, and store.  Even if you perfectly well knew what you wanted to do, it was a challenge to tell the computer how to do it.
 
-And the saddest thing of all is, now you think these languages "fit you nice."  No.  You fit them.  You've twisted yourself so small we could pack you into a 32-bit integer.  You've spent so much effort denaturing your thought processes into loops and array indexes that you've lost sight of what you were trying to do: describe computation.
+And the saddest thing of all is, now you think these languages "fit you nice."  No.  You fit them.  You've twisted yourself so tight we could pack you into a 32-bit integer.  You've spent so much effort denaturing your thought processes into loops and array indexes that you've lost sight of what you were trying to do: describe computation.
 
-It's time for you to straighten up!  Learn a language that describes what you want to do, not the bit-by-bit details of how to do it.  J.
+It's time for you to stand up straight!  Learn a language that describes what you want to do, not the bit-by-bit details of how to do it.  J.
 
 
-Ken Iverson put it this way: In J, when you want to move the army from Piladelphia to New York, you say just that: move the army from Philadelphia to New York.  In a scalar language, you say, Go to every soldier, and move that soldier to New York.
+Ken Iverson put it this way: In J, when you want to move the army from Philadelphia to New York, you say just that: move the army from Philadelphia to New York.  In a scalar language, you say, Go to every soldier, and move that soldier to New York.
 
-If you want to move the army from Philadelphia to New York, and put the two leading divisions in the rear for rest, in J you just say that (it takes 5 characters).  In a scalar language you have to haul out loops, counters, and indexes - all for such a simple thing!
+If you want to move the army from Philadelphia to New York, and put the two leading divisions in the rear for rest, in J you just say that (it takes 5 characters).  In a scalar language you have to haul out loops, counters, and indexes - all for such a simple task!
 )
 
 NB. =========================================================
@@ -222,7 +225,7 @@ When you're learning J, you pick it up little by little.  You add a primitive, s
 
 Eventually, when you become an expert, you can put your new knowledge and your new mindset together to produce extremely concise programs.
 
-Just so you can see what you have to look forward to, this lab will show you the complete expert versions of the programs we write.  You may analyze them if you like, but that's up to you.  Our reason for including them is to keep you interested in learning J.
+Just so you can see what you have to look forward to, this lab will show you the complete expert versions of the programs we write.  Some of them are very short.  You may analyze them if you like, but that's up to you.  Our reason for including them is to keep you interested in learning J.
 
 Yes, that one line is the whole program!
 )

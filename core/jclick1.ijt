@@ -127,7 +127,7 @@ opendebscript 0 : 0
 NB. Find shortest name
 NB. y is a list of boxes, each containing a string
 NB. Result is (unboxed ) shortest string
-findshortestname =: verb define
+findshortestname =: monad define
 NB.~stop 1
 NB.~title 3	Find Shortest Name
 NB. get length of each string
@@ -216,7 +216,7 @@ It's time for you to stand up straight!  Learn a language that describes what yo
 
 Ken Iverson put it this way: In J, when you want to move the army from Philadelphia to New York, you say just that: move the army from Philadelphia to New York.  In a scalar language, you say, Go to every soldier, and move that soldier to New York.
 
-If you want to move the army from Philadelphia to New York, and put the two leading divisions in the rear for rest, in J you just say that (it takes 5 characters).  In a scalar language you have to haul out loops, counters, and indexes - all for such a simple task!
+If you want to move the army from Philadelphia to New York, and put the two leading divisions in the rear for rest, in J you say that (it takes 5 characters).  In a scalar language you have to haul out loops, counters, and indexes.  There's a better way!
 )
 
 NB. =========================================================
@@ -261,7 +261,7 @@ NB. Result is a list:
 NB. (#bytes),(#words),(#lines)
 NB. where a word is defined as a non-whitespace preceded
 NB.  by a whitespace
-wc =: verb define
+wc =: monad define
 NB.~stop 1
 NB.~title 3	Word Count
 NB. Box the filename and Read the file
@@ -390,14 +390,115 @@ wc =: (# , +/@:=&LF ,~ +/@(}: > }.)@(1 , e.&WS) )@:(1!:1)@<
 
 wc jpath '~addons/labs/labs/core/lorem.txt'
 
+NB. =========================================================
+Lab Chapter Random Composition
+NB. =========================================================
+Lab Section The problem
+The problem is to choose an ordered set of N positive integers such that the integers sum to the value S.  Such an ordered set is called a "composition" of S, and we want our verb to choose randomly from the possible compositions of S such that any composition is equally likely to be chosen.
+
+Write the program to select such a random composition.
+
+Are you thinking about loops and indices ALREADY!?  No, no - let's focus on the problem, not the machine.  We can pick random numbers, but how do we ensure they add up to S?
+
+One way would be to ensure that they correspond to nonoverlapping subintervals that cover the interval 0 to S.  The lengths of such a set of subintervals would necessarily add to S.
+
+Yes, that's the way.  Suppose N=10 and S=50.  We start with the points 0 and 50, and then choose 9 other points at random in the interval 1 to 49, making sure no value is repeated.  These 11 points define 10 intervals, and the lengths of these intervals are the composition we desire.
+
+Now we'll write the program.  Think about it before going on; perhaps sketch out a design in the language of your choice.
+)
+
+NB. =========================================================
+Lab Section Solution
+The J solution is in the edit window.
+)
+PREPARE
+opendebscript 0 : 0
+NB. Return random composition (ordered list of positive
+NB. integers adding to a desired total)
+NB. x is the number of integers to pick
+NB. y is the total they must add up to
+randomcomposition =: dyad define
+NB.~stop 1
+NB.~title 3	Random Composition
+NB.~title1 0	Choose random points
+NB.~link0 0	Compositions	http://en.wikipedia.org/wiki/Composition_(combinatorics)
+NB.~check shape
+NB. Choose x-1 random values from 0 to y-2, without repeats
+randoms =. ? (x-1) $ y-1
+NB. Sort the list
+NB.~title1 0	Sort the points
+NB.~check all
+randoms =. /:~ randoms
+NB.~title1 0	Calculate interval lengths
+NB. Find the lengths of the intervals given the random points
+NB. and the starting point _1 and the ending point y-1.
+NB. This is the result
+(randoms,y-1) - (_1 , randoms)
+))
+)
+PREPARE
+
+NB. =========================================================
+Lab Section Choose random values
+We will step through the execution of the program.
+
+The verb (randomcomposition) is defined as a "dyad", meaning it expects two operands.  When we execute it here, with the sentence
+
+5 randomcomposition 10
+
+the two operands are the nouns to its left and right.  The nouns are assigned to argument-names before (randomcomposition) runs: (5) is assigned to the name (x) and (10) to the name (y).
+
+The first line uses the verb (x ? y) which selects (x) random integers in the range (0) to (y-1), with no duplicates.
+
+[Note: the dissected version of the sentence is a preview of the execution of the line by the debugger.  The random values will be different between the two versions.]
+)
+5 randomcomposition 10
+
+NB. =========================================================
+Lab Section Sort the values
+The verb (/:~ y) sorts (y) into ascending order.
+
+Fast.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Calculate interval lengths, return result
+We have 9 random numbers between 0 and (y-2).  If we bracket these values with the fixed values (_1) and (y-1), we will have defined the desired set of nonoverlapping subintervals spanning the range (_1) to (y-1), which is a total length of (y).
+
+[Note that the negative sign for numbers in J is the underscore.]
+
+Then the starting values of the intervals will be (_1) followed by the random values, and the ending values will be the random values followed by (y-1).
+
+We form the lists of ending points and starting points and take the difference.  That produces the desired result.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section completion
+The verb produces its final result, a list.
+)
+debugrunstop''
+
+NB. =========================================================
+Lab Section Expert version
+In advanced J, the program can be written in a single line.
+)
+NB. Return random composition (ordered list of positive
+NB. integers adding to a desired total)
+NB. x is the number of integers to pick
+NB. y is the total they must add up to
+randomcomposition =: (/:~@:? (, - _1&,@[) ])&<:
+
+5 randomcomposition 10
 
 NB. =========================================================
 Lab Chapter Where are the loops?
 NB. =========================================================
 Lab Section The Zen of J
-The J program to count words and characters is very different from a corresponding program in a scalar language.  The J programmer thinks about the problem as a whole, rather than immediately considering individual characters, counters, and loops.
+The J programs we wrote above were very different from the corresponding programs in a scalar language.  The J programmer thinks about the problem as a whole, rather than immediately considering individual characters, counters, and loops.
 
-For example, to find the places where words start, we didn't say, "look at every position and see if there is whitespace before and non-whitespace after."  Instead, we said, "create a value for each character that indicates whitespace; create another that indicates following whitespace; words start where the first is 1 and the second is 0."
+For example, when counting words, to find the places where words start we didn't say, "look at every position and see if there is whitespace before and non-whitespace after."  Instead, we said, "create a value for each character that indicates whitespace; create another that indicates following whitespace; words start where the first is 1 and the second is 0."
 
 Both of those approaches imply loops, but the first is more customized than the second.  The first approach is a loop over the concept of "position" which requires a specific computation at each position, and it really requires a loop index to keep the computation straight.
 
@@ -432,7 +533,7 @@ As the processing flows from top to bottom you can see the action of the differe
 )
 PREPARE
 opendebscript 0 : 0
-cells =: verb define
+cells =: monad define
 NB.~stop 1
 NB.~title 3	3-, 2-, 1-, and 0-cells
 |."0 |."1 |."2 |."3 y
@@ -499,7 +600,7 @@ Every J primitive has an "implicit rank" - the rank that is used if the verb is 
 
 When a verb is applied to a noun whose rank exceeds the implicit rank, the verb is automatically applied to cells with the implicit rank, and the results are assembled.
 
-A verb can have infinite implicit rank, which means that it always applies to its argument in its entirety.  Verbs created by (verb define) have infinite rank.
+A verb can have infinite implicit rank, which means that it always applies to its argument in its entirety.  Verbs created by (define) have infinite rank.
 
 In general, a verb is responsible for handling any argument whose rank is less than or equal to the implicit rank.  Thus, the (%.) verb, which operates on tables [as matrices], has implicit rank 2 and is defined to operate on lists too.  The arithmetic verbs such as (+) have rank 0, i. e. they operate on atoms, and their application to larger arrays is entirely through the rank mechanism discussed above.
 
@@ -519,7 +620,7 @@ What should its rank be?  The key is that it operates on a list of numbers.  Tha
 
 The verb is shown.  See in the edit window that we defined the verb with
 
-stats =: verb define"1
+stats =: monad define"1
 
 to indicate that the verb works on lists.
 
@@ -531,7 +632,7 @@ PREPARE
 destroy__dl''
 opendebscript 0 : 0
 NB. Create count, mean, and sample standard deviation for a list
-stats =: verb define"1
+stats =: monad define"1
 NB.~stop stats
 NB.~title 3	Stats
 NB. Get number of observations
@@ -803,7 +904,7 @@ NB. Random Battleship Board
 NB. y is a table, where each row is (ship length),(ship id)
 NB. Result is 10x10 board where each cell contains the id of a ship, or 0 if the cell is empty.
 NB. We deal random boards until we get one with no overlapping ships
-battleshipstart =: verb define
+battleshipstart =: monad define
 NB.~stop battleship
 NB.~title 3	Random Battleship Board
 NB.~title1 0	Test for valid board
@@ -953,7 +1054,7 @@ NB.    Five Figure Summary
 NB.    Empty values are ignored
 NB. Result is comma-delimited string, suitable for writing
 NB.  to a CSV file; or empty string, if there was an error
-fivenumbercsv =: verb define
+fivenumbercsv =: monad define
 NB.~stop fivenum
 NB.~title 3	Five Number Summary of CSV File
 NB.~title1 0	Read and convert the file
@@ -1001,7 +1102,7 @@ NB. Convert each row to CSV, append LF, run lines together
 NB. y is a string
 NB. result s the same string, but any " characters are doubled,
 NB. and if the string contains , or " it is enclosed in "
-addquote =: verb define
+addquote =: monad define
 NB.~stop addquote
 NB.~title 3	Convert field to CSV format
 NB.~title1 0	Escape embedded quotes
@@ -1022,7 +1123,7 @@ escquotes
 NB. y is a list of numbers
 NB. Result is Five Number Summary (a list of 5 numbers)
 NB. but if there are no numbers in y, return empty numeric list
-fivenumbersumm =: verb define
+fivenumbersumm =: monad define
 NB.~stop fivenumsumm
 NB.~title 3	Five Number Summary
 NB.~title1 0	Check for empty input

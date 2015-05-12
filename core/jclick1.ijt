@@ -122,7 +122,6 @@ The bottom pane shows the values of names that will be referred to in the senten
 
 )
 PREPARE
-smoutput@>^:(*@#) fkeystatus
 opendebscript 0 : 0
 NB. Find shortest name
 NB. y is a list of boxes, each containing a string
@@ -155,6 +154,8 @@ Hitting the stop also brought up the colorful dissect window.  A single sentence
 
 The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
 
+Take a minute to hover over different blocks, and to click them.
+
 You should now size and arrange your windows into comfortable positions.  The dissect window will vary in size depending on the sentence.
 
 You can dissect your own sentences too.  Normally you will do this by clicking on the line [in either the term or edit window] and pressing the function key that has been assigned the Dissect Line function.
@@ -163,6 +164,9 @@ Or, you can press the Dissect Last Error function key to dissect the last failin
 
 When the dissect window is automatically triggered at a stop, it shows you what will happen when the sentence is executed.  [The debugger has to have been put into Autodissect mode, which we have done for you in this lab.]
 )
+PREPARE
+smoutput@>^:(*@#) fkeystatus
+PREPARE
 
 NB. =========================================================
 Lab Section Your browser
@@ -297,6 +301,21 @@ PREPARE
 wc jpath '~addons/labs/labs/core/lorem.txt'
 
 NB. =========================================================
+Lab Section Monads and dyads
+Before we examine (wc) we need to handle one important bit of terminology.
+
+In J, as in most languages, a primitive verb such as (*) or (-) has two different meanings depending on whether it is applied "monadically" [with only one noun argument, which is to its right] or "dyadically" [with two arguments, one to its left and the other to its right].
+
+J is unusual in that this treatment is precisely the same for user-defined named verbs.
+
+It makes no sense, then, to discuss 'the verb (*)' without indicating whether we are talking about the monadic or dyadic use.
+
+Rather than say 'the verb (*) when used monadically' we will use the more compact form '(* y)'.  We will use '(x * y)' to denote the dyadic form.
+
+In this notation we are simply generalizing normal J usage.  Within any user-defined verb the right argument is referred to as (y) and the left, if any, as (x).  Our (x * y) notation uses the same names for the arguments to primitives.
+)
+
+NB. =========================================================
 Lab Section Invoking wc
 The program was started by executing the sentence
 
@@ -306,12 +325,12 @@ In this sentence, the quoted string is a noun and the names (wc) and (jpath) are
 
 All J sentences are executed right-to-left.  A verb is executed by giving its name followed by a noun on its right.  The noun becomes an argument to the verb - and if there is a noun to the verb's left, that noun becomes a second argument to the verb.  [A verb always takes one or two arguments.]
 
-In this case, (jpath) does not have a noun to its left, so it is executed with the string as its sole argument.  The result from (jpath) then becomes the sole argument of (wc) which is executed next.
+In this case, (jpath) does not have a noun to its left, so it is executed with the string as its sole argument.  The result from (jpath y) then becomes the sole argument of (wc y) which is executed next.
 )
 
 NB. =========================================================
 Lab Section Read the file
-Executing wc means reading the sentences of its definition one by one and executing them.
+Executing (wc) means reading the sentences of its definition one by one and executing them.
 
 Before execution starts, the value of the noun that appeared to the right of (wc) is assigned to the name (y).  If there had been a noun to the left of (wc), its value would also have been assigned to the name (x).
 
@@ -321,9 +340,9 @@ In the first line, the contents of the file are read and assigned to the name (f
 
 (=.) performs assignment to a private name, i. e. a name used only inside the verb.
 
-(1!:1) is a verb that reads a file.  It requires that the filename be boxed.
+(1!:1 y) is a verb that reads a file.  It requires that the filename be boxed.
 
-(<) is a verb that puts its argument into a box.
+(< y) is a verb that puts its argument into a box.
 
 When the line finishes, (filedata) is a noun that contains a one-dimensional array of characters.
 
@@ -332,7 +351,7 @@ A one-dimensional array is called a "list".  (filedata) is a list of characters.
 
 NB. =========================================================
 Lab Section Count bytes
-(#) is a verb that tells how many items are in its argument.
+(# y) is a verb that tells how many items are in its argument.
 )
 debugstep''
 
@@ -342,7 +361,7 @@ Every line ends with a linefeed [LF character], so the number of lines is the nu
 
 The J way to find this is to compare each character of filedata against LF: this produces a Boolean value, 0 or 1, for each character; then add up the numbers to see how many 1s there were.
 
-(+/) is a verb that adds all the items of its argument.
+(+/ y) is a verb that adds all the items of its argument.
 
 Note that the Boolean value for a true comparison is the number 1; false is 0.  The results of comparisons can be added and multiplied just like any other number.
 
@@ -400,7 +419,7 @@ Write the program to select such a random composition.
 
 Are you thinking about loops and indices ALREADY!?  No, no - let's focus on the problem, not the machine.  We can pick random numbers, but how do we ensure they add up to S?
 
-One way would be to ensure that they correspond to nonoverlapping subintervals that cover the interval 0 to S.  The lengths of such a set of subintervals would necessarily add to S.
+One way would be to have them correspond to nonoverlapping subintervals that cover the interval 0 to S.  The lengths of such a set of subintervals would necessarily add to S.
 
 Yes, that's the way.  Suppose N=10 and S=50.  We start with the points 0 and 50, and then choose 9 other points at random in the interval 1 to 49, making sure no value is repeated.  These 11 points define 10 intervals, and the lengths of these intervals are the composition we desire.
 
@@ -410,6 +429,8 @@ Now we'll write the program.  Think about it before going on; perhaps sketch out
 NB. =========================================================
 Lab Section Solution
 The J solution is in the edit window.
+
+The program performs the steps we outlined.  The only change is that it is more convenient to select the random numbers in the range 0 to S-2 rather than 1 to S-1.
 )
 PREPARE
 opendebscript 0 : 0
@@ -457,8 +478,6 @@ The first line uses the verb (x ? y) which selects (x) random integers in the ra
 NB. =========================================================
 Lab Section Sort the values
 The verb (/:~ y) sorts (y) into ascending order.
-
-Fast.
 )
 debugstep''
 
@@ -558,7 +577,7 @@ You can control how a verb is executed by specifying the rank of the cells it wi
 
 (n) is said to be the "rank" of the verb (u"n).  The word "rank" has different meanings when applied to nouns and verbs.
 
-We used (|."n) to create the display of cells.  Cells of different ranks were reversed, depending on the value of (n).
+We used (|."n y) to create the display of cells.  Cells of different ranks were reversed, depending on the value of (n).
 )
 
 NB. =========================================================
@@ -585,9 +604,9 @@ Here's the solution.  Click on results to see how result-cells were generated.
 
 The execution of a verb automatically implies execution on multiple cells, depending on the rank of the verb.  These cells will have been ordered as an array, and the results of the execution are ordered the same way.  This ordering, which is taken from the leading axes of the argument-shape and becomes the leading axes of the result-shape, is called the "frame".
 
-In the example shown, the verb (|.) is executed 3 times, with a frame of (3).  Each result is a list [of 4 characters], so the overall result is a list of lists, with shape (3 4).
+In the example shown, the verb (|. y) is executed 3 times, with a frame of (3).  Each result is a list [of 4 characters], so the overall result is a list of lists, with shape (3 4).
 
-The verb (+/) takes the total of the items of its argument.  What verb would add up the items in each row of an array?  What would be the shape of the result if (+/) were applied to the array (d) shown below?
+The verb (+/ y) takes the total of the items of its argument.  What verb would add up the items in each row of an array?  What would be the shape of the result if (+/) were applied to the array (d) shown below?
 )
 dl =: 2 dissect '3 1 3 |."0 1 c'
 ]d =: i. 4 5
@@ -602,9 +621,9 @@ When a verb is applied to a noun whose rank exceeds the implicit rank, the verb 
 
 A verb can have infinite implicit rank, which means that it always applies to its argument in its entirety.  Verbs created by (define) have infinite rank.
 
-In general, a verb is responsible for handling any argument whose rank is less than or equal to the implicit rank.  Thus, the (%.) verb, which operates on tables [as matrices], has implicit rank 2 and is defined to operate on lists too.  The arithmetic verbs such as (+) have rank 0, i. e. they operate on atoms, and their application to larger arrays is entirely through the rank mechanism discussed above.
+In general, a verb is responsible for handling any argument whose rank is less than or equal to the implicit rank.  Thus, the (%. y) verb, which operates on tables [as matrices], has implicit rank 2 and is defined to operate on lists too.  The arithmetic verbs such as (+) have rank 0, i. e. they operate on atoms, and their application to larger arrays is entirely through the rank mechanism discussed above.
 
-Verbs that operate on an entire array, such as ($) which gives its shape or (|.) which reverses the order of items, have infinite rank.
+Verbs that operate on an entire array, such as ($ y) which gives its shape or (|. y) which reverses the order of items, have infinite rank.
 )
 destroy__dl''
 dl =: 2 dissect '+/"1 d'
@@ -755,9 +774,9 @@ NB. =========================================================
 Lab Section Split into lines
 (;._2) is a "partitioning modifier".  It is applied to a verb to its left to produce a "compound".  The whole compound - (u;._2) where (u) is any verb you like - is a new verb.  When the compound is executed, (u) will be applied on selected portions of the right argument to the compound.  Each such selected portion is called a "partition".
 
-Here, the verb is (<) which means each partition will be put into a box.
+Here, the verb is (< y) which means each partition will be put into a box.
 
-The compound verb (<;._2) is executed here with a left and a right argument.  The left argument has a 1 in the position of each unquoted LF character; the right argument is the file data; the result is to box each line.
+The compound verb (x <;._2 y) is executed here with a left and a right argument.  The left argument has a 1 in the position of each unquoted LF character; the right argument is the file data; the result is to box each line.
 
 The partitions will be those portions of the right argument that end at each 1 in the left argument, but not including the value corresponding to the 1.  [This is the definition of the partitioning modifier (;._2)].
 
@@ -768,7 +787,7 @@ NB. =========================================================
 Lab Section Find parity of " characters
 ('"' = y) creates a 1 for each LF and a 0 for each non-LF.
 
-(+/\) is another partitioning modifier: (u\ y) executes (u) on "prefixes" of y of increasing length: first on just the first item of y, then on the first 2 items, then the first 3, and so on, collecting the results from the prefixes together into its final result.
+(\) is another partitioning modifier: (u\ y) executes (u) on "prefixes" of y of increasing length: first on just the first item of y, then on the first 2 items, then the first 3, and so on, collecting the results from the prefixes together into its final result.
 
 Here the (u) is (+/), which adds up the items of its argument.
 
@@ -974,15 +993,15 @@ This line places one ship.
 
 First, we use ($) to create the ship, a horizontal array with the correct length and value.
 
-Then (,:) converts the list into a one-row table.
+Then (,: y) converts the list into a one-row table.
 
-Then ({.) creates a 10x10 array with the ship in the top-left corner.
+Then (x {. y) creates a 10x10 array with the ship in the top-left corner.
 
-Then we use (?) to create a random position: in the vertical direction, a random value between 0 and 9; in the horizontal direction, a random value between 0 and the maximum starting position, which is 10 - the length of the ship, to keep the ship from falling off the right-hand edge.
+Then we use (? y) to create a random position: in the vertical direction, a random value between 0 and 9; in the horizontal direction, a random value between 0 and the maximum starting position, which is 10 - the length of the ship, to keep the ship from falling off the right-hand edge.
 
-Then we use (|.) to rotate the ship to the random position.  The rotation counts are negative to perform rightward rotation.
+Then we use (x |. y) to rotate the ship to the random position.  The rotation counts are negative to perform rightward rotation.
 
-Finally, we use (|:) to interchange axes, making the placement vertical rather than horizontal.  We random either perform this operation or not, to get a random orientation.
+Finally, we use (|: y) to interchange axes, making the placement vertical rather than horizontal.  We random either perform this operation or not, to get a random orientation.
 
 Note: the dissect display is taken from a different execution of the sentence than the one that produces the result used in the program.  Since there are random numbers involved, the displayed value will be different from the one used in the program.
 )
@@ -1092,11 +1111,13 @@ NB.~datasize 10 20
 NB. Append headers to summaries, and summaries to line labels.
 NB. Convert numbers to string form
 reslines =. (datax {.&> boxedfields) ,. ('Min';'Q1';'Median';'Q3';'Max') , ":each@> fns
-NB.~title1 0	Format result as CSV
+NB.~title1 0	Convert fields to CSV
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
-NB.~link2 0	Fork	http://www.jsoftware.com/jwiki/Vocabulary/fork
-NB. Convert each row to CSV, append LF, run lines together
-; <@(LF _1} ;)"1 (addquote each reslines) , each ','
+NB. Convert each row to CSV
+reslines =. (addquote each reslines) , each ','
+NB.~title1 0	Convert lines to CSV
+NB. Collect fields into rows; replace final comma with LF; run lines together
+; LF _1} each  <@;"1 reslines
 ))
 
 NB. y is a string
@@ -1159,7 +1180,7 @@ NB. =========================================================
 Lab Section Read the CSV file
 First we read the file, and then use the splitcsv program we wrote earlier to parse it.
 
-(1!:1) is a verb, in fact a verb to read a file.  (!:) is a "conjunction", meaning it takes two operands, which can be nouns or verbs, on its left and right, and produces any part of speech.
+(1!:1 y) is a verb, in fact a verb to read a file.  (!:) is a "conjunction", meaning it takes two operands, which can be nouns or verbs, on its left and right, and produces any part of speech.
 
 This is different from a verb which takes one or two arguments which must be nouns, and produces a result that must be a noun.
 
@@ -1332,20 +1353,12 @@ Finally, we join the two tables together using (,.) which appends corresponding 
 debugstep''
 
 NB. =========================================================
-Lab Section Format the result as CSV
+Lab Section Format fields as CSV
 The final result will be a string with commas between fields and LF between lines.
 
 Fields containing special characters will have to be escaped and enclosed in " characters.  We delegate that to the verb (addquote) and we use (each) so that the string is properly formatted inside its own box.
 
 Next we add a comma after each field, converting (123.45) to (123.45,).  This produces all the comma delimiters, plus one extra one at the end of the line.
-
-Then we format each row, using the verb (<@(LF _1} ;)"1).  The ("1) indicates that the verb is to be applied to a 1-cell of the data, i. e. a single row of boxes.
-
-For each row, we perform (LF _1} ;) which uses (;) to run the contents of the boxes into a single string and then (_1}) to replace the last character with (LF).  This removes the extra unwanted comma and replaces it with the needed line-separator.
-
-Since the resulting strings have varying length, we enclose each one in a box.
-
-Finally, we use (;) to run all the lines together into the final result string.
 )
 debugstep''
 
@@ -1353,15 +1366,31 @@ NB. =========================================================
 Lab Section Escape quote characters by doubling them
 Here we follow the execution of (addquote).
 
-First, we have to replace each " character by "" .   We do this be creating a list that contain 2 for each " character and 1 for each non-quote, and using (x # y) to create a string containing (x) copies of each item of (y).
+First, we have to replace each " character by "" .   We do this be creating a list that contains 2 for each " character and 1 for each non-quote, and using (x # y) to create a string containing (x) copies of each item of (y).
 )
 debugstep''
 
 NB. =========================================================
 Lab Section Enclose in quotes if necessary
-We use (e.) to check each special character for inclusion in (y).  We then use (+./) to OR together those results, producing 1 if the field contained a special character.
+We use (x e. y) to check each special character for inclusion in (y).  We then use (+./ y) to OR together those results, producing 1 if the field contained a special character.
 
 If the field did, we enclose it in quotes.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Format lines as CSV
+Back in the main verb, next we format each row.  The first step is to run all the fields for the row together.  We do this with the compound verb (<@;"1 y), which runs (; y) followed by (< y).
+
+(; y) when applied to a boxed array opens the boxes and runs all the contents together into a single array.
+
+(< y) is then immediately applied to that array to enclose it in a box.
+
+This sequence of operations is applied to each row separately, because of the rank ("1) given in (<@;"1).
+
+Now each row is a single string, but it ends with an extra comma and doesn't have a newline character.  We fix this by replacing the last character with (LF).  The verb to do this is (x _1} y) which creates a copy of (y) with the last item [indexed by the (_1)] replaced by (x).  We use (each) to cause this replacement to occur inside each box.
+
+Finally, (; y) runs the boxed lines together to produce the final result, a single character string.
 )
 debugstep''
 

@@ -187,21 +187,21 @@ NB. =========================================================
 Lab Section A true story
 A man goes to a tailor for a suit. The tailor takes his measurements and says "OK, come back in a week, I'll have the suit ready." 
 
-In a week the man returns to the tailor shop. "Here’s your suit," says the tailor. 
+In a week the man returns to the tailor shop. "Here's your suit," says the tailor. 
 
-"Well, I’d like to try it on," says the customer. So he goes into the dressing room.  It’s all but impossible to get into the thing!  Finally, he has it on, comes out, and looks in the mirror.
+"Well, I'd like to try it on," says the customer. So he goes into the dressing room.  It's all but impossible to get into the thing!  Finally, he has it on, comes out, and looks in the mirror.
 
-He complains to the tailor, "This suit is terrible! Look at this! The jacket sleeves are so long they’re flopping! But the shoulders are so narrow I can’t even breathe! The pants legs are baggy! But at the same time, the pants squeeze my hips!..."
+He complains to the tailor, "This suit is terrible! Look at this! The jacket sleeves are so long they're flopping! But the shoulders are so narrow I can't even breathe! The pants legs are baggy! But at the same time, the pants squeeze my hips!..."
 
 "Wait a minute," says the tailor, interrupting him. "There's nothing wrong with the suit, you just have to wear it right".  And the tailor shows him how to hold in his sleeves, hunch up his shoulders, tuck in the baggy pants with one hand, all at the same time.
 
-A few minutes later the man emerges from the shop onto the street. He’s hobbling down the sidewalk, trying to walk while still holding his sleeve, hunching his shoulders, tucking the pants, etc, etc. 
+A few minutes later the man emerges from the shop onto the street. He's hobbling down the sidewalk, trying to walk while still holding his sleeve, hunching his shoulders, tucking the pants, etc, etc. 
 
 Two old ladies waiting for a bus across the street notice him as he struggles along. 
 
 "Dear me!!" says one of the ladies, shaking her head in pity. "Look at that poor crippled man!" 
 
-"Sad," says her companion.  "But doesn’t his suit fit him nice!"
+"Sad," says her companion.  "But doesn't his suit fit him nice!"
 )
 debugrunstop''
 
@@ -808,8 +808,6 @@ Lab Section Find unquoted delimiters
 (x *. y) is Boolean AND.
 
 So this line produces a 1 in the location of every delimiter (x) [LF in this case], except in positions that are preceded by an odd number of " characters.
-
-[Rather than ((-. parity) *. y) we could have used (parity < y).] 
 )
 debugstep''
 

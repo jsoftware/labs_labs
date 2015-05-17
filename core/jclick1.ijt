@@ -150,7 +150,8 @@ findshortestname 'Jeb';'Hillary';'George';'Bill'
 
 NB. =========================================================
 Lab Section Dissect window
-Hitting the stop also brought up the colorful dissect window.  A single sentence in J can do an enormous amount of computation, so much that you need to see it all laid out at once to understand it.
+Hitting the stop also brought up the colorful dissect window.
+A single sentence in J can do an enormous amount of computation, so much that you need to see it all laid out at once to understand it.
 
 The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
 
@@ -946,7 +947,6 @@ NB. y is (length of ship),(id of ship)
 NB. Result is 10x10 array with the ship randomly placed
 placeship =: 3 : 0"1
 NB.~stop place
-NB.~auto 0
 NB.~title 3	Place One Ship
 NB.~title1 0	Split y into components
 NB.~link0 0	Battleship	http://en.wikipedia.org/wiki/Battleship_%28game%29

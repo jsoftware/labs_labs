@@ -16,16 +16,18 @@ NB. Remove CR characters; if file doesn't end with LF, add LF
 if. LF ~: {: csvdata =. y -. CR do.
   csvdata =. csvdata , LF
 end.
-NB. Split file on sections ending with unquoted LF; box each section, discarding the LF
 NB.~title1 0	Split into lines
 NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
 NB.~link2
 NB.~link3
+
+NB. Split file on sections ending with unquoted LF; box each section, discarding the LF
 lines =. (LF udlp csvdata) <;._2 csvdata
-NB. Process each line and return the result
 NB.~title1 0	Split each line
 NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
 NB.~link2 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+
+NB. Process each line and return the result
 splitline each lines
 )
 
@@ -42,9 +44,10 @@ NB.~datasize 10 20
 NB. Get the even-odd parity of " characters including
 NB. current char; shift right 1 to make it parity of preceding
 parity =. (|.!.0) 2 | +/\ '"' = y
-NB. Find delimiters, ignore any that have odd parity
 NB.~title1 0	Find delimiters with even parity
 NB.~link0
+
+NB. Find delimiters, ignore any that have odd parity
 (-. parity) *. x E. y
 )
 
@@ -66,12 +69,14 @@ NB.~title1 0	Split line on unquoted commas
 NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
 NB.~link1 0	Dynamic If	http://www.jsoftware.com/jwiki/Vocabulary/hatco#IfDyad
 NB.~link2 0	Fork	http://www.jsoftware.com/jwiki/Vocabulary/fork
+
 NB. If any field begins with ", delete the first and last characters
 boxedfields =. }.@}:^:('"'={.) each boxedfields
 NB.~title1 0	Remove escaped quotes
 NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
 NB.~link1
 NB.~link2
+
 NB. Remove escaped quotes, which are positions of "" that
 NB. have even parity
 (-. each '""'&udlp each boxedfields) # each boxedfields

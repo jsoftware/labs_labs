@@ -129,19 +129,22 @@ NB. Result is (unboxed ) shortest string
 findshortestname =: monad define
 NB.~stop 1
 NB.~title 3	Find Shortest Name
-NB. get length of each string
 NB.~title1 0	Get lengths
 NB.~link1 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
 NB.~link2 0	Arrays	http://www.jsoftware.com/jwiki/Vocabulary/ArrayProcessing
 NB.~link3 0	Modifiers	http://www.jsoftware.com/jwiki/Vocabulary/Modifiers
+
+NB. get length of each string
 lengths =. #@> y
-NB. Find smallest length, and its index
 NB.~stop
 NB.~title1 0	Get index of smallest length
+
+NB. Find smallest length, and its index
 smallindex =. lengths i. <./ lengths
-NB. Extract that string to give the result
 NB.~title1 0	Select smallest string
 NB.~link1
+
+NB. Extract that string to give the result
 smallindex {:: y
 ))
 ) 
@@ -240,6 +243,71 @@ findshortestname =: {::~   (i. <./)@:(#@>)
 findshortestname 'Jeb';'Hillary';'George';'Bill'
 
 NB. =========================================================
+Lab Chapter The Distinct-Birthday Problem
+NB. =========================================================
+Lab Section The Problem and the program
+In a roomful of n people, what is the probability that two people will share a birthday?  Plot the result for several values of n.
+
+The problem is solved by calculating the complementary probability, the chance that all the birthdays are unique.
+
+For a single person, this probability is 1.  A second person has a 364/365 chance of having a different birthday; a third person a 363/365 chance; and in general for n people, the probability is the product of such fractions.
+
+The program to calculate the probabilities is shown in the edit window.
+)
+PREPARE
+opendebscript 0 : 0
+NB. Distinct Birthdays
+NB. y is the number of people we want to calculate for
+NB. Result is y probabilities, with item i giving the
+NB. probability that i people will have distinct birthdays
+NB. We ignore Feb 29 and assume uniform distribution of birthdays
+birthdayprob =: monad define
+NB.~stop birthday
+NB.~title 3	Probability of distinct birthdays
+NB.~link3 0	Birthday Problem	http://en.wikipedia.org/wiki/Birthday_problem
+NB. Calculate running product of probabilities; this is the result
+-. */\ (365 - i. y) % 365
+))
+) 
+PREPARE
+
+NB. =========================================================
+Lab Section Running the program
+In J, we don't start by thinking about how to build up the result one value at a time.  We think about the whole problem.
+
+The result for n people will depend on the result for [n-1] people, and the probability for the nth person.  If we calculate for each person the probability that they will have a distinct birthday, we can just take the running product of those probabilities to solve the problem.
+
+(y) is the name given to the input the the verb: the number of calculations we want.
+
+(i. y) is a list of integers from (0) to (y-1).
+
+(x - y) subtracts, so we get a list of integers 365, 364, ...
+
+(x % y) is division giving the list of fractions 365/365, 364/365, ...
+
+(+/\ y) calculates the "running product" of (y).  The first result is 365/365, the second is [365/365]*[364/365]; and so on.  This gives the probability, for each number of people, that those people have distinct birthdays.
+
+(-. y) is (1 - y) and computes the desired result. 
+)
+birthdayprob 50
+
+NB. =========================================================
+Lab Section Completion
+We let the verb run to completion.  The result of the verb, which is a list of probabilities, is typed.
+)
+0 debugchangestops ;:'birthday'
+debugrunstop''
+
+NB. =========================================================
+Lab Section Plotting the result
+We can plot the results as a function of n.
+
+J includes a package to create plots.
+)
+load 'plot'
+'title Probability of distinct birthdays' plot (>: i. 50);birthdayprob 50
+
+NB. =========================================================
 Lab Chapter Word, Character, and Line Count
 NB. =========================================================
 Lab Section The Program
@@ -269,32 +337,36 @@ NB.  by a whitespace
 wc =: monad define
 NB.~stop 1
 NB.~title 3	Word Count
-NB. Box the filename and Read the file
 NB.~title1 0	Read the file
 NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
 NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
 NB.~link1 0	Files	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
 NB.~datasize 10 10
+NB. Box the filename and Read the file
 filedata =. 1!:1 <y
-NB. Count characters
 NB.~title1 0	Count bytes
 NB.~link1
+
+NB. Count characters
 cc =. #filedata
-NB. Count lines
 NB.~title1 0	Count lines
 NB.~link2 0	Arrays	http://www.jsoftware.com/jwiki/Vocabulary/ArrayProcessing
+
+NB. Count lines
 lc =. +/ LF = filedata
-NB. Classify each character as whitespace or not
-NB.  add a whitespace to the beginning to ensure first word counted
 NB.~title1 0	Classify whitespace
 ws =. 1 , filedata e. ' ',TAB,CR,LF
 NB. Count nonwhite preceded by white
 NB.~title1 0	Count words
+
+NB. Classify each character as whitespace or not
+NB.  add a whitespace to the beginning to ensure first word counted
 wc =. +/ ws > 1 |. ws
-NB. Return results
 NB.~title1 0	Result
 NB.~link0
 NB.~link2
+
+NB. Return results
 cc,wc,lc
 ))
 ) 
@@ -411,6 +483,122 @@ wc =: (# , +/@:=&LF ,~ +/@(}: > }.)@(1 , e.&WS) )@:(1!:1)@<
 wc jpath '~addons/labs/labs/core/lorem.txt'
 
 NB. =========================================================
+Lab Chapter Show Parenthesis Nesting
+NB. =========================================================
+Lab Section The Problem
+We want a program that will examine a line of code and indicate which parentheses match.  The desired display is shown below.  Note that parentheses inside quoted strings do not participate.
+
+Think about how you would write this program.
+)
+PREPARE
+smoutput 0 : 0
+Sample display:
+((+/)\) ((((=/)\)@(''''&~:)) * (('()' i. ])))
+           └──┘
+          └─────┘ └───────┘     └─────────┘ 
+ └──┘    └─────────────────┘   └───────────┘
+└─────┘ └───────────────────────────────────┘
+)
+PREPARE
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
+
+
+NB. =========================================================
+Lab Section The Program
+We observe that each character can be assigned a nesting level n, depending on how many pairs of parentheses enclose it; 
+and that each column ends with n nonblank characters, which are horizontal lines except that the topmost one is replaced by an angle if the character is a parenthesis.
+
+We can write a program to do that pretty directly.  The characters to use for the graphics are J's "box-drawing characters", which can be queried by the verb (9!:6).
+
+The program is shown in the edit window.
+)
+PREPARE
+opendebscript 0 : 0
+NB. Show Parenthesis Nesting
+
+NB. y is a string
+NB. Result is an array of characters: the first row is the string; subsequent rows
+NB. show the scope of each pair of parentheses
+showparen =: monad define
+NB.~title 3	Show Parenthesis Nesting
+NB.~stop parens
+NB.~title1 0	Box-drawing characters
+NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
+NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB.~link1 0	Boxing Characters	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m9
+
+NB. Read the box-drawing characters
+'langle rangle vert' =. 6 8 10 { 9!:6 ''
+NB.~title1 0	Classify characters
+NB.~link0
+NB.~link1
+
+NB. Classify characters: _1 0 1   for   ) other ( .  If in character string, force 0 (=other)
+charclass =. (-. 2 | +/\ y = '''') * ('()' i. y) { 1 _1 0
+NB.~title1 0	Calculate nesting level
+
+NB. Calculate nesting level for each position.  Give ) the same level as matching (
+level =. (charclass = _1) + +/\ charclass
+NB.~title1 0	Create display array
+NB.~datasize 20 30
+
+NB. Get the starting character, extend it with vert to nesting level.  Then put into correct position
+NB. and prepend the original string to create the final result
+y , |. |: (-level) {.!.vert"0 charclass { vert,langle,rangle
+))
+) 
+PREPARE
+
+NB. =========================================================
+Lab Section Fetch box-drawing characters
+)
+string =: 0 : 0
+((+/)\) ((((=/)\)@(''''&~:)) * (('()' i. ])))
+)
+showparen string
+
+NB. =========================================================
+Lab Section Classify characters
+We classify each character as 1 if it is ('('), _1 if it is (')'), or 0 if it is neither.  We do this by using ('()' i. y), which returns, for each character of (y), its position in the list ('()'): this will be 0 or 1 for a parenthesis, or 2 for other characters.
+
+Then we use (x { y) to translate the 0, 1, or 2 value to 1, _1, or 0.
+
+But if the character has been preceded by an odd number of quote characters, it is inside a literal constant and is not a parenthesis for matching.
+We count the number of quotes before each position [using (+/\ y)], then see if the value is odd (2 | y), and create a 1 if the value is even (-. y).
+
+By multiplying the character class by this not-in-string value, we force the character class to 0 for all points inside a string. 
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Calculate nesting level
+The parenthesis nesting depth at each point is the running total of the character class, going up 1 when we encounter ( and going down one when we encounter ).
+Since we want to give the trailing ) the same level as the corresponding (, we need to increase the level by one at those positions.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Final result
+We calculate each COLUMN of the final result-matrix as one ROW  of an intermediate value.
+First we calculate the top character, which depends on the class of the character, using (x { y).
+
+Then we create the characters for the column, by using (x {. y) to take as many characters as the nesting level.
+We do this independently for each character [because of the ("0)].  We fill the extra characters with vertical bars (!.vert) and we leave the top character on the right [because the shift value is negative].
+
+The resulting array has the information we want.  We just have to interchange the vertical and horizontal axes (|: y), the flip top and bottom (|. y), and join the oroginal string (x , y).
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Completion
+When we release the program it displays the result.
+)
+0 debugchangestops ;:'parens'
+debugrunstop''
+
+
+
+NB. =========================================================
 Lab Chapter Random Composition
 NB. =========================================================
 Lab Section The problem
@@ -440,18 +628,21 @@ NB. integers adding to a desired total)
 NB. x is the number of integers to pick
 NB. y is the total they must add up to
 randomcomposition =: dyad define
-NB.~stop 1
+NB.~stop randomcomp
 NB.~title 3	Random Composition
 NB.~title1 0	Choose random points
 NB.~link0 0	Compositions	http://en.wikipedia.org/wiki/Composition_(combinatorics)
 NB.~check shape
+
 NB. Choose x-1 random values from 0 to y-2, without repeats
 randoms =. ? (x-1) $ y-1
-NB. Sort the list
 NB.~title1 0	Sort the points
 NB.~check all
+
+NB. Sort the list
 randoms =. /:~ randoms
 NB.~title1 0	Calculate interval lengths
+
 NB. Find the lengths of the intervals given the random points
 NB. and the starting point _1 and the ending point y-1.
 NB. This is the result
@@ -498,6 +689,7 @@ NB. =========================================================
 Lab Section completion
 The verb produces its final result, a list.
 )
+0 debugchangestops ;:'randomcomp'
 debugrunstop''
 
 NB. =========================================================
@@ -655,18 +847,21 @@ NB. Create count, mean, and sample standard deviation for a list
 stats =: monad define"1
 NB.~stop stats
 NB.~title 3	Stats
-NB. Get number of observations
 NB.~title1 0	Calculate n
+NB. Get number of observations
 count =. #y
-NB. Calculate mean
 NB.~title1 0	Calculate mean
+
+NB. Calculate mean
 mean =. (+/y) % count
 NB.~title1 0	Calculate sample standard deviation
 NB.~link0 0	Standard deviation	http://en.wikipedia.org/wiki/Standard_deviation#Corrected_sample_standard_deviation
+
 NB. Calculate sample standard deviation
 stddev =. (%: +/ *: (y - mean)) % (count - 1)
 NB.~title1 0	Return results
 NB.~link0
+
 NB. Return results
 count,mean,stddev
 ))
@@ -938,6 +1133,7 @@ NB.~stop
 end.
 NB.~stop finish
 NB.~title1 0	Combine ships into single board
+
 NB. No overlaps in 'ships' - combine all ships into one board
 +/ ships
 ))
@@ -956,6 +1152,7 @@ NB.~title1 0	Place and move the ship
 NB.~link1 0	Multiple Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment#Multiple_Assignment
 NB.~auto 1
 NB.~check shape
+
 NB. Create the ship, randomly rotate, randomly transpose
 |:^:(?2) (- ? 11 - (1,ship)) |. 10 10 {. ,: ship $ id
 ))
@@ -1081,9 +1278,11 @@ NB. Read the file, convert to CSV format
 boxedfields =. splitcsv 1!:1 < jpath y
 NB.~title1 0	Take first line
 NB.~link1
+
 NB. Extract header line
 header =. > {. boxedfields
 NB.~title1 0	Find position of 'Data'
+
 NB. Find position of 'Data' header (error if omitted)
 datax =. header i. <'Data'
 NB.~title1 0	Exit if no 'Data'
@@ -1091,6 +1290,7 @@ if. datax = #header do. '' return. end.
 NB.~title1 0	Remove empties, convert to numeric
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
 NB.~datasize 20 20
+
 NB. Remove empties; convert the data to numeric (__ if invalid data); leave data as numeric list
 datafields =. {.@(__&".)@> each  (-.&a:) each datax }. each }. boxedfields
 NB.~title1 0	Check for errors in conversion
@@ -1099,6 +1299,7 @@ if. __ e. ; datafields do. '' return. end.
 NB.~title1 0	Calculate FNS
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
 NB.~datasize
+
 NB. Take the five-number summary of each line
 NB. This returns 5 numbers or none for each line
 NB.  (none if there are no numbers)
@@ -1107,13 +1308,16 @@ NB.~title1 0	Join headers & labels to FNS
 NB.~link1
 NB.~datasize 10 20
 NB. Append headers to summaries, and summaries to line labels.
+
 NB. Convert numbers to string form
 reslines =. (datax {.&> boxedfields) ,. ('Min';'Q1';'Median';'Q3';'Max') , ":each@> fns
 NB.~title1 0	Convert fields to CSV
 NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+
 NB. Convert each row to CSV
 reslines =. (addquote each reslines) , each ','
 NB.~title1 0	Convert lines to CSV
+
 NB. Collect fields into rows; replace final comma with LF; run lines together
 ; LF _1} each  <@;"1 reslines
 ))
@@ -1129,12 +1333,15 @@ NB. Double any " characters
 escquotes =. (>: '"' = y) # y
 NB.~title1 0	Test for special character
 NB.~link0 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
+
 NB. Enclose in quotes if value contains special character
 if. +./ (',"',LF) e. y do.
 NB.~title1 0	Enclose line in quotes
 NB.~link0
   escquotes =. '"' , escquotes , '"'
 end.
+
+NB. Return the result
 escquotes
 ))
 
@@ -1147,14 +1354,18 @@ NB.~stop fivenumsumm
 NB.~title 3	Five Number Summary
 NB.~title1 0	Check for empty input
 NB.~link0 0	Five Number Summary	http://en.wikipedia.org/wiki/Five-number_summary
+NB. If input empty, return empty
 if. 0 = #y do. 0$0 return. end.
 NB.~title1 0	Calculate percentile positions
+
 NB. Calculate indices of the 5 percentiles
 index =. (<:#y) * 0 0.25 0.5 0.75 1
 NB.~title1 0	Calculate index of lower value
+
 NB. The integer part of the index is the lower number to use
 fetchlo =. <. index
 NB.~title1 0	Calculate weighting for upper & lower values
+
 NB. The fractional part of the index is the amount of the
 NB. upper number to use; 1-that is the amount of the lower number to use.
 NB. For example, an index of 4.25 will take 0.75 times value 4
@@ -1164,6 +1375,7 @@ weights =. (,.   -.) (index - fetchlo)
 NB.~title1 0	Sort inputs, fetch value, weight
 NB.~link1 0	Sort	http://www.jsoftware.com/jwiki/Vocabulary/slashco#dyadic
 NB.~link2 0	Table	http://www.jsoftware.com/jwiki/Vocabulary/slash#dyadic
+
 NB. Sort the inputs into order.
 NB. Fetch (upper value, lower value) for each result, multiply by
 NB. weight, and add.  We have to add on an extra value at the end

@@ -185,6 +185,8 @@ Click around in the dissect window to see what you can bring up in your browser.
 You are now ready to explore J.  To watch execution, use the leftmost debugger button (Run) to run to the next stop, or the third-from-left button (Step Over) to run one line.
 
 The sequence (NB.) starts a comment.  The (NB.) and everything following it on the same line are documentation and ignored during execution.
+
+When you advance to the next section we will turn off the debugger and run the verb to completion.
 )
 
 NB. =========================================================
@@ -241,6 +243,7 @@ NB. y is list of boxed names, result is unboxed shortest name
 findshortestname =: {::~   (i. <./)@:(#@>)
 
 findshortestname 'Jeb';'Hillary';'George';'Bill'
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Chapter The Distinct-Birthday Problem
@@ -306,6 +309,7 @@ J includes a package to create plots.
 )
 load 'plot'
 'title Probability of distinct birthdays' plot (>: i. 50);birthdayprob 50
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Chapter Word, Character, and Line Count
@@ -483,228 +487,6 @@ wc =: (# , +/@:=&LF ,~ +/@(}: > }.)@(1 , e.&WS) )@:(1!:1)@<
 wc jpath '~addons/labs/labs/core/lorem.txt'
 
 NB. =========================================================
-Lab Chapter Show Parenthesis Nesting
-NB. =========================================================
-Lab Section The Problem
-We want a program that will examine a line of code and indicate which parentheses match.  The desired display is shown below.  Note that parentheses inside quoted strings do not participate.
-
-Think about how you would write this program.
-)
-PREPARE
-smoutput 0 : 0
-Sample display:
-((+/)\) ((((=/)\)@(''''&~:)) * (('()' i. ])))
-           └──┘
-          └─────┘ └───────┘     └─────────┘ 
- └──┘    └─────────────────┘   └───────────┘
-└─────┘ └───────────────────────────────────┘
-)
-PREPARE
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
-
-
-NB. =========================================================
-Lab Section The Program
-We observe that each character can be assigned a nesting level n, depending on how many pairs of parentheses enclose it; 
-and that each column ends with n nonblank characters, which are horizontal lines except that the topmost one is replaced by an angle if the character is a parenthesis.
-
-We can write a program to do that pretty directly.  The characters to use for the graphics are J's "box-drawing characters", which can be queried by the verb (9!:6).
-
-The program is shown in the edit window.
-)
-PREPARE
-opendebscript 0 : 0
-NB. Show Parenthesis Nesting
-
-NB. y is a string
-NB. Result is an array of characters: the first row is the string; subsequent rows
-NB. show the scope of each pair of parentheses
-showparen =: monad define
-NB.~title 3	Show Parenthesis Nesting
-NB.~stop parens
-NB.~title1 0	Box-drawing characters
-NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
-NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
-NB.~link1 0	Boxing Characters	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m9
-
-NB. Read the box-drawing characters
-'langle rangle vert' =. 6 8 10 { 9!:6 ''
-NB.~title1 0	Classify characters
-NB.~link0
-NB.~link1
-
-NB. Classify characters: _1 0 1   for   ) other ( .  If in character string, force 0 (=other)
-charclass =. (-. 2 | +/\ y = '''') * ('()' i. y) { 1 _1 0
-NB.~title1 0	Calculate nesting level
-
-NB. Calculate nesting level for each position.  Give ) the same level as matching (
-level =. (charclass = _1) + +/\ charclass
-NB.~title1 0	Create display array
-NB.~datasize 20 30
-
-NB. Get the starting character, extend it with vert to nesting level.  Then put into correct position
-NB. and prepend the original string to create the final result
-y , |. |: (-level) {.!.vert"0 charclass { vert,langle,rangle
-))
-) 
-PREPARE
-
-NB. =========================================================
-Lab Section Fetch box-drawing characters
-)
-string =: 0 : 0
-((+/)\) ((((=/)\)@(''''&~:)) * (('()' i. ])))
-)
-showparen string
-
-NB. =========================================================
-Lab Section Classify characters
-We classify each character as 1 if it is ('('), _1 if it is (')'), or 0 if it is neither.  We do this by using ('()' i. y), which returns, for each character of (y), its position in the list ('()'): this will be 0 or 1 for a parenthesis, or 2 for other characters.
-
-Then we use (x { y) to translate the 0, 1, or 2 value to 1, _1, or 0.
-
-But if the character has been preceded by an odd number of quote characters, it is inside a literal constant and is not a parenthesis for matching.
-We count the number of quotes before each position [using (+/\ y)], then see if the value is odd (2 | y), and create a 1 if the value is even (-. y).
-
-By multiplying the character class by this not-in-string value, we force the character class to 0 for all points inside a string. 
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Calculate nesting level
-The parenthesis nesting depth at each point is the running total of the character class, going up 1 when we encounter ( and going down one when we encounter ).
-Since we want to give the trailing ) the same level as the corresponding (, we need to increase the level by one at those positions.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Final result
-We calculate each COLUMN of the final result-matrix as one ROW  of an intermediate value.
-First we calculate the top character, which depends on the class of the character, using (x { y).
-
-Then we create the characters for the column, by using (x {. y) to take as many characters as the nesting level.
-We do this independently for each character [because of the ("0)].  We fill the extra characters with vertical bars (!.vert) and we leave the top character on the right [because the shift value is negative].
-
-The resulting array has the information we want.  We just have to interchange the vertical and horizontal axes (|: y), the flip top and bottom (|. y), and join the oroginal string (x , y).
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Completion
-When we release the program it displays the result.
-)
-0 debugchangestops ;:'parens'
-debugrunstop''
-
-
-
-NB. =========================================================
-Lab Chapter Random Composition
-NB. =========================================================
-Lab Section The problem
-The problem is to choose an ordered set of N positive integers such that the integers sum to the value S.  Such an ordered set is called a "composition" of S, and we want our verb to choose randomly from the possible compositions of S such that any composition is equally likely to be chosen.
-
-Write the program to select such a random composition.
-
-Are you thinking about loops and indices ALREADY!?  No, no - let's focus on the problem, not the machine.  We can pick random numbers, but how do we ensure they add up to S?
-
-One way would be to have them correspond to nonoverlapping subintervals that cover the interval 0 to S.  The lengths of such a set of subintervals would necessarily add to S.
-
-Yes, that's the way.  Suppose N=10 and S=50.  We start with the points 0 and 50, and then choose 9 other points at random in the interval 1 to 49, making sure no value is repeated.  These 11 points define 10 intervals, and the lengths of these intervals are the composition we desire.
-
-Now we'll write the program.  Think about it before going on; perhaps sketch out a design in the language of your choice.
-)
-
-NB. =========================================================
-Lab Section Solution
-The J solution is in the edit window.
-
-The program performs the steps we outlined.  The only change is that it is more convenient to select the random numbers in the range 0 to S-2 rather than 1 to S-1.
-)
-PREPARE
-opendebscript 0 : 0
-NB. Return random composition (ordered list of positive
-NB. integers adding to a desired total)
-NB. x is the number of integers to pick
-NB. y is the total they must add up to
-randomcomposition =: dyad define
-NB.~stop randomcomp
-NB.~title 3	Random Composition
-NB.~title1 0	Choose random points
-NB.~link0 0	Compositions	http://en.wikipedia.org/wiki/Composition_(combinatorics)
-NB.~check shape
-
-NB. Choose x-1 random values from 0 to y-2, without repeats
-randoms =. ? (x-1) $ y-1
-NB.~title1 0	Sort the points
-NB.~check all
-
-NB. Sort the list
-randoms =. /:~ randoms
-NB.~title1 0	Calculate interval lengths
-
-NB. Find the lengths of the intervals given the random points
-NB. and the starting point _1 and the ending point y-1.
-NB. This is the result
-(randoms,y-1) - (_1 , randoms)
-))
-)
-PREPARE
-
-NB. =========================================================
-Lab Section Choose random values
-We will step through the execution of the program.
-
-The verb (randomcomposition) is defined as a "dyad", meaning it expects two operands.  When we execute it here, with the sentence
-
-5 randomcomposition 10
-
-the two operands are the nouns to its left and right.  The nouns are assigned to argument-names before (randomcomposition) runs: (5) is assigned to the name (x) and (10) to the name (y).
-
-The first line uses the verb (x ? y) which selects (x) random integers in the range (0) to (y-1), with no duplicates.
-
-[Note: the dissected version of the sentence is a preview of the execution of the line by the debugger.  The random values will be different between the two versions.]
-)
-5 randomcomposition 10
-
-NB. =========================================================
-Lab Section Sort the values
-The verb (/:~ y) sorts (y) into ascending order.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Calculate interval lengths, return result
-We have 9 random numbers between 0 and (y-2).  If we bracket these values with the fixed values (_1) and (y-1), we will have defined the desired set of nonoverlapping subintervals spanning the range (_1) to (y-1), which is a total length of (y).
-
-[Note that the negative sign for numbers in J is the underscore.]
-
-Then the starting values of the intervals will be (_1) followed by the random values, and the ending values will be the random values followed by (y-1).
-
-We form the lists of ending points and starting points and take the difference.  That produces the desired result.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section completion
-The verb produces its final result, a list.
-)
-0 debugchangestops ;:'randomcomp'
-debugrunstop''
-
-NB. =========================================================
-Lab Section Expert version
-In advanced J, the program can be written in a single line.
-)
-NB. Return random composition (ordered list of positive
-NB. integers adding to a desired total)
-NB. x is the number of integers to pick
-NB. y is the total they must add up to
-randomcomposition =: (/:~@:? (, - _1&,@[) ])&<:
-
-5 randomcomposition 10
-
-NB. =========================================================
 Lab Chapter Where are the loops?
 NB. =========================================================
 Lab Section The Zen of J
@@ -722,40 +504,109 @@ Ken Iverson, in the culmination of a lifetime of thinking about computation, sel
 )
 
 NB. =========================================================
-Lab Section The organization of nouns
-The most important way data is organized is along coordinate "axes".  An operation on an entire array is usually broken into a set of operations on parts of the array.  For example, comparing two characters is an operation on atoms, but if two strings are compared, the (=) verb is automatically applied between corresponding atoms.
+Lab Section The organization of nouns: array, axis, index, rank, shape, list, table, brick
+The most important way data is organized is as an "array", along coordinate "axes".
+All the values in an array must have the same type [numeric, character, or boxed], but you do not need to worry about floating-point versus integer - J will choose whichever is needed.
+
+All the rows of a table must have the same length - ragged arrays are not allowed [use boxing to achieve the effect].
+
+The position of an item along its axis is called the "index".  The index of the first item is 0.
+
+An atom of an array can be identified by giving all its indexes, which taken together are called the "index list".
 
 The list of lengths of coordinate axes is called the "shape" of a noun.  The verb ($) produces the shape of its argument.
 
-The number of axes is called the "rank" of the noun.  The rank is therefore the length of the shape.  The verb (#) produces the number of items in a noun, and (# $ y) gives the rank of the noun (y).
+The number of axes is called the "rank" of the noun.  The rank is therefore the length of the shape, and ($ $ y) gives the rank of the noun (y).
 
-A "k-cell" of an array is a subarray of rank k, taking a slice along the last k axes.
+The verb (i. y) produces a noun whose shape is (y) and whose values are consecutive integers starting at 0.
 
-For example, a 1-cell of a table is a row of the table: a list taken by a slice along the last axis.
+Important vocabulary words:
 
-A 1-cell of a 3-dimensional array is a row of one of the tables that make up the array.
+A "list" is a one-dimensional array [nothing to do with linked lists].  Its rank is 1.
 
-A 0-cell is always an atom.
+A "table" is a two-dimensional array.  Its rank is 2.
 
-An array can be thought of as an array of its cells, in different ways: A 3x2x4 array can be thought of as a single "brick", or as 3 "tables", each 2x4; or as a 3x2 array of lists, each of length 4; or as a 3x2x4 array of atoms.
+A "brick" is a three-dimensional array, with rank 3.
 
-The picture shows these different interpretations.  The verb (|.) reverses the order of the items of its argument.  (|."3) reverses the order inside the 3-cells, that is, it reverses the order of the 2-cells [tables]; (|."2) reverses the order of lists within each 2-cell; (|."1) reverses the order of atoms in each list; (|."0) does nothing because reversing an atom doesn't change anything.
-
-As the processing flows from top to bottom you can see the action of the different verbs.  Click in a result to see what the argument- and result-cells were.
 )
 PREPARE
 opendebscript 0 : 0
-cells =: monad define
+rankshape =: monad define
 NB.~stop 1
-NB.~title 3	3-, 2-, 1-, and 0-cells
-|."0 |."1 |."2 |."3 y
+NB.~title 3	Noun Nomenclature
+NB.~title0 0	($ y) gives the shape of y
+NB.~title1 0	The rank is the length of the shape
+$ $ i. 4 7
+NB.~title0 0	(+/ y) totals the items of y
+NB.~title1
++/ +/ i. 4 7
+NB.~title0 0	3-, 2-, 1-, and 0-cells
+|."0 |."1 |."2 |."3 (3 2 4) $ 'abcdefghijklmnopqrstuvwx'
 NB.~stop
 0 0$0
 ))
 )
 PREPARE
-'abc' = 'aca'
-cells 3 2 4 $ 'abcdefghijklmnopqrstuvwx'
+rankshape''
+
+NB. =========================================================
+Lab Section The organization of nouns: items, list of X
+Verbs like ($ y) apply to the entirety of (y), but most verbs apply to subarrays of their nouns.  The most important of these subarrays are the smallest and largest: atoms and items.
+
+An "atom" is an indivisible value: a single number, a single character, or a box.  Numeric operations like (x + y) apply to corresponding atoms of (x) and (y).
+
+An "item" of an array is a subarray with rank one less than the rank of the array.  The items of a list are its atoms, and the items of a table are its rows [which are lists].
+
+To be precise, an item of an array is a subarray comprising all the atoms that have the same index in the first axis.  Thus, the columns of a table are NOT items.
+
+The first axis is privileged in that many verbs operate on items, which makes it easy to break an array into subarrays along the leading axis.  Generally you should arrange the order of axes with this fact in mind.
+
+Because so many verbs operate on items, it is useful to have the phrase "list of X" to mean "an array whose items are X".  Thus, a plain 'list' is a list of atoms [or of numbers, characters, or boxes], while a table is a list of lists and a brick is a list of tables.
+
+For completeness we declare that an atom is itself a single item.
+
+Phrases to remember:
+
+The shape is a list giving the length of each axis.
+
+The shape of an atom is an empty list.
+
+The rank is the length of the shape.
+
+An array is a list of its items.
+
+An atom has one item, itself.
+
+
+
+The example shows the verb (+/ y), which totals the items of its argument (y).  When we apply this verb to a table, it totals the rows.  When we apply this verb to a list, it totals the atoms.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section The organization of nouns: cells
+Similar to the way an array can be viewed as a list of its items, it can be split up into subarrays of other rank.
+
+A "k-cell" of an array is a subarray of rank k, taking a slice along the last k axes.
+
+For example, a 1-cell of a table is a row of the table: a list taken by a slice along the last axis.
+
+A 2-cell of a 3-dimensional array is a table.
+
+A 1-cell of a 3-dimensional array is a row of one of the tables that make up the array.
+
+A 0-cell is always an atom.
+
+An array can be thought of as an array of its cells, in different ways: A 3x2x4 array can be thought of as a single brick, or as 3 tables, each 2x4 [i. e. a list of tables]; or as a 3x2 array of lists, each of length 4 [i. e. a table of lists]; or as a 3x2x4 array of atoms.
+
+The k-cell concept is extended to negative k.  A "(-k)-cell" is a subarray whose rank is k less than the rank of the array.
+A _1-cell is the same thing as an item.  A _2-cell of a table is an atom.
+
+The picture shows these different interpretations.  The verb (|.) reverses the order of the items of its argument.  (|."3) reverses the order inside the 3-cells, that is, it reverses the order of the 2-cells [tables]; (|."2) reverses the order of lists within each 2-cell; (|."1) reverses the order of atoms in each list; (|."0) does nothing because reversing an atom doesn't change anything.
+
+As the processing flows from top to bottom you can see the action of the different verbs.  Click in a result to see what the argument- and result-cells were.
+)
+debugstep''
 
 NB. =========================================================
 Lab Section The rank of verbs
@@ -764,6 +615,11 @@ To recap:
 Every noun has a rank - the number of axes.
 
 An array can be construed as an array of cells of lower rank.
+
+An operation on an array may apply to the array as a whole, for example "how big is the array?",
+or to parts of the array, for example "add array A to array B" which is performed number by number.
+
+is usually broken into a set of operations on parts of the array.  For example, comparing two characters is an operation on atoms, but if two strings are compared, the (=) verb is automatically applied between corresponding atoms.
 
 
 You can control how a verb is executed by specifying the rank of the cells it will operate on.  You do this by following the verb with ("n) where (n) is the rank of the cells you want the verb to be applied to.  (u"n) is a "derived verb" that operates like (u), but it is applied to n-cells.
@@ -918,6 +774,356 @@ The rank mechanism provides way of matching computation to data: by applying a v
 
 J has about a dozen other ways to rearrange data for computation.  We will examine these in later chapters, and with examples as we go along.
 )
+
+NB. =========================================================
+Lab Chapter Show Parenthesis Nesting
+NB. =========================================================
+Lab Section The Problem
+We want a program that will examine a line of code and indicate which parentheses match.  The desired display is shown below.  Note that parentheses inside quoted strings do not participate.
+
+Think about how you would write this program.
+)
+PREPARE
+smoutput 0 : 0
+Sample display:
+((+/)\) ((((=/)\)@(''''&~:)) * (('()' i. ])))
+           └──┘
+          └─────┘ └───────┘     └─────────┘ 
+ └──┘    └─────────────────┘   └───────────┘
+└─────┘ └───────────────────────────────────┘
+)
+PREPARE
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
+
+
+NB. =========================================================
+Lab Section The Program
+We observe that each character can be assigned a nesting level n, depending on how many pairs of parentheses enclose it; 
+and that each column ends with n nonblank characters, which are horizontal lines except that the topmost one is replaced by an angle if the character is a parenthesis.
+
+We can write a program to do that pretty directly.  The characters to use for the graphics are J's "box-drawing characters", which can be queried by the verb (9!:6).
+
+The program is shown in the edit window.
+)
+PREPARE
+opendebscript 0 : 0
+NB. Show Parenthesis Nesting
+
+NB. y is a string
+NB. Result is an array of characters: the first row is the string; subsequent rows
+NB. show the scope of each pair of parentheses
+showparen =: monad define
+NB.~title 3	Show Parenthesis Nesting
+NB.~stop parens
+NB.~title1 0	Box-drawing characters
+NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
+NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB.~link1 0	Boxing Characters	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m9
+
+NB. Read the box-drawing characters
+'langle rangle vert' =. 6 8 10 { 9!:6 ''
+NB.~title1 0	Classify characters
+NB.~link0
+NB.~link1
+
+NB. Classify characters: _1 0 1   for   ) other ( .  If in character string, force 0 (=other)
+charclass =. (-. 2 | +/\ y = '''') * ('()' i. y) { 1 _1 0
+NB.~title1 0	Calculate nesting level
+
+NB. Calculate nesting level for each position.  Give ) the same level as matching (
+level =. (charclass = _1) + +/\ charclass
+NB.~title1 0	Create display array
+NB.~datasize 20 30
+
+NB. Get the starting character, extend it with vert to nesting level.  Then put into correct position
+NB. and prepend the original string to create the final result
+y , |. |: (-level) {.!.vert"0 charclass { vert,langle,rangle
+))
+) 
+PREPARE
+
+NB. =========================================================
+Lab Section Fetch box-drawing characters
+)
+string =: 0 : 0
+((+/)\) ((((=/)\)@(''''&~:)) * (('()' i. ])))
+)
+showparen string
+
+NB. =========================================================
+Lab Section Classify characters
+We classify each character as 1 if it is ('('), _1 if it is (')'), or 0 if it is neither.  We do this by using ('()' i. y), which returns, for each character of (y), its position in the list ('()'): this will be 0 or 1 for a parenthesis, or 2 for other characters.
+
+Then we use (x { y) to translate the 0, 1, or 2 value to 1, _1, or 0.
+
+But if the character has been preceded by an odd number of quote characters, it is inside a literal constant and is not a parenthesis for matching.
+We count the number of quotes before each position [using (+/\ y)], then see if the value is odd (2 | y), and create a 1 if the value is even (-. y).
+
+By multiplying the character class by this not-in-string value, we force the character class to 0 for all points inside a string. 
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Calculate nesting level
+The parenthesis nesting depth at each point is the running total of the character class, going up 1 when we encounter ( and going down one when we encounter ).
+Since we want to give the trailing ) the same level as the corresponding (, we need to increase the level by one at those positions.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Final result
+We calculate each COLUMN of the final result-matrix as one ROW  of an intermediate value.
+First we calculate the top character, which depends on the class of the character, using (x { y).
+
+Then we create the characters for the column, by using (x {. y) to take as many characters as the nesting level.
+We do this independently for each character [because of the ("0)].  We fill the extra characters with vertical bars (!.vert) and we leave the top character on the right [because the shift value is negative].
+
+The resulting array has the information we want.  We just have to interchange the vertical and horizontal axes (|: y), the flip top and bottom (|. y), and join the oroginal string (x , y).
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Completion
+When we release the program it displays the result.
+)
+0 debugchangestops ;:'parens'
+debugrunstop''
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
+
+NB. =========================================================
+Lab Chapter Searching, Selection, Sorting, and Grading
+NB. =========================================================
+Lab Section Searching an array; selecting from an array
+Searching an array for a matching item is performed by (x i. y) which finds the items of (x) that match cells of (y).
+
+The result, for each cell of (y), is the index of the first matching item.  If no item matches a cell, the index is (#x), the number of items of (x), which is one more than the last valid index into (x).
+
+(x) is treated as a list of its items, and (y) as an array of cells whose rank is the rank of an item of (x).
+
+(x { y) produces item number (x) from (y).  If (x) is an array, the result is an array of items of (y).
+
+Selection using (x { y) is much less common in J than in scalar languages.  Most operations are done on entire arrays rather than subarrays.
+
+In the example we have a list of boxed words and another list of the corresponding numbers of syllables, and a second list of words.  We find the number of syllables in each word in the second list.
+Note that we append a 0 to the list of syllable-lengths to provide a syllable count for words that are not in the dictionary.
+)
+] dict =: ;: 'a able bravo carousel dog evanescent filigree'
+] sylls =:    1  2     2      3      1     4          4
+dl =: (2;<'title';'3',TAB,'Searching and selection') dissect '(dict i. ;: ''filigree a b dog'') { sylls,0'
+
+
+NB. =========================================================
+Lab Section Sorting and Grading
+J programmers use sorting more than scalar programmers, partly because it's so easy to do, partly because they're used to thinking about arrays as a whole.
+
+(y /: y) sorts (y) into ascending order, and (y \: y) sorts into descending order.  These can also be written in the shorter form (/:~ y) and (\:~ y).
+
+(y /: y) is a special case of the more general "Sort Using" verb (x /: y) which treats (y) as a list of keys for the items of (x), and sorts the items of (x) into ascending order of the key (y).
+
+(x /: y) in turn uses the yet more general (/: y) which calculates the "grading permutation" of (y): the list that gives, for position (i), the index of the (i)th largest item of (y).
+
+The formal definition of (x /: y) is ((/: y) { x).  In words, figure out the permutation that would put y into order, and they apply that permutation to x.
+
+Sort Using and Grading are very powerful but they seem exotic to scalar programmers.
+Take a minute to look at this display and verify that (/: y) is the grading permutation, and that the definition of (x /: y) is correct.
+The purpose of the program is to order a rack of Scrabble letters in ascending order of score.
+)
+destroy__dl''
+scrabbleletters =: 'peccary'
+letterscore =: 3 1 3 3 1 1 4
+dl =: (2;<'title';'3',TAB,'(/: y) and (x /: y)') dissect '(scrabbleletters /: letterscore) -: ((/: letterscore) { scrabbleletters)'
+
+NB. =========================================================
+Lab Section Exercise
+We want a program that will give, for each item of (y), the number of identical previous items in (y).  An example output is shown.
+
+Decide how you would write program 
+)
+PREPARE
+itemordinals =: i.~   (] - {)   /:@/:
+PREPARE
+destroy__dl''
+] words =: ;: 'a man a plan a canal another plan another canal Panama'
+itemordinals words
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
+
+NB. =========================================================
+Lab Section Solution: ordinals
+[this program comes from Roger Hui]
+
+The program is in the edit window.  It uses two useful J idioms.
+
+(/: /: y) - the grading permutation of the grading permutation - generates the ordinal number for each position of (y): the index that that item of (y) would have if the items were sorted into order.
+
+In this example the three "a"s have ordinals 0, 1, and 2, and the two "plan"s have ordinals 9 and 10.
+
+Study this computation to convince yourself that it properly computes the ordinals.
+) 
+PREPARE
+opendebscript 0 : 0
+NB. Item ordinals
+NB. y is any array
+NB. Result is a list, giving, for each item of y, the number of earlier items that match y
+itemordinals =: monad define
+NB.~title 3	Item Ordinals
+NB.~stop itemords
+NB.~title1 0	Calculate ordinal position in (y)
+NB. Calculate ordinal position for each item of y
+ordinal =. /: /: y
+
+NB.~title1 0	Find index of each first matching item
+NB. For each item, find the index of the first matching item
+NB. position of the item
+firstmatch =. y i. y
+
+NB.~title1 0	Find ordinal within matching items
+NB. For each item, subtract the ordinal position of the first matching item from the ordinal
+NB. position of the item.  This is the result.
+ordinal - firstmatch { ordinal
+))
+) 
+PREPARE
+itemordinals words
+
+NB. =========================================================
+Lab Section Solution: self-index
+We have learned that (x i. y) finds indexes in (x) of items of (x) that match cells of (y), producing the smallest such index, i. e. the index of the first match.
+
+(y i. y) is a special case of (x i. y).  For each item of (y), it finds the index of the first occurrence of that item in (y).  It is often the first tool to use when comparing items of (y) against other such items.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Solution: item ordinals
+We subtract the ordinal position of the first matching item from the ordinal position of the item, for each item.  Since all the matching items will be sorted into a contiguous block of ordinals, this will give the desired item ordinals.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Solution: completion and final result
+We run the program to completion and see the result.
+)
+0 debugchangestops ;:'itemords'
+debugrunstop''
+
+NB. =========================================================
+Lab Section Expert version
+The expert version does the same job but fits in one line.
+)
+NB. y is any array
+NB. Result is a list, giving, for each item of y, the number of earlier items that match y
+itemordinals =: i.~   (] - {)   /:@/:
+
+itemordinals words
+wd 'sm focus term'  NB. needed to avoid crash in 8.03
+
+NB. =========================================================
+Lab Chapter Random Composition
+NB. =========================================================
+Lab Section The problem
+The problem is to choose an ordered set of N positive integers such that the integers sum to the value S.  Such an ordered set is called a "composition" of S, and we want our verb to choose randomly from the possible compositions of S such that any composition is equally likely to be chosen.
+
+Write the program to select such a random composition.
+
+Are you thinking about loops and indices ALREADY!?  No, no - let's focus on the problem, not the machine.  We can pick random numbers, but how do we ensure they add up to S?
+
+One way would be to have them correspond to nonoverlapping subintervals that cover the interval 0 to S.  The lengths of such a set of subintervals would necessarily add to S.
+
+Yes, that's the way.  Suppose N=10 and S=50.  We start with the points 0 and 50, and then choose 9 other points at random in the interval 1 to 49, making sure no value is repeated.  These 11 points define 10 intervals, and the lengths of these intervals are the composition we desire.
+
+Now we'll write the program.  Think about it before going on; perhaps sketch out a design in the language of your choice.
+)
+
+NB. =========================================================
+Lab Section Solution
+The J solution is in the edit window.
+
+The program performs the steps we outlined.  The only change is that it is more convenient to select the random numbers in the range 0 to S-2 rather than 1 to S-1.
+)
+PREPARE
+opendebscript 0 : 0
+NB. Return random composition (ordered list of positive
+NB. integers adding to a desired total)
+NB. x is the number of integers to pick
+NB. y is the total they must add up to
+randomcomposition =: dyad define
+NB.~stop randomcomp
+NB.~title 3	Random Composition
+NB.~title1 0	Choose random points
+NB.~link0 0	Compositions	http://en.wikipedia.org/wiki/Composition_(combinatorics)
+NB.~check shape
+
+NB. Choose x-1 random values from 0 to y-2, without repeats
+randoms =. ? (x-1) $ y-1
+NB.~title1 0	Sort the points
+NB.~check all
+
+NB. Sort the list
+randoms =. /:~ randoms
+NB.~title1 0	Calculate interval lengths
+
+NB. Find the lengths of the intervals given the random points
+NB. and the starting point _1 and the ending point y-1.
+NB. This is the result
+(randoms,y-1) - (_1 , randoms)
+))
+)
+PREPARE
+
+NB. =========================================================
+Lab Section Choose random values
+We will step through the execution of the program.
+
+The verb (randomcomposition) is defined as a "dyad", meaning it expects two operands.  When we execute it here, with the sentence
+
+5 randomcomposition 10
+
+the two operands are the nouns to its left and right.  The nouns are assigned to argument-names before (randomcomposition) runs: (5) is assigned to the name (x) and (10) to the name (y).
+
+The first line uses the verb (x ? y) which selects (x) random integers in the range (0) to (y-1), with no duplicates.
+
+[Note: the dissected version of the sentence is a preview of the execution of the line by the debugger.  The random values will be different between the two versions.]
+)
+5 randomcomposition 10
+
+NB. =========================================================
+Lab Section Sort the values
+The verb (/:~ y) sorts (y) into ascending order.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Calculate interval lengths, return result
+We have 9 random numbers between 0 and (y-2).  If we bracket these values with the fixed values (_1) and (y-1), we will have defined the desired set of nonoverlapping subintervals spanning the range (_1) to (y-1), which is a total length of (y).
+
+[Note that the negative sign for numbers in J is the underscore.]
+
+Then the starting values of the intervals will be (_1) followed by the random values, and the ending values will be the random values followed by (y-1).
+
+We form the lists of ending points and starting points and take the difference.  That produces the desired result.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section completion
+The verb produces its final result, a list.
+)
+0 debugchangestops ;:'randomcomp'
+debugrunstop''
+
+NB. =========================================================
+Lab Section Expert version
+In advanced J, the program can be written in a single line.
+)
+NB. Return random composition (ordered list of positive
+NB. integers adding to a desired total)
+NB. x is the number of integers to pick
+NB. y is the total they must add up to
+randomcomposition =: (/:~@:? (, - _1&,@[) ])&<:
+
+5 randomcomposition 10
+
+
 NB. =========================================================
 Lab Chapter Read CSV file
 NB. =========================================================

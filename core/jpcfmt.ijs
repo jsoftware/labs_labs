@@ -64,9 +64,7 @@ if. '' -: $ 'acttbl text' =. prepscript y do.
   smoutput 'error processing script - ' , acttbl {:: '';'no ) found'
 else.
   NB. Start/restart the debugger before text is loaded
-  if. 0 > 4!:0 <'STOPS_jdebug_' do. jdb_open_jdebug_'' end.
-  jdb_clear_jdebug_''
-  jdb_open_jdebug_ ''
+  debugstop''
   NB. Load the script into the edit window
   _1 1 loadedittab text
   NB. Load the actions into the debugger - after verbs are loaded.
@@ -94,7 +92,9 @@ end.
 
 NB. Clear debugger
 debugstop =: 3 : 0
+if. 0 > 4!:0 <'STOPS_jdebug_' do. jdb_open_jdebug_'' end.
 jdb_clear_jdebug_''
+jdb_open_jdebug_ ''
 )
 
 NB. Run, then clear

@@ -517,11 +517,11 @@ falling factorial polynomial ffp=:p.!._1. These matters will be discussed more f
 b=:0 _2 _4 0 16 50 108
 dif=:}.-}:
 dif^:0 1 2 3 4 b
-c=:0 _2 0 6 0   NB. First column of table of differences
-]nc=: c % !i.#c NB. Normalized coefficients
-ffp=:p.!._1     NB. Falling factorial polynomial
-nc ffp i.7      NB. Reproduces b
-f=: nc&ffp      NB. A function that defines (and extends) the series
+c=:0 _2 0 6 0       NB. First column of table of differences
+]ncoeff=: c % !i.#c NB. Normalized coefficients
+ffp=:p.!._1         NB. Falling factorial polynomial
+ncoeff ffp i.7      NB. Reproduces b
+f=: ncoeff&ffp      NB. A function that defines (and extends) the series
 f i. 15
 
 NB. =========================================================

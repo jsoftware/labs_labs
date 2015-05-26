@@ -403,9 +403,9 @@ c2*q                           NB. weighted by c2
 
 +/c2*q
 
-on=. 4 : '+/ x * y&times ^: (i.#x) 1'
+coeffs=. 4 : '+/ x * y&times ^: (i.#x) 1'
 
-c2 on c3
+c2 coeffs c3
 
 NB. =========================================================
 Lab Section SECANT SLOPE
@@ -534,4 +534,3 @@ d=: 1 9 9 7
 |.d
 
 (|.d) p. 10
-

@@ -26,7 +26,7 @@ To advance to the next panel of the lab, click on Studio|Advance,
 or use the indicated shortcut.
 )
 PREPARE
-
+clear''
 9!:17 ] 1 1 NB. Display centered
 FOR=:2 : '(n,m) (|:@(|:@(] = {.@[) {"0 1 |:@(] ,: {:@[)))  y'
 POLY=:|.@[ p. ]
@@ -138,7 +138,8 @@ plus=:2 : 'u table + v table'
 poly=:p.
 power=:^
 prefixes=: \
-  pref=:prefixes
+pref=:prefixes
+pwdifs=:sums for _1
 
 ravel=:,
 reciprocal=:%

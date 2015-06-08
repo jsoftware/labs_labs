@@ -1,6 +1,8 @@
 require 'debug/dissect'
 require 'debug'
 require 'regex'
+LABTEMPDIR =: 'labs/jpc/'  NB. subdir of ~temp to use for files
+DEFAULTFN =: 'example.ijs'
 
 NB. Markup language for scripts
 NB.
@@ -52,6 +54,7 @@ NB. or STOPS_jdebug_
 NB. to see table of name;0;0;(monadic stop lines);(dyadic stop lines)
 
 NB. Process script y into an edit tab
+NB. x is filename to use for script (xxx.ijs)
 NB. y is a script, in markup form (dissect/debug lines start with NB.~
 NB. and the definitions end with ))
 NB. (the script was inlined in the lab, so )) is needed)
@@ -59,14 +62,43 @@ NB. No result.
 NB. Side effects: the action table, containing stop and dissect info,
 NB. is loaded into the debugger; the text is put into an edit tab.
 opendebscript =: 3 : 0
+DEFAULTFN opendebscript y
+:
+ofn =. (tempdir =. jpath '~temp/',LABTEMPDIR),x  NB. output filename
 NB. process the markup, returning actions and displayable script
 if. '' -: $ 'acttbl text' =. prepscript y do.
   smoutput 'error processing script - ' , acttbl {:: '';'no ) found'
 else.
   NB. Start/restart the debugger before text is loaded
   debugstop''
-  NB. Load the script into the edit window
-  _1 1 loadedittab text
+  NB. Create the directory path for the script as needed
+  0:@(1!:5@<^:(0=#@(1!:0)@}:))@;\ (<;.2~ e.&'/\') ofn
+  NB. Write the script data to the file
+  text 1!:2 <ofn
+  NB. Make sure comments are preserved for debugger
+  comments =. 9!:40''
+  9!:41 (1)
+  if. 1 -.@e. temptab =. (] -: ({.~ #))&tempdir@> 1 {"1 wd 'sm get tabs edit' do.
+    NB. This lab is not running in the main edit tab, but it might be in the other.
+    NB. If there is a second edit window, look there
+    if. (<'edit2') e. {."1 wd 'sm get xywh' do.
+      if. 1 e. temptab =. (] -: ({.~ #))&tempdir@> 1 {"1 wd 'sm get tabs edit2' do.
+        wd 'sm active edit2'
+      end.
+    end.
+  end.
+  if. 1 e. temptab do.
+  NB. If there is an edit tab for this lab, replace its file.
+    wd 'sm active tab ' , ": temptab i. 1
+    wd 'sm replace edit *', ofn
+  else.
+    NB. Otherwise create a new one with this file
+    wd 'sm open tab *' , ofn
+  end.
+  NB. load the script
+  wd 'sm run edit'
+  9!:41 comments
+  debugstart''   NB. sm run edit is incompatible with debug mode
   NB. Load the actions into the debugger - after verbs are loaded.
   jdb_extstops_jdebug_ acttbl
 end.
@@ -90,11 +122,16 @@ end.
 0 0$0
 )
 
+NB. Start debugger
+debugstart =: 3 : 0
+debugstop''
+jdb_open_jdebug_ ''
+)
+
 NB. Clear debugger
 debugstop =: 3 : 0
 if. 0 > 4!:0 <'STOPS_jdebug_' do. jdb_open_jdebug_'' end.
 jdb_clear_jdebug_''
-jdb_open_jdebug_ ''
 )
 
 NB. Run, then clear
@@ -109,27 +146,6 @@ if. #stopmods =. (<x) (<a:;0)} (#~ classes e.~ {."1) labdebugstops do.
   jdb_extstops_jdebug_ <stopmods
 end.
 0 0$0
-)
-
-NB. Put a script into an edit window
-NB. y is the text of the script
-NB. x is (tab number);(run);filename
-NB.  if tab number is _1, a new tab is created (default _1)
-NB.  if run is 1, the script is loaded after it is set
-NB.  if filename is not empty, that name is applied to the tab
-NB. Result is (tab number that was created);tablabel
-loadedittab =: 4 : 0
-'tab run fn' =. (,   (_1;1;'') }.~ #) <"0^:(0=L.) x
-open '~addons/labs/labs/core/emptyfile.ijs'
-wd 'sm set edit text ',DEL,y
-if. run do.
-  NB. Make sure comments are preserved for debugger
-  comments =. 9!:40''
-  9!:41 (1)
-  0!:100 y
-  9!:41 comments
-end. NB. needed till load command provided
-0
 )
 
 NB. Prepare a script for analysis

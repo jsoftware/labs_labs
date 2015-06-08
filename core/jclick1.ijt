@@ -80,7 +80,8 @@ In normal use you will open a tab for a file using the File|Open menu.  This lab
 Read the text in the edit window.
 )
 PREPARE
-_1 0 loadedittab 0 : 0
+wd 'sm open tab'
+wd 'sm set edit text *' , 0 : 0
 NB. Since J is interpreted, there is no compilation step for J
 NB. programs.  If you have program definitions that you want to
 NB. execute, you load them by pressing the green arrow above (or
@@ -122,7 +123,7 @@ The bottom pane shows the values of names that will be referred to in the senten
 
 )
 PREPARE
-opendebscript 0 : 0
+'shortname.ijs' opendebscript 0 : 0
 NB. Find shortest name
 NB. y is a list of boxes, each containing a string
 NB. Result is (unboxed ) shortest string
@@ -158,9 +159,11 @@ A single sentence in J can do an enormous amount of computation, so much that yo
 
 The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
 
+Start by going through the dieect menu line, choosing the options you want.  Beginners often like to set the tooltip delay to 'immediate' and the tooltip detail to 'tutorial'.
+
 Take a minute to hover over different blocks, and to click them.
 
-You should now size and arrange your windows into comfortable positions.  The dissect window will vary in size depending on the sentence.
+Now size and arrange your windows into comfortable positions.  The dissect window will vary in size depending on the sentence.
 
 You can dissect your own sentences too.  Normally you will do this by clicking on the line [in either the term or edit window] and pressing the function key that has been assigned the Dissect Line function.
 
@@ -258,7 +261,7 @@ For a single person, this probability is 1.  A second person has a 364/365 chanc
 The program to calculate the probabilities is shown in the edit window.
 )
 PREPARE
-opendebscript 0 : 0
+'birthdays.ijs' opendebscript 0 : 0
 NB. Distinct Birthdays
 NB. y is the number of people we want to calculate for
 NB. Result is y probabilities, with item i giving the
@@ -330,7 +333,7 @@ An "atom" is a noun that is not an array.  It can be of any type: a single numbe
 As you step through this lab using ctrl-J, the lab will give a brief discussion of each line and automatically move the debugger through the lines.  Your job is to click around the dissect window and develop an idea for what's going on.
 )
 PREPARE
-opendebscript 0 : 0
+'wc.ijs' opendebscript 0 : 0
 NB. Word Count
 
 NB. y is a filename
@@ -530,7 +533,7 @@ A "brick" is a three-dimensional array, with rank 3.
 
 )
 PREPARE
-opendebscript 0 : 0
+'rankshape.ijs' opendebscript 0 : 0
 rankshape =: monad define
 NB.~stop 1
 NB.~title 3	Noun Nomenclature
@@ -698,7 +701,7 @@ Observe, as we stop at the first execution of (stats), that the (y) argument is 
 )
 PREPARE
 destroy__dl''
-opendebscript 0 : 0
+'simplestats.ijs' opendebscript 0 : 0
 NB. Create count, mean, and sample standard deviation for a list
 stats =: monad define"1
 NB.~stop stats
@@ -776,6 +779,204 @@ J has about a dozen other ways to rearrange data for computation.  We will exami
 )
 
 NB. =========================================================
+Lab Chapter Create Directory
+NB. =========================================================
+Lab Section The problem
+Given a file name, for example 'C:/My Documents/Vacations/monaco.txt', we want to make sure
+that the directories all exist.
+
+This involves checking that the files 'C:/My Documents' and 'C:/My Documents/Vacations' exist, creating them if they do not.
+
+This is not a taxing problem, but think about how you would write it.  Directories are delimited by either '/' or '\', and the first
+slash should be ignored because it indicates a drive letter rather than a directory.
+)
+
+NB. =========================================================
+Lab Section Solution
+The steps to solving this problem will be:
+
+1. Find the location of each slash that ends a directory name
+
+2. Split the string into a sequence of directory qualifiers
+
+3. For increasingly long subdirectories, check for existence and create directory if not found
+
+J has primitives to:
+
+1. check each character against a slash
+
+2. split a string at delimiters
+
+3. apply a verb on successive prefixes of an array
+
+so we just need to use them.
+The J solution is in the edit window.
+
+)
+PREPARE
+'createdir.ijs' opendebscript 0 : 0
+NB. The foreign verb (1!:5) creates a directory.  Here we give it a descriptive name.
+createdir =: 1!:5
+NB. During this lab, sentences are executed multiple times, one for dissect and one for
+NB. debug, and creating the directories will get them mixed up.  So we replace
+NB. createdir with a harmless verb that does nothing
+createdir =: 1:
+
+NB. Create directory if it doesn't exist already
+NB. y is a string giving a filename (ex: 'C:/xxx/yyy.txt')
+NB. Result is number of directories we created
+createdirasneeded =: monad define
+NB.~stop createdir
+NB.~title 3	Create Directories As Needed
+NB.~title1 0	Find positions of slashes
+NB. Find ending slashes
+slashpos =. y e. '/\'
+
+NB.~title1 0	Remove the first slash
+NB. Remove first slash, since that's not a directory
+slashpos =. slashpos > </\ slashpos
+
+NB.~title1 0	Create directories
+NB. Box each directory; create directories one by one
++/ credir\ slashpos <;.2 y
+))
+
+NB. Create single directory as needed
+NB. y is a list of boxes
+NB. We run the contents of the boxes together to make the directory name.
+NB. If the directory exists, we return 0; if not, we create it and return 1
+credir =: verb define
+NB.~stop credir
+NB.~title 3	Create Single Directory
+NB.~title1 0	Run boxes together
+NB. Create name of directory
+dirname =. }: ; y
+
+NB.~title1 0	Does directory exist?
+NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+if. 0 = # 1!:0 dirname do.
+  NB.~title1 0	Create new directory
+  NB. Create new directory and set return code
+  createdir dirname
+else.
+  NB.~title1 0	Directory exists, return 0
+  0
+end.
+))
+)
+PREPARE
+
+NB. Before we start, remove the two lower-level directories
+1!:55 :: 0: (jpath '~temp/labs/jpc');(jpath '~temp/labs')
+
+
+NB. =========================================================
+Lab Section Find slashes
+First we create a Boolean list indicating which characters are slashes.
+)
+createdirasneeded jpath '~temp/labs\jpc/test.txt'
+
+NB. =========================================================
+Lab Section Find the first 1
+J will teach you the power of comparisons (>) and (<).
+
+When they are applied to Booleans, the comparison verbs have very simple descriptions.
+If (x) and (y) are restricted to the values 0 and 1, (x > y) produces 1 if (x) is 1 and (y) is 0, and 0 the rest of the time.
+Likewise, (x < y) produces 1 only when (x) is 0 and (y) is 1.
+
+What would (</ y) do?  For example, what would (</ 1 0 1 1 1) or (</ 0 0 0 1) produce?
+
+(u/) means 'insert the verb (u) between items of (y)', so (</ 1 0 1 1 1) is the same as
+
+1 < 0 < 1 < 1 < 1
+
+Now, imagine this being executed right-to-left.  The first comparison, (1 < 1), produces 0.  The next comparison will then be (1 < 0) which also produces 0, and you can see that the overall result must be 0, because the only way to get a 1 out of (x < y) is to be comparing (0 < 1): once a comparison produces 0, all further comparisons will produce 0 as well.
+
+In other words, (</ y) will produce a 1 only if (y) is all 0 except for a single 1 at the end.
+
+What about (</\ y) then?  This means, "Apply (</) on prefixes of (y) of increasing length, starting with just the first item."
+So the result of (</\ 0 1 0 0 1 0) would be
+
+(</ 0) , (</ 0 1) , (</ 0 1 0)...
+
+Only one of these applications of (</) will produce a 1.  That 1 will be in the position of the first 1 in the Boolean list (y).
+
+So now we can say it: (+/\ y) when (y) is Boolean list produces a list with the shape of (y), with the leading 1 preserved and all other positions set to 0.
+
+See how powerful the modifiers of J are!  Here (/) and (\) combine to produce an elegant result.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Turn off the first 1
+After that ordeal, can you see what (slashpos > </\ slashpos) does?
+
+It turns off the first 1 in slashpos.
+
+The result is a Boolean list marking the ends of directories.
+)
+
+NB. =========================================================
+Lab Section Create all directories
+We use the end-of-directory markers to split the filename into pieces.
+
+Then we use (u\) again, this time to execute the verb (credir) on each directory in turn.
+
+At the end we add up the returned values, indicating how many directories we created.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Run directories together to produce directory name
+We use (; y) to run all the strings together, and then (}: y) to remove the trailing slash.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Test whether directory exists
+(1!:0 y) is a foreign verb that tests whether the file (y) exists.  It returns the number of files that matched the description in (y).  We compare this result against 0.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Directory exists, return 0
+The first-level directory exists, so we don't need to create it, and there is nothing else for this verb to do.
+
+But we need to produce the return value of 0.  Since the last sentence executed before the end of the verb
+becomes the return value, we execute a sentence with the value 0.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Next directory
+We immediately start to work on the next-lower directory.
+If you want to see other directories in the chain, single-step the debugger.
+
+When you advance this lab, we will skip to the end of the directory-creating step.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section completion
+We remove our stops and run to completion.
+)
+0 debugchangestops ;:'createdir credir'
+debugrunstop''
+
+NB. =========================================================
+Lab Section Expert version
+In advanced J, the program can be written in a single line.
+)
+NB. Create directory if it doesn't exist already
+NB. y is a string giving a filename (ex: 'C:/xxx/yyy.txt')
+NB. Result is number of directories we created
+createdirasneeded =: [: +/ [: (1!:5`0:@.(0~:#@(1!:0)@}:))@;\ (<;.2~   [: (> </\) e.&'/\')
+
+createdirasneeded jpath '~temp/labs\jpc/test.txt'
+NB. You may inspect to see that the directories were created by this version.
+
+
+NB. =========================================================
 Lab Chapter Show Parenthesis Nesting
 NB. =========================================================
 Lab Section The Problem
@@ -806,7 +1007,7 @@ We can write a program to do that pretty directly.  The characters to use for th
 The program is shown in the edit window.
 )
 PREPARE
-opendebscript 0 : 0
+'matchparens.ijs' opendebscript 0 : 0
 NB. Show Parenthesis Nesting
 
 NB. y is a string
@@ -960,7 +1161,7 @@ In this example the three "a"s have ordinals 0, 1, and 2, and the two "plan"s ha
 Study this computation to convince yourself that it properly computes the ordinals.
 ) 
 PREPARE
-opendebscript 0 : 0
+'itemordinals.ijs' opendebscript 0 : 0
 NB. Item ordinals
 NB. y is any array
 NB. Result is a list, giving, for each item of y, the number of earlier items that match y
@@ -1041,7 +1242,7 @@ The J solution is in the edit window.
 The program performs the steps we outlined.  The only change is that it is more convenient to select the random numbers in the range 0 to S-2 rather than 1 to S-1.
 )
 PREPARE
-opendebscript 0 : 0
+'randomcomp.ijs' opendebscript 0 : 0
 NB. Return random composition (ordered list of positive
 NB. integers adding to a desired total)
 NB. x is the number of integers to pick
@@ -1163,7 +1364,7 @@ Since LF may appear in a quoted field, we must not start the program by splittin
 The final program is shown in the edit window.
 )
 PREPARE
-opendebscript 1!:1 < jpath '~addons\labs\labs\core\splitcsv.ijs'
+'splitcsv.ijs' opendebscript 1!:1 < jpath '~addons\labs\labs\core\splitcsv.ijs'
 PREPARE
 
 NB. =========================================================
@@ -1317,7 +1518,7 @@ We will write a verb to place one ship given its length and ID.  We will call th
 The program to produce the starting position is shown in the edit window.
 )
 PREPARE
-opendebscript 0 : 0
+'battleship.ijs' opendebscript 0 : 0
 SHIPLENID =: 5 4 3 3 2 ,. 1 2 3 4 5  NB. length and id of each ship
 NB. Random Battleship Board
 NB. y is a table, where each row is (ship length),(ship id)
@@ -1447,6 +1648,187 @@ It is possible to write the program shorter but the version we have is pretty sh
 )
 
 NB. =========================================================
+Lab Chapter Levenshtein distance
+NB. =========================================================
+Lab Section The Problem
+The Levenshtein distance between two strings is a measure of how closely they match.  It is described at
+
+http://en.wikipedia.org/wiki/Levenshtein_distance
+
+Essentially, the Levenshtein distance is the minimum number of single-character changes (i.e. insertions, deletions or substitutions) required to convert one string to the other.
+
+Consider the problem.  If you like, look at the solutions given in Wikipedia.
+)
+NB. =========================================================
+Lab Section The Program
+Our method will be to process each character of string (a) against string (b), producing a list (D)
+defined as follows:
+
+after (i) characters of (a) have been processed, position (j) of (D) contains L(i,j), which we define as the Levenshtein distance between
+(i {. a) and (j { b), where (x {. y) means "the first (x) characters of (y)".  (D) has one atom for each character of (b).
+
+
+When we are all through, the last item of (D) will be the Levenshtein distance between the entire strings (a) and (b).
+
+The initial condition of (D) is the set of Levenshtein distances between an empty string (0 {. a) and each prefix of (b).  The distance between an empty string (e) and any string (s) is the length of (s), representing an insertion for each character of (s).
+Thus, the initial condition of (D) is the list (1,2,3...).
+
+When we add a new character of (a), we have to consider its effect on each prefix of (b).  At each position (j):
+
+1. The new character could be deleted, which would mean that L(i,j) = 1 + L(i-1,j) since the deletion increases the Levenshtein distance by 1.
+
+2. The new character could be matched with character (j), which will mean that L(i,j) = L(i-1,j-1)+(subst) where (subst) is 1 if the new character is different from character (j) of (b).  This corresponds to adding 1 to the Levenshtein distance if there is a substitution.
+If the new character matches character (j) of (b), the distance should not be increased.
+
+There is one additional step: L(i,j) can never be more than 1 more than L(i,j-1) because if there is an arrangement that gives a distance L for L(i,j-1), that same arrangement would give a distance of L+1 for L(i,j) [where the added 1 represents a deletion of character (j) of (b)].
+
+Here is the program:
+)
+PREPARE
+'levenshtein.ijs' opendebscript 0 : 0
+NB. x and y are strings
+NB. Result is Levenshtein distance: number of insertions, deletions, & substitutions required
+NB. to transform one string into the other
+levdist=: dyad define"1
+NB.~stop levdist
+NB.~title 3	Levenshtein Distance
+NB.~title1 0	Assign strings to names
+NB.~link0 0	Levenshtein distance	http://en.wikipedia.org/wiki/Levenshtein_distance
+NB.~link1 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB. Assign shorter string to a, longer to b
+'a b'=. (x;y) /: (#x),(#y)
+NB.~title1 0	Initialization
+NB.~link1
+NB. Init iz to index vector with length of b, D to initial value (all insertions)
+D=. >: iz =. i.#b
+NB.~title1 0	Loop over each character of a
+NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB. Process each character of a
+for_j. a do.
+NB.~stop levmain
+NB.~title1 0	Calculate new D(i,j)
+NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB. (>: D) is the distance to use if the new character is deleted
+NB. (shifted D) is the distance to use if the character is substituted,
+NB.  with 1 added if the substitution is a mismatch
+NB. We make sure that the values in D increase by no more than 1
+  D=. <./\&.(-&iz) (>: D) <. (j ~: b) + |.!.j_index D
+end.
+NB.~stop levfinish
+NB.~title1 0	Return result
+NB.~link1
+NB. The last item of D is the distance
+{:D
+))
+)
+PREPARE
+
+NB. =========================================================
+Lab Section Find longer string
+The first step is to sort the strings in order of length.  The verb (x /: y) sorts (x) into the the order given by (y).
+We get the lengths of the input strings and sort them into ascending order of length.  Then we assign the shorter
+string to the name (a), the longer to (b).
+)
+'kiting' levdist 'scatting'
+
+NB. =========================================================
+Lab Section Preliminaries
+We create a list of ascending integers (ix) with the length of (b).  We will use this list in the main loop.  This illustrates a common trick in J:
+rather than looping n times, we create a noun with n items and operate on each item of the noun.
+
+We also initialize the result list (D) to a value corresponding to an empty (a).  In that case, every character of (b) would require a deletion step, and thus for every (i),
+(D(i)=i+1).  Thus (d) is just one more than (ix).
+)
+debugstep''
+
+NB. =========================================================
+Lab Section The loop
+J has loops (while. ... do. ... end.) and (for. ... do. ... end.).  We don't use them often, because every verb in J
+automatically loops.  This application calls for a (for.) loop.
+
+The construct we will use is (for_j. a do. body end.) which works like this:
+
+1. (a) is an array.  The loop body is executed once for each item of (a).
+
+2. (j), designated in (for_j.), is the index variable.  Before each execution of the body, the value of the next item of (a) is assigned to (j).
+
+3. (j_index) [whose name is derived from (j)] gives the iteration number.  The first iteration is 0,  Formally, on iteration (i), (j) is (j_index{a).
+
+Here the array (a) is simply the shorter string, so we will be executing the loop once for each character in (a), giving the character the name (j).
+)
+debugstep''
+
+NB. =========================================================
+Lab Section The loop body
+The work of the program is done in 3 steps.  We consider deleting the character, and substituting it at each possible position in D; then we choose whichever operation gives the shorter distance.
+
+1.  ((j ~: b) + |.!.j_index D) considers the substitution, which may be a match.  (x ~: y) is the "not-equal" verb.  (j ~: b) produces a Boolean list for each position in (b), containing 1 if the character at that position is not the same as the new character (j).
+
+(|.!.f y) is the "right-shift" operation.
+Each item of (y) is moved one item to the right, the last item is discarded, and the first item is replaced by (f).
+
+This is saying that if there is a substitution at position (j_index), the distance after the subsitution is either: [i] if the character in (b) matches (j), it's a match, and the distance is the same as the previous distance for the first (j_index-1) characters; [ii] if the characters do not match, we have to add 1 to the
+previous distance to account for the substitution.
+
+The tricky bit is handling a substitution at the first character.  This implies the deletion of the first (j_index) characters of (a), so we shift that value into the calculation.
+
+2. (>: D) considers the deletion of the character (j).  This simply adds 1 to all the distances that were found for the first (j_index-1) characters of (a).
+
+The smaller of those two values is the distance from the delete/substitute step.
+
+We then have to propagate the improved distance through the list (D), to account for the fact that D(i,j)<=D(i,j-1)+1.
+
+This sounds like a loop, but mentally unrolling the loop we find that it is saying that if for each position (n) in (D) we take (D(n)-n), the resulting values should never increase.
+
+This puts the computation into the mold of (u&.v y), one of the loveliest notations in J.  (u&.v y) says 'apply (v) to (y); then apply (u) to that result; then un-apply (v)'.  Formally, it is
+
+(u&.v y) <=> (v^:_1 u v y)
+
+where (v^:_1) is the inverse operation of (v).
+
+Thus the phrase (<./\&.(-&iz) y) is saying:
+
+1. Subtract (iz) from (y)
+
+2. apply <./\, which is similar to the 'running sum' verb (+/\); it finds, for each position in (y), the smallest value up to and including that position;
+
+3. Add (iz) back into the result
+
+
+That's a full line's worth of computation!  Probe around the dissect window until you see how it all works.
+)
+
+NB. =========================================================
+Lab Section Repeat for subsequent characters of (a)
+Here the second character of (a) is considered.
+
+If you want to see execution on more lines, single-step the Debug window.  When you advance this lab, we will skip to the end of the loop.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Calculate result
+When the loop finishes, the last item of (D) holds the final distance.
+)
+0 debugchangestops 'levdist levmain'
+debugstep''
+
+NB. =========================================================
+Lab Section Completion and expert version
+When we let the verb complete, it returns its result.
+
+Our version of the verb would satisfy an expert.
+
+If you understand the (levdist) verb created here, you might want to look at the Damerau-Levenshtein distance at
+
+http://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+
+and find the small modification to (levdist) needed to calculate this distance.
+)
+0 debugchangestops 'levfinish'
+debugrunstop''
+
+NB. =========================================================
 Lab Chapter Five Number Summary
 NB. =========================================================
 Lab Section The Program
@@ -1460,7 +1842,7 @@ Our output will be a CSV file.  The first line will be copied from the input, ex
 The program is shown in the edit window.
 )
 PREPARE
-opendebscript 0 : 0
+'fivenumbersumm.ijs' opendebscript 0 : 0
 NB. Five Number Summary
 NB. y is filename (string) of a CSV file
 NB.  We read in the file and break it into comma-delimited fields

@@ -57,6 +57,8 @@ NB. Process script y into an edit tab
 NB. x is filename to use for script (xxx.ijs)
 NB. y is a script, in markup form (dissect/debug lines start with NB.~
 NB. and the definitions end with ))
+NB.   or (script;prepflag,debugflag) where we run prepscript only if prepflag is 1,
+NB.   and start debugger only if debugflag is 1
 NB. (the script was inlined in the lab, so )) is needed)
 NB. No result.
 NB. Side effects: the action table, containing stop and dissect info,
@@ -64,13 +66,17 @@ NB. is loaded into the debugger; the text is put into an edit tab.
 opendebscript =: 3 : 0
 DEFAULTFN opendebscript y
 :
+TY  =: y
 ofn =. (tempdir =. jpath '~temp/',LABTEMPDIR),x  NB. output filename
+'text options' =. 2 {. (boxopen y) , <1 1
+'prepflag debugflag' =. 2 {.!.1 options
 NB. process the markup, returning actions and displayable script
-if. '' -: $ 'acttbl text' =. prepscript y do.
+if. prepflag do. A  =: 'acttbl text' =. prepscript text
+else. acttbl =. ''
+end.
+if. '' -: $acttbl do.
   smoutput 'error processing script - ' , acttbl {:: '';'no ) found'
 else.
-  NB. Start/restart the debugger before text is loaded
-  debugstop''
   NB. Create the directory path for the script as needed
   0:@(1!:5@<^:(0=#@(1!:0)@}:))@;\ (<;.2~ e.&'/\') ofn
   NB. Write the script data to the file
@@ -78,14 +84,17 @@ else.
   NB. Make sure comments are preserved for debugger
   comments =. 9!:40''
   9!:41 (1)
-  if. 1 -.@e. temptab =. (] -: ({.~ #))&tempdir@> 1 {"1 wd 'sm get tabs edit' do.
-    NB. This lab is not running in the main edit tab, but it might be in the other.
-    NB. If there is a second edit window, look there
-    if. (<'edit2') e. {."1 wd 'sm get xywh' do.
-      if. 1 e. temptab =. (] -: ({.~ #))&tempdir@> 1 {"1 wd 'sm get tabs edit2' do.
-        wd 'sm active edit2'
+  if. (<'edit') e. winids =. {."1 wd 'sm get xywh' do.
+    if. 1 -.@e. temptab =. (] -: ({.~ #))&tempdir@> 1 {"1 wd 'sm get tabs edit' do.
+      NB. This lab is not running in the main edit tab, but it might be in the other.
+      NB. If there is a second edit window, look there
+      if. (<'edit2') e. winids do.
+        if. 1 e. temptab =. (] -: ({.~ #))&tempdir@> 1 {"1 wd 'sm get tabs edit2' do.
+          wd 'sm active edit2'
+        end.
       end.
     end.
+  else. temptab =. $0  NB. No edit window, force opening new tab
   end.
   if. 1 e. temptab do.
   NB. If there is an edit tab for this lab, replace its file.
@@ -95,12 +104,14 @@ else.
     NB. Otherwise create a new one with this file
     wd 'sm open tab *' , ofn
   end.
-  NB. load the script
-  wd 'sm run edit'
+  NB. Start/restart the debugger before text is loaded
+  debugstop^:debugflag''
+  NB. load the script.  sm run edit defers exec till immex, so we do it by hand
+  0!:100 ({::~   1 ,~ (<'text') i.~ 0&{"1)  wd 'sm get edit'
   9!:41 comments
-  debugstart''   NB. sm run edit is incompatible with debug mode
+  debugstart^:debugflag''
   NB. Load the actions into the debugger - after verbs are loaded.
-  jdb_extstops_jdebug_ acttbl
+  jdb_extstops_jdebug_^:debugflag acttbl
 end.
 0 0$0
 )
@@ -141,7 +152,7 @@ NB. x is 0 to clear, 1, to set, 2 to toggle stops
 NB. y is class(es) to change
 debugchangestops =: 4 : 0
 assert. x e. 0 1 2
-classes =. boxopen y
+classes =. ;:^:(0=L.) y
 if. #stopmods =. (<x) (<a:;0)} (#~ classes e.~ {."1) labdebugstops do.
   jdb_extstops_jdebug_ <stopmods
 end.
@@ -153,7 +164,7 @@ NB. y is text (a verb or a script)
 NB. NB.~ comments indicate debug/dissect controls
 NB. Result is (control info for debug);(text of the script) or scalar retcode if error
 NB. We keep the global name 'labdebugstops' which is the stop
-NB. class followed by the stop data (action;name;locale;valence;lines) for each stop
+NB. class followed by the stop data (name;locale;valence;lines) for each stop
 prepscript =: 3 : 0
 NB. Convert script to table of prefix;start;locale;body
 pslb =. splitscript y
@@ -263,8 +274,8 @@ NB.*exppatt n pattern to match the start of an explicit definition
 NB.-descrip: regex pattern to detect start-of-explicit-definition
 NB.-note: modify if you have novel ways of starting an explicit definition
 exppattn=: rxcomp '(?:^\s*|[^a-zA-Z0-9_])(?:(?:0|noun)\s+define(?:\s|$)|(?:noun|0)\s+:\s*0|Note(?![a-zA-Z0-9_])\s*(?!\s)(?!=[:.]))'
-exppatt=: rxcomp '(?:^\s*|[^a-zA-Z0-9_])(?:0|1|2|3|4|13|noun|verb|adverb|conjunction|monad|dyad)\s+(?:define(?:\s|$)|:\s*0)'
-exppattd=: rxcomp '(?:^\s*|[^a-zA-Z0-9_])(?:4|dyad)\s+(?:define(?:\s|$)|:\s*0)'
+exppatt=: rxcomp '(?:^\s*|[^a-zA-Z0-9_])(?:0|1|2|3|4|13|noun|verb|adverb|conjunction|monad|dyad)\s+(?:define(?:[^a-zA-Z0-9_]|$)|:\s*0)'
+exppattd=: rxcomp '(?:^\s*|[^a-zA-Z0-9_])(?:4|dyad)\s+(?:define(?:[^a-zA-Z0-9_]|$)|:\s*0)'
 
 
 NB. Split a script into verbs

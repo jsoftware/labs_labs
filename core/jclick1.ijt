@@ -80,8 +80,7 @@ In normal use you will open a tab for a file using the File|Open menu.  This lab
 Read the text in the edit window.
 )
 PREPARE
-wd 'sm open tab'
-wd 'sm set edit text *' , 0 : 0
+'editinfo.ijs' opendebscript 0 : 0;0 0
 NB. Since J is interpreted, there is no compilation step for J
 NB. programs.  If you have program definitions that you want to
 NB. execute, you load them by pressing the green arrow above (or
@@ -128,7 +127,7 @@ NB. Find shortest name
 NB. y is a list of boxes, each containing a string
 NB. Result is (unboxed ) shortest string
 findshortestname =: monad define
-NB.~stop 1
+NB.~stop shortname
 NB.~title 3	Find Shortest Name
 NB.~title1 0	Get lengths
 NB.~link1 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
@@ -212,6 +211,7 @@ Two old ladies waiting for a bus across the street notice him as he struggles al
 
 "Sad," says her companion.  "But doesn't his suit fit him nice!"
 )
+0 debugchangestops 'shortname'
 debugrunstop''
 
 NB. =========================================================
@@ -301,7 +301,7 @@ NB. =========================================================
 Lab Section Completion
 We let the verb run to completion.  The result of the verb, which is a list of probabilities, is typed.
 )
-0 debugchangestops ;:'birthday'
+0 debugchangestops 'birthday'
 debugrunstop''
 
 NB. =========================================================
@@ -759,7 +759,7 @@ debugstep''
 NB. =========================================================
 Lab Section completion and display of final result
 )
-0 debugchangestops ;:'stats'
+0 debugchangestops 'stats'
 debugrunstop''
 
 NB. =========================================================
@@ -960,7 +960,7 @@ NB. =========================================================
 Lab Section completion
 We remove our stops and run to completion.
 )
-0 debugchangestops ;:'createdir credir'
+0 debugchangestops 'createdir credir'
 debugrunstop''
 
 NB. =========================================================
@@ -1087,7 +1087,7 @@ NB. =========================================================
 Lab Section Completion
 When we release the program it displays the result.
 )
-0 debugchangestops ;:'parens'
+0 debugchangestops 'parens'
 debugrunstop''
 wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
@@ -1204,7 +1204,7 @@ NB. =========================================================
 Lab Section Solution: completion and final result
 We run the program to completion and see the result.
 )
-0 debugchangestops ;:'itemords'
+0 debugchangestops 'itemords'
 debugrunstop''
 
 NB. =========================================================
@@ -1309,7 +1309,7 @@ NB. =========================================================
 Lab Section completion
 The verb produces its final result, a list.
 )
-0 debugchangestops ;:'randomcomp'
+0 debugchangestops 'randomcomp'
 debugrunstop''
 
 NB. =========================================================
@@ -1459,7 +1459,7 @@ All that remains is to apply the formatting verb to each line.
 
 The result of the verb is shown.
 )
-0 debugchangestops ;: 'splitline splitcsv'
+0 debugchangestops 'splitline splitcsv'
 debugrunstop''
 
 NB. =========================================================
@@ -1665,7 +1665,7 @@ Our method will be to process each character of string (a) against string (b), p
 defined as follows:
 
 after (i) characters of (a) have been processed, position (j) of (D) contains L(i,j), which we define as the Levenshtein distance between
-(i {. a) and (j { b), where (x {. y) means "the first (x) characters of (y)".  (D) has one atom for each character of (b).
+(i {. a) and (j {. b), where (x {. y) means "the first (x) characters of (y)".  (D) has one atom for each character of (b).
 
 
 When we are all through, the last item of (D) will be the Levenshtein distance between the entire strings (a) and (b).
@@ -1682,14 +1682,14 @@ If the new character matches character (j) of (b), the distance should not be in
 
 There is one additional step: L(i,j) can never be more than 1 more than L(i,j-1) because if there is an arrangement that gives a distance L for L(i,j-1), that same arrangement would give a distance of L+1 for L(i,j) [where the added 1 represents a deletion of character (j) of (b)].
 
-Here is the program:
+The program is shown in the edit window.
 )
 PREPARE
 'levenshtein.ijs' opendebscript 0 : 0
 NB. x and y are strings
 NB. Result is Levenshtein distance: number of insertions, deletions, & substitutions required
 NB. to transform one string into the other
-levdist=: dyad define"1
+levdist =: dyad define"1
 NB.~stop levdist
 NB.~title 3	Levenshtein Distance
 NB.~title1 0	Assign strings to names
@@ -1733,11 +1733,11 @@ string to the name (a), the longer to (b).
 
 NB. =========================================================
 Lab Section Preliminaries
-We create a list of ascending integers (ix) with the length of (b).  We will use this list in the main loop.  This illustrates a common trick in J:
+We create a list of ascending integers (iz) with the length of (b).  We will use this list in the main loop.  This illustrates a common trick in J:
 rather than looping n times, we create a noun with n items and operate on each item of the noun.
 
 We also initialize the result list (D) to a value corresponding to an empty (a).  In that case, every character of (b) would require a deletion step, and thus for every (i),
-(D(i)=i+1).  Thus (d) is just one more than (ix).
+(D(i)=i+1).  Thus (d) is just one more than (iz).
 )
 debugstep''
 
@@ -1797,6 +1797,7 @@ Thus the phrase (<./\&.(-&iz) y) is saying:
 
 That's a full line's worth of computation!  Probe around the dissect window until you see how it all works.
 )
+debugstep''
 
 NB. =========================================================
 Lab Section Repeat for subsequent characters of (a)
@@ -1811,7 +1812,7 @@ Lab Section Calculate result
 When the loop finishes, the last item of (D) holds the final distance.
 )
 0 debugchangestops 'levdist levmain'
-debugstep''
+debugrun''
 
 NB. =========================================================
 Lab Section Completion and expert version
@@ -2198,5 +2199,5 @@ The final result of (fivenumbercsv) is the string representing the CSV file.
 
 An expert would be satisfied with the code we wrote.
 )
-0 debugchangestops ;:'addquote fivenum'
+0 debugchangestops 'addquote fivenum'
 debugrunstop''

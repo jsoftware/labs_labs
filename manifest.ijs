@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.110'
+VERSION=: '1.0.111'
 
 FILES=: 0 : 0
 autolab.ijs

@@ -1752,7 +1752,7 @@ The construct we will use is (for_j. a do. body end.) which works like this:
 
 2. (j), designated in (for_j.), is the index variable.  Before each execution of the body, the value of the next item of (a) is assigned to (j).
 
-3. (j_index) [whose name is derived from (j)] gives the iteration number.  The first iteration is 0,  Formally, on iteration (i), (j) is (j_index{a).
+3. (j_index) [whose name is derived from (j)] gives the iteration number.  The first iteration is 0,  Formally, on iteration (J_index), (j) is (j_index{a).
 
 Here the array (a) is simply the shorter string, so we will be executing the loop once for each character in (a), giving the character the name (j).
 )

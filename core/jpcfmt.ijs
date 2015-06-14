@@ -146,7 +146,7 @@ jdb_clear_jdebug_''
 )
 
 NB. Run, then clear
-debugrunstop =: debugstop@debugrun
+debugrunstop =: ([ debugstop)@debugrun
 
 NB. x is 0 to clear, 1, to set, 2 to toggle stops
 NB. y is class(es) to change

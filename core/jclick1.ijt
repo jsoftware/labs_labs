@@ -314,6 +314,7 @@ load 'plot'
 'title Probability of distinct birthdays' plot (>: i. 50);birthdayprob 50
 wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
+
 NB. =========================================================
 Lab Chapter Word, Character, and Line Count
 NB. =========================================================
@@ -1217,6 +1218,150 @@ itemordinals =: i.~   (] - {)   /:@/:
 
 itemordinals words
 wd 'sm focus term'  NB. needed to avoid crash in 8.03
+
+NB. =========================================================
+Lab Chapter Perfect Shuffles
+NB. =========================================================
+Lab Section Out-shuffles and In-shuffles, and the problem
+[the idea behind this program comes from Raul Miller]
+
+A pack containing an even number of cards can be "perfectly shuffled" by splitting the pack into two equal halves and
+interleaving the cards of each half.
+
+[This type of shuffle is called a "faro shuffle", "weave shuffle", or "riffle shuffle" and is described at
+https://en.wikipedia.org/wiki/Shuffling#Riffle]
+
+Two types of perfect shuffle are possible: the "out-shuffle", in which each card of the top half comes before the corresponding card of
+the bottom half; and the "in-shuffle", in which the card from the bottom half comes first.  In an out-shuffle the top and bottom cards stay in place; in an in-shuffle they move one position toward the center of the pack.
+
+Performing a perfect shuffle repeatedly will eventually return the pack to its original order!
+
+How many perfect in-shuffles are required to put a 52-card pack back in order, and how many perfect out-shuffles?
+)
+
+NB. =========================================================
+Lab Section Permutations and cycle form
+The key is to view the shuffle as a permutation.  Repeated applications of the same permutation eventually bring the pack back to its original order.
+
+How many applications?  The easiest way to find out is to express the permutation in "cycle form", which breaks the permutation into "cycles".  A "cycle" is a sequence of positions
+p0, p1, ... pn for which the permutation moves value p1 to position p0, value p2 to position p1, and so on, ending by moving value p0 to position pn. 
+
+In J the verb (C. y) converts a permutation between cycle form and "direct form" in which each position indicates which item of input is moved to that position by the permutation.
+
+See the examples below.
+)
+NB. A permutation:
+p =. 2 1 3 4 0
+NB. See it work:
+p { 'abcde'
+NB. Express it in cycle form:
+C. p
+NB. The cycle form says that item 1 does not move (it is in
+NB. a cycle by itself), and that item 0 moves to position 4, item 2 to
+NB. position 0, item 3 to position 2, and item 4 to position 3.
+
+
+NB. =========================================================
+Lab Section The program
+The original position will be restored when each cycle has come back to its starting position.
+This will be a common multiple of the lengths of the cycles; the least common multiple will be the first repeat.
+
+Fortunately, J has the verb (x *. y) for finding the least common multiple of (x) and (y), and (*./ y) by analogy with
+(+/ y) to find the LCM of a set of numbers.
+
+So, the program will
+
+1. Express the perfect shuffle as a permutation
+
+2. Put the permutation into cycle form
+
+3. Find the LCM of the cycle lengths.
+
+The program is shown in the edit window.
+)
+PREPARE
+'shufflecount.ijs' opendebscript 0 : 0
+NB. Perfect shuffles
+NB. x is the size of the pack
+NB. y is 0 1 for an out-shuffle, 1 0 for an in-shuffle
+NB. Result is the number of shuffles needed to restore order
+shufflecount =: dyad define"0 1
+NB.~stop shuffle
+NB.~title 3	Perfect Shuffles
+NB.~title1 0	Calculate permutation for the shuffle
+NB.~link0 0	Riffle shuffle	https://en.wikipedia.org/wiki/Shuffling#Riffle]
+NB. Create list indicating which positions come from the top half
+NB. (0) and which from the bottom (1); then find the ordinal positions,
+NB. which gives the direct form of the permutation that moves
+NB. 00...011...1 to 01010101 or 10101010.  This is the shuffle
+NB. permutation
+shuffleperm =. /: /: x $ y
+
+NB.~title1 0	Convert to cycles and find LCM
+NB.~link0 0	LCM	https://en.wikipedia.org/wiki/Least_common_multiple
+NB.~link1 0	Cycle Notation for permutations	https://en.wikipedia.org/wiki/Permutation#Cycle_notation
+NB. Convert to cycles, find the length of each, and LCM.
+NB. This is the result
+*./ #@> C. shuffleperm
+))
+) 
+PREPARE
+
+NB. =========================================================
+Lab Section Out-shuffle permutation
+We see the calculation of the out-shuffle permutation using the ordinals of the alternating list.
+)
+52 shufflecount 0 1
+
+NB. =========================================================
+Lab Section Compute LCM
+We get the length of each cycle, and then take the LCM of all the lengths.
+
+Note the use of (#@>) to get the lengths of the cycles.  It wouldn't do to use (# >) because
+opening the boxes would force them all into a single array with fills added, losing the original length information.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Completion
+)
+debugrun''
+
+NB. =========================================================
+Lab Section In-shuffle permutation
+Same computation, but for the in-shuffle.
+)
+52 shufflecount 1 0
+
+NB. =========================================================
+Lab Section Compute LCM
+The in-shuffle permutation has a different cycle structure.
+)
+debugstep''
+
+NB. =========================================================
+Lab Section Completion
+It takes more in-shuffles than out-shuffles to restore the pack to original order.
+)
+debugrunstop''
+
+NB. =========================================================
+Lab Section Expert version
+In expert J the program is a one-liner.
+)
+NB. Perfect shuffles
+NB. x is the size of the pack
+NB. y is 0 1 for an out-shuffle, 1 0 for an in-shuffle
+NB. Result is the number of shuffles needed to restore order
+shufflecount =: ((*./)@:(#@>)@C.@/:@/:@$)"0 1
+
+52 shufflecount 0 1
+52 shufflecount 1 0
+
+
+
+
+
 
 NB. =========================================================
 Lab Chapter Random Composition

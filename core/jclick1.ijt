@@ -1080,7 +1080,7 @@ First we calculate the top character, which depends on the class of the characte
 Then we create the characters for the column, by using (x {. y) to take as many characters as the nesting level.
 We do this independently for each character [because of the ("0)].  We fill the extra characters with vertical bars (!.vert) and we leave the top character on the right [because the shift value is negative].
 
-The resulting array has the information we want.  We just have to interchange the vertical and horizontal axes (|: y), the flip top and bottom (|. y), and join the oroginal string (x , y).
+The resulting array has the information we want.  We just have to interchange the vertical and horizontal axes (|: y), flip vertically top and bottom (|. y), and join the original string (x , y).
 )
 debugstep''
 

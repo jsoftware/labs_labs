@@ -104,7 +104,7 @@ Example: Suppose we want to create some "personal baggage check" objects. We wan
 
 The next section creates and opens a "pbc"-class script.
 
-Position the IJX and IJS windows so you can work with both.
+Position the Term and Edit windows so you can work with both.
 )
 
 NB. =========================================================
@@ -145,7 +145,7 @@ The first script line is: coclass "pbc"
 
 pbc is the class name.
 
-Class and object utilities are defined in colib.ijs. The co prefix is for "class/object".
+Class and object utilities are defined in stdlib.ijs. The co prefix is for "class/object".
 )
 
 NB. =========================================================

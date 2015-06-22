@@ -42,10 +42,7 @@ Lab Section
 This lab discusses the basic facilities provided by locales, and shows how they can be used to do modular programming.
 
 Lab "Object Oriented Programming" shows how a certain model of working with locales can be used to do OOP.
-
-The lab first loads utilities in coutil.ijs:
 )
-load 'coutil'
 
 NB. =========================================================
 Lab Section plot example
@@ -74,12 +71,14 @@ A J session can have several locales, and thereby can have several sets of globa
 )
 
 NB. =========================================================
-Lab Section colib
+Lab Section standard library
 The 18!:x foreigns work with locales.
 
-colib.ijs defines utilities using 18!:x and in general you will not use 18!: directly.
+The standard library defines utilities using 18!:x and in general you will not use 18!: directly.
 
-colib utilities start with a prefix of co. The co is for class/object which is OOP terminology. One use of locales is in providing OOP.
+These utilities start with a prefix of co.
+The co is for class/object which is OOP terminology.
+One use of locales is in providing OOP.
 )
 
 NB. =========================================================
@@ -751,7 +750,7 @@ NB. =========================================================
 Lab Section 18!:x
 Locales are used by direct and indirect locatives and by the 18!:x foreigns.
 
-Summary of 18!:x and colib.ijs definitions:
+Summary of 18!:x definitions:
  18!:1   conl        - 0/1  named/numbered
  18!:2   copath      - return path : set path
  18!:3   cocreate    - create numbered

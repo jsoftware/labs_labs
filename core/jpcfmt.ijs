@@ -78,8 +78,8 @@ if. '' -: $acttbl do.
   smoutput 'error processing script - ' , acttbl {:: '';'no ) found'
 else.
   NB. Create the directory path for the script as needed
-  0:@(1!:5@<^:(0=#@(1!:0)@}:))@;\ (<;.2~ e.&'/\') ofn
-  NB. Write the script data to the file
+  1!:5 :: 0: @<@;\ (<;.2~ e.&'/\') ofn
+ NB. Write the script data to the file
   text 1!:2 <ofn
   NB. Make sure comments are preserved for debugger
   comments =. 9!:40''

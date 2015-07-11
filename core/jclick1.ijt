@@ -395,6 +395,7 @@ Rather than say 'the verb (*) when used monadically' we will use the more compac
 
 In this notation we are simply generalizing normal J usage.  Within any user-defined verb the right argument is referred to as (y) and the left, if any, as (x).  Our (x * y) notation uses the same names for the arguments to primitives.
 )
+NB. 
 
 NB. =========================================================
 Lab Section Invoking wc
@@ -408,6 +409,7 @@ All J sentences are executed right-to-left.  A verb is executed by giving its na
 
 In this case, (jpath) does not have a noun to its left, so it is executed with the string as its sole argument.  The result from (jpath y) then becomes the sole argument of (wc y) which is executed next.
 )
+NB. 
 
 NB. =========================================================
 Lab Section Read the file
@@ -778,204 +780,6 @@ The rank mechanism provides way of matching computation to data: by applying a v
 
 J has about a dozen other ways to rearrange data for computation.  We will examine these in later chapters, and with examples as we go along.
 )
-
-NB. =========================================================
-Lab Chapter Create Directory
-NB. =========================================================
-Lab Section The problem
-Given a file name, for example 'C:/My Documents/Vacations/monaco.txt', we want to make sure
-that the directories all exist.
-
-This involves checking that the files 'C:/My Documents' and 'C:/My Documents/Vacations' exist, creating them if they do not.
-
-This is not a taxing problem, but think about how you would write it.  Directories are delimited by either '/' or '\', and the first
-slash should be ignored because it indicates a drive letter rather than a directory.
-)
-
-NB. =========================================================
-Lab Section Solution
-The steps to solving this problem will be:
-
-1. Find the location of each slash that ends a directory name
-
-2. Split the string into a sequence of directory qualifiers
-
-3. For increasingly long subdirectories, check for existence and create directory if not found
-
-J has primitives to:
-
-1. check each character against a slash
-
-2. split a string at delimiters
-
-3. apply a verb on successive prefixes of an array
-
-so we just need to use them.
-The J solution is in the edit window.
-
-)
-PREPARE
-'createdir.ijs' opendebscript 0 : 0
-NB. The foreign verb (1!:5) creates a directory.  Here we give it a descriptive name.
-createdir =: 1!:5
-NB. During this lab, sentences are executed multiple times, one for dissect and one for
-NB. debug, and creating the directories will get them mixed up.  So we replace
-NB. createdir with a harmless verb that does nothing
-createdir =: 1:
-
-NB. Create directory if it doesn't exist already
-NB. y is a string giving a filename (ex: 'C:/xxx/yyy.txt')
-NB. Result is number of directories we created
-createdirasneeded =: monad define
-NB.~stop createdir
-NB.~title 3	Create Directories As Needed
-NB.~title1 0	Find positions of slashes
-NB. Find ending slashes
-slashpos =. y e. '/\'
-
-NB.~title1 0	Remove the first slash
-NB. Remove first slash, since that's not a directory
-slashpos =. slashpos > </\ slashpos
-
-NB.~title1 0	Create directories
-NB. Box each directory; create directories one by one
-+/ credir\ slashpos <;.2 y
-))
-
-NB. Create single directory as needed
-NB. y is a list of boxes
-NB. We run the contents of the boxes together to make the directory name.
-NB. If the directory exists, we return 0; if not, we create it and return 1
-credir =: verb define
-NB.~stop credir
-NB.~title 3	Create Single Directory
-NB.~title1 0	Run boxes together
-NB. Create name of directory
-dirname =. }: ; y
-
-NB.~title1 0	Does directory exist?
-NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
-if. 0 = # 1!:0 dirname do.
-  NB.~title1 0	Create new directory
-  NB. Create new directory and set return code
-  createdir dirname
-else.
-  NB.~title1 0	Directory exists, return 0
-  0
-end.
-))
-)
-PREPARE
-
-NB. Before we start, remove the two lower-level directories
-1!:55 :: 0: (jpath '~temp/labs/jpc');(jpath '~temp/labs')
-
-
-NB. =========================================================
-Lab Section Find slashes
-First we create a Boolean list indicating which characters are slashes.
-)
-createdirasneeded jpath '~temp/labs\jpc/test.txt'
-
-NB. =========================================================
-Lab Section Find the first 1
-J will teach you the power of comparisons (>) and (<).
-
-When they are applied to Booleans, the comparison verbs have very simple descriptions.
-If (x) and (y) are restricted to the values 0 and 1, (x > y) produces 1 if (x) is 1 and (y) is 0, and 0 the rest of the time.
-Likewise, (x < y) produces 1 only when (x) is 0 and (y) is 1.
-
-What would (</ y) do?  For example, what would (</ 1 0 1 1 1) or (</ 0 0 0 1) produce?
-
-(u/) means 'insert the verb (u) between items of (y)', so (</ 1 0 1 1 1) is the same as
-
-1 < 0 < 1 < 1 < 1
-
-Now, imagine this being executed right-to-left.  The first comparison, (1 < 1), produces 0.  The next comparison will then be (1 < 0) which also produces 0, and you can see that the overall result must be 0, because the only way to get a 1 out of (x < y) is to be comparing (0 < 1): once a comparison produces 0, all further comparisons will produce 0 as well.
-
-In other words, (</ y) will produce a 1 only if (y) is all 0 except for a single 1 at the end.
-
-What about (</\ y) then?  This means, "Apply (</) on prefixes of (y) of increasing length, starting with just the first item."
-So the result of (</\ 0 1 0 0 1 0) would be
-
-(</ 0) , (</ 0 1) , (</ 0 1 0)...
-
-Only one of these applications of (</) will produce a 1.  That 1 will be in the position of the first 1 in the Boolean list (y).
-
-So now we can say it: (+/\ y) when (y) is Boolean list produces a list with the shape of (y), with the leading 1 preserved and all other positions set to 0.
-
-See how powerful the modifiers of J are!  Here (/) and (\) combine to produce an elegant result.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Turn off the first 1
-After that ordeal, can you see what (slashpos > </\ slashpos) does?
-
-It turns off the first 1 in slashpos.
-
-The result is a Boolean list marking the ends of directories.
-)
-
-NB. =========================================================
-Lab Section Create all directories
-We use the end-of-directory markers to split the filename into pieces.
-
-Then we use (u\) again, this time to execute the verb (credir) on each directory in turn.
-
-At the end we add up the returned values, indicating how many directories we created.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Run directories together to produce directory name
-We use (; y) to run all the strings together, and then (}: y) to remove the trailing slash.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Test whether directory exists
-(1!:0 y) is a foreign verb that tests whether the file (y) exists.  It returns the number of files that matched the description in (y).  We compare this result against 0.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Directory exists, return 0
-The first-level directory exists, so we don't need to create it, and there is nothing else for this verb to do.
-
-But we need to produce the return value of 0.  Since the last sentence executed before the end of the verb
-becomes the return value, we execute a sentence with the value 0.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section Next directory
-We immediately start to work on the next-lower directory.
-If you want to see other directories in the chain, single-step the debugger.
-
-When you advance this lab, we will skip to the end of the directory-creating step.
-)
-debugstep''
-
-NB. =========================================================
-Lab Section completion
-We remove our stops and run to completion.
-)
-0 debugchangestops 'createdir credir'
-debugrunstop''
-
-NB. =========================================================
-Lab Section Expert version
-In advanced J, the program can be written in a single line.
-)
-NB. Create directory if it doesn't exist already
-NB. y is a string giving a filename (ex: 'C:/xxx/yyy.txt')
-NB. Result is number of directories we created
-createdirasneeded =: [: +/ [: (1!:5`0:@.(0~:#@(1!:0)@}:))@;\ (<;.2~   [: (> </\) e.&'/\')
-
-createdirasneeded jpath '~temp/labs\jpc/test.txt'
-NB. You may inspect to see that the directories were created by this version.
-
 
 NB. =========================================================
 Lab Chapter Show Parenthesis Nesting

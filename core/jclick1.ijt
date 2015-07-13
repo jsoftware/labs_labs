@@ -19,7 +19,7 @@ Type the string
 
 into the last line of this window and press ENTER.  The result will be typed below your input.
 
-To advance to the next section, press ctrl+J.
+To advance to the next section, press ctrl+J in any of the main lab windows [the term window, the debug window, or the dissect window].
 
 NOTE: In this lab, parentheses are used to indicate J code.
 )
@@ -104,6 +104,12 @@ Lab Section Debug window
 The third window is the debug window.  Right now it's just a little bar in the upper-right of your screen.  It will get bigger when it has something to say.
 
 In normal use you summon up the debug window by pressing ctrl+K.  This lab will manage the debugger for you.
+
+To begin with the debug window is set to remain on top of the display at all times.  With a display as busy as this lab's, which has several windows open at once, you might want to revert the debug window to normal priority so that other windows can cover it.
+
+Ctrl+T toggles the display priority for the debug window. Click on the debug window and then press Ctrl+T.
+
+The display priority is remembered between invocations of the debugger.
 )
 PREPARE
 jdb_open_jdebug_ ''
@@ -119,7 +125,6 @@ The top pane shows the lines of the definition that is running.  The > shows the
 The middle pane shows the "call stack": the programs that were called on the way to the line being debugged.  In this case, most of them are in the Labs Manager.
 
 The bottom pane shows the values of names that will be referred to in the sentence.
-
 )
 PREPARE
 'shortname.ijs' opendebscript 0 : 0
@@ -246,7 +251,6 @@ NB. y is list of boxed names, result is unboxed shortest name
 findshortestname =: {::~   (i. <./)@:(#@>)
 
 findshortestname 'Jeb';'Hillary';'George';'Bill'
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Chapter The Distinct-Birthday Problem
@@ -312,8 +316,6 @@ J includes a package to create plots.
 )
 load 'plot'
 'title Probability of distinct birthdays' plot (>: i. 50);birthdayprob 50
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
-
 
 NB. =========================================================
 Lab Chapter Word, Character, and Line Count
@@ -395,7 +397,6 @@ Rather than say 'the verb (*) when used monadically' we will use the more compac
 
 In this notation we are simply generalizing normal J usage.  Within any user-defined verb the right argument is referred to as (y) and the left, if any, as (x).  Our (x * y) notation uses the same names for the arguments to primitives.
 )
-NB. 
 
 NB. =========================================================
 Lab Section Invoking wc
@@ -409,7 +410,6 @@ All J sentences are executed right-to-left.  A verb is executed by giving its na
 
 In this case, (jpath) does not have a noun to its left, so it is executed with the string as its sole argument.  The result from (jpath y) then becomes the sole argument of (wc y) which is executed next.
 )
-NB. 
 
 NB. =========================================================
 Lab Section Read the file
@@ -682,7 +682,6 @@ Verbs that operate on an entire array, such as ($ y) which gives its shape or (|
 )
 destroy__dl''
 dl =: 2 dissect '+/"1 d'
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Section Choosing a rank for your verb
@@ -799,8 +798,6 @@ Sample display:
 └─────┘ └───────────────────────────────────┘
 )
 PREPARE
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
-
 
 NB. =========================================================
 Lab Section The Program
@@ -894,7 +891,6 @@ When we release the program it displays the result.
 )
 0 debugchangestops 'parens'
 debugrunstop''
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Chapter Searching, Selection, Sorting, and Grading
@@ -951,7 +947,6 @@ PREPARE
 destroy__dl''
 ] words =: ;: 'a man a plan a canal another plan another canal Panama'
 itemordinals words
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Section Solution: ordinals
@@ -1021,7 +1016,6 @@ NB. Result is a list, giving, for each item of y, the number of earlier items th
 itemordinals =: i.~   (] - {)   /:@/:
 
 itemordinals words
-wd 'sm focus term'  NB. needed to avoid crash in 8.03
 
 NB. =========================================================
 Lab Chapter Perfect Shuffles

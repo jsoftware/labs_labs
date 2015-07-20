@@ -24,6 +24,27 @@ To advance to the next section, press ctrl+J in any of the main lab windows [the
 NOTE: In this lab, parentheses are used to indicate J code.
 )
 PREPARE
+NB. Check the Qt and library versions
+
+(tlib__ =: 3 : 0) (0 : 0) ; (0 : 0)
+Your base library is out of date.  Before running this lab, go to Package Manager and
+update the base library.
+)
+Your Qt system is out of date.  To refresh it, follow the instructions at
+http://www.jsoftware.com/jwiki/Guides/Qt%20IDE/Install#Upgrade.  Don't forget to
+update ide\qt!
+)
+libver =. _3 {. 0&".;._2 '.' ,~ LF taketo 'Library:' takeafter JVERSION
+qtver =. _3 {. 0&".;._2 '.' ,~ '/' taketo 'Qt IDE:' takeafter JVERSION
+if. \: qtver ,: 1 4 3 do. res =. 0 {:: y
+elseif. \: libver ,: 8 4 6 do. res =. 1 {:: y
+elseif. do. res =. ''
+end.
+if. #res do. smoutput LF,LF,'***** Warning *****',LF,res end.
+0 0$0
+)
+
+
 load '~addons/labs/labs/core/jpcfmt.ijs'
 
 NB. Fix up user's config file
@@ -313,9 +334,17 @@ Lab Section Plotting the result
 We can plot the results as a function of n.
 
 J includes a package to create plots.
+
+To learn about it, run the Lab titled 'Plot Package'
 )
-load 'plot'
+require 'plot'
 'title Probability of distinct birthdays' plot (>: i. 50);birthdayprob 50
+
+NB. =========================================================
+Lab Section Plotting the result
+We will close the plot window to get it out of the way.
+)
+plot_close_jwplot_ :: ] ''
 
 NB. =========================================================
 Lab Chapter Word, Character, and Line Count

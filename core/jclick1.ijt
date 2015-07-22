@@ -79,12 +79,12 @@ if. #availkeys =. keysneeded -. 0 {"1 keynameval do.
   newvals =. (availkeys e.~ 0 {"1 desiredkeyvals) # desiredkeyvals
   NB. Get strings to add to config
   newconfigs =. ; (0&{ , ';' ; (<LF) ,~ 1&{)"1 newvals
-  NB. Rewrite config file
-  (cfiled , newconfigs) 1!:2 cfile
-  NB. Tell user what we did
-  newkeys =. 0 {"1 newvals
-  newactions =. ';' ([ taketo takeafter)&.> 1 {"1 newvals
-  fkeyinfo =. fkeyinfo , newkeys ('After restarting J, you can use ' , [ , ' for ' , ])&.> newactions
+  if. 'yes' -: wd 'mb query mb_yes mb_no "OK to change configuration?" "I would like to define function keys for dissect and lint.  Is that OK with you?',LF,LF,'If so, I will stop J and you will need to restart it."' do.
+    NB. Rewrite config file
+    (cfiled , newconfigs) 1!:2 cfile
+    NB. Kill J to allow restart with new keys
+    2!:55 (0)
+  end.
 end.
 fkeyinfo
 )
@@ -184,7 +184,7 @@ A single sentence in J can do an enormous amount of computation, so much that yo
 
 The dissect window shows you the execution of a single sentence, with the inputs coming in at the top and the results going out at the bottom.  By clicking and hovering over parts of the dissect display, you can learn what a sentence is doing.
 
-Start by going through the dieect menu line, choosing the options you want.  Beginners often like to set the tooltip delay to 'immediate' and the tooltip detail to 'tutorial'.
+Start by going through the dissect menu line, choosing the options you want.  Beginners often like to set the tooltip delay to 'immediate' and the tooltip detail to 'tutorial'.
 
 Take a minute to hover over different blocks, and to click them.
 
@@ -356,7 +356,7 @@ Before you try to analyze it, learn the essential terms of J.  Click on the link
 
 In J, a "noun" is a piece of data, and a "verb" is a function that operates on one or two nouns.
 
-Nouns have "shape" - corresponding to dimensions in other languages.  The the dissect display, the shape of a noun appears above its value.
+Nouns have "shape" - corresponding to dimensions in other languages.  In the dissect display, the shape of a noun appears above its value.
 
 Nouns have "type" - numeric, character, and boxed.  The special boxed type is a container that holds other nouns.  [Note that you don't have a worry about whether a number is integer or floating-point.  J will pick whichever is better.]
 
@@ -549,7 +549,7 @@ The position of an item along its axis is called the "index".  The index of the 
 
 An atom of an array can be identified by giving all its indexes, which taken together are called the "index list".
 
-The list of lengths of coordinate axes is called the "shape" of a noun.  The verb ($) produces the shape of its argument.
+The list of lengths of coordinate axes is called the "shape" of a noun.  The verb ($ y) produces the shape of its argument.
 
 The number of axes is called the "rank" of the noun.  The rank is therefore the length of the shape, and ($ $ y) gives the rank of the noun (y).
 
@@ -654,7 +654,10 @@ An array can be construed as an array of cells of lower rank.
 An operation on an array may apply to the array as a whole, for example "how big is the array?",
 or to parts of the array, for example "add array A to array B" which is performed number by number.
 
-is usually broken into a set of operations on parts of the array.  For example, comparing two characters is an operation on atoms, but if two strings are compared, the (=) verb is automatically applied between corresponding atoms.
+Consider the concept "compare two strings".  Depending on what you want, this could be a whole-array operation, returning a Boolean result telling whether the two strings are identical; or it could be an operation on individual characters, returning a Boolean result for each character.
+
+In J you would use the compare-whole-arrays verb (x -: y) to generate one Boolean value for the arrays, or the compare-atoms verb (x = y)
+to get a Boolean value for each pair of corresponding atoms of (x) and (y).
 
 
 You can control how a verb is executed by specifying the rank of the cells it will operate on.  You do this by following the verb with ("n) where (n) is the rank of the cells you want the verb to be applied to.  (u"n) is a "derived verb" that operates like (u), but it is applied to n-cells.
@@ -688,7 +691,7 @@ Here's the solution.  Click on results to see how result-cells were generated.
 
 The execution of a verb automatically implies execution on multiple cells, depending on the rank of the verb.  These cells will have been ordered as an array, and the results of the execution are ordered the same way.  This ordering, which is taken from the leading axes of the argument-shape and becomes the leading axes of the result-shape, is called the "frame".
 
-In the example shown, the verb (|. y) is executed 3 times, with a frame of (3).  Each result is a list [of 4 characters], so the overall result is a list of lists, with shape (3 4).
+In the example shown, the verb (x |. y) is executed 3 times, with a frame of (3).  Each result is a list [of 4 characters], so the overall result is a list of lists, with shape (3 4).
 
 The verb (+/ y) takes the total of the items of its argument.  What verb would add up the items in each row of an array?  What would be the shape of the result if (+/) were applied to the array (d) shown below?
 )
@@ -709,7 +712,7 @@ In general, a verb is responsible for handling any argument whose rank is less t
 
 Verbs that operate on an entire array, such as ($ y) which gives its shape or (|. y) which reverses the order of items, have infinite rank.
 )
-destroy__dl''
+destroyy dl
 dl =: 2 dissect '+/"1 d'
 
 NB. =========================================================
@@ -731,7 +734,7 @@ We ran the verb on a 3-line table of numbers, but as you can see J automatically
 Observe, as we stop at the first execution of (stats), that the (y) argument is just the first list from (data).
 )
 PREPARE
-destroy__dl''
+destroyy dl
 'simplestats.ijs' opendebscript 0 : 0
 NB. Create count, mean, and sample standard deviation for a list
 stats =: monad define"1
@@ -959,7 +962,7 @@ Sort Using and Grading are very powerful but they seem exotic to scalar programm
 Take a minute to look at this display and verify that (/: y) is the grading permutation, and that the definition of (x /: y) is correct.
 The purpose of the program is to order a rack of Scrabble letters in ascending order of score.
 )
-destroy__dl''
+destroyy dl
 scrabbleletters =: 'peccary'
 letterscore =: 3 1 3 3 1 1 4
 dl =: (2;<'title';'3',TAB,'(/: y) and (x /: y)') dissect '(scrabbleletters /: letterscore) -: ((/: letterscore) { scrabbleletters)'
@@ -973,7 +976,7 @@ Decide how you would write program
 PREPARE
 itemordinals =: i.~   (] - {)   /:@/:
 PREPARE
-destroy__dl''
+destroyy dl
 ] words =: ;: 'a man a plan a canal another plan another canal Panama'
 itemordinals words
 

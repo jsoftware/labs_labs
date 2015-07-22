@@ -4,6 +4,9 @@ require 'regex'
 LABTEMPDIR =: 'labs/jpc/'  NB. subdir of ~temp to use for files
 DEFAULTFN =: 'example.ijs'
 
+NB. destroy the locale y, but no error if it doesn't exist
+destroyy =: 3 : 'try. destroy__y $0 catch. end. 0 0$0'
+
 NB. Markup language for scripts
 NB.
 NB. Scripts are normal J scripts, but with )) rather than ) to end definitions

@@ -35,7 +35,7 @@ http://www.jsoftware.com/jwiki/Guides/Qt%20IDE/Install#Upgrade.  Don't forget to
 update ide\qt!
 )
 libver =. _3 {. 0&".;._2 '.' ,~ LF taketo 'Library:' takeafter JVERSION
-qtver =. _3 {. 0&".;._2 '.' ,~ '/' taketo 'Qt IDE:' takeafter JVERSION
+qtver =. _3 {. 0&".;._2 '.' ,~ 's' -.~ '/' taketo 'Qt IDE:' takeafter JVERSION
 if. \: qtver ,: 1 4 3 do. res =. 0 {:: y
 elseif. \: libver ,: 8 4 6 do. res =. 1 {:: y
 elseif. do. res =. ''

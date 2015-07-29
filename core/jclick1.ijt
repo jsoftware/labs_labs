@@ -26,7 +26,7 @@ NOTE: In this lab, parentheses are used to indicate J code.
 PREPARE
 NB. Check the Qt and library versions
 
-(tlib__ =: 3 : 0) (0 : 0) ; (0 : 0)
+(3 : 0) (0 : 0) ; (0 : 0)
 Your base library is out of date.  Before running this lab, go to Package Manager and
 update the base library.
 )
@@ -49,9 +49,9 @@ load '~addons/labs/labs/core/jpcfmt.ijs'
 
 NB. Fix up user's config file
 desiredkeyvals =: ';'&(taketo ; takeafter);._2 (0 : 0)
-F2;1;Dissect Line;dissect@finddissectline_dissect_ 0
-F3;1;Dissect Last Error;dissect@finddissectline_dissect_ 1
-F4;1;Lint;lintwindow_lint_''
+F2;0;Dissect Line;dissect&.finddissectline_dissect_ 0
+F3;0;Dissect Last Error;dissect&.finddissectline_dissect_ 1
+F4;0;Lint;lintwindow_lint_''
 )
 fkeystatus =: 3 : 0''
 fkeyinfo =. 0$a:

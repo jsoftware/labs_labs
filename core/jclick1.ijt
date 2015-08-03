@@ -32,7 +32,7 @@ update the base library.
 )
 Your Qt system is out of date.  To refresh it, follow the instructions at
 http://www.jsoftware.com/jwiki/Guides/Qt%20IDE/Install#Upgrade.  Don't forget to
-update ide\qt!
+update the ide\qt addon!
 )
 libver =. _3 {. 0&".;._2 '.' ,~ LF taketo 'Library:' takeafter JVERSION
 qtver =. _3 {. 0&".;._2 '.' ,~ 's' -.~ '/' taketo 'Qt IDE:' takeafter JVERSION

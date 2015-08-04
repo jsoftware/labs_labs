@@ -62,7 +62,7 @@ if. LF ~: {:cfiled do. cfiled =. cfiled , LF end.
 NB. Cut to lines
 lines =. <;._2 cfiled -. CR
 NB. discard comments
-lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines  
+lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines
 NB. get delimiter for each line
 delims =. (,&';' {~ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+' i.&0@:e.~ deb)@> lines
 NB. get existing keyname;values
@@ -94,10 +94,10 @@ fkn =. 0 {"1 fkeyassigned
 (fkn,<'') {~ fka i. ';' ([ taketo takeafter)&.> (1&{"1) desiredkeyvals
 )
 PREPARE
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Talking to your computer
 In this window, you type to Roger.  Roger asks the machine to do what you want and tells you what happened.
@@ -117,10 +117,10 @@ J.
 NOTE: In this lab, parentheses are used to indicate words in the J language.
 )
 
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section J sentences; words; numbers
 You talk to Roger by typing "sentences".  When you press ENTER, Roger executes whatever you typed.
@@ -146,10 +146,10 @@ Underscore by itself (_) represents infinity.  (__) is negative infinity.
 0.5 + 2   NB. better
 4 + _2
 _ + 1  NB. Infinity plus one remains infinity
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Primitives
 A "primitive" is a word that has a predefined meaning in J.  You have to look up the meaning.
@@ -160,7 +160,7 @@ Primitives can be:
 
 1. A single-digit number (may be negative) followed by a colon, for example 0: _2: 9: _:
 
-2. Any letter or primitive followed by a period or colon, for example +. i. {:: &.:   
+2. Any letter or primitive followed by a period or colon, for example +. i. {:: &.:
 
 The tacked-on period(s) and colons(s) at the end of a primitive are called "inflections".
 
@@ -181,10 +181,10 @@ The primitive (NB.) will be important for us.  It is the "comment" primitive.  I
 7 +. 8
 NB. Can you figure out what +. does?
 NB. You will have to experiment by typing sentences for Roger to execute.
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Names
 So far Roger looks like a pocket calculator: you type in a mathematical expression, and he types back the answer.
@@ -221,10 +221,10 @@ smu   NB. Roger, what is the value of this name?  Oops, I misspelled it
 sum5num   NB. What is the value of this name?
 enigma =: +/ i. 6  NB. ???
 NB. Now tell me, what is the value of (enigma)?
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Assignments and display
 If you were eagle-eyed, you noticed that when you typed an assignment, Roger didn't type anything back.  [You can look back to verify this.]
@@ -236,10 +236,10 @@ If you want to assign a value to a name and display it at the same time, fix thi
 enigma   NB. to find the value of a name, type the name
 array =: i. 5 6  NB. Create the array but don't display it
 ]array =: i. 5 6  NB. Create the array and display
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Assignments are not mathematics
 Many beginners make the mistake of thinking that assignments do more than they really do.
@@ -251,10 +251,10 @@ Follow the next few sections carefully and make sure you answer each question co
 minutes =: 5
 seconds =: 60 * minutes
 NB. What is the value of (seconds) now?  How would you find out?
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Assignments are not mathematics
 To find the value of a name, type the name by itself.
@@ -262,10 +262,10 @@ To find the value of a name, type the name by itself.
 seconds
 minutes =: 8
 NB. What is the value of (seconds) now?
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Assignments are not mathematics
 Assigning a new value to (minutes) didn't change the value of (seconds).
@@ -280,10 +280,10 @@ It was simply an assignment, giving a numeric value to the name 'seconds'.
 seconds   NB. This shows the new value of (seconds), same as the original
 NB. How would you make the value of (seconds)
 NB. correspond to the current value of (minutes)?
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Assignments are not mathematics
 To update the value in (seconds), assign a new value to the name.  The old value is forgotten, replaced by the new.
@@ -292,10 +292,10 @@ seconds =: 60 * minutes
 seconds
 minutes =: minutes + 10
 NB. What is the value of (minutes) now?
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Assignments are not mathematics
 Let's think about what the sentence
@@ -329,10 +329,10 @@ NB. that contains the score for player A,
 NB. write a sentence to perform the following action:
 
 NB. "Add 10 to player A's score to indicate that the target was hit."
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Assignments are not mathematics
 The key thing to see is that the line
@@ -350,10 +350,10 @@ would say "you are incrementing the value of ascore by 10".
 )
 ascore =: ascore + 10   NB. Increment the value in (ascore)
 ascore   NB. display the new value
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section String constants
 The last type of word in a J sentence is the "string constant".  This is any characters that appear between a pair of single-quote characters:
@@ -361,20 +361,20 @@ The last type of word in a J sentence is the "string constant".  This is any cha
 'Mr. Rich'  NB. A string of 8 characters, including the space.
 fullname =: 'Henry Rich'  NB. A character string can be assigned to a name
 fullname   NB. Roger types the value
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section String constants
 The contents of a string constant can be anything.  The string constant is treated as a single word.  The word (Mr.) would be a spelling error as a J word, but it was OK inside a string constant.
 )
 Mr.  NB. Not a primitive
 'Mr. Rich'   NB. OK in a string constant
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section String constants
 Observe that the value of the string constant DOES NOT include the single-quote symbol ['].  When Roger types the value back, the single-quote is gone.
@@ -386,10 +386,10 @@ Since most of the words you use will be numbers, names, and primitives, it makes
 Fred   NB. If you don't have quotes, Roger thinks it's a name
 'Fred'   NB. The quotes show it's a string constant.  Roger discards the quotes
 'exact   characters'   NB. spaces are significant inside a string.
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section String constants
 Suppose you wanted a string that contained the single-quote character???
@@ -401,10 +401,10 @@ As the contents of the string constant are scanned, starting with the character 
 'Margaret (Meg) O''Hertz'   NB. A string constant containing a single-quote
 ''   NB. NOT a single-quote.  This is just a string constant with no characters
 ''''   NB. A single single-quote character.  Roger types it back
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Chapter Execution of a sentence
 NB. =========================================================
@@ -432,10 +432,10 @@ In each case the verb produces a "result" which must be a noun.  The verb and it
 
 NB. Can you figure out what monadic (*) does?  Try executing
 NB. it in a variety of arguments.  Try negative as well as positive!
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Order of execution; result of a sentence
 A J sentence is executed starting at the right-hand end.  The last words of the sentence are inspected to see if they contain a verb that can be executed monadically or dyadically.
@@ -447,10 +447,10 @@ Since each execution of a verb makes the sentence shorter, the process must come
 2 'a'  NB. Two words, but no verb!  The sentence ends execution with two words
 'a' 2 * 5  NB. This sentence also ends with two words
 10 + 2 * 5  NB. First (2 * 5) is executed, then (10 + 10)
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Order of operations
 Mathematical notation has an order of operations: parentheses, then exponents, then multiply/divide, then add/subtract.  Many computer languages preserve this operator priority during evaluation of expressions; some even add to it, with over a dozen levels of what gets executed before what.
@@ -465,10 +465,10 @@ Especially remember that the negative sign for a number is (_).  (-) is a verb a
 (2 * 5) + 3   NB. (2 * 5) then (10 + 3)
 -5 + 6   NB. (5 + 6) then (-11)
 _5 + 6  NB. (_5 + 6).  The _ is part of the number 'negative five'
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section The sentence, not the verb, sets the valence
 Whether a verb is executed monadically or dyadically depends on how the verb is used in the sentence.  If it has a noun to its left, it is executed dyadically.
@@ -484,11 +484,11 @@ executes ({:) as a dyad.  If you do, Roger will signal "domain error".
 2 + 'a'  NB. what would THAT mean?
 {: 'abc'  NB. we'll learn what this does eventually
 2 {: 'abc'  NB. no dyadic valence
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
 Lab Section x and y
 Q. What does the dyad (*) do?
@@ -519,10 +519,10 @@ Q. What does (*: y) do?
 
 A. (*: y) is (y ^ 2).
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Dissect, the sentence visualizer
 J has a nifty tool that lets you see the execution of an entire sentence at once.  It is called Dissect.
@@ -550,10 +550,10 @@ end.
 0 0 $0
 )
 PREPARE
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section What part of speech does a word have?
 As we have seen, numbers and character strings are nouns.
@@ -571,10 +571,10 @@ plus =: +  NB. assign the name (plus) to be the verb (+)
 times =: *
 celsius =: 25
 32 plus celsius times 9 % 5
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Chapter Nouns
 NB. =========================================================
@@ -596,11 +596,11 @@ On the other hand, you have to be keenly aware of the type of your nouns.  There
 1 % 3  NB. a floating-point number
 3 * (1 % 3)  NB. mixed precision: no problem
 '3' + '2'  NB. adding characters??? Impossible!
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
 Lab Section Atoms and Arrays
 A noun can be a single number, as we have seen, or it can be an "array" of numbers where each number is identified by its position in the array.
@@ -614,10 +614,10 @@ An array can contain any number of atoms, including zero and one.  It's not the 
 5  NB. An atom
 i. 5  NB. 5 numbers arranged in a row
 i. 3 5  NB. 15 numbers arranged in 3 rows of 5 each
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section The vocabulary of arrays
 The simplest array is a "list of atoms", also called simply a "list".  The array contains zero or more values, distinguished by a number called the "index".  The index of the first atom is 0.  The atoms must have the same type.
@@ -638,10 +638,10 @@ i. 1  NB. A list of 1 number (it displays like an atom)
 i. 0  NB. An empty list - blank line with no numbers
 i. 0,0  NB. A 'quiet empty' - 0 lines with 0 numbers each, so no blank line
 
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Numeric-list notation
 As you might have noticed, a list of numbers, such as what (i. 5) produced, is displayed as a sequence of numbers separated by spaces.
@@ -667,10 +667,10 @@ It doesn't work!  (0 1) is recognized as a single word, but (zero one) is two wo
 zero =: 0
 one =: 1
 zero one + 2 3
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section More vocabulary for arrays: axis, rank, shape
 We say that a list of things [atom, list, etc.] is "arranged along an axis", and each individual thing is called an "item" of the array.
@@ -697,10 +697,10 @@ $ list  NB. Shape
 
 ]atom =: 'x'   NB. A single character
 NB. Find its rank, shape, and number of items.  These are very important
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section How to look up the definition of a primitive
 J has verbs to operate on arrays, and we need to learn some of them.
@@ -751,10 +751,10 @@ Lab Section Verbs for arrays
 , i. 2 5
 NB. Experiment with the others yourself
 
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Verbs for atoms
 We will also use the following primitives.  These verbs operate atom-by-atom.  If you apply them to arrays, they operate on atoms one at a time to produce an array with the same shape as the original array.
@@ -790,12 +790,12 @@ The dyads operate on corresponding atoms of (x) and (y).  If one argument is an 
 'ab' = 'cde'   NB. The number of atoms must match
 'c' = 'cde'  NB. But if one argument is an atom, is is repeated
 NB. Experiment with the others yourself
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
-Lab Chapter Writing Programs 
+Lab Chapter Writing Programs
 NB. =========================================================
 Lab Section Scripts
 So far all we've done is type sentences into Roger and see the results.  When we close J, all our work is gone.
@@ -813,10 +813,10 @@ Then the "edit" window will appear.  This is a tabbed window that allows you to 
 
 From now on, you will do your creative work in the edit window, and will type into the term window only to run the program you have written or to debug it.
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Our first program
 Time to write our first program!  We will write a program to solve a quadratic equation using the quadratic formula.
@@ -833,12 +833,12 @@ For this program, what is the result?  What form should this information take in
 
 And what is the input, and what form should it take?
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 The result will be the solutions to the quadratic equation, a list of 2 numbers.
 
 The input will be the equation to be solved.  The equation is
@@ -855,26 +855,26 @@ What would the input to the program be, for this equation?
 
 What would the result be?
 )
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 The input would be the list (1 _3 _10), and the result would be the list (5 _2) or (_2 5) since we haven't specified that we care about the order of the result.
 
 In J, a program is a verb, and the input is the argument[s] to the verb.
 
 We will write the verb, but first you have to decide: will the verb be used as a monad or a dyad?
 )
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 The verb takes a single argument, the list (1 _3 _10), so the verb will be used as a monad.
 
 We will name the verb (solvequad).
@@ -883,13 +883,13 @@ To use the verb (solvequad), we need to execute it in a sentence, with proper ar
 
 What will be the sentence that executes (solvequad)?
 )
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
    solvequad 1 _3 10
 
 You need to make sure you see what will happen.  In this sentence you have the verb, (solvequad), followed by its argument, (1 _3 _10).
@@ -927,13 +927,13 @@ is the special sequence that starts the definition of a verb. (monad define) mea
 
 The result of the (monad define) is a verb, which is then assigned to the name 'solvequad', so that (solvequad) becomes a verb that you can execute.
 )
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 Now we want to run the verb.
 
 First you have to send the script to Roger.  Do this by clicking on your script in the edit window and pressing your Lint function key, which is named below.
@@ -954,13 +954,13 @@ end.
 )
 PREPARE
 
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 Now that the verb is loaded into Roger, let's run it.
 )
 PREPARE
@@ -971,16 +971,16 @@ smoutput 'Your (solvequad) verb doesn''t produce the correct result!'
 smoutput 'Fix it and then run the sentence:'
 smoutput 'solvequad 1 _3 _10'
 end.
-) 
+)
 PREPARE
 solvequad 1 _3 _10
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 Now that you see that the program works, understand HOW it works.
 
 The hard thing to grasp is that when you write a program, you are building a machine to solve problems.
@@ -1001,13 +1001,13 @@ When the program is executed for a specific quadratic equation, the numbers for 
 
 So here's the big question: how do the values of a, b, and c get into the sentences of the program?  I haven't told you yet, but I think that if you look at the program you can figure out what must be happening.
 )
- 
- 
- 
- 
- 
+
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 Look at the first line of the program, which is
 
 a =: 0 { y
@@ -1030,10 +1030,10 @@ Describe in you own words what the first three executable sentences of (solvequa
 
 and then continue this lab.
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section The debugger
 They set (a) to (1), (b) to (_3), and (c) to (_10).
@@ -1057,10 +1057,10 @@ Type
 
    solvequad 1 _3 _10
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Single-stepping through your verb
 You have "hit a stop" and triggered the debugger, which lets you see into the program.  First look at the debugger window.  The top pane shows that it about to execute the first line.
@@ -1079,10 +1079,10 @@ Continue to your heart's content.  When you get to the end of the program, the d
 
 If you want to see it happen again, execute (solvequad) again.  Experiment with different arguments to (solvequad), representng different quadratic equations.
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Points worth mentioning
 1. You don't have to single-step to use the debugger.  Click on the rightmost debugger button, which looks like a broom.  That will clear the debugger.  Then open the Stop Manager and select (solvequad).  Notice that it still has stops set on every line.
@@ -1100,10 +1100,10 @@ It is possible to define a verb with both dyadic and monadic valences but we won
 
 4. The result of the last executed sentence becomes the result of the verb.  The last sentence doesn't have to be an assignment to be useful.
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Enhancing the program
 Add the following verbs to your script using cut & paste.  You will have to end each verb with the special ) line.
@@ -1179,12 +1179,12 @@ qstring,' = ',fstring
 
 Make sure you can load the enlarged script using lint.
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
-Lab Section 
+Lab Section
 Your goal is to understand how all those verbs work.  You have to, because they have small errors that you're going to have to fix!
 
 Start by figuring out (dispfactor) and (dispterm).  For each verb, start by running the verb with various arguments until you see what the verb is TRYING to do.
@@ -1193,10 +1193,10 @@ Then use the debugger to put stops in the verb, and single-step to see exactly w
 The if. control word runs the part between the if. and do., and if the result doesn't start with 0 Roger then runs the part between the do. and the end./else./elseif.  If the result of the if. starts with 0
 Roger skips over the part following the do.
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Verbs can call other verbs
 Now execute
@@ -1221,10 +1221,10 @@ After you understand what's going on, try some other equations, such as
 
    factor 1 5 4
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section Trouble
 Try the sentence
@@ -1233,10 +1233,10 @@ Try the sentence
 
 Uh-oh.  The typed statement isn't true.  Figure out what went wrong, and fix it.
 )
- 
- 
- 
- 
+
+
+
+
 NB. =========================================================
 Lab Section More trouble
 Find some other arguments that make (factor) fail.  Think about why (factor) fails, and come prepared to discuss it.  Don't fix the problem unless you really want to.

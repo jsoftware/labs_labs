@@ -79,7 +79,16 @@ if. #availkeys =. keysneeded -. 0 {"1 keynameval do.
   newvals =. (availkeys e.~ 0 {"1 desiredkeyvals) # desiredkeyvals
   NB. Get strings to add to config
   newconfigs =. ; (0&{ , ';' ; (<LF) ,~ 1&{)"1 newvals
-  if. 'yes' -: wd 'mb query mb_yes mb_no "OK to change configuration?" "I would like to define function keys for dissect and lint.  Is that OK with you?',LF,LF,'If so, I will stop J and you will need to restart it."' do.
+  NB. Get prompt string to use
+  select. #newkeys =. {."1 newvals
+  case. 1 do.
+    keystg =. 'key ', ; newkeys
+  case. 2 do.
+    keystg =. 'keys ' , (>{. newkeys) , ' and ' , (>{: newkeys)
+  case. do.
+    keystg =. _2 }. 'keys ' , ; (}: , (<'and ') , {:) (,&', '&.> newkeys)
+  end.
+  if. 'yes' -: wd 'mb query mb_yes mb_no "May I change configuration?" "I would like to define function ',keystg,'.  Is that OK with you?',LF,LF,'If so, I will stop J and you will need to restart it."' do.
     NB. Rewrite config file
     (cfiled , newconfigs) 1!:2 cfile
     NB. Kill J to allow restart with new keys

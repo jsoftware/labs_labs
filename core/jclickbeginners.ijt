@@ -108,7 +108,7 @@ PREPARE
  
  
 NB. =========================================================
-Lab Section Talking to your computer
+Lab Section Talking to Roger
 In this window, you type to Roger.  Roger asks the machine to do what you want and tells you what happened.
 
 Since Roger is all you ever talk to, we'll never think about the machine again, and just concentrate on how to talk to Roger.
@@ -117,7 +117,7 @@ Roger doesn't know English.  The trouble with English is that it is not precise.
 
   Did you hear about the blind carpenter who picked up his hammer and saw?
 
-Computer programs, even including Roger, just can't make sense of that.
+Computer programs, even including Roger, just can't be sure what you mean.
 
 Roger understands a language invented for describing computation.  The name of that language is:
 
@@ -261,7 +261,7 @@ Follow the next few sections carefully and make sure you answer each question co
 )
 minutes =: 5
 seconds =: 60 * minutes
-NB. What is the value of (seconds) now?  How would you find out?
+NB. What is the value of (seconds) now?  How would you find out for sure?
  
  
  
@@ -367,25 +367,27 @@ ascore   NB. display the new value
  
 NB. =========================================================
 Lab Section Coding break
-Write a sentence to convert 30 degrees Celsius to Fahrenheit.  (Google the formula if you need to).  It will help you to know that in J,
+Solve the following problems:
+
+0. Write a sentence to convert 30 degrees Celsius to Fahrenheit.  (Google the formula if you need to).  It will help you to know that in J,
  (+) means add
  (-) means subtract
  (*) means multiply
  (%) means divide
 
-Assign the value 30 to the name 'celsius'.
+1. Assign the value 30 to the name 'celsius'.
 
-Write a sentence to convert the value of (celsius) to Fahrenheit.
+2. Write a sentence to convert the value of (celsius) to Fahrenheit.
 
-Change the value of (celsius) to 30.
+3. Change the value of (celsius) to 30.
 
-Reexecute the sentence that converts (celsius) to Fahrenheit.  There are two fast ways to do this:
+4. Reexecute the sentence that converts (celsius) to Fahrenheit.  There are two fast ways to do this:
 
-0.  Use Ctrl+Shift+uparrow to bring back lines you recently typed.
+a.  Use Ctrl+Shift+uparrow to bring back lines you recently typed.
 
-1.  Put your cursor on a line in the term window and press ENTER.  That will bring the line to the bottom of the term window.  Then press ENTER again to execute it.  In other words, put your cursor on a line and press ENTER twice.
+b.  Put your cursor on a line in the term window and press ENTER.  That will bring the line to the bottom of the term window.  Then press ENTER again to execute it.  In other words, put your cursor on a line and press ENTER twice.
 
-Verify that your executions of the sentence produce different correct results.
+Verify that your executions of the sentence produce different and correct results.
 )
  
  
@@ -502,6 +504,7 @@ Especially remember that the negative sign for a number is (_).  (-) is a verb a
 (2 * 5) + 3   NB. (2 * 5) then (10 + 3)
 -5 + 6   NB. (5 + 6) then (-11)
 _5 + 6  NB. (_5 + 6).  The _ is part of the number 'negative five'
+
 NB. In math class, 6+4-5-3-2=0, right?   But in J, it's not.
 NB. Exercise 0: Before asking Roger, figure out what Roger will think 6+4-5-3-2 equals.
 NB.   Then check your answer with Roger.
@@ -531,6 +534,7 @@ executes ({:) as a dyad.  If you do, Roger will signal "domain error".
 2 + 'a'  NB. what would THAT mean?
 {: 'abc'  NB. we'll learn what this does eventually
 2 {: 'abc'  NB. no dyadic valence
+
 NB. Exercise: write a J sentence that uses only the symbols (-) and (2) and whose result is 8.
  
  
@@ -648,9 +652,12 @@ On the other hand, you have to be keenly aware of the type of your nouns.  There
 3   NB. an integer
 1 % 3  NB. a floating-point number
 3 * (1 % 3)  NB. mixed precision: no problem
-'3' + '2'  NB. adding characters??? Impossible!
- 
- 
+'a' + 'b'   NB. adding characters??? Impossible!  What would it mean?
+'3' + '2'  NB. Even if the characters are numerals, you still can't add...
+'Ƽ'  NB. ...because a character is just a picture.  Look closely:
+NB. This is not the numeral 5. It is a letter used in the Zhuang alphabet
+NB. from 1957 to 1986 to indicate its fifth tone.  Side-by-side with 5:
+'Ƽ5'
  
  
  
@@ -667,8 +674,10 @@ An array can contain any number of atoms, including zero and one.  It's not the 
 5  NB. An atom
 i. 5  NB. 5 numbers arranged in a row
 i. 3 5  NB. 15 numbers arranged in 3 rows of 5 each
-NB. Exercise: create [0] an array of 4 rows of 2 numbers each;
-NB. [1] an array containing 3 table, each one having 3 rows of 6 numbers each
+
+NB. Exercises:
+NB. 0. create an array of 4 rows of 2 numbers each;
+NB. 1. an array containing 3 tables, each one having 3 rows of 6 numbers each
  
  
  
@@ -727,7 +736,7 @@ zero one + 2 3
  
  
 NB. =========================================================
-Lab Section More vocabulary for arrays: axis, rank, shape
+Lab Section More vocabulary for arrays: axis, item, rank, shape
 We say that a list of things [atom, list, etc.] is "arranged along an axis", and each individual thing is called an "item" of the array.
 
 [IMPORTANT DEFINITION] The number of axes is called the "rank" of the array.  A list has 1 axis, a table has 2 axes, a brick has 3, and so on.
@@ -752,7 +761,13 @@ $ list  NB. Shape
 
 ]atom =: 'x'   NB. A single character
 NB. Find its rank, shape, and number of items.  These are very important
- 
+
+NB. Exercises:
+NB. 0. What is item number 0 of the array produced by (i. 3 4)?
+NB. 1. What is item number 2 of the array produced by (i. 6)?
+NB. 2. What is item number 4 of the array produced by (i. _6)?
+NB. 3. What is item number _2 of the array produced by (i. 5 3)?
+NB. 4. What is item number 1 of the array produced by (i. 6 2 3)?
  
  
  
@@ -1142,18 +1157,20 @@ If you want to see it happen again, execute (solvequad) again.  Experiment with 
  
 NB. =========================================================
 Lab Section Points worth mentioning
-1. You don't have to single-step to use the debugger.  Click on the rightmost debugger button, which looks like a broom.  That will clear the debugger.  Then open the Stop Manager and select (solvequad).  Notice that it still has stops set on every line.
+1. You don't have to single-step to use the debugger.  Click on the rightmost debugger button, which looks like a broom.  That will clear the debugger.
+Then open the Stop Manager and select (solvequad).  Notice that it still has stops set on every line.
 Press Stop All to clear the stops, then Close.  Now type
 
    solvequad 'abc'
 
 Whenever your program has an error, the debugger will spring to life if it is enabled.  That lets you see what caused the error.
 
-2. If you wanted to define a verb for use dyadically, use (dyad define) instead of (monad define).  The name (x) will be assigned the value of the left argument before the verb starts execution.
+2. If you want to define a verb for use dyadically, use (dyad define) instead of (monad define).  The name (x) will be assigned the value of the left argument before the verb starts execution.
 
 It is possible to define a verb with both dyadic and monadic valences but we won't learn that here.
 
-3. Notice that every line of the verb except the last is an assignment.  This is normal.  If you don't assign the result of a sentence to a name, the result is discarded, so why run the sentence at all?
+3. Notice that every line of the verb except the last is an assignment.  This is normal.
+If you don't assign the result of a sentence to a name, the result is discarded, so why run the sentence at all?
 
 4. The result of the last executed sentence becomes the result of the verb.  The last sentence doesn't have to be an assignment to be useful.
 )
@@ -1245,7 +1262,7 @@ Lab Section Single-step through the program
 Your goal is to understand how all those verbs work.  You have to, because they have small errors that you're going to have to fix!
 
 Start by figuring out (dispfactor) and (dispterm).  For each verb, start by running the verb with various arguments until you see what the verb is TRYING to do.
-Then use the debugger to put stops in the verb, and single-step to see exactly what the verb is doing.
+Then use the debugger to put stops in the verb, and single-step to see exactly what the verb is doing on each line.
 
 The if. control word runs the part between the if. and do., and if the result doesn't start with 0 Roger then runs the part between the do. and the end./else./elseif.  If the result of the if. starts with 0
 Roger skips over the part following the do.
@@ -1271,7 +1288,9 @@ Are you wondering if that will mess up the value of (y) when (dispterm) finishes
 
 It's been set back to (1 _3 _10), just like it was before the call to (dispterm)!  That means that (factor) and (dispterm) don't mess each other up!
 
-Every executing verb has a separate copy of (x), (y), and any other names that are assigned "privately".  Professional programmers make most of their names private so verbs won't interfere with each other.  We won't follow this practice because it makes debugging a little harder.
+Every executing verb has a separate copy of (x), (y), and any other names that are assigned "privately".
+Professional programmers make most of their names private so verbs won't interfere with each other.
+We won't follow this practice because it makes debugging a little harder.
 But we will be grateful that (x) and (y) are always assigned privately.
 
 After you understand what's going on, try some other equations, such as

@@ -500,7 +500,7 @@ This means that you have to be careful when you write mathematics in J, and not 
 
 Especially remember that the negative sign for a number is (_).  (-) is a verb and is executed, as a monad or dyad, in the right-to-left execution order.
 )
-2 * 5 + 3  NB. (5 * 3), then (2 * 8)
+2 * 5 + 3  NB. (5 + 3), then (2 * 8)
 (2 * 5) + 3   NB. (2 * 5) then (10 + 3)
 -5 + 6   NB. (5 + 6) then (-11)
 _5 + 6  NB. (_5 + 6).  The _ is part of the number 'negative five'

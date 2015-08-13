@@ -55,7 +55,6 @@ graphics/fvj3/labs/owin3.ijt
 graphics/fvj3/labs/povkit2.ijt
 graphics/fvj3/labs/raster6.ijt
 graphics/jturtle/jturtleuser.ijt
-labs/labs/core/introcourse.ijt
 labs/labs/general/jturtleuser.ijt
 labs/labs/general/nn1.ijt
 labs/labs/graphics/gl2.ijt

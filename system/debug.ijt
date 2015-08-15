@@ -295,6 +295,16 @@ Now enter and step through:
 )
 
 NB. =========================================================
+Lab Section Dissect in Debug
+Dissect gives a detailed display of the execution of a single sentence.  Debug runs sentences one at a time.  Dissect can display what will happen when debug runs the next line.
+
+Two buttons on the Debug bar relate to dissect.  The Dissect Line button will dissect the stop line (or the line under the cursor if you have selected a different line).
+
+The Autodissect button will cause dissect to run automatically whenever the debugger is entered, giving you a line-by-line view of execution.
+
+Dissect is described in a pair of Labs.
+
+NB. =========================================================
 Lab Section
 This completes the Debug Lab.
 

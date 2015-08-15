@@ -2,8 +2,6 @@ LABTITLE=: 'An Introductory Course in J'
 LABAUTHOR=: 'Henry Rich'
 LABCOMMENTS=: 'Lecture notes from a 3-day class on J.'
 LABERRORS=: 1
-LABWIDTH=: 80
-LABWRAP=: 0
 LABFOCUS=: 1
 
 NB. ============================================================================
@@ -22,6 +20,9 @@ have it perform the computation for you.
 When you type a J sentence, the computer evaluates it and displays the
 result.
 )
+PREPARE
+load '~addons/labs/labs/core/jpcfmt.ijs'
+PREPARE
 2 + 3   NB. Computer evaluates the sentence
 i. 5  NB. Computer evaluates the sentence, producing a list of numbers
 i. 3 5   NB.  Result of this sentence is an array of numbers
@@ -247,6 +248,34 @@ NB. 'select', so the verb is selecting item number 2 from the list
 NB. 1 2 3 4 5
 2 { 1 2 3 4 5
 
+NB. =========================================================
+Lab Section Dissect, the sentence visualizer
+J has a nifty tool that lets you see the execution of an entire sentence at once.  It is called Dissect.
+
+To run it, you should have a PFkey set up to run dissect.  Look below to see what your dissect key is.  Then put your cursor on a line and press the dissect key.
+A window will pop up showing the execution of your sentence.
+
+Each block represents an input value or a result.  Arguments to a box come in at the top, and the result of the sentence is the contents of the last box.
+
+Try dissecting this sentence:
+
+   3 + 5
+
+Then try writing your own sentences and dissecting them.
+
+If you move the dissect window, subsequent executions of dissect will remember where you put it.
+)
+PREPARE
+3 : 0 dissectfkey
+if. #y do.
+  smoutput 'Your dissect key is ',y
+else.
+  smoutput 'You do not have a dissect key, or its definition is nonstandard.'
+end.
+0 0 $0
+)
+PREPARE
+ 
 NB. ============================================================================
 Lab Chapter Arrays
 NB. ============================================================================
@@ -280,7 +309,7 @@ Each dimension of an array is called an AXIS.
 
 The number of axes in an array is its RANK.
 
-An array of rank 0 is called an ATOM or a SCALAR.  It has no axes and therefore
+A noun of rank 0 is called an ATOM or a SCALAR.  It has no axes and therefore
 no indexes, and it has exactly one value.
 
 An array of rank 1 is called a VECTOR.
@@ -737,6 +766,287 @@ NB. The operands as they are matched before the final addition:
 100 200 (<@;)"0"0 1 (1 2 3 4)
 
 NB. ============================================================================
+Lab Chapter Scripts and Explicit Definitions
+NB. ============================================================================
+Lab Section Scripts
+So far we have written single sentences.  You can do a lot with a J sentence, but the time will come when you want to write a verb containing several sentences.
+
+You will write your verb in a SCRIPT, a file with extension .ijs.  You can use your favorite editor to edit your script, or you can use J's built-in edit window.  To run a verb in the script, you first LOAD the script, which feeds the lines of the script into the interpreter as if you had typed them from the keyboard.  
+
+We have created a sample script in the edit window.
+
+We have also created a debug window that you can use to stop and single-step through your verbs.  The debug window is the short window toward the top-right of the screen.
+)
+PREPARE
+require 'format/printf'
+'covar' opendebscript 0 : 0
+NB. Calculate covariance of two lists
+NB. x and y are the lists
+NB. If x is omitted, y is used, giving variance of y
+NB. Calculates mean of each first, then finds average of the product of deviations
+NB. Result is covariance (atom)
+covar =: verb define
+NB.~stop 0
+qprintf 'y '
+NB.~stop covarm
+NB.~title 3	Covariance of Two Lists
+NB.~title1 0	Monad: default x=y
+NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB.~link1 0	Verb Definition	http://www.jsoftware.com/jwiki/Vocabulary/coa
+NB.~link2 0	Control Words	http://www.jsoftware.com/help/dictionary/ctrl.htm
+NB. monad: take covariance of y with itself
+y covar y
+:
+NB.~stop covard
+NB.~title 3	Covariance of Two Lists
+NB.~title1 0	Test for empty list
+NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB.~link1 0	Verb Definition	http://www.jsoftware.com/jwiki/Vocabulary/coa
+NB.~link2 0	Control Words	http://www.jsoftware.com/help/dictionary/ctrl.htm
+if. 0 = #y do.
+  smoutput 'empty covariance'
+  0 return.
+end.
+NB.~title1 0	Total of x
+sumx =. +/ x
+NB.~title1 0	Mean of x
+meanx =. sumx % (#x)
+NB.~title1 0	Mean of y
+meany =. (+/ y) % #y
+NB. Save meany in a global for external visibility
+NB.~title1 0	Save mean of y in a public name
+DMEANY   =: meany   NB. debug
+NB.~auto 0
+NB.~stop
+qprintf 'meanx meany '   NB. debug
+NB.~auto 1
+NB.~stop covard
+NB.~title1 0	Final result
+(+/ (x-meanx)*(y-meany)) % #x
+))
+)
+
+NB. Turn off debug to begin with
+0 debugchangestops ;:'covarm covard'
+PREPARE
+
+NB. ============================================================================
+Lab Section load and lint
+To load the script, you have two options.
+
+If you feel lucky, you can just load the script by pressing Ctrl+L.
+
+If you want to run a static analysis of the verbs in your script, to find things like uninitialized names and omitted verb endings, run lint.  If you have the explorer profile, function key F4 runs lint on the current edit window.
+
+lint is described in its page http://www.jsoftware.com/jwiki/Vocabulary/Lint
+
+NB. ============================================================================
+Lab Section Running the Verb; Passing Arguments
+This script defines a verb named covar that calculates the covariance of two lists.
+
+You run this verb the same way you run any verb: by giving it a right argument (for monadic execution) or right and left arguments (for dyadic execution).
+
+The way the argument(s) are passed into the verb is very simple: before the verb starts running, the name y is set to the value of the right argument, and if there is a left argument, its value is assigned to the name x.
+
+This simple method works because all J verbs have either 1 or 2 arguments.
+
+After the arguments are set, the sentences of the verb are executed one by one until there aren't any more, and the result of the last one becomes the result of the verb.
+)
+1 2 3 4 5 covar 5 4 3 2 1
+
+NB. ============================================================================
+Lab Section How Was The Verb Defined?
+The definition of the verb covar started with the line
+
+covar =: verb define
+
+and ended with the line containing a single ) character.
+The lines in between are the body of the verb.
+
+A verb defined using (verb define) or its variants (monad define), (dyad define), (3 : 0), or (4 : 0) is called an explicitly defined verb.  Modifiers can also be created using (define); they are called explicit modifiers.
+
+A script can contain any number of such verb-definitions, along with any other sentences you want to execute.  Loading the script executes the lines of the script; those lines that contain verb-definitions create those verbs, which you can then use.
+
+If you want to change the definition of a verb, you simply execute a new verb-definition for that name.  The usual way is to edit the script containing the verb-definition, and then reload the script.  You can do this at any time.
+
+To get an understanding of what is happening inside the verb, we use the debugger.  The debugger allows us to stop and single-step verbs, and dissect the sentences as they are executed.
+
+Normally you bring up the debugger by pressing Ctrl+k, and then install stops using the Stops Manager.  There is a lab that explains how to use Debug.
+
+To save you the trouble, this lab has automatically started Debug and set a stop on each line of the verb covar.
+
+When you advance this lab, the debugger will spring to life, stopping before the execution of the first line of covar.
+)
+PREPARE
+1 debugchangestops ;:'covarm covard'
+PREPARE
+
+NB. ============================================================================
+Lab Section Check For Empty Input
+The debugger has awakened, and has dissected the first line.
+
+Click on the link titled 'Verb Definition' at the top-left of the dissect window.  This will point your browser to the reference page that explains verb definition using this example verb.  As you step through the execution, follow along with the discussion there.
+
+The first line checks to see whether the input is empty.
+)
+1 2 3 4 5 covar 5 4 3 2 1
+
+NB. ============================================================================
+Lab Section Total x values
+The reference page discussing this verb gives an annotated line-by-line explanation of what is going on.  Refer to that analysis as you step through the verb.
+
+Here we add the x values.
+
+)
+debugrun''
+
+NB. ============================================================================
+Lab Section Calculate mean of x
+We calculate the mean of x.
+)
+debugrun''
+
+NB. ============================================================================
+Lab Section Calculate mean of y
+We calculate the mean of y.
+)
+debugrun''
+
+NB. ============================================================================
+Lab Section Save the mean of y in a global
+The assignments in the verb, to sumx, meanx, and meany, have all been private assignments that will be invisible outside the execution of the verb covar.  If we want to be able to see one of these values after covar has executed, we need to save it in a public name.  Here we assign the name DMEANY.
+)
+debugrun''
+
+NB. ============================================================================
+Lab Section Calculate result
+We calculate the covariance.
+)
+debugrun''
+
+NB. ============================================================================
+Lab Section Run to completion
+The calculated result is returned and J displays it.
+)
+0 debugchangestops ;:'covarm covard'
+debugrunstop''
+
+NB. ============================================================================
+Lab Section Multiple Assignment
+Only two arguments are allowed to a verb, but everybody knows that functions need lots of arguments.  How does J handle that?
+
+With a simple two-step.  The arguments are combined into a single package that is passed into the verb; then the package is opened inside the verb.
+
+The example below shows how.  The execution of the verb is
+
+polyint poly;low;high
+
+The (poly;low;high) part creates a single noun containing the three values (in the next chapter you'll learn more about this).  Then the first line of the verb is
+
+'poly a b' =. y
+
+which splits the noun into its three parts, giving each the name the verb knows them by.
+)
+NB. y is (polynomial);(lower limit);(upper limit)
+NB. Result is integral of polynomial between the limits
+polyint =: monad define
+'poly a b' =. y
+'aderiva aderivb' =. (0 p.. poly) p. a,b
+aderivb-aderiva
+)
+
+poly =. 1 2 2  NB. 2x^2 + 2x +1
+low =. 1
+high =. 3
+
+polyint poly;low;high
+
+NB. ============================================================================
+Lab Section Public and Private Names
+When an explicit definition (call it V) starts execution, it receives a private namespace.  Names defined in this namespace are not accessible to other verbs: not to verbs called by the verb V, nor verbs that called V.
+
+To assign a name in this private namespace, use (=.) for the assignment.  To assign the name in a public namespace accessible to all verbs, use (=:).
+
+In the example of the previous section, all the names assigned inside polyint were private.  This is good practice.  None of those names could affect or be affected by names used outside polyint.  The name poly was used both outside and inside the verb; those two names are disticnt and do not interact.
+
+If no explicit definition is running, (=.) acts like (=:) and assigns to the public namespace.  The assignment
+
+poly =. 1 2 2
+
+was made in the public namespace for this reason.
+
+When an explicit definition starts execution, the names y and (for dyads) x are assigned in the private namespace.
+
+NB. ============================================================================
+Lab Section Valence
+Every verb can be executed as a monad or dyad.  Which valence is used depends on the invocation of the verb, not the definition.  As the writer of the verb you have no control over which valence a user will try.
+
+If the user attempts to use a valence that you have not defined, the result will be "domain error".  Thus, if you define a verb with (monad define) and the user executes it as a dyad, or if you define the verb with (dyad define) and the user executes it as a monad, domain error will be signalled.
+
+But suppose you want to let your verb have both a monadic and dyadic meaning?
+
+Then you define your verb like this:
+
+ name =: verb define
+ ...sentences of monadic valence...
+ :
+ ...sentence of dyadic valence
+ )
+
+The verb covar (defined a few sections back) illustrates this.
+)
+
+NB. ============================================================================
+Lab Section Control Words
+Words that consist of a name followed by a period are reserved for Control Words.  The list of allowed control words, and a full discussion of them, is given at
+
+http://www.jsoftware.com/help/dictionary/ctrl.htm
+
+Control words provide the usual testing and looping facilities.  Here we mention only some subtleties.
+
+1.  Control words are allowed only inside an explicit definition.  Outside, they are considered "spelling errors".  See the example below for a way to create a temporary explicit definition to allow you to use if.
+
+2.  for. array do.
+ starts a loop with a fixed number of iterations.  The number of iterations is the number of items of array.  So, to execute 10 iterations, use
+
+for. i. 10 do.
+
+3.  for_name. array do.
+ also runs a fixed number of iterations, one for each item of array, but it defines the (name) at the start of each iteration to hold the value of the corresponding item.
+
+4.  If you use elseif. in a construct, you may not use else. in that construct.
+
+Bad:
+  if. x > 0 do.
+    ...
+  elseif. x = 0 do.
+    ...
+  else.
+    ...
+  end.
+
+Good:
+  if. x > 0 do.
+    ...
+  elseif. x = 0 do.
+    ...
+  elseif. do.
+    ...
+  end.
+
+Observe that the empty test (elseif. do.) tests true.
+)
+if. IFQT do.  NB. Oops, not allowed outside of explicit
+
+3 : 0 ''   NB. Create an anonymous verb and immediately run it
+if. IFQT do.
+  value =: 0
+else.
+  value =: 1
+end.
+)
+
+NB. ============================================================================
 Lab Chapter Boxed Data
 NB. ============================================================================
 Lab Section The Boxed Data Type
@@ -971,7 +1281,7 @@ If x contains values greater than 1, the corresponding items of y are repeated
 in the result.
 
 If an item of x is complex, the imaginary part tells how many FILLs to insert
-after the itmes of y.  Fills are cells with the shape of items of y, but
+after the items of y.  Fills are cells with the shape of items of y, but
 whose atoms are 0 (for numeric y), ' ' (for literal y), or a: (for boxed y).
 The fill can be changed using the Fit conjunction !., as discussed later.
 
@@ -1268,10 +1578,10 @@ NB. ============================================================================
 Lab Section What a Conjunction Does Not Do
 The description of & gives, for the dyadic case,
 
-  x u&v y   is   (v x) u (v y)
+  x u&:v y   is   (v x) u (v y)
 
 This is a schematic description only!  The interpreter DOES NOT
-actually expand the sequence x u&v y   into  (v x) u (v y) .
+actually expand the sequence x u&:v y   into  (v x) u (v y) .
 
 The interpreter could have been designed that way, with each name replaced
 by an equivalent.  There are several reasons that would be bad design:
@@ -1292,9 +1602,10 @@ PREPARE
 odisp =: 9!:2''
 9!:3 (5)
 PREPARE
-NB. Model for substituting & symbolically
+NB. Model for substituting &: symbolically
+NB. Just to show how big the intermediate results can get
 and =: 2 : 0
-u @ v  NB. Monadic form
+u @: v  NB. Monadic form
 :
 (u@[) v (u@])  NB. Dyadic form
 )
@@ -1304,18 +1615,18 @@ a and b and c and d
 
 NB. ============================================================================
 Lab Section What a Conjunction Does
-  x u&v y   is   (v x) u (v y)
+  x u&:v y   is   (v x) u (v y)
 
-means that u&v produces a verb, and that verb operates according to the
+means that u&:v produces a verb, and that verb operates according to the
 description (v x) u (v y) .  The verb created by execution of a conjunction
 is called a DERIVED VERB.
 
-The proper way to think of this is that & is executed when it is
-given its u and v operands.  Execution of & produces a derived verb.
-Execution of & DOES NOT look at the x and y operands.  x and y
+The proper way to think of this is that &: is executed when it is
+given its u and v operands.  Execution of &: produces a derived verb.
+Execution of &: DOES NOT look at the x and y operands.  x and y
 are operands to the derived verb.
 
-To repeat: in    x u&v y   , u&v is executed to produce a derived verb, and
+To repeat: in    x u&:v y   , u&:v is executed to produce a derived verb, and
 then   x derived-verb y   is executed to produce the result of the expression.
 )
 PREPARE
@@ -1407,7 +1718,7 @@ onboxedpiecesusinghead2 =: 1 : ';@:(<@u;.1)'
 
 NB. ============================================================================
 Lab Section Invisible Modifiers: Hooks and Forks
-Hooks and forks are just modifiers that don't have a symbol.
+Hooks and forks are modifiers that don't have a symbol.
 They are recognized by syntax.
 
 When a hook or fork is encountered, it is turned into a derived verb.
@@ -1705,35 +2016,12 @@ Let rv be the rank of v.  In either verb, v operates on cells of rank rv.
 But in u@v, the overall verb (u@v) also operates on cells of rank rv.
 This means that the rv-cells of the operand are processed independently
 by the overall verb.
+
+Use dissect on these sentences to follow the execution.  For u@v you must select a single result-cell before you can see the result of v that contributed to it.
 )
 +/@:*:  1 2 3   NB. Sum of squares
 (+/@:*:)"0  (1 2 3)  NB. With rank 0, each atom is independent.
 +/@*:  1 2 3   NB. +/@*:  is equivalent to   +/@:*:"0
-
-NB. ============================================================================
-Lab Section The fndisplay Tool
-A J tool called fndisplay lets you see how operations are applied
-on cells.  To invoke it, first load it with
-
-  load 'system/packages/misc/fndisplay.ijs'
-  setfnform 'J'
-
-Define verbs you want to use, giving them a rank if it's not infinite:
-
-  defverbs 'list-of-names'    name  or name"n
-
-Define named nouns you plan to use:
-
-  defnouns 'x y'
-
-When you use those verbs and nouns, the result will show how the
-operation was performed.
-)
-load 'system/packages/misc/fndisplay.ijs'
-setfnform 'J'
-defverbs 'Sum Sq"0'
-Sum@:Sq 1 2 3
-Sum@Sq 1 2 3    NB. Note the 'Sum' is of only a single 'Sq'
 
 NB. ============================================================================
 Lab Section Interpretation of u@v
@@ -1744,11 +2032,9 @@ passed to u.
 
 This interpretation is not accurate, for two reasons:
 
-1. the control of what gets passed to u, v, and u@v is done not inside v,
-  but in a part of u@v that is outside of both u and v;
+1. the control of what gets passed to u, v, and u@v is done not inside v, but in a part of u@v that is outside of both u and v;
 
-2.  it gives incorrect results when applied to sequences of more than
-  two verbs.
+2.  it gives incorrect results when applied to sequences of more than two verbs.
 
 The more accurate interpretation is that u@v has rank v, which means
 that the overall verb u@v is applied to v-cells of the operands (by which
@@ -1775,7 +2061,7 @@ nm
 
 NB. ============================================================================
 Lab Section Exegetic Examples
-We will now follow some examples of compounds.
+We will now follow some examples of compounds.  For each example, use dissect to give a detailed picture.
 )
 ]a =: 1 2 3 ; 4 5 ; 6 7 8  NB. The operand we use for the examples
 
@@ -1788,12 +2074,6 @@ NB. 0 because of @, so > then {. is applied to each cell, giving 1 4 6.
 NB. Then }. is applied, leaving 4 6.
 
 }.@:({.@>) a
-
-load 'system/packages/misc/fndisplay.ijs'
-setfnform 'J'
-defverbs 'drop head unbox"0'
-NB. The boxing of the items of a is not displayed
-drop@:(head@unbox) a
 
 NB. ============================================================================
 Lab Section
@@ -1811,12 +2091,6 @@ NB. empty list.  Each cell produces an empty list, so the result is
 NB. an array of shape 3 0, which display as three blank lines.
 
 }.@({.@>) a
-
-load 'system/packages/misc/fndisplay.ijs'
-setfnform 'J'
-defverbs 'drop head unbox"0'
-NB. The boxing of the items of a is not displayed
-drop@(head@unbox) a
 
 NB. ============================================================================
 Lab Section
@@ -1837,12 +2111,6 @@ NB. }.@{. is equivalent to }.@:{. because both compounds have rank _ .
 
 }.@:{.@> a
 
-load 'system/packages/misc/fndisplay.ijs'
-setfnform 'J'
-defverbs 'drop head unbox"0'
-NB. The boxing of the items of a is not displayed
-drop@:head@unbox a
-
 NB. ============================================================================
 Lab Section
 )
@@ -1858,12 +2126,6 @@ NB. first item of that is taken, leaving 1 2 3 .  }. is applied
 NB. to that, leaving the result 2 3 .
 
 }.@({.@:>) a
-
-load 'system/packages/misc/fndisplay.ijs'
-setfnform 'J'
-defverbs 'drop head unbox"0'
-NB. The boxing of the items of a is not displayed
-drop@(head@:unbox) a
 
 NB. ============================================================================
 Lab Section

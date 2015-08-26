@@ -238,8 +238,8 @@ NB. ============================================================================
 Lab Section Surprises
 There are a few basic things about J that may surprise you:
 
-1.  Period and colon are INFLECTIONs that are suffixed to names to make
-  new names.  + +. +: and +:: are all different names.
+1.  Period and colon are INFLECTIONs that are suffixed to primitives or names to make
+new primitives.  + +. +: and +:: are all different words.
 
 2.  The only punctuation is control statements [if. for example] and
      ( ) ' NB. LF
@@ -249,10 +249,10 @@ There are a few basic things about J that may surprise you:
   NB. starts a comment.  Everything on a line after NB. is ignored.
 
 3.  { } [ ] " ,  are NOT punctuation, and are NOT paired - they are
-  individual symbols with defined meanings.
+individual symbols with defined meanings.
 
 4.  A sequence of numbers separated by spaces is taken as a single list of
-  numbers.  This is NOT true for names separated by spaces.
+numbers.  This is NOT true for names separated by spaces.
 )
 NB. The following is a perfectly good sentence.  The verb { means
 NB. 'select', so the verb is selecting item number 2 from the list
@@ -286,7 +286,7 @@ end.
 0 0 $0
 )
 PREPARE
- 
+
 NB. ============================================================================
 Lab Chapter Arrays
 NB. ============================================================================
@@ -498,11 +498,11 @@ Lab Section Review of Terms
 An n by m by ...   array has the SHAPE n,m,...
 The shape of a noun is a list, with one number per dimension.
 
-  The shape of a noun is given by ($ noun)
+The shape of a noun is given by ($ noun)
 
 The number of dimensions of the array is its RANK
 
-  The rank of a noun is given by (# $ noun)
+The rank of a noun is given by (# $ noun)
 
 An array with rank 0 is an ATOM, also called a SCALAR.  Its shape is an empty list.
 )
@@ -513,27 +513,27 @@ $ array  NB. shape
 NB. ============================================================================
 Lab Section
 An array can be interpreted as an array of CELLS each of which
-  is an array of the same rank and shape.  For example, a 2x3x4 array
-  can be interpreted as:
-    A 2x3x4 array of cells of rank 0 [atoms]
+is an array of the same rank and shape.  For example, a 2x3x4 array
+can be interpreted as:
+ A 2x3x4 array of cells of rank 0 [atoms]
  or A 2x3 array of cells of rank 1 [each cell has shape 4]
  or An array of 2 cells of rank 2 [each cell has shape 3x4]
  or A single entity of shape 2x3x4.
 
 If k is greater than or equal to the rank of the array, there is a single
-  k-cell, containing the entire array.
+k-cell, containing the entire array.
 
 Cells with rank k are called K-CELLS.
 
-  The shape of the k-cells of a noun is given by
+The shape of the k-cells of a noun is given by
     (k ((] {.~ [: - (<. #))  $) noun)
 
 When the array is viewed as an array of shape (j) of k-cells, (j) is called
-  the FRAME of the array with respect to k-cells, or the k-FRAME of the array.
+the FRAME of the array with respect to k-cells, or the k-FRAME of the array.
 
-  The 1-frame of a 2x3x4 array is  (2 3).
+The 1-frame of a 2x3x4 array is  (2 3).
 
-  The k-frame of a noun is given by
+The k-frame of a noun is given by
     (k ((] }.~ [: - (<. #))  $) noun)
 )
 array =: 2 3 4 $ 'abcdefghijklmnopqrstuvwx'
@@ -549,16 +549,16 @@ Lab Section
 The notion of k-cells can be expanded to negative values of k.  The
 [-k]-CELLS of a noun have rank k less than the rank of the noun.
 
-   The _1-cells of a 2x3x4 array have rank 1 less than the array, in other
-   words rank 2, shape 3 4 .
+The _1-cells of a 2x3x4 array have rank 1 less than the array, in other
+words rank 2, shape 3 4 .
 
 The _1-cells of a noun are called the ITEMS of the noun.
 
 
 An array is said to be a LIST of its items.  The 2x3x4 array is a list of
-  2-cells, each of which has shape 3 4.
+2-cells, each of which has shape 3 4.
 
-   The number of items in a noun is given by (# noun).
+The number of items in a noun is given by (# noun).
 
 A list of atoms is called a LIST.
 
@@ -577,14 +577,14 @@ Every verb has two RANKS, one for the monadic case and one for dyadic.
 We will discuss monads here.
 
 When a verb (v) with rank (r) is applied to a noun (n), the noun is
-  viewed as an array of (r)-cells.  Call the (r)-frame of (n) (f); then (n)
-  is viewed as an array, of shape (f), of (r)-cells.  (v) is applied to each
-  (r)-cell independently, and the result is viewed as an array of shape
-  (f) of cells, where each result cell comes from the application of (v) to a
-  single cell of (n).
+viewed as an array of (r)-cells.  Call the (r)-frame of (n) (f); then (n)
+is viewed as an array, of shape (f), of (r)-cells.  (v) is applied to each
+(r)-cell independently, and the result is viewed as an array of shape
+(f) of cells, where each result cell comes from the application of (v) to a
+single cell of (n).
 
 The (") conjunction can be used to make a verb with a desired rank.
-  (v"n) is a verb with rank (n).  It applies (v) to each (n)-cell of its argument.
+(v"n) is a verb with rank (n).  It applies (v) to each (n)-cell of its argument.
 
 (v b. 0) shows the ranks of (v).  The first number is the monadic rank.
 )
@@ -628,14 +628,14 @@ The shape of the overall result is the (r)-frame of the argument, concatenated
 with the shape of the result for an individual cell.
 
 But what happens if the results for the individual cells have different
-  shapes?
+shapes?
 
 In that case, the results are brought up to the same size by adding
-  padding to the shorter results.  This padding is called FRAMING FILL,
-  and it is 0 for numbers, ' ' for characters, or (a:) for boxes.
+padding to the shorter results.  This padding is called FRAMING FILL,
+and it is 0 for numbers, ' ' for characters, or (a:) for boxes.
 
 If the results have different rank, first they are brought up to the
-  same rank by adding leading axes of length 1; then fill is added.
+same rank by adding leading axes of length 1; then fill is added.
 )
 ] array =: 2 3 4 $ 'abcdefghijklmnopqrstuvwx'
 NB. The spaces are framing fills:
@@ -645,20 +645,20 @@ NB. The spaces are framing fills:
 NB. ============================================================================
 Lab Section Dyadic Verb Rank
 Each verb has a rank when used dyadically.  This is two numbers: the
-  rank used on the left argument and the rank used on the right argument.
+rank used on the left argument and the rank used on the right argument.
 
-(v b. 0) shows the ranks of (v).  The second number is the left rank,
-  the last is the right rank.
+(v b. 0) shows the ranks of (v).  The first number is the rank of the monad (v y); the second number is the left rank of the dyad (x v y);
+the last is the right rank of the dyad.
 
 When the verb (v) is applied dyadically, as in (x v y), each argument has
-  a frame, called the LEFT FRAME and the RIGHT FRAME.
+a frame, called the LEFT FRAME and the RIGHT FRAME.
 
 When the left frame and the right frame are identical, it means that
-  there is a one-to-one correspondence of cells between the left and the
-  right arguments.  In that case the verb (v) is applied between each
-  corresponding pair of cells, producing an independent result for each
-  pair.  These results are then treated as an array of cells whose
-  frame is the same as the frame of the arguments.
+there is a one-to-one correspondence of cells between the left and the
+right arguments.  In that case the verb (v) is applied between each
+corresponding pair of cells, producing an independent result for each
+pair.  These results are then treated as an array of cells whose
+frame is the same as the frame of the arguments.
 )
 array
 ]selector =: 2 3 $ 0 1 2 0 1 3
@@ -673,15 +673,15 @@ $ selector {."0 1  array
 NB. ============================================================================
 Lab Section
 When the left and right frame are not identical, the situation becomes
-  more complicated.
+more complicated.
 
 For an operation to be possible, the shorter frame must be a prefix
-  of the longer.  Failure to meet this condition produces a length error.
+of the longer.  Failure to meet this condition produces a length error.
 )
 i. 2 3   NB. A 2x3 array
 100 101 102 + i. 2 3   NB. length error - why?
 
-NB. The rank of the verb is 0 0.  The left frame is 3; the right frame is 2 3;
+NB. The rank of the verb (x + y) is 0 0.  The left frame is 3; the right frame is 2 3;
 NB. 3 is not a prefix of 2 3; error.
 
 100 101 + i. 2 3  NB. Left frame 2, right frame 2 3, 2 is a prefix of 2 3; OK
@@ -690,27 +690,27 @@ NB. 3 is not a prefix of 2 3; error.
 NB. ============================================================================
 Lab Section
 The shorter frame, which is a prefix of the longer, is called the
-  COMMON FRAME.  The part of the longer frame that is left after the
-  common frame is removed is called the SURPLUS FRAME.
+COMMON FRAME.  The part of the longer frame that is left after the
+common frame is removed is called the SURPLUS FRAME.
 
 The argument with the shorter frame is viewed as an array of argument
-  cells whose shape is the common frame.  This is the same as the monadic
-  case we discussed previously.
+cells whose shape is the common frame.  This is the same as the monadic
+case we discussed previously.
 
 The argument with the longer frame is viewed as an array of subarrays, where
-  each subarray is an array of argument cells whose shape is the surplus frame.
-  The argument is an array of these subarrays, with shape equal to the common
-  frame.
+each subarray is an array of argument cells whose shape is the surplus frame.
+The argument is an array of these subarrays, with shape equal to the common
+frame.
 
 Each cell of the shorter-frame argument is matched with the corresponding
-  subarray of the longer-frame argument.  The verb is applied between
-  the shorter-frame cell and each cell in the longer-frame subarray.
-  The results of the individual applications of the verb are collected into an
-  array using the longer frame.
+subarray of the longer-frame argument.  The verb is applied between
+the shorter-frame cell and each cell in the longer-frame subarray.
+The results of the individual applications of the verb are collected into an
+array using the longer frame.
 
-  You may think of each individual cell of the shorter-frame argument as
-  being duplicated to make up for the surplus frame of the corresponding
-  part of the longer-frame argument.
+You may think of each individual cell of the shorter-frame argument as
+being duplicated to make up for the surplus frame of the corresponding
+part of the longer-frame argument.
 
 Use dissect to display the examples below.
 )
@@ -757,9 +757,9 @@ The rank operator produces implicit looping.  You can nest rank
 operators to produce nested loops.
 
 In the verb (u"r"s), the verb is executed as ((u"r)"s); in other
-  words, the argument cells are matched up using the shape s;
-  then, within each corresponding pair of cells, subcells are
-  matched up according to the shape r.
+words, the argument cells are matched up using the shape s;
+then, within each corresponding pair of cells, subcells are
+matched up according to the shape r.
 
 Dissect the following example lines to see a picture of the computation.
 )
@@ -1114,7 +1114,7 @@ NB. attempt to create one failed
 
 NB. ============================================================================
 Lab Section Creating Boxes: (x ; y) [Link]
-(x ; y) creates a boxed list out of (x) and (y).  (x) is always put into a box; (y) is
+(x ; y) creates a list of boxes out of (x) and (y).  (x) is always put into a box; (y) is
 put into a box only if it is not boxed already; then the boxes are concatenated
 into a list.
 
@@ -1128,7 +1128,7 @@ a boxing level to it too, you must write
 
   x ; y ;< z
 
-to force boxing of the last item in the chain.
+to force boxing of the last item in the chain.  If you leave out the (<) for boxed (z), the result may be an array of any rank rather than a list, and will probably not be what you want.
 
 If you just want to add one level of boxing regardless of the initial
 condition, use
@@ -1140,6 +1140,10 @@ condition, use
 (1 ; 2) ; (3 4 ; 4 5)  NB. Do you expect 2 boxes or 3?
 (1 ; 2) ,&< (3 4 ; 4 5)  NB. One way to get 2 boxes
 (1 ; 2) ;< (3 4 ; 4 5)  NB. Another way
+
+]y =: 1 2 $ (1 2;3 4)  NB. An array of two boxes
+9 10 ; y  NB. Oops, forgot to box y
+9 10 ;< y  NB. This is what I meant
 
 NB. ============================================================================
 Lab Section Words  (;: y)
@@ -1588,7 +1592,7 @@ NB. ============================================================================
 Lab Section What a Conjunction Does Not Do
 An example: the description of (&:) gives, for the dyadic case,
 
-  x u&:v y   is   (v x) u (v y)
+x u&:v y   is   (v x) u (v y)
 
 This is a schematic description only!  The interpreter DOES NOT
 actually expand the sequence (x u&:v y)  into  ((v x) u (v y)).
@@ -1597,15 +1601,15 @@ The interpreter could have been designed that way, with each name replaced
 by an equivalent.  There are several reasons that would be bad design:
 
 1.  There might not be a concise equivalent for the function of the
-  conjunction.
+conjunction.
 
 2.  At the time (u&v) is encountered, it is not known whether the
-  usage is monadic or dyadic, so both forms must be substituted;
-  but this can lead to huge intermediate results.
+usage is monadic or dyadic, so both forms must be substituted;
+but this can lead to huge intermediate results.
 
 3.  Conjunctions are not required to have (x) and (y) arguments.  Substituting
-  the description of what the conjunction does to (x) and (y) doesn't make
-  sense if it doesn't have an (x) or (y).
+the description of what the conjunction does to (x) and (y) doesn't make
+sense if it doesn't have an (x) or (y).
 )
 PREPARE
 4!:55 'a';'b';'c';'d'
@@ -1625,7 +1629,7 @@ a and b and c and d
 
 NB. ============================================================================
 Lab Section What a Conjunction Does
-  x u&:v y   is   (v x) u (v y)
+x u&:v y   is   (v x) u (v y)
 
 means that (u&:v) produces a verb, and that verb operates according to the
 description ((v x) u (v y)).  The verb created by execution of a conjunction
@@ -1653,16 +1657,16 @@ EXECUTION OF A CONJUNCTION PRODUCES A DERIVED ENTITY.
 Some ramifications of this fact:
 
 1.  You can assign the derived verb to a name.  When the named verb is
-  executed, the conjunction is not executed again - it was executed before
-  the verb was assigned.
+executed, the conjunction is not executed again - it was executed before
+the verb was assigned.
 
 2.  Any setup calculation done when the conjunction is executed does not
-  have to be done again when the verb is executed.
+have to be done again when the verb is executed.
 
 3.  The derived verb may use any algorithm it wants to produce a result
-  consistent with its definition.  Many of the fast idioms in J are
-  special combinations which are detected when a derived verb is created.
-  The derived verb then uses fast code to produce the correct result.
+consistent with its definition.  Many of the fast idioms in J are
+special combinations which are detected when a derived verb is created.
+The derived verb then uses fast code to produce the correct result.
 )
 3 +&*: 4
 addsq =: +&*:  NB. Assign derived verb to name
@@ -1737,16 +1741,16 @@ They are recognized by syntax.
 When a hook or fork is encountered, it is turned into a derived verb.
 
 The HOOK is a sequence of 2 verbs in a row with no noun argument, as in
-   (f g)
+(f g)
 
 The FORK is a sequence of 3 verbs in a row with no noun argument, as in
-   (f g h)
+(f g h)
 
 The verb derived from the hook has the function
-   y f g y [monad]             x f g y  [dyad]
+ y f g y [monad]             x f g y  [dyad]
 
 The verb derived from the fork has the function
-   (f y) g (h y) [monad]       (x f y) g (x h y) [dyad]
+ (f y) g (h y) [monad]       (x f y) g (x h y) [dyad]
 
 As with visible modifiers, many sequences of (f), (g), and (h) are
 recognized as special, and handled by a derived verb with special code.
@@ -1855,7 +1859,7 @@ has the other.
 Remember: in any hook (f g), f is applied dyadically, g monadically.
 
 in a fork (f g h), g is always applied dyadically, and f and h are applied
-  dyadically if the fork is applied dyadically.
+dyadically if the fork is applied dyadically.
 
 If either the x or the y argument must be applied to two verbs, you cannot
 use a hook - you need a fork.
@@ -1919,21 +1923,21 @@ of the dyad, or (u&n) to make (n) the right argument.
 Some examples of when you need a monad to do a dyad's work:
 
 1.  The function you want is only monadic, as in the dual function (u&.v).
-  (v) is a monad, so if you need two arguments to (u), you have to use (m&u) or (u&n).
+(v) is a monad, so if you need two arguments to (u), you have to use (m&u) or (u&n).
 
 2.  You need to inject an argument into a long verb.  A simple example
-  is  ((x&u)&.v).  This is like (x u&.v y) except that in ((x&u)&.v) the
-  (x) argument bypasses the verb (v).  This is necessary if the verb (v) is
-  inappropriate for (x).
+is  ((x&u)&.v).  This is like (x u&.v y) except that in ((x&u)&.v) the
+(x) argument bypasses the verb (v).  This is necessary if the verb (v) is
+inappropriate for (x).
 
 3.  Another example: ((f g m&h) y).  Here (h) must be monadic, since
-  it is in a monadic fork, so the only way to pass in the argument is with
-  (m&h).
+it is in a monadic fork, so the only way to pass in the argument is with
+(m&h).
 
 4.  Another example: (x (f g (m&h)@]) y).  The verb (h) is turned into
-  a monad and then back into a dyad with a different argument.  We want
-  (m h y) instead of (x h y), so first we ignore (x) with (@]) and then
-  supply (m) with (m&).
+a monad and then back into a dyad with a different argument.  We want
+(m h y) instead of (x h y), so first we ignore (x) with (@]) and then
+supply (m) with (m&).
 )
 2 3 %&(1&{) 5 6 7  NB. (1 { x) % (1 { y)
 (+/ % #)@:(2 3&{)&.:*:  3 1 4 1 5 9  NB. Geometric mean of items 2 and 3
@@ -1943,7 +1947,7 @@ NB. ============================================================================
 Lab Section Alternative to (m&v) and (u&n): Constant in Fork
 Another way of putting a fixed argument into a verb is with the CONSTANT FORK
 
-  (noun verb verb)
+(noun verb verb)
 
 Instead of the usual fork (f g h) where f g h are verbs, in the constant
 fork f is a noun and g and h are verbs.  In this context, the noun
@@ -1952,7 +1956,7 @@ result.
 
 So, the form  (x (f g m&h@]) y) could be written
 
-  x (f g m h ]) y
+x (f g m h ]) y
 
 because (m h ]), the constant fork, is equivalent to (m&h@]).
 
@@ -1975,7 +1979,7 @@ Lab Section The Capped Fork
 The verb ([:) is an odd animal.  In its most frequent use it is never
 even executed at all: this is the CAPPED FORK
 
-  ([: g h)
+([: g h)
 
 This is fundamentally different from the normal fork
 ([x] (f g h) y) which is  (([x] f y) g ([x] h y)).  The capped fork
@@ -2208,20 +2212,20 @@ Lab Section Other Conjunction Pairs (& &:)  (&. &.:)
 The principles used to make sense of (@) and (@:) also apply for other
 ways of making compounds.  The conjunction (&:) is defined by
 
-  [x] u&:v y   is   [v x] u (v y)
+[x] u&:v y   is   [v x] u (v y)
 
 and this is used to define (&) as
 
-  [x] u&v y    is   u&:v"mv   [mv is the monadic rank of v]
+[x] u&v y    is   u&:v"mv   [mv is the monadic rank of v]
 
 
 Similarly, (&.:) is defined as
 
-  [x] u&.:v y   is   (u^:_1) [v x] u (v y)
+[x] u&.:v y   is   (u^:_1) [v x] u (v y)
 
 and this is used to define (&.) as
 
-  [x] u&.v y    is   u&.:v"mv
+[x] u&.v y    is   u&.:v"mv
 )
 _1 2 _3 4 5 i.&:|   _4 2   NB. Take absolute value, then look for y in x
 _1 2 _3 4 5 i.&|   _4 2   NB. Rank 0 makes no sense
@@ -2248,14 +2252,14 @@ Lab Section Raze, the Prototype for Concatenation
 (; y), the verb called Raze, is the general case of concatenation.
 We will examine it and define the other verbs as special cases.
 
-(; y) applies to a boxed argument [on an unboxed argument it is just like (, y)].  It opens each box and concatenates
-the contents, in a way to be defined presently.  Since it is the contents
+(; y) is an extension of (, y).  (; y) first puts the atoms of (y) into a list; then, if the atoms of (y) are boxes, each box is opened and the resulting contents concatenated to produce the result.  The definition of 'concatenated' is rather complex in general, because the items of the different boxes may have different shapes; but in the simple case, when all the contants have items of the same shape, concatenation is striaghtforward: the result is an array whose items are the items of all the contents, in order.
+
+Since it is the contents
 of the boxes that are concatenated, the actual shape of the boxed argument is
 immaterial except to indicate the order in which the contents are
 concatenated.
 
-The items of each boxed contents are concatenated into a list whose items are
-the same shape as the items of the boxed contents.  So, if (i. 2 3) with
+For example, if (i. 2 3) with
 item shape (,3) is concatenated with (i. 5 3) with item shape (,3), the
 result has items of the same shape - (,3) - and so the result shape is
 (7 3), with 2 items from (i. 2 3) followed by 5 items from (i. 5 3).
@@ -2271,9 +2275,9 @@ Lab Section Raze Overview
 Some observations to help you follow the detailed description of raze:
 
 1.  Smaller items are padded to match the shape of the largest item.  For items that are arrays, fill atoms are used for the padding.
-  Note: ITEMS of the boxed contents, not the whole boxed contents.  The items
-  are brought up to common shape, and then the items of the several contents
-  are concatenated into one long list of items.
+Note: ITEMS of the boxed contents, not the whole boxed contents.  The items
+are brought up to common shape, and then the items of the several contents
+are concatenated into one long list of items.
 )
 NB. Examples of raze:
 ]op =: 2 ; 5
@@ -2286,10 +2290,10 @@ NB. Examples of raze:
 NB. ============================================================================
 Lab Section
 2.  Atoms, however, are not padded with fill; their values are replicated
-  as required to match the shape of the largest item.  Also, they do not affect the size of the items of the result.
-  The size of an item of the result is calculated by looking at all the
-  contents that are arrays, and then each atom is replicated to
-  produce a single item of that size.
+as required to match the shape of the largest item.  Also, they do not affect the size of the items of the result.
+The size of an item of the result is calculated by looking at all the
+contents that are arrays, and then each atom is replicated to
+produce a single item of that size.
 )
 ]op =: (i. 3 2) ; 9   NB. Atom is replicated
 ;op
@@ -2299,19 +2303,19 @@ Lab Section
 NB. ============================================================================
 Lab Section
 3.  If the contents have different ranks, the lower-rank arrays are brought up
-  to the rank of the largest-rank contents by adding leading axes, of
-  length 1, as many times as needed.  So, a contents of shape 3 4 will
-  be treated as having shape 1 3 4 if the largest contents has rank 3, or
-  1 1 3 4 if the largest contents has rank 4, and so on.  Note that there
-  is no replication or padding: the shape is changed, but not the number of
-  atoms in the array.
+to the rank of the largest-rank contents by adding leading axes, of
+length 1, as many times as needed.  So, a contents of shape 3 4 will
+be treated as having shape 1 3 4 if the largest contents has rank 3, or
+1 1 3 4 if the largest contents has rank 4, and so on.  Note that there
+is no replication or padding: the shape is changed, but not the number of
+atoms in the array.
 
-  The extension of rank happens first thing, before the items are padded
-  with fill.
+The extension of rank happens first thing, before the items are padded
+with fill.
 
-  As with padding, atoms do not participate in this extension of rank.
-  An atom always becomes a single result item whose shape is determined
-  by the shape of the other elements.
+As with padding, atoms do not participate in this extension of rank.
+An atom always becomes a single result item whose shape is determined
+by the shape of the other elements.
 )
 NB. Atom is replicated; short list has axis added, then items are padded with fill
 op =: (i. 2 3) ; 8 9 ; 6
@@ -2445,12 +2449,12 @@ NB. Assemble the items along a single leading axis
 
 NB. ============================================================================
 Lab Section Other Verbs For Concatenation; Atoms
- (,: y),  (,. y), (x , y),  (x ,. y), and (x ,: y) perform reshaping and concatenation.
+(,: y),  (,. y), (x , y),  (x ,. y), and (x ,: y) perform reshaping and concatenation.
 
 Note that atoms are handled as special cases in most of these:
 
 In (x , y) an atom is replicated to the shape of an item of the other
-  argument.
+argument.
 
 In (x ,: y) an atom is replicated to the shape of the entire other argument.
 
@@ -2460,23 +2464,23 @@ In (,. y) an atom is first turned into a one-item list.
 NB. ============================================================================
 Lab Section (x , y) [Append]
 (x , y) concatenates the (x) and (y) arguments.  The result is the same as
-   ; (<x), (<y).
+; (<x), (<y).
 
 The operation is easier to describe with only 2 arguments.
 
 1.  Any atom argument is replicated to be the shape of an ITEM of the
-  other argument.  [This is simpler than the general case of (; y),
-  because there is no need to look through all the contents to find
-  the shape of a result item - with 2 arguments the result item will always
-  be the shape of an item of the other argument]
+other argument.  [This is simpler than the general case of (; y),
+because there is no need to look through all the contents to find
+the shape of a result item - with 2 arguments the result item will always
+be the shape of an item of the other argument]
 
 2.  If one argument has lower rank than the other, leading axes of length
-  1 are added to bring the arguments to the same rank.  This does not add
-  or remove atoms, it just reshapes the array.
+1 are added to bring the arguments to the same rank.  This does not add
+or remove atoms, it just reshapes the array.
 
 3.  The items of the arguments, which now have the same rank, are brought
-  up to the same shape by padding with fills at the end of any axis that is
-  shorter than in the other arguments.
+up to the same shape by padding with fills at the end of any axis that is
+shorter than in the other arguments.
 
 4.  The lists of items, which now have the same item shape, are concatenated.
 )
@@ -2574,20 +2578,20 @@ The arguments are concatenated.  The (x) argument is always put into a box; the
 
 This asymmetrical definition causes an expression like
 
-  x ; y ; z
+x ; y ; z
 
 to box each argument exactly once if they were all unboxed initially.
 This is usually what you want.  If (z) was boxed, and you want to add
 a boxing level to it too, you must write
 
-  x ; y ;< z
+x ; y ;< z
 
 to force boxing of the last item in the chain.
 
 If you just want to add one level of boxing regardless of the initial
 condition, use
 
-  x ,&< y
+x ,&< y
 )
 1 ; 2 3 ; 4 5   NB. Create a list of boxes
 1 ,&< 2 3 ,&< 4 5   NB. ,&< is not usually what you want
@@ -2646,13 +2650,13 @@ Using (u^:v), you can have the execution of (u) depend on the (x) and (y) data.
 
 Points to note:
 
-  1.  (u^:v) can be used as either a dyad or a monad.  Whatever arguments there are will be applied to both (u) and (v).  Thus, if there is an (x) argument, both (u) and (v) will be executed as dyads.
+1.  (u^:v) can be used as either a dyad or a monad.  Whatever arguments there are will be applied to both (u) and (v).  Thus, if there is an (x) argument, both (u) and (v) will be executed as dyads.
 
-  2.  Often the (x) argument is just used to control the execution, i. e. it is needed only in (v).  In that case you will be prone to forget that it is also
-    an argument to (u).  If you want to ignore (x), make your (u) look like (u@]).
+2.  Often the (x) argument is just used to control the execution, i. e. it is needed only in (v).  In that case you will be prone to forget that it is also
+an argument to (u).  If you want to ignore (x), make your (u) look like (u@]).
 
-  3.  You can give (u^:v) a rank, by writing (u^:v"r), to make the number
-    of executions of (u) vary from cell to cell.  This feature is the main reason that (^:) can be better than (if.) - it can produce different results for different cells.
+3.  You can give (u^:v) a rank, by writing (u^:v"r), to make the number
+of executions of (u) vary from cell to cell.  This feature is the main reason that (^:) can be better than (if.) - it can produce different results for different cells.
 )
 If =: ^:  NB. Define a mnemonic
 5 + If > 4  NB. 'add if greater'
@@ -2770,7 +2774,7 @@ Lab Section System-Defined Inverses
 Many verbs - more than you would expect - have inverses that can be
 applied using (u^:_1).  To see if a verb (v) has an inverse, type
 
-   v b. _1
+v b. _1
 
 The result will be the inverse, if any, as a character string.  If there
 is no defined inverse you will get a domain error.
@@ -2795,7 +2799,7 @@ restricted domain that you happen to know you will be using.
 
 The verb
 
-  u :. v
+u :. v
 
 executes just like (u) except when its inverse is called for: then, (v) is
 used for the inverse.
@@ -2810,9 +2814,9 @@ NB. me to find it!
 NB. We can use it to undo the runningrevdiff verb
 runningrevdiff 2 3 4 5 6 7
 runningrevdiff^:_1 (2 1 _1 _4 _8 _13)
-   runningrevdiff^:(2) 1 1 2 3 5 8 13 21 34
+runningrevdiff^:(2) 1 1 2 3 5 8 13 21 34
 1 _1 _1 _2 _2 _2 _1 1 5
-      runningrevdiff^:(_2) 1 _1 _1 _2 _2 _2 _1 1 5
+runningrevdiff^:(_2) 1 _1 _1 _2 _2 _2 _1 1 5
 1 1 2 3 5 8 13 21 34
 
 NB. ============================================================================
@@ -2895,12 +2899,12 @@ Every entity has an atomic representation [AR], even modifiers.
 
 But since a modifier by itself cannot be an operand to a modifier, the
 tie conjunction cannot be used to create the AR of a modifier:
-  (&`'')  for example does not give the AR of (&) - it is a syntax error.
+(&`'')  for example does not give the AR of (&) - it is a syntax error.
 
 The foreign (5!:1) will produce the AR of any entity with
 a name.  You give the name as a boxed noun, as in
 
-  5!:1 <'name'
+5!:1 <'name'
 
 The result is the AR.
 
@@ -2946,7 +2950,7 @@ A gerund is an atomic representation [AR], or a list of ARs.
 The way to make a gerund out of a list of verbs is with the (`) conjunction,
 as in
 
-  +`-`(+/ % #)`*
++`-`(+/ % #)`*
 
 This creates a gerund which has 4 ARs, one for each verb.
 
@@ -2967,9 +2971,9 @@ NB. ============================================================================
 Lab Section
 If you think about it, you might find it puzzling that (a`b`c`d)
 produces the correct result.  After all, it is executed as
-  (((a`b)`c)`d)  [because the conjunctions are executed left-to-right]
+(((a`b)`c)`d)  [because the conjunctions are executed left-to-right]
 so why doesn't ((a`b)`c) produce
-  [the AR of the concatenated ARs of (a) and (b)] and [the AR of (c)]
+[the AR of the concatenated ARs of (a) and (b)] and [the AR of (c)]
 ?
 
 The trick is that (`) does not blindly produce the AR of its operands.
@@ -3002,7 +3006,7 @@ NB. ============================================================================
 Lab Section Using Gerunds: Agenda
 The simplest use of a gerund is the form
 
-  gerund @. noun
+gerund @. noun
 
 which is a SELECTED VERB [also known as an AGENDA, for reasons unfathomable to me]
 
@@ -3010,9 +3014,9 @@ The gerund is a list of ARs, and the noun is the number of which one should
 be used.  The result of the selected verb is a single verb that can then be
 applied to arguments.
 
-  (gerund @. noun)  is equivalent to  ((noun { gerund) `: 6)
+(gerund @. noun)  is equivalent to  ((noun { gerund) `: 6)
 
-  An AR is selected and then turned into a verb.  The noun must be a single number, but it may use negative indexing.
+An AR is selected and then turned into a verb.  The noun must be a single number, but it may use negative indexing.
 )
 NB. The result of the selection is a verb:
 +`-`%`* @. 2
@@ -3029,7 +3033,7 @@ Lab Section Using Gerunds: Computed Agenda
 A more useful form of selected verb makes the selection of the verb
 depend on the data.  This form is
 
-  [x] gerund @. v  y
+[x] gerund @. v  y
 
 where (v) is a verb that returns an atom.  The atom is used to select
 the gerund that will be converted to a verb and executed.
@@ -3091,15 +3095,15 @@ than there are ARs in the gerund.
 
 The simplest example is
 
-  +`-/ 1 2 3
++`-/ 1 2 3
 
 which is executed as follows:
 
-  (u/ 1 2 3)   is the same as   (1 u 2 u 3)
+(u/ 1 2 3)   is the same as   (1 u 2 u 3)
 
 and with the gerund, the verbs are substituted cyclically, so
 
-  (+`-/ 1 2 3) is the same as   (1 + 2 - 3)
+(+`-/ 1 2 3) is the same as   (1 + 2 - 3)
 
 All the partitioning and interval adverbs support gerund forms.
 )
@@ -3176,7 +3180,7 @@ Lab Section (u/\ y) and (u/\. y)
 (u\ y) and (u\. y) are most often used when u is of the form (u/).
 
 In (u/\ y), (u/) is applied to successive prefixes.  Consider a 4-item (y) argument
-  y0 y1 y2 y3 .
+y0 y1 y2 y3 .
  The first prefix is y0;         applying (u/) gives y0
  The second prefix is y0 y1;     applying (u/) gives y0 u y1
  The third prefix is y0 y1 y2;   applying (u/) gives y0 u y1 u y2
@@ -3399,7 +3403,7 @@ NB. ============================================================================
 Lab Section (x {. y) (x }. y) (x |. y) (x u;.1 2 _1 _2 y) can be multidimensional
 The dyads that work on arrays:
 
-  (x {. y) (x }. y) (x |. y) (x u;.1 y) (x u;._1 y) (x u;.2 y) (x u;._2 y) 
+(x {. y) (x }. y) (x |. y) (x u;.1 y) (x u;._1 y) (x u;.2 y) (x u;._2 y) 
 
 allow the operation to be performed on multiple axes.  This is a
 feature that is often overlooked.
@@ -3423,9 +3427,9 @@ successive axes.
 
 NB. ============================================================================
 Lab Section Use (i.~ y) to Self-Classify
-   (i.~ y)  which is equivalent to
+(i.~ y)  which is equivalent to
 
-   y i. y
+y i. y
 
 is a phrase you might not think would be useful, but it comes up
 surprisingly often.  The result is a list whose length is the number
@@ -3440,7 +3444,7 @@ corresponding number.
 ]a =: ;: 'a rose is a rose is a rose according to Gertrude Stein'
 i.~ a  NB. self-classify: an equivalence-class number for each item of a
 (i.~ a) { a   NB. see how this restores a
-NB. /:@/: gives the ordinal for each number in a:
+NB. /:@/: gives the ordinal for each number in (a):
 NB. position of each atom of a in the sorted list /:~ a
 /:~ a   NB. a sorted into order
 /:@/: a    NB. The ordinals of a
@@ -3457,7 +3461,7 @@ For a square matrix (y),   (%. y) is the matrix inverse of (y).
 
 If y is not square, it must have more rows than columns, and
      (%. y)  is   ((%. (|:y) mp y) mp (|: y))
-   in math notation, (%. y) is   (YtY)'Yt    where '=inverse, t=transpose
+ in math notation, (%. y) is   (YtY)'Yt    where '=inverse, t=transpose
 
 
 (x %. y) is matrix division, which is defined as ((%. y) mp x).
@@ -3506,7 +3510,7 @@ Lab Section Use (x +/ . * y) for Matrix Multiplication
 
 You can think of other ways to write this, like (+/@(*"1 _)).
 
-Don't.  (+/ . *) is heavily optimized in the interpreter.
+Don't.  (+/ . *) is heavily optimized in the interpreter.  It is OK to assign (+/ . *) to a name, such as (mp).
 )
 
 NB. ============================================================================
@@ -3561,7 +3565,7 @@ a part of, and so indicates the point or recursion.
 
 ($:), like any verb, can be part of many verb phrases at once: in
 
-  a@b@c@d
+a@b@c@d
 
 (a) is part of itself, (a@b), (a@b@c), and (a@b@c@d).  So which phrase is the
 one that is invoked by ($:) ?
@@ -3651,26 +3655,26 @@ by (1!:21 y).  A filename that is not fully qualified is taken as relative
 to the current Working Directory.
 
 
- (1!:1 file)  reads file, result is the text of the file
+(1!:1 file)  reads file, result is the text of the file
 
- (x 1!:2 file)  writes (and replaces) (file), text is (x)
+(x 1!:2 file)  writes (and replaces) (file), text is (x)
 
- (x 1!:3 file)  appends (x) to (file)
+(x 1!:3 file)  appends (x) to (file)
 
- (1!:0 y) fetches directory information.  (y) is a string, not a filename, and
-        may contain ? and * characters.
+(1!:0 y) fetches directory information.  (y) is a string, not a filename, and
+may contain ? and * characters.
 
- (1!:11 file ,< index,length)  NB. read (file), starting at (index)
+(1!:11 file ,< index,length)  NB. read (file), starting at (index)
 
- (x 1!:12 file ,< index) NB. Write (file), starting at (index) (length is (#x))
+(x 1!:12 file ,< index) NB. Write (file), starting at (index) (length is (#x))
 
- (1!:21 file)  open (file), returning file number
- (1!:22 filenumber) close file
+(1!:21 file)  open (file), returning file number
+(1!:22 filenumber) close file
 
- (1!:43 '') result is current Working Directory
- (1!:44 y) set Working Directory
+(1!:43 '') result is current Working Directory
+(1!:44 y) set Working Directory
 
- (1!:55 file) erase (file)
+(1!:55 file) erase (file)
 )
 1!:43 ''  NB. current Working Directory
 1!:0 '*.exe'  NB. executables in the current Working Directory
@@ -3678,15 +3682,15 @@ to the current Working Directory.
 
 NB. ============================================================================
 Lab Section Types and Conversions (3!:n)
- (3!:0 y)  type of (y): 1=Boolean, 2=character, 4=integer, 8=float, 16=complex,
-            32=boxed, ... [there are more]
+(3!:0 y)  type of (y): 1=Boolean, 2=character, 4=integer, 8=float, 16=complex,
+32=boxed, ... [there are more]
 
- (x 3!:4 y) x>0: convert J integers to character string [type cast]
-            x<0: convert character string to J integers [type cast]
- (x 3!:5 y)  similar, to type-cast J floats
+(x 3!:4 y) x>0: convert J integers to character string [type cast]
+x<0: convert character string to J integers [type cast]
+(x 3!:5 y)  similar, to type-cast J floats
 
-  (x 3!:4 y) and (x 3!:5 y) are used to convert data to a byte string for
-     passing to an external program
+(x 3!:4 y) and (x 3!:5 y) are used to convert data to a byte string for
+passing to an external program
 )
 3!:0 (0)  NB. Boolean
 3!:0 i. 3  NB. Integer
@@ -3700,7 +3704,7 @@ Lab Section Names  (4!:n)
 (4!:0 <'name') Class of (name): _2=invalid _1=unused 0-3=noun, adverb, conj, verb
 
 (4!:1 class-list) List of names in (class), which is a list of the desired parts of speech:
-     0-3=noun, adverb, conj, verb  6=locale
+0-3=noun, adverb, conj, verb  6=locale
 )
 a =: i. 2 3  NB. A Noun
 plus =: +
@@ -3711,17 +3715,17 @@ plus =: +
 NB. ============================================================================
 Lab Section Representation (5!:n)
 (5!:5 <'name') Produces a string which, when interpreted, yields the named
-              entity
+entity
 )
 ]a =: ('abc';'de';'fgh');0 2.25 4.5 6.75 9 11.25 13.5 15.75
 5!:5 <'a'   NB. Clever, eh?
 
 NB. ============================================================================
 Lab Section Time  (6!:n)
- (6!:0 '') current local time  y m d h m s
- (6!:1 '') seconds since start of session.  A single number.
- ([x] 6!:2 sentence)  execute (sentence) (x) times [default=1], report average time
- (6!:3 y)  delay y seconds
+(6!:0 '') current local time  y m d h m s
+(6!:1 '') seconds since start of session.  A single number.
+([x] 6!:2 sentence)  execute (sentence) (x) times [default=1], report average time
+(6!:3 y)  delay y seconds
 )
 6!:0 ''
 6!:1 ''
@@ -3741,9 +3745,9 @@ NB. ============================================================================
 Lab Section Locales  (18!:n)
 A J LOCALE is a public namespace.  It has nothing to do with timezones.  The locale is at the heart of object-oriented J.
 
- (18!:2 y)  return search path for locale y
- (x 18!:2 y) set search path for locale y to x
- (18!:5 '') return current locale
+(18!:2 y)  return search path for locale y
+(x 18!:2 y) set search path for locale y to x
+(18!:5 '') return current locale
 )
 18!:5 ''  NB. the current locale
 18!:2 (18!:5 '')  NB. The path of the current locale
@@ -3782,23 +3786,24 @@ NB. We will illustrate the frame by using a verb that boxes its argument.
 NB. Since each box is an atom, the shape of the result will just be the
 NB. frame of the original argument.
 
-<"2 a  NB. This is an array of 2 2-cells
-$ <"2 a  NB. The 2-frame of a
+<"2 a  NB. (<"2 a) is an array of 2 2-cells
+$ <"2 a  NB. The shape of that array is the 2-frame of a
 $ L:0 <"2 a  NB. The shape of each result cell
 
-<"1 a  NB. This is a 2x3 array of 1-cells
-$ <"1 a  NB. The 1-frame of a
+<"1 a  NB. (<"1 a)  is a 2x3 array of 1-cells
+$ <"1 a  NB. The shape of that array is the 1-frame of a
 $ L:0 <"1 a  NB. The shape of each result cell
 
 < a  NB. Rank of < is _; this is a 0-dimensional array of _-cells
-$ < a  NB. The _-frame of a  (empty frame)
+$ < a  NB. The shape of that array is the 1-frame of a
+NB.  _-frame of anything is always empty
 $ L:0 < a  NB. The shape of each result cell
 
 NB. ============================================================================
 Lab Section Definition of an Empty Argument
 An EMPTY ARGUMENT is one that has a zero in its frame.  This means that the
 argument has a zero in its shape, but that zero is not one of the last (r)
-items of the shape [(r) is the rank of the verb]
+items of the shape [(r) is the rank of the verb].  An empty argument must always have a rank higher than the rank of the verb.
 
 An ARGUMENT WITH EMPTY CELLS has a zero in one of the last (r) atoms of its shape.
 Then, each (r)-cell has a zero in its shape, i. e. is empty.
@@ -3813,7 +3818,7 @@ $ <"1 a   NB. The 1-frame of the argument.  This is an EMPTY OPERAND
 <"2 a  NB. Box the 2-cells.  Argument is a 2 0 array of 2-cells.
 $ <"2 a   NB. The 2-frame of the argument.  This is an EMPTY OPERAND
 
-<"3 a  NB. Box the 2-cells.  Argument is a 2 array of 3-cells.
+<"3 a  NB. Box the 3-cells.  Argument is a 2 array of 3-cells.
 $ <"3 a   NB. The 3-frame of the argument.  This is an OPERAND WITH EMPTY CELLS.
 $ L:0 <"3 a   NB. The shape of each argument cell is 0 3 4
 
@@ -3848,8 +3853,10 @@ The value of each atom in the fill cell is a fill of the appropriate
 type: (0) if the argument is numeric, (' ') if the argument is character,
 (a:) if the argument is boxed.
 
-The verb is applied to this fill cell, and the shape and type of the result
-are noted.  The frame of the argument is appended to the shape of the
+If the verb has two arguments [i. e. it is invoked as a dyad], the calculation of the fill cell is performed independently on eachg argument.
+
+The verb is applied to the fill cell[s], and the shape and type of the result
+are noted.  The frame is appended to the shape of the
 fill-cell result to give the overall result of the verb.
 
 The beauty of this system is that the empty-argument result fits into the
@@ -3869,15 +3876,17 @@ NB. ============================================================================
 Lab Section When Executing on the Fill Cell Results In Error
 If the execution of the verb on the fill cell results in an error,
 the interpreter carries on as if the execution had returned a numeric
-atom.
+atom.  An atom has empty shape.  Remember, this empty result from the fill will be concatenated to the frame of the argument to produce the shape of the result.  The frame will contain a 0 so the result will always be empty.
 
 If this is not what you want, you have to program more carefully.
+
+
 )
 5 + ' '   NB. You can't add a character to a number
 5 + ''  NB. Why doesn't this fail?  '' is still a character.
-NB. The verb was executed on a cell of fills, as 5 + ' '.  That failed,
+NB. The verb was executed with a cell of fills, as 5 + ' '.  That failed,
 NB. and execution continued as if it had returned 0...
-$ 5 + ''  NB. ...so overall result shape is 0
+$ 5 + ''  NB. ...so overall result shape is (,0)
 
 NB. ============================================================================
 Lab Section Arguments With Empty Cells
@@ -3916,7 +3925,7 @@ the shape of the argument.  This is easy to test for using (# y), and you
 can write code like
 
 if. # argument do.
-  ...here the argument is known to have items...
+...here the argument is known to have items...
 end.
 
 More compact ways are shown in the examples.
@@ -4101,7 +4110,8 @@ sel { a  NB. Selector 0 is an atom, axis disappears
 $ sel { a  NB. Axis is gone from shape
 
 ]sel =: < (,0) ; 1 2 ; 0 1 2
-sel { a  NB. Selector 0 is a 1-item list (can't see it in the display)
+sel { a  NB. Selector 0 is a 1-item list [you can't tell that from the session
+NB. display, but dissect will reveal the leading axis]
 $ sel { a  NB. ...but it's there in the shape
 
 ]sel =: < (0$0) ; 1 2 ; 0 1 2
@@ -4176,7 +4186,7 @@ will disappear from the result.
 As usual, omitted trailing axes are taken in full.  From this it can be
 deduced that the shape of the result is
 
-  (#>x) }. $y
+(#>x) }. $y
 )
 ] a =: 2 3 4 $ 'abcdefghijklmnopqrstuvwx'
 ]sel =: < 0 0  NB. Axes 0 and 1 given, axis 2 taken in full, result a list
@@ -4195,9 +4205,9 @@ calculating the result for each atom of (x) independently, and assembling those
 results into an array.
 
 The interpreter recognizes the case
-  list { y
- and treats it the same as
-  (<<list) { y
+ list { y
+and treats it the same as
+ (<<list) { y
  so there is no reason to prefer the boxed form.
 )
 ] a =: 2 3 4 $ 'abcdefghijklmnopqrstuvwx'
@@ -4249,11 +4259,11 @@ NB. ============================================================================
 Lab Section Modifying an Array: Gerund Form
 The form
 
-  x v0`v1`v2} y
+x v0`v1`v2} y
 
 is equivalent to
 
-  (x v0 y) (x v1 y)} (x v2 y)
+(x v0 y) (x v1 y)} (x v2 y)
 
 This is not useful for most work, but in tacit verbs it can come in handy.
 It does not allow modification in place.
@@ -4272,10 +4282,10 @@ a group of items.
 The first atom x0 is applied, as (x0 { y), giving a result (y1) [see below].
 The next atom is applied, as (x1 { y1), giving (y2)  [see below].
 The operation continues until (x) is exhausted; the final result is the
-  last (yn)  [see below].
+last (yn)  [see below].
 
 After each selection, if the result of the selector was an atom, the selected
-  item is opened, otherwise it is left boxed.
+item is opened, otherwise it is left boxed.
 
 Each selection except possibly the last must select an atom.
 )
@@ -4407,7 +4417,7 @@ this tolerance.
 1 2 1.000000000000001 3 2 </.!.0 i. 5  NB. Require exact matches
 
 0 < 0.000000000000001  NB. Greater than 0 (relative tolerance)
-  * 0.000000000000001  NB. But signum is 0 (absolute tolerance)
+* 0.000000000000001  NB. But signum is 0 (absolute tolerance)
 
 x: 5%3   NB. Convert fraction to exact form
 x:!.0 (5%3)  NB.  Intolerant conversion preserves the floating-point noise
@@ -4415,7 +4425,7 @@ x:!.0 (5%3)  NB.  Intolerant conversion preserves the floating-point noise
 NB. ============================================================================
 Lab Section Fills: ($!.n) (#!.n) (#^:_1!.n)  ({.!.n) etc.
 Verbs that reshape their (y) argument include
-  (x $ y) (x # y) (x {. y) (x }. y) ({. y) (x {:) (x }.) (x }:)
+(x $ y) (x # y) (x {. y) (x }. y) ({. y) (x {:) (x }.) (x }:)
 
 If the result is bigger than the (y) argument, the verb has to put
 something into the added spaces.  (x $ y) repeats its y argument; the
@@ -4431,15 +4441,15 @@ Note that Fit must specify an atom, NOT an array.
 The inverse of (x # y), (x #^:_1 y), expands its (y) argument to match the 1s in its
 (x) argument.  Fit can be used to control what goes into the added spaces.
 )
-3 2 $ 'abc'  NB. Fill with spaces
+3 2 $ 'abc'  NB. Repeat y argument
 3 2 $!.'*' 'abc'  NB. Fill with *
 
 1 0 0 1j1 0 2 # 'abcdef'  NB. Fill with spaces
 1 0 0 1j1 0 2 #!.'*' 'abcdef'  NB. Fill with *
 
 1 0 0 1 0 1 #^:_1 'adf'  NB. fill with spaces
-1 0 0 1 0 1&#^:_1!.'*' 'adf'  NB. fill with *.  Note the &, it is required
-1 0 0 1 0 1 #^:_1!.'*' 'adf'  NB. Error if used as dyad
+1 0 0 1 0 1&#^:_1!.'*' 'adf'  NB. fill with *.
+1 0 0 1 0 1 #^:_1!.'*' 'adf'  NB. Also works as dyad
 
 5 {. 1 2 3  NB. Overtake, extra spaces are filled with fills (0)
 5 {.!.(99) 1 2 3  NB. Fit specifies fill
@@ -4449,7 +4459,7 @@ The inverse of (x # y), (x #^:_1 y), expands its (y) argument to match the 1s in
 NB. ============================================================================
 Lab Section Fills In Concatenation Verbs
 The verbs that perform concatenation, namely
-  (x , y) (x ,. y) (x ,: y) (; y)
+(x , y) (x ,. y) (x ,: y) (; y)
  have to expand their arguments (or parts of their arguments) to bring them
 to a common shape.  During this operation, fills may be added.  The
 value to use for the fill can be specified by Fit.
@@ -4497,7 +4507,7 @@ _2 |.!.' ' 'abcdef'  NB. Shift Right, shifting in spaces
 NB. ============================================================================
 Lab Section Mathematical Frills (x ^!.n y) (x p.!.n y) (C.!.2 y)
 Fit is used with the Power verb (x ^ y) to produce a modified power:
-  x^!.n y   is   */(x + n*i. y)
+x^!.n y   is   */(x + n*i. y)
 With (n=0) this is (*/(y $ x)) which is ordinary (x^y).  If you're into Pochhammer symbols you'll love this one.
 
 (x p.!.n y) is the corresponding variant of (p.), in that the atoms of (x)
@@ -4579,16 +4589,16 @@ the locale, is called a LOCATIVE.
 
 Locatives come in two forms, DIRECT:
 
-   simplename_localename_
+simplename_localename_
 
    where the locale name, surrounded by underscores, follows the simple name
 
 and INDIRECT:
 
-   simplename__var
+simplename__var
 
    where the locale name, boxed, is contained in the variable (var), which is
-   separated from the simple name by two underscores.
+separated from the simple name by two underscores.
 
 Normal non-locative name references refer to names in the implied locale.
 
@@ -4611,7 +4621,7 @@ created.
 
 To delete a locale, use
 
-  coerase <'localename'
+coerase <'localename'
 
 The locale and all entities in it will be erased.  It is OK to erase a locale
 while an entity in it is running; the locale will be erased as soon as no
@@ -4619,7 +4629,7 @@ entity in it is running.
 
 To list the locales in use, use
 
-  conl 0 1   NB. 0 for named, 1 for numbered
+conl 0 1   NB. 0 for named, 1 for numbered
 )
 conl 0 1
 coerase  NB. coerase is an alias for 18!:55
@@ -4667,11 +4677,11 @@ NB. ============================================================================
 Lab Section Changing the Implied Locale I
 You can set the implied locale with
 
-  cocurrent locale-name
+cocurrent locale-name
 
 and query it with
 
-  18!:5 ''
+18!:5 ''
 
 You will often find cocurrent at the beginning of a script, to ensure that
 all names defined in the file are defined in the given locale.
@@ -4703,7 +4713,7 @@ if the name was found somewhere else in the search path.
 
 The simplest example of this is the form
 
-   name_z_ =: name_xyz_
+name_z_ =: name_xyz_
 
 to define a public entry point.  Then, a sentence like
 
@@ -4745,7 +4755,7 @@ access the names in the locale, only the base class will touch them.
 
 To define a base class, just put
 
-  cocurrent locale-name
+cocurrent locale-name
 
 at the top of each script file in the class.  All names assigned in the script
 will then be defined in the given locale.
@@ -4971,7 +4981,7 @@ When J verbs operate on large arrays, the execution overhead is negligible.
 When J verbs operate on atoms, the overhead is a couple of orders of
 magnitude larger than the computation time and dominates the overall time.
 
-The way to keep you verbs fast is to ensure that they work on arrays that are
+The way to keep your verbs fast is to ensure that they work on arrays that are
 as large as possible.
 )
 
@@ -5021,7 +5031,7 @@ But then, why isn't (+"0) slow?  And for that matter, why isn't (+) slow, since 
 is a rank-0 verb?  The answer is INTEGRATED RANK SUPPORT.  The primitives
 have the internal mechanisms to handle arguments of any rank.  And, the
 derived verbs created when you assign a rank to a primitive, as with
- (+"0), (+"1 2), etc., handle the looping internally with a single verb-start.
+(+"0), (+"1 2), etc., handle the looping internally with a single verb-start.
 
 Integrated Rank Support means you don't have to worry about the rank of
 primitives.  You still have to keep the rank of named verbs as high as
@@ -5118,18 +5128,18 @@ corresponds to a level of indirection between the header and the data.
 
 This structure has implications on space and time when you you use boxed arrays:
 
-  If the contents of a box are small, the header may add a substantial amount
-  to the space used by the array;
+If the contents of a box are small, the header may add a substantial amount
+to the space used by the array;
 
-  Executing a verb on the contents of boxes requires opening each box in
-  turn, which usually requires a verb-start per box.
+Executing a verb on the contents of boxes requires opening each box in
+turn, which usually requires a verb-start per box.
 
 The upshot is that you should avoid boxed arrays where the contents of the
 boxes are small.
 
 You can see how much space a named entity is using by executing
 
-   7!:5 <'name'
+7!:5 <'name'
 )
 xx =: 5 - ? 100000 $ 10  NB. An array of 100000 floats
 7!:5 <'xx'
@@ -5153,7 +5163,7 @@ NB. The Conjunction u L:0 applies u at the lowest boxing level and is also fast:
 20 ts '+: L:0 xxbb'
 
 NB. &.> is so fast that it even runs faster than @> which doesn't have to
-NB. box its result (it takes more space because its boxed result is much bigger):
+NB. box its result [(&.>) takes more space because its boxed result is much bigger]:
 20 ts '+:@> xxbb'
 
 NB. ============================================================================
@@ -5184,22 +5194,21 @@ Lab Section The Execution Model
 Execution of a J sentence follows these steps:
 
 1.  The sentence is broken into WORDS.  You can use (;: y) to show you what
-  the words are.
+the words are.
 
-2.  The words are considered as a STACK.  The stackpointer is
-  initially pointing at the end of the stack.
+2.  The words are considered as a STACK.  Four 'end-of-line' markers are appended to the words of the sentence, and the stackpointer initially points to the first of these added markers.
 
 3.  The four words starting with the stackpointer are examined to see if
-  they match an executable pattern.  If they do, 2 or 3 of the words,
-  depending on the pattern, are the executable FRAGMENT and are EXECUTED and
-  then replaced by the result of the execution.  If not, the stackpointer
-  is moved one position to the left.
+they match an executable pattern.  If they do, 2 or 3 of the words,
+depending on the pattern, are the executable FRAGMENT and are EXECUTED and
+then replaced by the result of the execution.  If not, the stackpointer
+is moved one position to the left.
 
 4.  Step 3 is repeated until the stackpointer moves off the left-hand end of
-  the sequence of words.
+the sequence of words.
 
 5.  If the stack contains one word, that is the result.  If there is more than
-  one word, the sentence contains an error.
+one word, the sentence contains an error.
 )
 
 NB. ============================================================================
@@ -5207,8 +5216,8 @@ Lab Section The Parsing Table
 The PARSING TABLE that gives the list of allowed executions is shown in
 a new window.  Keep it visible for reference.
 
-§ stands for beginning-of-line, an extra word that is added at the
-beginning of the sentence to act as a stopper.
+B stands for beginning-of-line, an extra word that is added at the
+beginning of the sentence to act as a stopper, and E stands for the end-of-line markers added at the end.
 
 A stands for Adverb, C for Conjunction, V for Verb, N for Noun.
 
@@ -5230,13 +5239,13 @@ speech.
 )
 SCRIPT
 Word At Stackpointer  Word 1    Word 2    Word 3     Action
-§ =. =: (             [V        N]        anything   0 Monad
-§ =. =: ( A V N       V         [V        N]         1 Monad
-§ =. =: ( A V N       [N        V         N]         2 Dyad
-§ =. =: ( A V N       [V N      A]        anything   3 Adverb
-§ =. =: ( A V N       [V N      C         V N]       4 Conj
-§ =. =: ( A V N       [V N      V         V]         5 Fork
-§ =. =: (             [C A V N  C A V N]  anything   6 Hook/Adverb
+B =. =: (             [V        N]        anything   0 Monad
+B =. =: ( A V N       V         [V        N]         1 Monad
+B =. =: ( A V N       [N        V         N]         2 Dyad
+B =. =: ( A V N       [V N      A]        anything   3 Adverb
+B =. =: ( A V N       [V N      C         V N]       4 Conj
+B =. =: ( A V N       [V N      V         V]         5 Fork
+B =. =: (             [C A V N  C A V N]  anything   6 Hook/Adverb
 [name N               =. =:     C A V N]  anything   7 Is
 [(                    C A V N   )]        anything   8 Paren
 SCRIPT
@@ -5368,7 +5377,7 @@ Lab Section Examples of Execution 4
 
 +/ . * is matrix multiplication, as defined under the (.) conjunction.
 
-The first execution is ',: 1 2 3' to produce an array with shape 3 1,
+The first execution is ',: 1 2 3' to produce an array with shape (1 3),
 followed by execution of the surrounding parentheses.
 
 The next executable pattern is   '3 1  $  1 2 3' .  It is a useful exercise
@@ -5423,7 +5432,7 @@ create anonymous verbs that work on their arguments according to those rules.
 
 In other words,
 
-  (+/ % #) y
+(+/ % #) y
 
 is not executed as
 
@@ -5500,7 +5509,7 @@ y does not have to be a function of x.
 )
 require 'plot'
 require 'trig'
-t =: 50 %~ o. i. 201  NB. 100 values of x from 0 to 2p1
+t =: 50 %~ o. i. 201  NB. 201 values of x from 0 to 4p1
 plot (sin t) ; cos 1.5 * t  NB. Parametric function
 
 NB. ============================================================================

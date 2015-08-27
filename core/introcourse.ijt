@@ -21,7 +21,39 @@ When you type a J sentence, the computer evaluates it and displays the
 result.
 )
 PREPARE
+require 'debug/lint'
 load '~addons/labs/labs/core/jpcfmt.ijs'
+NB. Fix up user's config file
+desiredkeyvals =: ';'&(taketo ; takeafter);._2 (0 : 0)
+F2;0;Dissect Line;dissect&.finddissectline_dissect_ 0
+F3;0;Dissect Last Error;dissect&.finddissectline_dissect_ 1
+F4;0;Lint;lintwindow_lint_''
+)
+'dissectfkey dissecterrorfkey lintfkey' =: 3 : 0''
+fkeyinfo =. 0$a:
+fkeyassigned =. 0 2$a:
+cfiled =. 1!:1 cfile =. < jpath '~config/userkeys.cfg'
+if. LF ~: {:cfiled do. cfiled =. cfiled , LF end.
+NB. Cut to lines
+lines =. <;._2 cfiled -. CR
+NB. discard comments
+lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines  
+NB. get delimiter for each line
+delims =. (,&';' {~ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+' i.&0@:e.~ deb)@> lines
+NB. get existing keyname;values
+keynameval =. delims (taketo ; takeafter)&> lines
+NB. for each desired value, get the key assigned currently
+keyassigns =. keynameval i.&:(1&{"1) desiredkeyvals
+NB. For the values not yet assigned, see if the keys are
+NB. available
+if. +./ assignedmask =. keyassigns < #keynameval do.
+  fkeyinfo =. fkeyinfo , (fk =. (0 {"1 keynameval) {~ assignedmask # keyassigns) ('You can use ' , [ , ' for ' , ])&.> fkact =. ';' ([ taketo takeafter)&.> assignedmask # 1 {"1 desiredkeyvals
+  fkeyassigned =. fkeyassigned , fk ,. fkact
+end.
+fka =. 1 {"1 fkeyassigned
+fkn =. 0 {"1 fkeyassigned
+(fkn,<'') {~ fka i. ';' ([ taketo takeafter)&.> (1&{"1) desiredkeyvals
+)
 PREPARE
 2 + 3   NB. Computer evaluates the sentence
 i. 5  NB. Computer evaluates the sentence, producing a list of numbers

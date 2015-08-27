@@ -325,7 +325,7 @@ The result for n people will depend on the result for [n-1] people, and the prob
 
 (x % y) is division giving the list of fractions 365/365, 364/365, ...
 
-(+/\ y) calculates the "running product" of (y).  The first result is 365/365, the second is [365/365]*[364/365]; and so on.  This gives the probability, for each number of people, that those people have distinct birthdays.
+(*/\ y) calculates the "running product" of (y).  The first result is 365/365, the second is [365/365]*[364/365]; and so on.  This gives the probability, for each number of people, that those people have distinct birthdays.
 
 (-. y) is (1 - y) and computes the desired result. 
 )

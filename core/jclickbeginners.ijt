@@ -971,22 +971,22 @@ Finally, we write the verb.  Use File>New to create a new script.  Call it quadr
 
 Use cut and paste to put the following verb into the script:
 
-NB. Solve quadratic equation
-NB. y is (a,b,c) for the quadratic ax^2 + bx + c = 0
-NB. Result is the 2 solutions
-solvequad =: monad define
-NB. Extract a, b, and c from the input
-a =: 0 { y
-b =: 1 { y
-c =: 2 { y
-NB. Calculate sqrt of discriminant
-discrimsqrt =: %: (b^2) - 4*a*c
-NB. Calculate first result
-res0 =. ((-b) + discrimsqrt) % 2*a
-NB. Calculate second result
-res1 =. ((-b) - discrimsqrt) % 2*a
-NB. Return both results
-res0,res1
+ NB. Solve quadratic equation
+ NB. y is (a,b,c) for the quadratic ax^2 + bx + c = 0
+ NB. Result is the 2 solutions
+ solvequad =: monad define
+ NB. Extract a, b, and c from the input
+ a =: 0 { y
+ b =: 1 { y
+ c =: 2 { y
+ NB. Calculate sqrt of discriminant
+ discrimsqrt =: %: (b^2) - 4*a*c
+ NB. Calculate first result
+ res0 =. ((-b) + discrimsqrt) % 2*a
+ NB. Calculate second result
+ res1 =. ((-b) - discrimsqrt) % 2*a
+ NB. Return both results
+ res0,res1
 
 
 
@@ -1182,72 +1182,72 @@ NB. =========================================================
 Lab Section Enhancing the program
 Add the following verbs to your script using cut & paste.  You will have to end each verb with the special ) line.
 
-NB. y is a number
-NB. result is a string (x-y) representing a term
-dispfactor =: monad define
-NB. Get string form of absolute value of y
-stringy =: ": | y
-NB. Get the sign to use for -y
-dispy =: (*y) { ' -+'
-NB. Format the term
-if. y = 0 do.
-  NB. 0 is special
-  'x'
-else.
-  '(x',dispy,stringy,')'
-end.
+ NB. y is a number
+ NB. result is a string (x-y) representing a term
+ dispfactor =: monad define
+ NB. Get string form of absolute value of y
+ stringy =: ": | y
+ NB. Get the sign to use for -y
+ dispy =: (*y) { ' -+'
+ NB. Format the term
+ if. y = 0 do.
+   NB. 0 is special
+   'x'
+ else.
+   '(x',dispy,stringy,')'
+ end.
 
 
 
-NB. x is the degree of a term (2 for x^2, 1 for x, 0 for constant)
-NB. y is the coefficient of a term
-NB. Result is the string form of the term, always including a leading sign
-NB. unless the coefficient is 0)
-dispterm =: dyad define
-if. y = 0 do.
-  ''  NB. If a term is 0, it has no display
-else.
-  NB. get sign, + for positive, - for negative
-  sign =: (*y) { ' +-'
-  NB. get the string to use for the number: y, unless it's +-1
-  if. 1 = |y do.
-    numstring =: ''
-  else.
-    numstring =: ": | y
-  end.
-  NB. Get the display of the x part, which depends on degree
-  if. x = 0 do.
-    xstring =: ''  NB. constant: no x part
-  elseif. x = 1 do.
-    xstring =: 'x'  NB. no power
-  elseif. do.
-    xstring =: 'x^' , ":x  NB. A power
-  end.
-  NB. Put it all together
-  sign,numstring,xstring
-end.
+ NB. x is the degree of a term (2 for x^2, 1 for x, 0 for constant) 
+ NB. y is  the coefficient of a term
+ NB. Result is the string form of the term, always including a leading sign
+ NB. unless the coefficient is 0)
+ dispterm =: dyad define
+ if. y = 0 do.
+   ''  NB. If a term is 0, it has no display
+ else.
+   NB. get sign, + for positive, - for negative
+   sign =: (*y) { ' +-'
+   NB. get the string to use for the number: y, unless it's +-1
+   if. 1 = |y do.
+     numstring =: ''
+   else.
+     numstring =: ": | y
+   end.
+   NB. Get the display of the x part, which depends on degree
+   if. x = 0 do.
+     xstring =: ''  NB. constant: no x part
+   elseif. x = 1 do.
+     xstring =: 'x'  NB. no power
+   elseif. do.
+     xstring =: 'x^' , ":x  NB. A power
+   end.
+   NB. Put it all together
+   sign,numstring,xstring
+ end.
 
 
 
-NB. y is a,b,c for a quadratic
-NB. Result is the quadratic, factored
-factor =: monad define
-NB. Pull out a, b, c
-fa =: 0 { y
-fb =: 1 { y
-fc =: 2 { y
-NB. Create format for quadratic.  Join terms together,
-NB. delete leading sign if it's '+'
-qstring =: (2 dispterm fa),(1 dispterm fb),(0 dispterm fc)
-if. '+' = {. qstring do.
-  qstring =: }. qstring  NB. remove first char if +
-end.
-NB. Solve the quadratic
-results =: solvequad y
-NB. format the terms
-fstring =: (dispfactor 0 { results),(dispfactor 1 { results)
-NB. Display the equation and the factored form
-qstring,' = ',fstring
+ NB. y is a,b,c for a quadratic
+ NB. Result is the quadratic, factored
+ factor =: monad define
+ NB. Pull out a, b, c
+ fa =: 0 { y
+ fb =: 1 { y
+ fc =: 2 { y
+ NB. Create format for quadratic.  Join terms together,
+ NB. delete leading sign if it's '+'
+ qstring =: (2 dispterm fa),(1 dispterm fb),(0 dispterm fc)
+ if. '+' = {. qstring do.
+   qstring =: }. qstring  NB. remove first char if +
+ end.
+ NB. Solve the quadratic
+ results =: solvequad y
+ NB. format the terms
+ fstring =: (dispfactor 0 { results),(dispfactor 1 { results)
+ NB. Display the equation and the factored form
+ qstring,' = ',fstring
 
 
 

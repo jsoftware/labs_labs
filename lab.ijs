@@ -502,6 +502,8 @@ CODENDX=: 0
 labsectionname=: 3 : 0
 j=. '(',(labposition''),') ',;labsection''
 )
+
+onCreate=: labsel_run
 labselect=: 3 : 0
 labaddons''
 labgetfiles y
@@ -514,7 +516,7 @@ else.
     LABCAT=: <ALL
   end.
 end.
-labsel_run''
+labsel_run`wd@.IFJA 'activity ',>coname''
 )
 labwelcome=: 3 : 0
 r=. LF,'Welcome to lab: ',LABTITLE
@@ -656,16 +658,32 @@ groupboxend;
 pas 6 4;pcenter;
 rem form end;
 )
+
+LABSELJA=: 0 : 0
+pc labsel closeok;pn "Lab Select";
+bin v;
+cc s0 static;cn "Select a lab";
+cc s1 static;cn "Category:";
+wh _1 _2;cc category combolist;
+wwh 1 _1 0;cc listbox listbox;
+bin z;
+pas 6 4;pcenter;
+rem form end;
+)
 labsel_run=: 3 : 0
 if. wdisparent 'labsel' do.
   wd 'psel labsel;pshow;pactive' return.
 end.
-wd LABSEL
+wd IFJA{::LABSEL;LABSELJA
 labshowcats''
-wd 'set comments checked ',":IFCOMMENTS
-wd 'set sentences checked ',":IFSENTENCES
-wd 'setfocus listbox'
-wdfit''
+if. IFJA do.
+  labsel_listbox_select=: labsel_listbox_button
+else.
+  wd 'set comments checked ',":IFCOMMENTS
+  wd 'set sentences checked ',":IFSENTENCES
+  wd 'setfocus listbox'
+  wdfit''
+end.
 wd 'pshow;'
 )
 labsel_browse_button=: 3 : 0

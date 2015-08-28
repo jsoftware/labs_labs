@@ -148,12 +148,14 @@ A leading underscore [_] is a negative sign, making the number negative.
 
 Underscore by itself (_) represents infinity.  (__) is negative infinity.
 
-In a J sentence, you can make notes to yourself.  When Roger encounters the word NB. he stops listening until you press ENTER.  Everythng after the NB. is for your eyes only.
+In a J sentence, you can make notes to yourself.  When Roger encounters the word NB. he stops listening until you press ENTER.  Everything after the NB. is for your eyes only.
 )
 100   NB. Roger executes your sentence and types the result
 100 + 2   NB. + means add
 20 + 2 * 5   NB. * means multiply
-.5 + 2  NB. .5 doesn't begin with a numeral!  See how Roger points out the error
+.5 + 2  NB. .5 doesn't begin with a numeral!
+NB. Notice how Roger points out the error using spacing
+
 0.5 + 2   NB. better
 4 + _2
 _ + 1  NB. Infinity plus one remains infinity
@@ -187,11 +189,12 @@ You can guess the meaning of some of the primitives: + and -, say.  But the infl
 
 There are around 250 primitives in J.  Fortunately you can get by knowing about 30 of them.
 )
-+..   NB. This follows the rules for a primitive, but it is not defined
++..   NB. follows the primitive rules, but is not defined
 4 +. 8
 7 +. 8
 NB. Can you figure out what +. does?
-NB. You will have to experiment by typing sentences for Roger to execute.
+NB. You will have to experiment by typing sentences for
+NB. Roger to execute.
  
  
  
@@ -223,14 +226,18 @@ When you assign a value to a name, any previous value assigned to the name is lo
 You should read that again too.
 )
 4 * 3   NB. 4 multiplied by 3
-product =: 4 * 3   NB. save the value under the name 'product'
+product =: 4 * 3   NB. save value under the name 'product'
 sum =: 4 + 3   NB. save the sum
-sum5num =: 1+2+3+4+5  NB. A name can contain a numeral, it just can't start with one
+sum5num =: 1+2+3+4+5  NB. A name can contain a numeral,
+                      NB. it just can't start with one
 product   NB. Roger, what is the value of this name?
 2 * product  NB.  The name can be used in sentences
-smu   NB. Roger, what is the value of this name?  Oops, I misspelled it
+smu   NB. Roger, what is the value of this name?
+NB. Value error?  Oops, I misspelled it
+
 sum5num   NB. What is the value of this name?
 enigma =: +/ i. 6  NB. ???
+
 NB. Now tell me, what is the value of (enigma)?
  
  
@@ -261,7 +268,10 @@ Follow the next few sections carefully and make sure you answer each question co
 )
 minutes =: 5
 seconds =: 60 * minutes
-NB. What is the value of (seconds) now?  How would you find out for sure?
+
+NB. What is the value of (seconds) now?
+
+NB. How would you find out for sure?
  
  
  
@@ -288,7 +298,8 @@ In other words, the original line
 DID NOT establish an ongoing relationship between the names 'seconds' and 'minutes'.  It was not like the definition of a mathematical function.
 It was simply an assignment, giving a numeric value to the name 'seconds'.
 )
-seconds   NB. This shows the new value of (seconds), same as the original
+seconds   NB. new value of (seconds), same as the original
+
 NB. How would you make the value of (seconds)
 NB. correspond to the current value of (minutes)?
  
@@ -339,7 +350,8 @@ ascore
 NB. that contains the score for player A,
 NB. write a sentence to perform the following action:
 
-NB. "Add 10 to player A's score to indicate that the target was hit."
+NB. "Add 10 to player A's score to indicate that the
+NB. target was hit."
  
  
  
@@ -397,9 +409,9 @@ NB. =========================================================
 Lab Section String constants
 The last type of word in a J sentence is the "string constant".  This is any characters that appear between a pair of single-quote characters:
 )
-'Mr. Rich'  NB. A string of 8 characters, including the space.
-fullname =: 'Henry Rich'  NB. A character string can be assigned to a name
-fullname   NB. Roger types the value
+'Mr. Rich'  NB. A string: 8 characters including the space
+fullname =: 'Henry Rich'  NB. A string can be assigned
+fullname   NB. Roger types the value of the name
  
  
  
@@ -422,9 +434,16 @@ The single-quote is something you have to add when you are typing a J sentence, 
 
 Since most of the words you use will be numbers, names, and primitives, it makes sense to be able to type those words without any extra characters, reserving the single-quotes for the relatively rare string constants.
 )
-Fred   NB. If you don't have quotes, Roger thinks it's a name
-'Fred'   NB. The quotes show it's a string constant.  Roger discards the quotes
-'exact   characters'   NB. spaces are significant inside a string.
+Fred   NB. Without quotes, Roger thinks it's a name...
+NB. ... but there is no such name.
+NB.  That's what 'value error' means
+
+'Fred'   NB. Quotes make it a string constant.
+NB. Notice that the quotes are not part of the value.
+NB. Once Roger has used them to find the string constant,
+NB.  he discards the quotes.
+
+'exact   characters'   NB. spaces matter inside a string.
  
  
  
@@ -437,9 +456,11 @@ There's a special exception: To get a single-quote character, write two single-q
 
 As the contents of the string constant are scanned, starting with the character after the leading single-quote that starts a string, two back-to-back single-quotes produce one single-quote in the string constant and the scan continues looking for more characters.
 )
-'Margaret (Meg) O''Hertz'   NB. A string constant containing a single-quote
-''   NB. NOT a single-quote.  This is just a string constant with no characters
-''''   NB. A single single-quote character.  Roger types it back
+'Margaret (Meg) O''Hertz'   NB. ' inside string constant
+''  NB. NOT a single-quote.
+NB. It was the string constant with no characters.
+
+''''   NB. A single-quote character.  Roger types it back
  
  
  
@@ -469,8 +490,9 @@ In each case the verb produces a "result" which must be a noun.  The verb and it
 2 * 5   NB. This executes dyadic (*) which means multiply
 * 5  NB. This executes monadic (*).
 
-NB. Can you figure out what monadic (*) does?  Try executing
-NB. it in a variety of arguments.  Try negative as well as positive!
+NB. Can you figure out what monadic (*) does?
+NB. Try executing it on a variety of arguments.
+NB. Try negative as well as positive!
  
  
  
@@ -482,8 +504,11 @@ If they do, the verb is executed, and the verb and its arguments are replaced by
 
 Since each execution of a verb makes the sentence shorter, the process must come to an end eventually.  If there is just one word left, that word is the "result" of the sentence.  If there is more than one word left, you did something wrong, and Roger calls it a "syntax error".
 )
-2 * 5  NB. A single execution, resulting in the value 10, which becomes the result
-2 'a'  NB. Two words, but no verb!  The sentence ends execution with two words
+2 * 5  NB. A single execution, producing 10...
+NB. ...which becomes the result.
+
+2 'a'  NB. Two words, but no verb!
+NB.  Execution ended with two words, error
 'a' 2 * 5  NB. This sentence also ends with two words
 10 + 2 * 5  NB. First (2 * 5) is executed, then (10 + 10)
  
@@ -503,13 +528,16 @@ Especially remember that the negative sign for a number is (_).  (-) is a verb a
 2 * 5 + 3  NB. (5 + 3), then (2 * 8)
 (2 * 5) + 3   NB. (2 * 5) then (10 + 3)
 -5 + 6   NB. (5 + 6) then (-11)
-_5 + 6  NB. (_5 + 6).  The _ is part of the number 'negative five'
+_5 + 6  NB. (_5 + 6).  The _ is part of 'negative five'
 
-NB. In math class, 6+4-5-3-2=0, right?   But in J, it's not.
-NB. Exercise 0: Before asking Roger, figure out what Roger will think 6+4-5-3-2 equals.
+NB. In math class, 6+4-5-3-2=0, right?   In J, it's not.
+NB. Exercise 0: Before asking Roger, figure out what Roger
+NB. will think 6+4-5-3-2 equals.
 NB.   Then check your answer with Roger.
-NB. Exercise 1: using just the numbers 6, 4, 5, 3, and 2 IN THAT ORDER,
-NB.  and the symbols + and -, write a J sentence whose result is 0.
+
+NB. Exercise 1: using just the numbers 6, 4, 5, 3, and 2
+NB. IN THAT ORDER, and the symbols + and -, write a
+NB. J sentence whose result is 0.
  
  
  
@@ -535,7 +563,8 @@ executes ({:) as a dyad.  If you do, Roger will signal "domain error".
 {: 'abc'  NB. we'll learn what this does eventually
 2 {: 'abc'  NB. no dyadic valence
 
-NB. Exercise: write a J sentence that uses only the symbols (-) and (2) and whose result is 8.
+NB. Exercise: write a J sentence that uses only the symbols
+NB. (-) and (2) and whose result is 8.
  
  
  
@@ -652,11 +681,16 @@ On the other hand, you have to be keenly aware of the type of your nouns.  There
 3   NB. an integer
 1 % 3  NB. a floating-point number
 3 * (1 % 3)  NB. mixed precision: no problem
-'a' + 'b'   NB. adding characters??? Impossible!  What would it mean?
-'3' + '2'  NB. Even if the characters are numerals, you still can't add...
-'Ƽ'  NB. ...because a character is just a picture.  Look closely:
-NB. This is not the numeral 5. It is a letter used in the Zhuang alphabet
-NB. from 1957 to 1986 to indicate its fifth tone.  Side-by-side with 5:
+'a' + 'b'   NB. add characters?  Impossible...
+NB. ...What would it mean?
+
+'3' + '2'  NB. Even if the characters are numerals,
+NB. ...you can't add...
+'Ƽ'  NB. ...because a character is just a picture.
+NB. Look closely: this is not the numeral 5.
+NB. It is a letter used in the Zhuang alphabet
+NB. from 1957 to 1986 to indicate its fifth tone.
+NB. Side-by-side with 5:
 'Ƽ5'
  
  
@@ -677,7 +711,8 @@ i. 3 5  NB. 15 numbers arranged in 3 rows of 5 each
 
 NB. Exercises:
 NB. 0. create an array of 4 rows of 2 numbers each;
-NB. 1. an array containing 3 tables, each one having 3 rows of 6 numbers each
+NB. 1. an array containing 3 tables, each one having
+NB.   3 rows of 6 numbers each
  
  
  
@@ -692,7 +727,8 @@ Then there is the "list of tables", also called a "brick".  The lists are distin
 
 And so on... arrays can be grouped into larger arrays as long as they have the same type and shape.
 )
-1,2,3,4  NB. (x , y) joins (x) and (y) into an array - here, a list
+NB. (x , y) joins (x) and (y) into an array.
+1,2,3,4  NB. here, joins the 2 lists into a single list
 l4 =: 1,2,3,4
 l4,5  NB. Appending an atom to a list extends the list
 NB. The verb (i. y) creates arrays of sequential integers
@@ -700,7 +736,8 @@ i. 5  NB. A list of 5 numbers
 i. 2,5   NB. A table, 2 rows of 5 numbers each
 i. 1  NB. A list of 1 number (it displays like an atom)
 i. 0  NB. An empty list - blank line with no numbers
-i. 0,0  NB. A 'quiet empty' - 0 lines with 0 numbers each, so no blank line
+i. 0,0  NB. 'quiet empty' - 0 lines, 0 numbers each...
+NB. ...so no blank line
 
  
  
@@ -752,7 +789,7 @@ The verb ($ y) gives the shape of (y).  The verb (# y) gives the number of items
 ]table =: i. 2 5   NB. a 2x5 table
 $ table  NB. its shape
 # table  NB. it has two items
-# $ table  NB. it has rank 2.  The rank is the length of the shape
+# $ table  NB. it has rank 2.  rank = length of the shape
 
 ]list =: 'abcdef'   NB. A 6-atom list
 $ list  NB. Shape
@@ -760,14 +797,15 @@ $ list  NB. Shape
 # $ list  NB. rank
 
 ]atom =: 'x'   NB. A single character
-NB. Find its rank, shape, and number of items.  These are very important
+NB. Find its rank, shape, and number of items.
+NB. These are very important
 
 NB. Exercises:
-NB. 0. What is item number 0 of the array produced by (i. 3 4)?
-NB. 1. What is item number 2 of the array produced by (i. 6)?
-NB. 2. What is item number 4 of the array produced by (i. _6)?
-NB. 3. What is item number _2 of the array produced by (i. 5 3)?
-NB. 4. What is item number 1 of the array produced by (i. 6 2 3)?
+NB. 0. What is item 0 of the array produced by (i. 3 4)?
+NB. 1. What is item 2 of the array produced by (i. 6)?
+NB. 2. What is item 4 of the array produced by (i. _6)?
+NB. 3. What is item _2 of the array produced by (i. 5 3)?
+NB. 4. What is item 1 of the array produced by (i. 6 2 3)?
  
  
  
@@ -859,8 +897,8 @@ The dyads operate on corresponding atoms of (x) and (y).  If one argument is an 
 'any' -: 'and'  NB. This compares for total equality
 'a' = 2  NB. they're not equal
 'a' > 2  NB. but don't try to rank them!
-'ab' = 'cde'   NB. The number of atoms must match
-'c' = 'cde'  NB. But if one argument is an atom, is is repeated
+'ab' = 'cde'   NB. The number of atoms of arrays must match
+'c' = 'cde'  NB. If one argument is an atom, it is repeated
 NB. Experiment with the others yourself
  
  
@@ -1199,23 +1237,27 @@ Add the following verbs to your script using cut & paste.  You will have to end 
 
 
 
- NB. x is the degree of a term (2 for x^2, 1 for x, 0 for constant) 
+ NB. x is the degree of a term (2 for x^2, 1 for x,
+ NB.   0 for constant) 
  NB. y is  the coefficient of a term
- NB. Result is the string form of the term, always including a leading sign
- NB. unless the coefficient is 0)
+ NB. Result is the string form of the term, always
+ NB.  including a leading sign (unless the
+ NB.  coefficient is 0)
  dispterm =: dyad define
  if. y = 0 do.
    ''  NB. If a term is 0, it has no display
  else.
    NB. get sign, + for positive, - for negative
    sign =: (*y) { ' +-'
-   NB. get the string to use for the number: y, unless it's +-1
+   NB. get the string to use for the number:
+   NB.  y, unless it's +-1
    if. 1 = |y do.
      numstring =: ''
    else.
      numstring =: ": | y
    end.
-   NB. Get the display of the x part, which depends on degree
+   NB. Create the display of the x part, which
+   NB. depends on degree
    if. x = 0 do.
      xstring =: ''  NB. constant: no x part
    elseif. x = 1 do.

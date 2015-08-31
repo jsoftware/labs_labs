@@ -168,17 +168,21 @@ NB.~title1 0	Get lengths
 NB.~link1 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
 NB.~link2 0	Arrays	http://www.jsoftware.com/jwiki/Vocabulary/ArrayProcessing
 NB.~link3 0	Modifiers	http://www.jsoftware.com/jwiki/Vocabulary/Modifiers
-
 NB. get length of each string
 lengths =. #@> y
-NB.~stop
-NB.~title1 0	Get index of smallest length
 
-NB. Find smallest length, and its index
-smallindex =. lengths i. <./ lengths
+NB.~stop
+NB.~title1 0	Get smallest length
+NB. Find smallest length
+smalllen =. <./ lengths
+
+NB.~title1 0	Find position of smallest length
+NB.~link1
+NB. Find position of smallest length
+smallindex =. lengths i. smalllen
+
 NB.~title1 0	Select smallest string
 NB.~link1
-
 NB. Extract that string to give the result
 smallindex {:: y
 ))

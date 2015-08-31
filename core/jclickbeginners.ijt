@@ -1187,7 +1187,7 @@ Next, press the Step Over button.  Look at all the windows and see that you are 
 
 Continue to your heart's content.  When you get to the end of the program, the debugger will fold up into the small bar.
 
-If you want to see it happen again, execute (solvequad) again.  Experiment with different arguments to (solvequad), representng different quadratic equations.
+If you want to see it happen again, execute (solvequad) again.  Experiment with different arguments to (solvequad), representing different quadratic equations.
 )
  
  
@@ -1218,7 +1218,7 @@ If you don't assign the result of a sentence to a name, the result is discarded,
  
 NB. =========================================================
 Lab Section Enhancing the program
-Add the following verbs to your script using cut & paste.  You will have to end each verb with the special ) line.
+Add the following verbs to your script using cut & paste.
 
  NB. y is a number
  NB. result is a string (x-y) representing a term
@@ -1234,7 +1234,7 @@ Add the following verbs to your script using cut & paste.  You will have to end 
  else.
    '(x',dispy,stringy,')'
  end.
-
+ )
 
 
  NB. x is the degree of a term (2 for x^2, 1 for x,
@@ -1268,7 +1268,7 @@ Add the following verbs to your script using cut & paste.  You will have to end 
    NB. Put it all together
    sign,numstring,xstring
  end.
-
+ )
 
 
  NB. y is a,b,c for a quadratic
@@ -1290,7 +1290,7 @@ Add the following verbs to your script using cut & paste.  You will have to end 
  fstring =: (dispfactor 0 { results),(dispfactor 1 { results)
  NB. Display the equation and the factored form
  qstring,' = ',fstring
-
+ )
 
 
 Make sure you can load the enlarged script using lint.

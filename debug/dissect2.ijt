@@ -75,7 +75,7 @@ dissect =: dissectonce
 PREPARE
 dissect '+/ i. 5'
 
-NNB. =========================================================
+NB. =========================================================
 Lab Section Removing the Expansion
 Click again on the (10) in the Final block.
 

@@ -208,7 +208,13 @@ One thing Roger has that a calculator doesn't is a fabulous memory.  Roger will 
 A "name" is any sequence of letters and numerals, as long as it starts with a letter.  Uppercase and lowercase letters are treated as different letters.
 
 A name can contain underscore characters, but there are some restrictions.  For the time being make sure you don't end a name with an underscore or have two underscores in a row.
+)
 
+
+
+
+NB. =========================================================
+Lab Section Assignment
 You assign a value to a name by having the name appear to the left of the (=:) primitive.  See the examples below.
 
 Once you have assigned a value to a name, you can use the name in later sentences and it will be replaced by its value.
@@ -389,9 +395,9 @@ Solve the following problems:
 
 1. Assign the value 30 to the name 'celsius'.
 
-2. Write a sentence to convert the value of (celsius) to Fahrenheit.
+2. Write a sentence to convert the value of (celsius) to Fahrenheit.  NOTE: J does not follow the standard mathematical order of operations, so you'd better put parentheses around every art of the calculation.
 
-3. Change the value of (celsius) to 30.
+3. Change the value of (celsius) to 40.
 
 4. Reexecute the sentence that converts (celsius) to Fahrenheit.  There are two fast ways to do this:
 

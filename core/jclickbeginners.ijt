@@ -1010,8 +1010,26 @@ Lab Section Definition of a verb
 
 You need to make sure you see what will happen.  In this sentence you have the verb, (solvequad), followed by its argument, (1 _3 _10).
 Since that is a verb followed by a noun, the verb will be executed.  Since there is no noun to the left of the verb, the verb (solvequad y) will be executed, with (y) equal to (1 _3 _10).
+)
 
-Finally, we write the verb.  Use File>New to create a new script.  Call it quadratic.ijs.
+NB. =========================================================
+Lab Section Edit window and term window
+From now on you will be using two windows into J.  Roger's window, where you type sentences for Roger to execute, is officially called the "term window" [short for 'terminal', because it display a session log as if it came off a teletype].
+
+The other window is the place where you write and polish your programs.  It is called the "edit window".  The edit window has tabs so that you can be working on several programs at once.
+
+What you type into the edit window doesn't go to Roger, at least not directly.  It goes to Chris, who saves it for you and writes the window contents out as files when you ask.  Files created by the edit window are called "scripts" and have file extension of .ijs.
+
+When you think your program is ready for Roger, you ask Chris to send the whole program to Roger, all at once, and Roger remembers it, just as if you had typed it in line by line.  This is called "loading your script".
+
+Remember: just changing your program in the edit window doesn't change anything for Roger until you load the modified script.
+
+Remember: the edit window is for modifying scripts.  To give Roger a sentence to execute, you still use the term window.
+)
+
+NB. =========================================================
+Lab Section Writing the verb
+Finally, we write the verb.  Use File>New temp in the J menu to create a new script.  This creates the edit window if one doesn't exist already.  In the edit window, select File|Save As from the menu.  Give the name quadratic.  You program will be saved in the file quadratic.ijs.
 
 Use cut and paste to put the following verb into the script:
 
@@ -1026,9 +1044,9 @@ Use cut and paste to put the following verb into the script:
  NB. Calculate sqrt of discriminant
  discrimsqrt =: %: (b^2) - 4*a*c
  NB. Calculate first result
- res0 =. ((-b) + discrimsqrt) % 2*a
+ res0 =: ((-b) + discrimsqrt) % 2*a
  NB. Calculate second result
- res1 =. ((-b) - discrimsqrt) % 2*a
+ res1 =: ((-b) - discrimsqrt) % 2*a
  NB. Return both results
  res0,res1
 
@@ -1052,12 +1070,12 @@ NB. =========================================================
 Lab Section lint
 Now we want to run the verb.
 
-First you have to send the script to Roger.  Do this by clicking on your script in the edit window and pressing your Lint function key, which is named below.
+First you have to load the script, to send it to Roger.  Do this by clicking on your script in the edit window and pressing your Lint function key, which is named below.
 
-Oh, look, you have an error.  [Welcome to the world of the programmer.]  Every verb has to end with a line that has just one character, a right-parenthesis ) in the first column.
-We left that out.
+Oh, look, you have an error.  [Welcome to the world of the programmer.]  Every verb has to end with a line that has just one character, a right-parenthesis ) in the first column.  This ending line comes after the last line of the definition.
+We left it out.
 
-Put in the missing ) line and rerun lint.
+Put in the missing ) line, after the line (res0,res1), and rerun lint.  You should see (No errors found) typed in the term window.
 )
 PREPARE
 3 : 0 lintfkey
@@ -1077,7 +1095,7 @@ PREPARE
  
 NB. =========================================================
 Lab Section Running a verb you wrote
-Now that the verb is loaded into Roger, let's run it.
+Now that the verb is loaded into Roger, let's run it.  We run it by typing a sentence into Roger's term window, as done for you below.
 )
 PREPARE
 3 : 0 ''

@@ -503,7 +503,7 @@ labsectionname=: 3 : 0
 j=. '(',(labposition''),') ',;labsection''
 )
 
-onCreate=: labsel_run
+onStart=: labsel_run
 labselect=: 3 : 0
 labaddons''
 labgetfiles y

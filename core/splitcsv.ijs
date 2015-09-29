@@ -9,7 +9,7 @@ NB.~stop splitcsv
 NB.~title 3	Convert CSV File
 NB.~title1 0	Remove CR & check for ending LF
 NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
-NB.~link2 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
+NB.~link2 0	if. blocks	http://code.jsoftware.com/wiki/Vocabulary/TBlock
 NB.~link3 0	Other control words	http://www.jsoftware.com/help/dictionary/ctrl.htm
 NB.~datasize 10 20
 NB. Remove CR characters; if file doesn't end with LF, add LF
@@ -25,7 +25,7 @@ NB. Split file on sections ending with unquoted LF; box each section, discarding
 lines =. (LF udlp csvdata) <;._2 csvdata
 NB.~title1 0	Split each line
 NB.~link1 0	CSV format	http://en.wikipedia.org/wiki/Comma-separated_values
-NB.~link2 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link2 0	each	http://code.jsoftware.com/wiki/Vocabulary/ampdot
 
 NB. Process each line and return the result
 splitline each lines
@@ -39,7 +39,7 @@ udlp =: dyad define
 NB.~stop delim
 NB.~title 3	Convert CSV File
 NB.~title1 0	Calculate parity of " characters
-NB.~link1 0	shift	http://www.jsoftware.com/jwiki/Vocabulary/bardot#monadicfit
+NB.~link1 0	shift	http://code.jsoftware.com/wiki/Vocabulary/bardot#monadicfit
 NB.~datasize 10 20
 NB. Get the even-odd parity of " characters including
 NB. current char; shift right 1 to make it parity of preceding
@@ -60,20 +60,20 @@ splitline =: verb define
 NB.~stop splitline
 NB.~title 3	Convert CSV File
 NB.~title1 0	Split line on unquoted commas
-NB.~link1 0	Intervals	http://www.jsoftware.com/jwiki/Vocabulary/semidot1#dyadic
+NB.~link1 0	Intervals	http://code.jsoftware.com/wiki/Vocabulary/semidot1#dyadic
 NB.~datasize 10 20
 NB. Split the line on comma delimiters, discarding them.  Add
 NB. a trailing delimiter to delimit the last field
 boxedfields =. ((',' udlp y),1) <;._2 y,' '
 NB.~title1 0	Split line on unquoted commas
-NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
-NB.~link1 0	Dynamic If	http://www.jsoftware.com/jwiki/Vocabulary/hatco#IfDyad
-NB.~link2 0	Fork	http://www.jsoftware.com/jwiki/Vocabulary/fork
+NB.~link0 0	each	http://code.jsoftware.com/wiki/Vocabulary/ampdot
+NB.~link1 0	Dynamic If	http://code.jsoftware.com/wiki/Vocabulary/hatco#IfDyad
+NB.~link2 0	Fork	http://code.jsoftware.com/wiki/Vocabulary/fork
 
 NB. If any field begins with ", delete the first and last characters
 boxedfields =. }.@}:^:('"'={.) each boxedfields
 NB.~title1 0	Remove escaped quotes
-NB.~link0 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link0 0	each	http://code.jsoftware.com/wiki/Vocabulary/ampdot
 NB.~link1
 NB.~link2
 

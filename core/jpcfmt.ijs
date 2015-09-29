@@ -334,7 +334,7 @@ NB. Read file y and see if x is inside it
 checkfile =: 4 : 0
 fname =. y
 NB.~stop checkfile
-NB.~link 0	File Foreigns	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB.~link 0	File Foreigns	http://code.jsoftware.com/wiki/Vocabulary/Foreigns#m1
 NB.~title0 3	Check In File
 fd =. 1!:1 <y
 x +./@:E. fd

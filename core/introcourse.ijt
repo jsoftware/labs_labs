@@ -834,8 +834,8 @@ qprintf 'y '
 NB.~stop covarm
 NB.~title 3	Covariance of Two Lists
 NB.~title1 0	Monad: default x=y
-NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
-NB.~link1 0	Verb Definition	http://www.jsoftware.com/jwiki/Vocabulary/coa
+NB.~link0 0	Assignment	http://code.jsoftware.com/wiki/Vocabulary/Assignment
+NB.~link1 0	Verb Definition	http://code.jsoftware.com/wiki/Vocabulary/coa
 NB.~link2 0	Control Words	http://www.jsoftware.com/help/dictionary/ctrl.htm
 NB. monad: take covariance of y with itself
 y covar y
@@ -843,8 +843,8 @@ y covar y
 NB.~stop covard
 NB.~title 3	Covariance of Two Lists
 NB.~title1 0	Test for empty list
-NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
-NB.~link1 0	Verb Definition	http://www.jsoftware.com/jwiki/Vocabulary/coa
+NB.~link0 0	Assignment	http://code.jsoftware.com/wiki/Vocabulary/Assignment
+NB.~link1 0	Verb Definition	http://code.jsoftware.com/wiki/Vocabulary/coa
 NB.~link2 0	Control Words	http://www.jsoftware.com/help/dictionary/ctrl.htm
 if. 0 = #y do.
   smoutput 'empty covariance'
@@ -881,7 +881,7 @@ If you feel lucky, you can just load the script by pressing Ctrl+L.
 
 If you want to run a static analysis of the verbs in your script, to find things like uninitialized names and omitted verb endings, run lint.  If you have the explorer profile, function key F4 runs lint on the current edit window.
 
-lint is described in its page http://www.jsoftware.com/jwiki/Vocabulary/Lint
+lint is described in its page http://code.jsoftware.com/wiki/Vocabulary/Lint
 
 NB. ============================================================================
 Lab Section Running the Verb; Passing Arguments

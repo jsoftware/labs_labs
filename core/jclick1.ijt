@@ -31,7 +31,7 @@ Your base library is out of date.  Before running this lab, go to Package Manage
 update the base library.
 )
 Your Qt system is out of date.  To refresh it, follow the instructions at
-http://www.jsoftware.com/jwiki/Guides/Qt%20IDE/Install#Upgrade.  Don't forget to
+http://code.jsoftware.com/wiki/Guides/Qt%20IDE/Install#Upgrade.  Don't forget to
 update the ide\qt addon!
 )
 libver =. _3 {. 0&".;._2 '.' ,~ LF taketo 'Library:' takeafter JVERSION
@@ -165,9 +165,9 @@ findshortestname =: monad define
 NB.~stop shortname
 NB.~title 3	Find Shortest Name
 NB.~title1 0	Get lengths
-NB.~link1 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
-NB.~link2 0	Arrays	http://www.jsoftware.com/jwiki/Vocabulary/ArrayProcessing
-NB.~link3 0	Modifiers	http://www.jsoftware.com/jwiki/Vocabulary/Modifiers
+NB.~link1 0	Assignment	http://code.jsoftware.com/wiki/Vocabulary/Assignment
+NB.~link2 0	Arrays	http://code.jsoftware.com/wiki/Vocabulary/ArrayProcessing
+NB.~link3 0	Modifiers	http://code.jsoftware.com/wiki/Vocabulary/Modifiers
 NB. get length of each string
 lengths =. #@> y
 
@@ -390,9 +390,9 @@ wc =: monad define
 NB.~stop 1
 NB.~title 3	Word Count
 NB.~title1 0	Read the file
-NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
-NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
-NB.~link1 0	Files	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB.~link3 0	Essential Terms	http://code.jsoftware.com/wiki/Vocabulary/AET
+NB.~link0 0	Assignment	http://code.jsoftware.com/wiki/Vocabulary/Assignment
+NB.~link1 0	Files	http://code.jsoftware.com/wiki/Vocabulary/Foreigns#m1
 NB.~datasize 10 10
 NB. Box the filename and Read the file
 filedata =. 1!:1 <y
@@ -402,7 +402,7 @@ NB.~link1
 NB. Count characters
 cc =. #filedata
 NB.~title1 0	Count lines
-NB.~link2 0	Arrays	http://www.jsoftware.com/jwiki/Vocabulary/ArrayProcessing
+NB.~link2 0	Arrays	http://code.jsoftware.com/wiki/Vocabulary/ArrayProcessing
 
 NB. Count lines
 lc =. +/ LF = filedata
@@ -864,9 +864,9 @@ showparen =: monad define
 NB.~title 3	Show Parenthesis Nesting
 NB.~stop parens
 NB.~title1 0	Box-drawing characters
-NB.~link3 0	Essential Terms	http://www.jsoftware.com/jwiki/Vocabulary/AET
-NB.~link0 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
-NB.~link1 0	Boxing Characters	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m9
+NB.~link3 0	Essential Terms	http://code.jsoftware.com/wiki/Vocabulary/AET
+NB.~link0 0	Assignment	http://code.jsoftware.com/wiki/Vocabulary/Assignment
+NB.~link1 0	Boxing Characters	http://code.jsoftware.com/wiki/Vocabulary/Foreigns#m9
 
 NB. Read the box-drawing characters
 'langle rangle vert' =. 6 8 10 { 9!:6 ''
@@ -1517,7 +1517,7 @@ NB.~stop battleship
 NB.~title 3	Random Battleship Board
 NB.~title1 0	Test for valid board
 NB.~link0 0	Battleship	http://en.wikipedia.org/wiki/Battleship_%28game%29
-NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB.~link1 0	Control Structures	http://code.jsoftware.com/wiki/Vocabulary/Foreigns#m1
 NB. Test for valid board
 whilst. 1 < >./ , +/ 0 ~: ships do.
 NB.~title1 0	Create all ships
@@ -1544,7 +1544,7 @@ NB.~link0 0	Battleship	http://en.wikipedia.org/wiki/Battleship_%28game%29
 NB. Split y into its parts
 'ship id' =. y
 NB.~title1 0	Place and move the ship
-NB.~link1 0	Multiple Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment#Multiple_Assignment
+NB.~link1 0	Multiple Assignment	http://code.jsoftware.com/wiki/Vocabulary/Assignment#Multiple_Assignment
 NB.~auto 1
 NB.~check shape
 
@@ -1682,7 +1682,7 @@ NB.~stop levdist
 NB.~title 3	Levenshtein Distance
 NB.~title1 0	Assign strings to names
 NB.~link0 0	Levenshtein distance	http://en.wikipedia.org/wiki/Levenshtein_distance
-NB.~link1 0	Assignment	http://www.jsoftware.com/jwiki/Vocabulary/Assignment
+NB.~link1 0	Assignment	http://code.jsoftware.com/wiki/Vocabulary/Assignment
 NB. Assign shorter string to a, longer to b
 'a b'=. (x;y) /: (#x),(#y)
 NB.~title1 0	Initialization
@@ -1690,12 +1690,12 @@ NB.~link1
 NB. Init iz to index vector with length of b, D to initial value (all insertions)
 D=. >: iz =. i.#b
 NB.~title1 0	Loop over each character of a
-NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB.~link1 0	Control Structures	http://code.jsoftware.com/wiki/Vocabulary/Foreigns#m1
 NB. Process each character of a
 for_j. a do.
 NB.~stop levmain
 NB.~title1 0	Calculate new D(i,j)
-NB.~link1 0	Control Structures	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB.~link1 0	Control Structures	http://code.jsoftware.com/wiki/Vocabulary/Foreigns#m1
 NB. (>: D) is the distance to use if the new character is deleted
 NB. (shifted D) is the distance to use if the character is substituted,
 NB.  with 1 added if the substitution is a mismatch
@@ -1850,7 +1850,7 @@ NB.~stop fivenum
 NB.~title 3	Five Number Summary of CSV File
 NB.~title1 0	Read and convert the file
 NB.~link0 0	Five Number Summary	http://en.wikipedia.org/wiki/Five-number_summary
-NB.~link1 0	I/O Verbs	http://www.jsoftware.com/jwiki/Vocabulary/Foreigns#m1
+NB.~link1 0	I/O Verbs	http://code.jsoftware.com/wiki/Vocabulary/Foreigns#m1
 NB. Read the file, convert to CSV format
 boxedfields =. splitcsv 1!:1 < jpath y
 NB.~title1 0	Take first line
@@ -1865,16 +1865,16 @@ datax =. header i. <'Data'
 NB.~title1 0	Exit if no 'Data'
 if. datax = #header do. '' return. end.
 NB.~title1 0	Remove empties, convert to numeric
-NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link1 0	each	http://code.jsoftware.com/wiki/Vocabulary/ampdot
 NB.~datasize 20 20
 
 NB. Remove empties; convert the data to numeric (__ if invalid data); leave data as numeric list
 datafields =. {.@(__&".)@> each  (-.&a:) each datax }. each }. boxedfields
 NB.~title1 0	Check for errors in conversion
-NB.~link1 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
+NB.~link1 0	if. blocks	http://code.jsoftware.com/wiki/Vocabulary/TBlock
 if. __ e. ; datafields do. '' return. end.
 NB.~title1 0	Calculate FNS
-NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link1 0	each	http://code.jsoftware.com/wiki/Vocabulary/ampdot
 NB.~datasize
 
 NB. Take the five-number summary of each line
@@ -1889,7 +1889,7 @@ NB. Append headers to summaries, and summaries to line labels.
 NB. Convert numbers to string form
 reslines =. (datax {.&> boxedfields) ,. ('Min';'Q1';'Median';'Q3';'Max') , ":each@> fns
 NB.~title1 0	Convert fields to CSV
-NB.~link1 0	each	http://www.jsoftware.com/jwiki/Vocabulary/ampdot
+NB.~link1 0	each	http://code.jsoftware.com/wiki/Vocabulary/ampdot
 
 NB. Convert each row to CSV
 reslines =. (addquote each reslines) , each ','
@@ -1909,7 +1909,7 @@ NB.~title1 0	Escape embedded quotes
 NB. Double any " characters
 escquotes =. (>: '"' = y) # y
 NB.~title1 0	Test for special character
-NB.~link0 0	if. blocks	http://www.jsoftware.com/jwiki/Vocabulary/TBlock
+NB.~link0 0	if. blocks	http://code.jsoftware.com/wiki/Vocabulary/TBlock
 
 NB. Enclose in quotes if value contains special character
 if. +./ (',"',LF) e. y do.
@@ -1950,8 +1950,8 @@ NB. and 0.25 times value 5
 NB. Create (upper weight,lower weight) for each result: a 5x2 table
 weights =. (,.   -.) (index - fetchlo)
 NB.~title1 0	Sort inputs, fetch value, weight
-NB.~link1 0	Sort	http://www.jsoftware.com/jwiki/Vocabulary/slashco#dyadic
-NB.~link2 0	Table	http://www.jsoftware.com/jwiki/Vocabulary/slash#dyadic
+NB.~link1 0	Sort	http://code.jsoftware.com/wiki/Vocabulary/slashco#dyadic
+NB.~link2 0	Table	http://code.jsoftware.com/wiki/Vocabulary/slash#dyadic
 
 NB. Sort the inputs into order.
 NB. Fetch (upper value, lower value) for each result, multiply by

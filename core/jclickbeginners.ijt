@@ -32,7 +32,7 @@ NB. Check the Qt and library versions
 Your base library is out of date.  Before running this lab, go to Package Manager, update the base library, and restart J.
 )
 Your Qt system is out of date.  To refresh it, follow the instructions at
-http://www.jsoftware.com/jwiki/Guides/Qt%20IDE/Install#Upgrade.  Don't forget to
+http://code.jsoftware.com/wiki/Guides/Qt%20IDE/Install#Upgrade.  Don't forget to
 update the ide\qt addon!
 )
 libver =. _3 {. 0&".;._2 '.' ,~ LF taketo 'Library:' takeafter JVERSION

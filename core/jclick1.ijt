@@ -1,10 +1,13 @@
 LABTITLE=: 'J By Point & Click I'
 LABFOCUS=: 1
+LABWIDTH=: 80
 
 NB. =========================================================
 Lab Chapter The J Session
 NB. =========================================================
 Lab Section Term window
+To see the Table of Contents for this lab, go to Help|Studio|Chapters in the menu for this window.
+
 In this lab you will teach yourself J by watching J code run and by exploring the documentation.
 
 You will have five windows into your J session.  The first is the window you are looking at now.  It is called the term window.  You type sentences here to have them executed, and the results are typed back here.
@@ -19,7 +22,7 @@ Type the string
 
 into the last line of this window and press ENTER.  The result will be typed below your input.
 
-To advance to the next section, press ctrl+J in any of the main lab windows [the term window, the debug window, or the dissect window].
+To advance to the next section, press ctrl+J in any of the main lab windows [the term window, the debug window, or the dissect window].  On a Mac, use Cmd+J.
 
 NOTE: In this lab, parentheses are used to indicate J code.
 )
@@ -137,7 +140,7 @@ In normal use you summon up the debug window by pressing ctrl+K.  This lab will 
 
 To begin with the debug window is set to remain on top of the display at all times.  With a display as busy as this lab's, which has several windows open at once, you might want to revert the debug window to normal priority so that other windows can cover it.
 
-Ctrl+T toggles the display priority for the debug window. Click on the debug window and then press Ctrl+T.
+Ctrl+T toggles the display priority for the debug window. Click on the debug window and then press Ctrl+T [on a Mac, use Cmd+T].
 
 The display priority is remembered between invocations of the debugger.
 )

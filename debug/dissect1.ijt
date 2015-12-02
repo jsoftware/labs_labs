@@ -904,7 +904,7 @@ PREPARE
 dissectclose''
 dissect =: dissectonce
 PREPARE
-selector =. (2;3 4 5);(4 2 3;1);<(1 0 2;4 1) 
+selector =: (2;3 4 5);(4 2 3;1);<(1 0 2;4 1) 
 dissect '(100 * i. 2 3) selector} i. 5 6'
 
 NB. =========================================================

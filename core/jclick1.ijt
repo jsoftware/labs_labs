@@ -116,8 +116,7 @@ PREPARE
 'editinfo.ijs' opendebscript 0 : 0;0 0
 NB. Since J is interpreted, there is no compilation step for J
 NB. programs.  If you have program definitions that you want to
-NB. execute, you load them by pressing the green arrow above (or
-NB. by pressing ctrl+L).
+NB. execute, you load them by pressing the green arrow above the NB. definition [or by pressing Ctrl+L [Cmd+T on Mac]].
 
 NB. A file containing J sentences, like this one, is called a
 NB. "script".  All the sentences in this script are comments,

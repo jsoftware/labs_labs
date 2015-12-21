@@ -427,7 +427,7 @@ Lab Section The J Debugger
 J Debug is described in its own Lab.  It is part of the J IDE.
 This discussion assumes you understand how to use Debug.
 
-To start Debug, you press crtl-K which brings up the Debug Menu.
+To start Debug, you press Ctrl+K which brings up the Debug Menu.
 )
 PREPARE
 dissectclose''
@@ -435,7 +435,7 @@ load 'debug'
 jdb_open_jdebug_ 0
 PREPARE
 require 'debug'
-NB. we have simulated pressing ctrl-K
+NB. we have simulated pressing Ctrl+K
 
 NB. =========================================================
 Lab Section Debug Menu
@@ -541,7 +541,46 @@ jdb_clear_jdebug_ :: 0: ''
 PREPARE
 
 NB. =========================================================
-Lab Chapter Mapping Dissect to PF Keys 
+Lab Chapter Using Dissect to Drill Down Into Execution
+NB. =========================================================
+Lab Section Dissecting Inside Named Verbs
+Dissect shows the result of each verb.  If a verb is a named verb, it may do a lot of processing to get its result.
+
+Dissect allows you to look inside the execution of named verbs.  You do so by selecting a single result-cell of the verb, and then right-clicking on the name of the verb.
+
+What happens then depends on whether the verb is an explicit definition or a tacit one.
+)
+
+NB. =========================================================
+Lab Section Clicking a Tacit Verb: sub-Dissect
+When you right-click on the name of a tacitly-defined verb, Dissect reexecutes the verb, recreating the execution that produced the result-cell you selected.  Dissect creates a new dissection window showing the execution on that cell.
+
+In this example, the sentence refers to the library verb (taketo).  Hover over the name of the verb, just above the final result: Dissect informs you that you can right-click to dissect the execution of this verb.
+
+Now right-click on the name (taketo).  A new Dissect window lets you see what (taketo) was doing.
+)
+PREPARE
+dissect =: dissectonce
+PREPARE
+dissect '''cad'' taketo ''abracadabra'''
+
+NB. =========================================================
+Lab Section Clicking an Explicit Verb: Debug
+When you right-click on the name of an explicity-defined verb, Dissect also reexecutes the verb, recreating the execution that produced the result-cell you selected; but instead of dissecting the verb, it starts the Debugger.
+
+Before the verb is executed, a stop is placed on every line of the verb.  The verb will therefore stop before it executes its first sentence, and you can probe around, change stops, and see what the verb does.  You can even engage the Autodissect facility to dissect the sentences of the verb one by one as they are executed!
+
+Because the Debugger is not reentrant, you may have only one Debug session at a time.  Right-clicking on an explicit name closes any outstanding Debug session before starting the new one.
+
+In this example, the sentence refers to the library verb (toupper).  Right-click on the name to launch the debugger.  Debug to your heart's content.
+)
+PREPARE
+dissect =: dissectonce
+PREPARE
+dissect 'toupper ''George III'''
+
+NB. =========================================================
+Lab Chapter Mapping Dissect to PF Keys
 NB. =========================================================
 Lab Section J Wiki
 The J Wiki has instructions for mapping Dissect to PF keys at http://code.jsoftware.com/wiki/Vocabulary/Dissect#Labs

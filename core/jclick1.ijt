@@ -1354,14 +1354,14 @@ Since LF may appear in a quoted field, we must not start the program by splittin
 The final program is shown in the edit window.
 )
 PREPARE
-'splitcsv.ijs' opendebscript 1!:1 < jpath '~addons\labs\labs\core\splitcsv.ijs'
+'splitcsv.ijs' opendebscript 1!:1 < jpath '~addons/labs/labs/core/splitcsv.ijs'
 PREPARE
 
 NB. =========================================================
 Lab Section Audit input
 The first thing to do is to check the input: remove any CR characters that the operating system put in, and make sure the file ends with LF.
 )
-splitcsv 1!:1 < jpath '~addons\labs\labs\core\example.csv'
+splitcsv 1!:1 < jpath '~addons/labs/labs/core/example.csv'
 
 NB. =========================================================
 Lab Section Split into lines
@@ -1484,7 +1484,7 @@ NB. Enclosing " characters are removed from the field value.
 NB. A " character is escaped inside a string by doubling it
 splitline =: (#~ -.@('""'&udlp)) @ (}.@}:^:('"'={.)) each @ (','&(< ondelim))
 
-splitcsv 1!:1 < jpath '~addons\labs\labs\core\example.csv'
+splitcsv 1!:1 < jpath '~addons/labs/labs/core/example.csv'
 
 NB. =========================================================
 Lab Chapter Random Battleship board
@@ -1963,7 +1963,7 @@ NB. for the last (=maximum) result (it will have a weight of 0)
 ))
 )
 PREPARE
-load '~addons\labs\labs\core\splitcsv.ijs'
+load '~addons/labs/labs/core/splitcsv.ijs'
 
 NB. =========================================================
 Lab Section Read the CSV file
@@ -1989,7 +1989,7 @@ The foreign function used here, (1!:1), reads the file named by (y) and produces
 
 The library function (jpath) resolves the name ('~addons') to its location on your system.
 )
-fivenumbercsv '~addons\labs\labs\core\fivenum.csv'
+fivenumbercsv '~addons/labs/labs/core/fivenum.csv'
 
 NB. =========================================================
 Lab Section Extract header line

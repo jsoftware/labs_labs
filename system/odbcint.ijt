@@ -21,25 +21,59 @@ Two: an ODBC driver that reads & writes the datasource.
 
 Three: an application interface that calls the driver.
 
-This lab shows how to use the basic facilities of the J ODBC  interface.  First load the basic interface script.
+For Windows, first download and install Access ODBC driver from https://www.microsoft.com/en-us/download/details.aspx?id=13255
+
+For Debian Linux, install sqlite3 and its ODBC driver using command line,
+
+sudo aptitude install libsqliteodbc
+
+This lab shows how to use the basic facilities of the J ODBC interface.  First load the basic interface script.
 )
 load 'dd'
 
 NB. =========================================================
 Lab Section Check DSN registrations?
-NOTE:  This lab uses the following ODBC datasources.  If these datasoures are not registered use the ODBC control panel applet to register them.
+NOTE:  This lab uses the following ODBC datasources.  If these datasoures are not registered use the Windows ODBC control panel applet to register them.
 
 DSN     FILE, DIRECTORY or DATABASE
 ---------------------------------------------
-jdata   FoxPro or dBase driver
-        /j4/system/examples/data
 
-jaccess ACCESS driver
-        /j4/system/examples/data/jdata.mdb
+Windows:
+ jdata  ACCESS driver
+        ~/jdata.mdb
+
+ jdata2 ACCESS driver
+        ~/jdata2.mdb
+
+Linux/Mac:
+ jdata  Sqlite3 driver
+        ~/jdata.sqlite
+
+ jdata2 Sqlite3 driver
+        ~/jdata2.sqlite
+
+For Linux/Mac, create the file $HOME/.odbc.ini and add the following lines into it, (change the file path of database)
+
+ [jdata]
+ Description=jdata sqlite
+ Driver=SQLite3
+ Database=/home/bakerjd/jdata.sqlite
+
+ [jdata2]
+ Description=jdata2 sqlite
+ Driver=SQLite3
+ Database=/home/bakerjd/jdata2.sqlite
+
 )
+PREPARE
+(jpath '~/jdata.mdb') fcopynew^:IFWIN (jpath '~addons/labs/labs/examples/data/jdata.mdb')
+(jpath '~/jdata2.mdb') fcopynew^:IFWIN (jpath '~addons/labs/labs/examples/data/jdata.mdb')
+(jpath '~/jdata.sqlite') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jdata.sqlite')
+(jpath '~/jdata2.sqlite') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jdata.sqlite')
+PREPARE
 NB. check registrations - will be list of 1's
 NB. if all DSN's are registered.
-(;:'jdata jaccess') e. {."1 ddsrc 0
+(;:'jdata jdata2') e. {."1 ddsrc 0
 
 NB. =========================================================
 Lab Section Connection handles
@@ -129,7 +163,7 @@ NB. =========================================================
 Lab Section Multiple datasources
 More than one datasource can be connected.
 )
-ch2 =: ddcon 'dsn=jaccess'
+ch2 =: ddcon 'dsn=jdata2'
 
 NB. list tables, views et cetera
 ddtblx ch2

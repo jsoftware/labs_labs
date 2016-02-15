@@ -25,8 +25,8 @@ NOTE: to run this lab you must register the following data sources with the ODBC
  DSN     DRIVER and DATA LOCATION
  -----------------------------------------
 
- jdata   FoxPro or Dbase driver directory
-         /j5/system/examples/data/
+ jdata   ACCESS driver
+         ~/jdata.mdb
 
  messier EXCEL driver and spreadsheet file
          /j5/system/examples/data/messier.xls

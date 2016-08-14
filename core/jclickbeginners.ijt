@@ -124,8 +124,14 @@ Roger understands a language invented for describing computation.  The name of t
 J.
 
 NOTE: In this lab, parentheses are used to indicate words in the J language.
-)
 
+Every lab section is split into two parts.  The first part is
+explanatory test, which you should read.  The text ends with a line
+containing a single ) character.  Any lines following the ) line
+are executable lines of J.  Whenever you like, you may execute your
+own lines by typing them.
+)
+   100  NB. This is an executable line following the ) line
  
  
  

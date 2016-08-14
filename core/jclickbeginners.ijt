@@ -401,7 +401,7 @@ Solve the following problems:
 
 1. Assign the value 30 to the name 'celsius'.
 
-2. Write a sentence to convert the value of (celsius) to Fahrenheit.  NOTE: J does not follow the standard mathematical order of operations, so you'd better put parentheses around every art of the calculation.
+2. Write a sentence to convert the value of (celsius) to Fahrenheit.  NOTE: J does not follow the standard mathematical order of operations, so you'd better put parentheses around every part of the calculation.
 
 3. Change the value of (celsius) to 40.
 
@@ -584,10 +584,10 @@ NB. (-) and (2) and whose result is 8.
  
 NB. =========================================================
 Lab Section x and y
-   2--2--2--2
-8
-   2 - - 2 - - 2 - -2  NB. easier to read
-8
+    2--2--2--2
+ 8
+    2 - - 2 - - 2 - -2  NB. easier to read
+ 8
 
 Q. What does the dyad (*) do?
 
@@ -601,9 +601,9 @@ The right argument of a verb - that is, the noun that is to the right of the ver
 
 The left argument of a dyadic execution will be called (x).
 
-To say 'the verb (v) executed monadically', we will write (v y) representing (v) with one argument.
+To say 'the verb (v) executed monadically', we will write (v y) representing (v) executed on one argument.
 
-To say 'the verb (v) executed dyadically', we will write (x v y) representing (v) with two arguments.
+To say 'the verb (v) executed dyadically', we will write (x v y) representing (v) executed on two arguments.
 
 Q. What does (x * y) do?
 
@@ -681,10 +681,10 @@ Every noun has a "type" and a "precision".
 
 The "type" tells what general kind of information is stored in the array.  The options are "numeric", "character", and "boxed".  [We'll discusses boxes later.]
 
-The "precision" tells how the information for the type is represented.  For numeric information, the options are "Boolean", "integer", "floating-point", "complex", "extended", and "rational".
+The "precision" tells how the information for the type is represented.  For numeric information, the options are "Boolean", "integer", "floating-point" [i. e. scientific notation], "complex", "extended", and "rational".
 Each of these categories is a subset of the concept of 'number'.
 
-For character information, the choices are "ASCII" and "unicode".  ASCII is old-fashioned American characters, while unicode supports characters from the rest of the world.
+For character information, the choices are "ASCII", "short unicode", and "long unicode".  ASCII is old-fashioned American characters, while unicode supports characters from the rest of the world.  ASCII will be all we'll need.
 
 You usually don't have to worry much about the precision of your nouns.  Roger will choose the precision that is best for your data.  If it is necessary to convert from one precision to another, Roger will do so without involving you.
 
@@ -924,8 +924,11 @@ So far all we've done is type sentences into Roger and see the results.  When we
 
 Now that we're about to write programs, that has to change.  We need to be able to save our work for later use.
 
-The work you want to save will be kept in "scripts", which are files with a file extension of '.ijs'.  You should type all of your code into scripts, never into this window (which is called the "term" window).
+The work you want to save will be kept in "scripts", which are files with a file extension of '.ijs'.  Scripts live in a separate window, called the "edit window".  [The window you are looking at now is called the "term window"].
+
 When you want to run your code, you "load" the script, which gives the lines of the script to Roger one by one, as if you had typed them into the term window.
+
+You will type all the code you want to keep into scripts, never into the term window.
 
 That way, your code is always saved in files.  You do have to remember to load the script before you execute the programs in it.
 
@@ -933,7 +936,7 @@ To create a script, go to File>New temp in the Menu.  You will be prompted for a
 
 Then the "edit" window will appear.  This is a tabbed window that allows you to have easy access to several scripts at the same time.
 
-From now on, you will do your creative work in the edit window, and will type into the term window only to run the program you have written or to debug it.
+From now on, you will do your creative work in the edit window, and will type into the term window only to test individual sentences, or to run or debug the program you have written.
 )
  
  

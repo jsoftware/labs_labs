@@ -268,7 +268,7 @@ gl2lab''
 
 NB. =========================================================
 Lab Section
-Unicode characters can be displayed.
+Unicode characters using UTF-8 encoding can be displayed.
 
 See User Manual chapter Unicode for information on working with unicode text.
 )

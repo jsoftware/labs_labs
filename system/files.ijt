@@ -344,9 +344,13 @@ NB. =========================================================
 Lab Chapter Unicode and UTF-8
 NB. =========================================================
 Lab Section General Information
-Unicode is a computing industry standard for the consistent encoding, representation and handling of text expressed in most of the world's writing systems. Presently J Unicode is supported in a double-byte character set (DBCS) where each character is represented by 2 bytes. To support Unicode a new data type has been added to J and is identified as type 131072 and is called "unicode" in J.
+Unicode is a computing industry standard for the consistent encoding, representation and handling of text expressed in most of the world's writing systems. Presently J Unicode is supported in multi-byte character sets where each character is represented by 2 or 4 bytes. To support Unicode two new data types have been added to J. One is identified as type 131072 and is called "wchar" in J. The other is identified as type 262144 and is called "literal4".
 
-UTF-8 (Unicode Transformation Formats or U8) is a method to represent Unicode that is compatible with ASCII. ASCII characters are unchanged in UTF-8. Extended unicode characters are represented by 2 or more bytes using _128{.a. of literal. J reads and writes UTF-8 with the screen and web services use UTF-8.
+UTF-8 (Unicode Transformation Formats or U8) is an encoding to represent Unicode that is compatible with ASCII. ASCII characters are unchanged in UTF-8. Extended unicode characters are represented by 2 or more bytes using _128{.a. of literal. J reads and writes UTF-8 with the screen and web services use UTF-8.
+
+UTF-16 (or U16) is an encoding to represent Unicode that each character is represented by 1 or 2 wchar character.
+
+UTF-32 (or U32) is an encoding to represent Unicode that each character is represented by 1 literal4 character.
 )
 
 NB. =========================================================
@@ -362,7 +366,7 @@ a.i.l2                   NB. Bytes per character varies.
 
 NB. =========================================================
 Lab Section
-Working with text in unicode is simpler in many ways; however, text from the internet and other outside sources is usually UTF-8. One must explicitly convert literal to and from unicode.
+Working with text in UTF-16 or UTF-32 are simpler in many ways; however, text from the internet and other outside sources is usually UTF-8. One must explicitly convert between different encodings.
 
 Reading and writing unicode text requires care, particularly if you are sharing data from other sources. Are the systems you're dealing with big endian or little endian?
 )
@@ -385,7 +389,7 @@ The choice of using Unicode or the UTF-8 representation of Unicode within a J ap
 
 • Manipulating UTF-8 text is more difficult as the number of bytes per character varies.
 
-• Unicode has endian issues. UTF-8 does not.
+• UTF-16 and UTF-32 have endian issues. UTF-8 does not.
 
 See "u:" in the Dictionary for how J supports Unicode and UTF-8 and go to wikipedia.org/wiki/UTF-8 for how Unicode is represented in UTF-8.
 )

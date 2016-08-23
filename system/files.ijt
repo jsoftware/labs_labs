@@ -344,11 +344,11 @@ NB. =========================================================
 Lab Chapter Unicode and UTF-8
 NB. =========================================================
 Lab Section General Information
-Unicode is a computing industry standard for the consistent encoding, representation and handling of text expressed in most of the world's writing systems. Presently J Unicode is supported in multi-byte character sets where each character is represented by 2 or 4 bytes. To support Unicode two new data types have been added to J. One is identified as type 131072 and is called "wchar" in J. The other is identified as type 262144 and is called "literal4".
+Unicode is a computing industry standard for the consistent encoding, representation and handling of text expressed in most of the world's writing systems. Presently J Unicode is supported in multi-byte character sets where each character is represented by 2 or 4 bytes. To support Unicode two new data types have been added to J. One is identified as type 131072 and is called "literal2" in J. The other is identified as type 262144 and is called "literal4".
 
 UTF-8 (Unicode Transformation Formats or U8) is an encoding to represent Unicode that is compatible with ASCII. ASCII characters are unchanged in UTF-8. Extended unicode characters are represented by 2 or more bytes using _128{.a. of literal. J reads and writes UTF-8 with the screen and web services use UTF-8.
 
-UTF-16 (or U16) is an encoding to represent Unicode that each character is represented by 1 or 2 wchar character.
+UTF-16 (or U16) is an encoding to represent Unicode that each character is represented by 1 or 2 liteal2 character.
 
 UTF-32 (or U32) is an encoding to represent Unicode that each character is represented by 1 literal4 character.
 )

@@ -25,6 +25,7 @@
 
 # ---------------------------------------------
 EXJHS=: 0 : 0
+labs/labs/core/jclickbeginners.ijt
 labs/labs/graphics/fractals.ijt
 labs/labs/graphics/graphut.ijt
 labs/labs/graphics/viewmat.ijt

@@ -39,6 +39,7 @@ labs/labs/system/pm.ijt
 labs/labs/system/sockserv.ijt
 labs/labs/system/sockcli.ijt
 labs/labs/system/sockinet.ijt
+media/videolabs/videolabintro.ijt
 )
 
 # ---------------------------------------------

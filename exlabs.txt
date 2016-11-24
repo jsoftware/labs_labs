@@ -40,6 +40,15 @@ labs/labs/system/sockserv.ijt
 labs/labs/system/sockcli.ijt
 labs/labs/system/sockinet.ijt
 media/videolabs/videolabintro.ijt
+media/videolabs/videolabintro.ijt
+labs/labs/debug/dissect1.ijt
+labs/labs/debug/dissect2.ijt
+labs/labs/core/jclick1.ijt
+labs/labs/system/debug.ijt
+graphics/fvj4/dwin.ijt
+graphics/fvj4/dwin_ja.ijt
+graphics/fvj4/raster.ijt
+graphics/fvj4/raster_ja.ijt
 )
 
 # ---------------------------------------------

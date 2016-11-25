@@ -25,7 +25,14 @@
 
 # ---------------------------------------------
 EXJHS=: 0 : 0
+graphics/fvj4/dwin.ijt
+graphics/fvj4/dwin_ja.ijt
+graphics/fvj4/raster.ijt
+graphics/fvj4/raster_ja.ijt
+labs/labs/core/jclick1.ijt
 labs/labs/core/jclickbeginners.ijt
+labs/labs/debug/dissect1.ijt
+labs/labs/debug/dissect2.ijt
 labs/labs/graphics/fractals.ijt
 labs/labs/graphics/graphut.ijt
 labs/labs/graphics/viewmat.ijt
@@ -33,23 +40,14 @@ labs/labs/livetexts/candg.ijt
 labs/labs/livetexts/linearalgebra.ijt
 labs/labs/math/teachersaide.ijt
 labs/labs/system/client_server.ijt
+labs/labs/system/debug.ijt
 labs/labs/system/mapfile.ijt
 labs/labs/system/mappeddb.ijt
 labs/labs/system/pm.ijt
-labs/labs/system/sockserv.ijt
 labs/labs/system/sockcli.ijt
 labs/labs/system/sockinet.ijt
+labs/labs/system/sockserv.ijt
 media/videolabs/videolabintro.ijt
-labs/labs/debug/dissect1.ijt
-labs/labs/debug/dissect2.ijt
-labs/labs/core/jclick1.ijt
-labs/labs/system/debug.ijt
-graphics/fvj4/dwin.ijt
-graphics/fvj4/dwin_ja.ijt
-graphics/fvj4/raster.ijt
-graphics/fvj4/raster_ja.ijt
-labs/labs/debug/dissect1.ijt
-labs/labs/debug/dissect2.ijt
 )
 
 # ---------------------------------------------
@@ -70,14 +68,14 @@ graphics/jturtle/jturtleuser.ijt
 labs/labs/general/jturtleuser.ijt
 labs/labs/general/nn1.ijt
 labs/labs/graphics/gl2.ijt
-labs/labs/graphics/plotjhs.ijt
 labs/labs/graphics/opengl.ijt
 labs/labs/graphics/openglut.ijt
+labs/labs/graphics/plotjhs.ijt
 labs/labs/system/apps.ijt
 labs/labs/system/callback.ijt
 labs/labs/system/dllwrite.ijt
-labs/labs/system/odbcsap.ijt
 labs/labs/system/odbcinv.ijt
+labs/labs/system/odbcsap.ijt
 labs/labs/system/printer.ijt
 labs/labs/system/printutl.ijt
 labs/labs/system/regbuild.ijt

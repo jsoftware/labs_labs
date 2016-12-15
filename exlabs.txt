@@ -5,6 +5,7 @@
 #
 # EXJHS  - excluded in JHS
 # EXJQT  - excluded in JQt
+# EXJNET - excluded in JNet
 # EXALL  - excluded everywhere
 #
 # The EXALL exclusions are labs that need updating for the current J release,
@@ -53,6 +54,12 @@ media/videolabs/videolabintro.ijt
 # ---------------------------------------------
 EXJQT=: 0 : 0
 labs/labs/graphics/d3.ijt
+)
+
+# ---------------------------------------------
+EXJNET=: 0 : 0
+labs/labs/graphics/d3.ijt
+media/videolabs/videolabintro.ijt
 )
 
 # ---------------------------------------------

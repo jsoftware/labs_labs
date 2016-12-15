@@ -1,6 +1,7 @@
 coclass 'jlab'
 
 PATHSEP=: '/'
+IFJNET=: (IFJNET"_)^:(0=4!:0<'IFJNET')0
 cat=: ,&,.&.|:
 commaseps=: 2 }. ;@:(', '&,&.>)
 deb=: #~ (+. 1: |. (> </\))@(' '&~:)
@@ -56,6 +57,8 @@ if. IFJHS do.
   r=. r,EXJHS
 elseif. IFQT do.
   r=. r,EXJQT
+elseif. IFJNET do.
+  r=. r,EXJNET
 end.
 r=. ((jpath '~addons/'),deb) each <;._2 r
 y #~ -. (2{"1 y) e. r
@@ -558,6 +561,17 @@ bin sz;
 pas 4 2;pcenter;
 rem form end;
 )
+
+LABJUMP6=: 0 : 0
+pc labjump closeok;pn "Lab Selection";
+xywh 270 68 80 24;cc ok button leftmove rightmove;cn "OK";
+xywh 270 98 80 24;cc cancel button leftmove rightmove;cn "Cancel";
+xywh 12 70 240 200;cc listbox listbox ws_border ws_vscroll rightmove bottommove;
+xywh 14 16 332 22;cc labid static;
+xywh 14 44 240 22;cc labinfo static;cn " ";
+pas 4 2;pcenter;
+rem form end;
+)
 labfmt=: 4 : 0
 DEL,(":x),'. ',y,DEL
 )
@@ -566,7 +580,7 @@ if. 1=#CHAPTERDATA do.
   info 'There is only one chapter in the lab'
   return.
 end.
-wd LABJUMP
+wd IFJNET{::LABJUMP;LABJUMP6
 s=. #CHAPTERS
 wd 'set labid text *',LABTITLE,' (',(":s),(s plurals ' chapter'),')'
 wd 'set labinfo text *Select a chapter:'
@@ -603,8 +617,19 @@ bin szzsz;
 pas 6 6;pcenter;
 rem form end;
 )
+
+LABOPT6=: 0 : 0
+pc labopt;pn "Lab Options";
+xywh 18 18 226 78;cc g0 groupbox;cn "Lab Displays";
+xywh 36 42 152 22;cc comments checkbox;cn "Comment text";
+xywh 36 66 152 22;cc sentences checkbox group;cn "J sentences";
+xywh 272 18 80 24;cc ok button;cn "OK";
+xywh 272 48 80 24;cc cancel button;cn "Cancel";
+pas 6 6;pcenter;
+rem form end;
+)
 labopt_run=: 3 : 0
-wd LABOPT
+wd IFJNET{::LABOPT;LABOPT6
 wd 'set comments value ',":IFCOMMENTS
 wd 'set sentences value ',":IFSENTENCES
 wd 'pshow;'
@@ -659,6 +684,31 @@ pas 6 4;pcenter;
 rem form end;
 )
 
+LABSEL6=: 0 : 0
+pc labsel closeok;pn "Lab Select";
+menupop "Options";
+menu comments "Labs display &Comment Text" "" "" "Show comments when running Labs";
+menu sentences "Labs display J &Sentences" "" "" "Show sentences when running Labs";
+menusep;
+menu exit "E&xit" "" "" "";
+menupopz;
+menupop "Help";
+menu intro "&Introduction to Labs..." "" "" "";
+menupopz;
+xywh 22 24 248 22;cc s0 static;cn "Select a lab";
+xywh 14 6 422 46;cc g0 groupbox rightmove;cn "";
+xywh 326 22 100 24;cc browse button leftmove rightmove;cn "&Browse...";
+xywh 22 78 74 22;cc s1 static;cn "Category:";
+xywh 100 76 214 218;cc category combodrop ws_vscroll rightmove;
+xywh 22 110 292 314;cc listbox listbox ws_border ws_vscroll rightmove bottommove;
+xywh 326 112 100 24;cc ok button leftmove rightmove;cn "&Run";
+xywh 326 142 100 24;cc print button leftmove rightmove;cn "&Print";
+xywh 326 388 100 24;cc cancel button leftmove topmove rightmove bottommove;cn "&Close";
+xywh 14 58 422 366;cc g1 groupbox rightmove bottommove;cn "";
+pas 6 4;pcenter;
+rem form end;
+)
+
 LABSELJA=: 0 : 0
 pc labsel closeok;pn "Lab Select";
 bin v;
@@ -674,7 +724,7 @@ labsel_run=: 3 : 0
 if. wdisparent 'labsel' do.
   wd 'psel labsel;pshow;pactive' return.
 end.
-wd IFJA{::LABSEL;LABSELJA
+wd IFJA{::(IFJNET{::LABSEL;LABSEL6);LABSELJA
 labshowcats''
 if. IFJA do.
   labsel_listbox_select=: labsel_listbox_button
@@ -689,7 +739,7 @@ wd 'pshow;'
 labsel_browse_button=: 3 : 0
 p=. jpath '~user'
 j=. '"Labs (*.ijt)|*.ijt|All Files (*.*)|*.*"'
-f=. wd 'mb open1 "Open File" "',p,'" " ',j
+f=. wd 'mb open1 "Open File" "',p,'" ',j
 if. #f do.
   labselrun f
 end.
@@ -701,7 +751,11 @@ end.
 )
 labsel_print_button=: 3 : 0
 if. #listbox do.
-  wd 'mb print ', 2 pick (".listbox_select) { LABCATSEL#LABS
+  if. IFJNET do.
+    printfiles_j_ 2 pick (".listbox_select) { LABCATSEL#LABS
+  else.
+    wd 'mb print ', 2 pick (".listbox_select) { LABCATSEL#LABS
+  end.
 end.
 )
 labsel_enter=: labsel_ok_button=: labsel_listbox_button
@@ -709,7 +763,7 @@ labsel_intro_button=: labselrun bind (jpath '~addons/labs/labs/labintro.txt')
 labselrun=: 3 : 0
 labinit y
 wd :: ] 'psel labsel;pclose;'
-smact''
+smact`smselact_jijs_@.IFJNET''
 )
 labsel_cancel_button=: wd bind 'pclose'
 labsel_exit_button=: labsel_cancel_button

@@ -685,7 +685,7 @@ rem form end;
 )
 
 LABSEL6=: 0 : 0
-pc labsel closeok;pn "Lab Select";
+pc8j labsel closeok;pn "Lab Select";
 menupop "Options";
 menu comments "Labs display &Comment Text" "" "" "Show comments when running Labs";
 menu sentences "Labs display J &Sentences" "" "" "Show sentences when running Labs";
@@ -739,7 +739,11 @@ wd 'pshow;'
 labsel_browse_button=: 3 : 0
 p=. jpath '~user'
 j=. '"Labs (*.ijt)|*.ijt|All Files (*.*)|*.*"'
-f=. wd 'mb open1 "Open File" "',p,'" ',j
+if. IFJNET do.
+  f=. wd 'mbopen1 "Open File" "',p,'" ',j
+else.
+  f=. wd 'mb open1 "Open File" "',p,'" ',j
+end.
 if. #f do.
   labselrun f
 end.

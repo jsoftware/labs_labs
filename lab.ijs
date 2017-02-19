@@ -740,7 +740,7 @@ labsel_browse_button=: 3 : 0
 p=. jpath '~user'
 j=. '"Labs (*.ijt)|*.ijt|All Files (*.*)|*.*"'
 if. IFJNET do.
-  f=. wd 'mbopen1 "Open File" "',p,'" ',j
+  f=. mbopen '"Open File" "',p,'" "" ',j
 else.
   f=. wd 'mb open1 "Open File" "',p,'" ',j
 end.

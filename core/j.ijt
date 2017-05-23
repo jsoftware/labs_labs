@@ -250,20 +250,9 @@ NB. =========================================================
 Lab Chapter Patterns: color
 NB. =========================================================
 Lab Section Addition Table
- The pattern seen in
- an addition table
- can be emphasized
- by producing a
- window in which
- equal values in the
- table are assigned
- the same color.
- To continue, press
- Esc to remove the
- window, or click
- the mouse on the
- main window to
- return focus to it.
+The pattern seen in an addition table can be emphasized
+by producing a window in which equal values in the
+table are assigned the same color.
 )
 require 'plot viewmat'
 color =: viewmat
@@ -273,16 +262,6 @@ color x +/ x
 
 NB. =========================================================
 Lab Section Subtraction Table
- The color window can
- be moved away from
- text that it may
- obscure by clicking
- on the top bar,
- holding the button
- down, and dragging
- it to a new position
- before releasing
- the mouse button:
 )
 x -/ x       NB. Subtraction table
 color x -/ x
@@ -568,11 +547,11 @@ NB. =========================================================
 Lab Section
 Polynomials are important for a number of reasons:
 
- 1. A sum of polynomials is a polynomial
- 2. A product of polynomials is a polynomial
- 3. The derivative of a polynomial is a polynomial
- 4. The integral of a polynomial is a polynomial
- 5. Polynomials serve to approximate many functions, such as
+1. A sum of polynomials is a polynomial
+2. A product of polynomials is a polynomial
+3. The derivative of a polynomial is a polynomial
+4. The integral of a polynomial is a polynomial
+5. Polynomials serve to approximate many functions, such as
    sine, cosine, and exponential.
 )
 c=:1 3 3 1
@@ -603,7 +582,7 @@ c */ e
 
 NB. =========================================================
 Lab Section Derivatives and Integrals
-The derivative of a polynomial is obtained  by multiplying
+The derivative of a polynomial is obtained by multiplying
 each monomial by its exponent, and reducing the exponent by 1.
 
 Equivalently, the coefficients of the derivative of c p. x
@@ -1118,7 +1097,7 @@ Lab Section
 The Taylor adverb t. gives the coefficients of
 derivatives and integrals.
 
->From the results shown below it is clear that d._1
+From the results shown below it is clear that d._1
 uses a zero constant of integration. The effect of
 any other can be obtained by adding it.
 )
@@ -1165,9 +1144,9 @@ NB. =========================================================
 Lab Section Proofs
 A proof is a sequence of equivalent expressions that lead in justifiable steps from a left limb to a right. We will write one expression below another to assert that it is equivalent to the one above it, possibly annotating it with the justification to provide a formal proof:
 
-L        NB. Theorem 1
+  L        NB. Theorem 1
 
-+/@i.    NB. Definition of L
+  +/@i.    NB. Definition of L
 )
 
 NB. =========================================================
@@ -1201,21 +1180,21 @@ NB. =========================================================
 Lab Section
 The following is a similar proof that the sum of the first n odd integers equals the square of n:
 
-(odds=: 1: + 2: * i.)        NB. First odd integers
+  (odds=: 1: + 2: * i.)        NB. First odd integers
 
-+/@(1: + 2: * i.)            NB. Sum of odds
+  +/@(1: + 2: * i.)            NB. Sum of odds
 
-(n + +/@(2: * i.))           NB. Sum of n ones is n
+  (n + +/@(2: * i.))           NB. Sum of n ones is n
 
-(n + 2: * +/@i.)             NB. Sum of twice is twice sum
+  (n + 2: * +/@i.)             NB. Sum of twice is twice sum
 
-(n + 2: * (n * n - 1:) % 2:) NB. Result of preceding theorem
+  (n + 2: * (n * n - 1:) % 2:) NB. Result of preceding theorem
 
-(n + n * n - 1:)             NB. Simple algebra
+  (n + n * n - 1:)             NB. Simple algebra
 
-(n * n)                      NB. Simple algebra
+  (n * n)                      NB. Simple algebra
 
-*:                           NB. Definition of square
+  *:                           NB. Definition of square
 )
 
 NB. =========================================================
@@ -1411,11 +1390,11 @@ NB. =========================================================
 Lab Section
 We now box each row of the table p4 of permutations of
 order 4, append to the result the cycle representations of p4, and transpose
-the whole for easier reading.
+the whole for easier reading. Only the first 10 values are shown.
 )
-<"1 p4=: (i.!4) A. i.4
+10 {. p4=: (i.!4) A. i.4
 
-|: (<"1 p4=: (i.!4) A. i.4) ,. (C. p4)
+|: 10 {. (<"1 p4=: (i.!4) A. i.4) ,. (C. p4)
 
 NB. =========================================================
 Lab Section

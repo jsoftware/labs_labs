@@ -36,7 +36,7 @@ For example, look up the function ^ used in this section, and the function p. an
 NB. =========================================================
 Lab Section POLYNOMIALS
 
-.               2     3              3
+                2     3              3
 The functions 3x  + 2x and 3 + 2x + x  are examples of polynomials, which are united in a single family under the dyadic function p. as illustrated below:
 )
 x=: 2

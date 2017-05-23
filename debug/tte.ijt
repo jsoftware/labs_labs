@@ -13,7 +13,7 @@ Newcomers to J are apt to view tacit code with perplexity:
 )
 
 NB. =========================================================
-Lab Section 
+Lab Section
 
 J-ers delight in writing tacit code.
  They even embed tacit idioms in explicit sentences,
@@ -24,7 +24,7 @@ J-ers delight in writing tacit code.
 (+/ % #) 3 4 5       NB. mean value of (3 4 5)
 
 NB. =========================================================
-Lab Section 
+Lab Section
 
 "Tacit J" and "explicit J" are not two distinct languages.
  They can be mixed:
@@ -43,7 +43,7 @@ NOTE:
 +/ (% (# 3 4 5))
 
 NB. =========================================================
-Lab Section 
+Lab Section
 
 To many J-ers tacit code is as easy to read as explicit code
  --if not easier.
@@ -58,7 +58,7 @@ There's a need for tools to help read a tacit definition.
 )
 
 NB. =========================================================
-Lab Section 
+Lab Section
 
 J has a built-in tool to convert explicit code to tacit code.
  (You'd expect that, wouldn't you?)
@@ -76,7 +76,7 @@ mean=: 3 : '(+/y) % (#y)'
 mean 3 4 5
 
 NB. =========================================================
-Lab Section 
+Lab Section
 
 ...Then, replacing: mean=: 3 :
  by: 13 :

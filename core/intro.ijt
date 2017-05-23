@@ -75,7 +75,7 @@ A function can be monadic or dyadic, depending on whether there is an argument o
 
 NB. =========================================================
 Lab Section More Primitives
-The primitives functions include + - * % as well as ^ (power), ^. (log), > (greater than), >. (maximum), +. (or/GCD), *. (and/LCM), | (residue or modulo), etc.
+The primitive functions include + - * % as well as ^ (power), ^. (log), > (greater than), >. (maximum), +. (or/GCD), *. (and/LCM), | (residue or modulo), etc.
 
 And all of these can be monadic or dyadic, and apply to arrays.
 )

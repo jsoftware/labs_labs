@@ -765,7 +765,7 @@ end.
 labsel_enter=: labsel_ok_button=: labsel_listbox_button
 labsel_intro_button=: labselrun bind (jpath '~addons/labs/labs/labintro.txt')
 labselrun=: 3 : 0
-labinit y
+lab_jlab_ y
 wd :: ] 'psel labsel;pclose;'
 smact`smselact_jijs_@.IFJNET''
 )

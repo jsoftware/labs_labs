@@ -6,16 +6,15 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.160'
+VERSION=: '1.0.161'
 
 FILES=: 0 : 0
-autolab.ijs
 lab.ijs
 labs.ijs
+labs805.ijs
 labdir.ijs
 labintro.txt
 exlabs.txt
-manifest.ijs
 core/
 debug/
 examples/
@@ -26,4 +25,4 @@ math/
 system/
 )
 
-RELEASE=: 'j804 j805 j806'
+RELEASE=: 'j806'

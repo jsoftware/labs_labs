@@ -808,8 +808,6 @@ SCRIPT
 PREPARE
 (toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/turtledemo.ijs'
 open jpath '~temp/turtledemo.ijs'
-
-tile_jijs_''
 PREPARE
 
 NB. =========================================================

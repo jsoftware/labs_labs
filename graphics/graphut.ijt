@@ -69,7 +69,6 @@ SCRIPT
 PREPARE
 (toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/gl2demo.ijs'
 open jpath '~temp/gl2demo.ijs'
-NB. tile_jijs_''
 PREPARE
 
 NB. =========================================================
@@ -134,10 +133,6 @@ There are 4 types of commands:
    gdcolor, etc.   state-setting commands, e.g. set color
    gdrect,  etc.   drawing commands
 )
-PREPARE
-closewindows_jijs_ ''
-tile_jijs_ ''
-PREPARE
 
 NB. =========================================================
 Lab Section

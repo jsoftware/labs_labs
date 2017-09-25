@@ -7,8 +7,6 @@ Updated to work properly in J8 on Windows, Linux (UBUNTU) and Android. Allowance
 
 Ian Clark suggested that this be converted to a WIKI with the actual lab show only examples. Will do, but for now I just want to get it working properly.
 
-AUTOLAB_jlab_ is tested in this script and left as is. It is only set to zero nullifying the code in (1) 2. It is only referenced in this lab. I do not know what it is for and leaving it alone.
-
 profile.ijs was moved to a second bin directory for Android. Lab fixed to find it. Also made running fview of it optional. Easier to see what's going on in Android.
 )
 LABERRORS=: 1
@@ -42,14 +40,6 @@ This lab is divided into several chapters. You may run through the entire lab or
 
 The filename 'labfile.txt' is used for most examples and is created in the current directory. Make sure this will not destroy an important file.
 )
-PREPARE
-3 : 0''
-if. AUTOLAB_jlab_ do.
-  fview_z_=: fselect_z_=: ]
-end.
-empty''
-)
-PREPARE
 
 NB. =========================================================
 Lab Chapter General Rules
@@ -418,7 +408,7 @@ if. -.fexist ".f do. NB. Unknown.
 end.
 if. IFJHS
   do.
-    smoutput 'NB. In JHS "open" creates a link to this script.' 
+    smoutput 'NB. In JHS "open" creates a link to this script.'
     smoutput '   open ',f
   else. smoutput'   fview ',f
 end.
@@ -584,4 +574,3 @@ A summary of the primary file verbs:
 PREPARE Clean up.
 ferase 'labfile.txt'
 PREPARE ___________
-

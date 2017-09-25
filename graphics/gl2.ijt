@@ -41,8 +41,6 @@ gl2labijs=: <jpath '~temp/gl2lab.ijs'
 gl2lab_update=: 3 : 0
 t=.gl2boiler,toHOST SCRIPT_jlab_
 t 1!:2 gl2labijs
-smsel_jijs_ gl2labijs
-try. smwrite_jijs_ t catch. open gl2labijs end.
 load gl2labijs
 )
 sleep=: 6!:3
@@ -602,4 +600,3 @@ PREPARE
 gl2lab_update''
 PREPARE
 gl2lab''
-

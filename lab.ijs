@@ -192,7 +192,6 @@ lab_jlab805_ y
 )
 labcheckdef=: 3 : 0
 if. 0=#LABDEF do. 1[echo 'first open a lab' else. 0 end.
-0
 )
 labcheckpos=: 3 : 0
 if. LABPOS > {:LABNDX do. 1[echo 'end of lab' else. 0 end.

@@ -120,7 +120,8 @@ if. #ADDLABS do.
   nms=. msk # nms
   cat=. {:"1 nms
   tit=. labgettitle1 each fls
-  ADDLABS=: cat,.tit,.fls,.<0
+  msk=. 0 < # &> tit
+  ADDLABS=: msk#cat,.tit,.fls,.<0
 else.
   ADDLABS=: i.0 4
 end.
@@ -186,7 +187,8 @@ else.
     s=. (#files)#0
   end.
   t=. labgettitle1 each files
-  t=. t,. files (,<)"0 [s
+  m=. 0 < # &> t
+  t=. m # t,. files (,<)"0 [s
 end.
 
 if. #s=. labgetsubdir path do.
@@ -196,7 +198,11 @@ end.
 )
 labgettitle1=: 3 : 0
 t=. toJ 1!:11 y;0 100
-". (t i. LF) {. t
+if. 'LABTITLE=:' -: 10 {. t do.
+   ". (t i. LF) {. t
+else.
+ ''
+end.
 )
 ADVANCE=: 0 : 0
 To advance the lab, select menu Help|Studio|Advance or the

@@ -736,7 +736,9 @@ In general, a verb is responsible for handling any argument whose rank is less t
 
 Verbs that operate on an entire array, such as ($ y) which gives its shape or (|. y) which reverses the order of items, have infinite rank.
 )
+PREPARE
 destroyy dl
+PREPARE
 dl =: 2 dissect '+/"1 d'
 
 NB. =========================================================

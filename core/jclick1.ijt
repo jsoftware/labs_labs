@@ -201,7 +201,7 @@ The dissect window shows you the execution of a single sentence, with the inputs
 
 Start by going through the dissect menu line, choosing the options you want.  Beginners often like to set the tooltip delay to 'immediate' and the tooltip detail to 'tutorial'.
 
-Take a minute to hover over different blocks, and to click them.
+Take a minute to hover over different blocks, and to click them.  Also note that you can move the display around within its window by clicking on an empty area and dragging the display, like you would with Google Maps.
 
 Now size and arrange your windows into comfortable positions.  The dissect window will vary in size depending on the sentence.
 
@@ -327,13 +327,13 @@ The result for n people will depend on the result for [n-1] people, and the prob
 
 (i. y) is a list of integers from (0) to (y-1).
 
-(x - y) subtracts, so we get a list of integers 365, 364, ...
+(365 - list) subtracts that list from 365, so we get a list of integers 365, 364, ...
 
-(x % y) is division giving the list of fractions 365/365, 364/365, ...
+(list % 365) is division giving the list of fractions 365/365, 364/365, ...
 
-(*/\ y) calculates the "running product" of (y).  The first result is 365/365, the second is [365/365]*[364/365]; and so on.  This gives the probability, for each number of people, that those people have distinct birthdays.
+(*/\ list) calculates the "running product" of (list).  The first result is 365/365, the second is [365/365]*[364/365]; and so on.  This gives the probability, for each number of people, that those people have distinct birthdays.
 
-(-. y) is (1 - y) and computes the desired result. 
+(-. product) is (1 - product) and computes the desired result. 
 )
 birthdayprob 50
 
@@ -426,6 +426,9 @@ cc,wc,lc
 ) 
 PREPARE
 wc jpath '~addons/labs/labs/core/lorem.txt'
+NB. This executes jpath first, when wc.  Read this as: count
+NB. words on the file whose name inside J is
+NB. '~addons/labs/labs/core/lorem.txt'
 
 NB. =========================================================
 Lab Section Monads and dyads
@@ -537,7 +540,7 @@ wc =: (# , +/@:=&LF ,~ +/@(}: > }.)@(1 , e.&WS) )@:(1!:1)@<
 wc jpath '~addons/labs/labs/core/lorem.txt'
 
 NB. =========================================================
-Lab Chapter Where are the loops?
+Lab Chapter Where are the loops?  (Answer: implied by rank)
 NB. =========================================================
 Lab Section The Zen of J
 The J programs we wrote above were very different from the corresponding programs in a scalar language.  The J programmer thinks about the problem as a whole, rather than immediately considering individual characters, counters, and loops.
@@ -566,7 +569,7 @@ An atom of an array can be identified by giving all its indexes, which taken tog
 
 The list of lengths of coordinate axes is called the "shape" of a noun.  The verb ($ y) produces the shape of its argument.
 
-The number of axes is called the "rank" of the noun.  The rank is therefore the length of the shape, and ($ $ y) gives the rank of the noun (y).
+The number of axes is called the "rank" of the noun.  The rank is therefore the length of the shape, and (# $ y) gives the rank of the noun (y).
 
 The verb (i. y) produces a noun whose shape is (y) and whose values are consecutive integers starting at 0.
 
@@ -652,7 +655,7 @@ An array can be thought of as an array of its cells, in different ways: A 3x2x4 
 The k-cell concept is extended to negative k.  A "(-k)-cell" is a subarray whose rank is k less than the rank of the array.
 A _1-cell is the same thing as an item.  A _2-cell of a table is an atom.
 
-The picture shows these different interpretations.  The verb (|.) reverses the order of the items of its argument.  (|."3) reverses the order inside the 3-cells, that is, it reverses the order of the 2-cells [tables]; (|."2) reverses the order of lists within each 2-cell; (|."1) reverses the order of atoms in each list; (|."0) does nothing because reversing an atom doesn't change anything.
+The dissect display shows these different interpretations.  The verb (|.) reverses the order of the items of its argument.  (|."3) reverses the order inside the 3-cells, that is, it reverses the order of the 2-cells [tables]; (|."2) reverses the order of lists within each 2-cell; (|."1) reverses the order of atoms in each list; (|."0) does nothing because reversing an atom doesn't change anything.
 
 As the processing flows from top to bottom you can see the action of the different verbs.  Click in a result to see what the argument- and result-cells were.
 )
@@ -719,7 +722,13 @@ The argument had 4 rows, and each is totaled to produce an atom, so the shape of
 
 Every J primitive has an "implicit rank" - the rank that is used if the verb is not modified by ("n).  You need to learn the rank when you learn a new verb, just as you need to learn the gender of a new Latin or German noun.
 
-When a verb is applied to a noun whose rank exceeds the implicit rank, the verb is automatically applied to cells with the implicit rank, and the results are assembled.
+When a verb is applied to a noun whose rank exceeds the implicit rank, the verb is automatically applied - separately - to cells with the implicit rank, and the results are assembled.  It's like writing
+
+for (each cell of the noun) {
+  apply verb to cell, creating a cell of the result
+}
+
+but it all happens automatically.
 
 A verb can have infinite implicit rank, which means that it always applies to its argument in its entirety.  Verbs created by (define) have infinite rank.
 

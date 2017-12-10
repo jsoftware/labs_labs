@@ -13,30 +13,20 @@ PREPARE
 
 NB. =========================================================
 Lab Section Activating Debug
-The Debug help file is in User Manual|Debug. Take a few minutes to browse the help. You may also refer to it as you go through the lab.
-)
-
-NB. =========================================================
-Lab Section
 Activate Debug by pressing Ctrl-K when the session has focus.
 
 Try this now!
 )
 
 NB. =========================================================
-Lab Section
+Lab Section Positioning the Debug form
 You can position the Debug form as convenient.
 
-If the Debug form has focus, then Ctrl-T toggles the topmost attribute.
-)
-
-NB. =========================================================
-Lab Section Positioning the Debug form
 Closing Debug deactivates it.
 )
 
 NB. =========================================================
-Lab Section Deactivating Debug
+Lab Section Stepping through a definition
 We now step through the execution of a definition. To do so:
 
 - ensure Debug is active
@@ -47,7 +37,7 @@ We now step through the execution of a definition. To do so:
 )
 
 NB. =========================================================
-Lab Section Stepping through a definition
+Lab Section
 We will use the following definition:
 
   foo=: 4 : 0
@@ -93,14 +83,14 @@ then Debug will no longer be active, even if the Debug window is still displayed
 )
 
 NB. =========================================================
-Lab Section
+Lab Section Debug Active
 Display foo again by re-entering:
 
    2 foo 3
 )
 
 NB. =========================================================
-Lab Section Debug Active
+Lab Section Experiments
 Try the following experiments:
 
 Use the Back and Forward buttons to move through the code.
@@ -113,7 +103,7 @@ Note that if the Debug window has focus, pressing Enter is equivalent to pressin
 )
 
 NB. =========================================================
-Lab Section Experiments
+Lab Section
 Reset Debug by either stepping through all lines of foo, or by pressing the Clear button.
 
 The Debug window should show only the toolbar - this means it is active, but there are no suspended definitions.
@@ -125,7 +115,7 @@ If Debug is active, and an error occurs, the suspended definition is shown.
 )
 
 NB. =========================================================
-Lab Section
+Lab Section Error Handling
 Verb goo is defined with an error as follows, TXT is not defined:
 
   goo=: 3 : 0
@@ -148,7 +138,7 @@ erase <'TXT'
 PREPARE
 
 NB. =========================================================
-Lab Section Error Handling
+Lab Section
 Ensure Debug is active (press Ctrl-K), then enter:
 
    goo 3
@@ -169,7 +159,7 @@ Press Run to resume and complete execution.
 )
 
 NB. =========================================================
-Lab Section
+Lab Section Single Step
 Thus far, we set stops on all lines of the definitions, so that the Run button would step through the definitions line by line.
 
 In general, Run will execute up to the next stop, or to completion if no stops have been set.
@@ -181,7 +171,7 @@ You can use the Step into and Step over buttons to run one line at a time, even 
 )
 
 NB. =========================================================
-Lab Section Single Step
+Lab Section
 For example, abc and rst are defined as follows:
 
   abc=: 3 : 0
@@ -298,15 +288,16 @@ NB. =========================================================
 Lab Section Dissect in Debug
 Dissect gives a detailed display of the execution of a single sentence.  Debug runs sentences one at a time.  Dissect can display what will happen when debug runs the next line.
 
-Two buttons on the Debug bar relate to dissect.  The Dissect Line button will dissect the stop line (or the line under the cursor if you have selected a different line).
+Unless explicitly disabled, there are two buttons on the Debug bar that relate to dissect.  The Dissect Line button will dissect the stop line (or the line under the cursor if you have selected a different line).
 
 The Autodissect button will cause dissect to run automatically whenever the debugger is entered, giving you a line-by-line view of execution.
 
 Dissect is described in a pair of Labs.
+)
 
 NB. =========================================================
 Lab Section
 This completes the Debug Lab.
 
-For more information, read the Help available from the Debug window.
+For more information, read the Help available from the Debug window or see the wiki Debug page.
 )

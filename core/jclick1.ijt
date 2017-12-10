@@ -359,7 +359,7 @@ NB. =========================================================
 Lab Section Plotting the result
 We will close the plot window to get it out of the way.
 )
-plot_close_jwplot_ :: ] ''
+wdpclose 'plot'
 
 NB. =========================================================
 Lab Chapter Word, Character, and Line Count

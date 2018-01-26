@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.169'
+VERSION=: '1.0.170'
 
 FILES=: 0 : 0
 lab.ijs
@@ -25,4 +25,4 @@ math/
 system/
 )
 
-RELEASE=: 'j806'
+RELEASE=: 'j806 j807'

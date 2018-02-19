@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 LABS
 )
 
-VERSION=: '1.0.171'
+VERSION=: '1.0.172'
 
 FILES=: 0 : 0
 lab.ijs

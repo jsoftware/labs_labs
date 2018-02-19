@@ -112,21 +112,6 @@ commentfmt=: 3 : 0
 
 addrecord=: 3 : 0
 'xlic xmake xcolor xyear xfine xfirstname xlastname'=.y
-additem_jmf_ each VR   NB. random garbage data
-ROWS=: >:ROWS
-lic=:       (liccode xlic)          _1}lic
-make=:      ((MAKES i.<xmake){a.)   _1}make
-color=:     ((COLORS i.<xcolor){a.) _1}color
-year=:      xyear                   _1}year
-fine=:      xfine                   _1}fine
-firstname=: (6{.xfirstname)         _1}firstname
-lastname=:  (8{.xlastname)          _1}lastname
-comment=:   (0)                     _1}comment
-i.0 0
-)
-
-addrecord=: 3 : 0
-'xlic xmake xcolor xyear xfine xfirstname xlastname'=.y
 lic=:       lic,  liccode xlic
 make=:      make, (MAKES i.<xmake){a.
 color=:     color,(COLORS i.<xcolor){a.

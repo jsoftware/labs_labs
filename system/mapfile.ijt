@@ -283,11 +283,6 @@ jdata=: jdata,i.100 3
 
 NB. =========================================================
 Lab Section
-Before append was implemented to run in place (significant performance benefit), utility verb additem appended data in place. This is no longer necessary, but is left for the use of older applications.
-)
-
-NB. =========================================================
-Lab Section
 )
 jdata=: 23 (_1)} jdata  NB. amend in-place
 jdata

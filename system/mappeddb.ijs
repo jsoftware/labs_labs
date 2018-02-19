@@ -125,6 +125,19 @@ comment=:   (0)                     _1}comment
 i.0 0
 )
 
+addrecord=: 3 : 0
+'xlic xmake xcolor xyear xfine xfirstname xlastname'=.y
+lic=:       lic,  liccode xlic
+make=:      make, (MAKES i.<xmake){a.
+color=:     color,(COLORS i.<xcolor){a.
+year=:      year, xyear
+fine=:      fine, xfine
+firstname=: firstname, 6{.xfirstname
+lastname=:  lastname, 8{.xlastname
+comment=:   comment, 0
+ROWS=: #lic
+)
+
 vrmap=:   3 : 'empty dbmap each VR'
 vrunmap=: 3 : 'empty unmap_jmf_ each VR'
 

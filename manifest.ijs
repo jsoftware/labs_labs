@@ -25,4 +25,6 @@ math/
 system/
 )
 
-RELEASE=: 'j806 j807'
+RELEASE=: 'j806'
+
+FOLDER=: 'labs/labs'

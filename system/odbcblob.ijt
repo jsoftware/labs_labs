@@ -46,9 +46,9 @@ Lab Section
 NOTE: to run this lab you must register the following data source with the ODBC control panel applet. For Linux/Mac, create the file $HOME/.odbc.ini and add the following lines into it, (change the file path of database)
 
  [jblob]
- Description=jblob sqlite
+ Description=jblob db
  Driver=SQLite3
- Database=/home/bakerjd/jblob.sqlite
+ Database=/home/bakerjd/jblob.db
 
 The next section checks it is correctly registered.
 
@@ -59,11 +59,11 @@ Windows:
  jblob   Access file  ~/jblob.mdb
 
 Linux/Mac:
- jblob   Sqlite file  ~/jblob.sqlite
+ jblob   Sqlite file  ~/jblob.db
 )
 PREPARE
 (jpath '~/jblob.mdb') fcopynew^:IFWIN (jpath '~addons/labs/labs/examples/data/jblob.mdb')
-(jpath '~/jblob.sqlite') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jblob.sqlite')
+(jpath '~/jblob.db') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jblob.db')
 PREPARE
 NB. check ODBC dsn registration - result should be 1
 (<'jblob') e. {."1 ddsrc 0
@@ -137,7 +137,7 @@ dddis ch
 
 NB. =========================================================
 Lab Section Large blobs
-The remainder of this lab uses the SQL Server driver to show that this method can effectively scale to very large blobs.  If you do not have access to an SQL Server database stop here.  If you do have appropriate access you have to define a simple table with the same structure as the jblob.mdb or jblob.sqlite database.  I assume you have defined this table and registered it as an ODBC datasource.  I have defined such a table in the (jdant) datasource.
+The remainder of this lab uses the SQL Server driver to show that this method can effectively scale to very large blobs.  If you do not have access to an SQL Server database stop here.  If you do have appropriate access you have to define a simple table with the same structure as the jblob.mdb or jblob.db database.  I assume you have defined this table and registered it as an ODBC datasource.  I have defined such a table in the (jdant) datasource.
 )
 ch2 =: ddcon 'dsn=jdant'
 

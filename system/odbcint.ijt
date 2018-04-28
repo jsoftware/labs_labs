@@ -47,29 +47,29 @@ Windows:
 
 Linux/Mac:
  jdata  Sqlite3 driver
-        ~/jdata.sqlite
+        ~/jdata.db
 
- jdata2 Sqlite3 driver
-        ~/jdata2.sqlite
+ jdata2.db3 driver
+        ~/jdata2.db
 
 For Linux/Mac, create the file $HOME/.odbc.ini and add the following lines into it, (change the file path of database)
 
  [jdata]
- Description=jdata sqlite
+ Description=jdata db
  Driver=SQLite3
- Database=/home/bakerjd/jdata.sqlite
+ Database=/home/bakerjd/jdata.db
 
  [jdata2]
- Description=jdata2 sqlite
+ Description=jdata2 db
  Driver=SQLite3
- Database=/home/bakerjd/jdata2.sqlite
+ Database=/home/bakerjd/jdata2.db
 
 )
 PREPARE
 (jpath '~/jdata.mdb') fcopynew^:IFWIN (jpath '~addons/labs/labs/examples/data/jdata.mdb')
 (jpath '~/jdata2.mdb') fcopynew^:IFWIN (jpath '~addons/labs/labs/examples/data/jdata.mdb')
-(jpath '~/jdata.sqlite') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jdata.sqlite')
-(jpath '~/jdata2.sqlite') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jdata.sqlite')
+(jpath '~/jdata.db') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jdata.db')
+(jpath '~/jdata2.db') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jdata.db')
 PREPARE
 NB. check registrations - will be list of 1's
 NB. if all DSN's are registered.

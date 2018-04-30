@@ -49,7 +49,7 @@ Linux/Mac:
  jdata  Sqlite3 driver
         ~/jdata.db
 
- jdata2.db3 driver
+ jdata2 Sqlite3 driver
         ~/jdata2.db
 
 For Linux/Mac, create the file $HOME/.odbc.ini and add the following lines into it, (change the file path of database)

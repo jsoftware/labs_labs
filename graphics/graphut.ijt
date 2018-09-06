@@ -67,7 +67,7 @@ glrect_jgl2_ (wh,wh) * 300 300 400 400 % 1000
 gl2demo_run''
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/gl2demo.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp/gl2demo.ijs'
 open jpath '~temp/gl2demo.ijs'
 PREPARE
 

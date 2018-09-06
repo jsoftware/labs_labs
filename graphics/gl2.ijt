@@ -36,10 +36,10 @@ end.
 SCRIPT
 PREPARE
 goto=: 3 : 'lab_jlab_ 0[NDX_jlab_=:(<.#SECTIONDATA_jlab_)<.0>.<:y'
-gl2boiler=: toHOST SCRIPT_jlab_
+gl2boiler=: toHOST SCRIPT_jlab805_
 gl2labijs=: <jpath '~temp/gl2lab.ijs'
 gl2lab_update=: 3 : 0
-t=.gl2boiler,toHOST SCRIPT_jlab_
+t=.gl2boiler,toHOST SCRIPT_jlab805_
 t 1!:2 gl2labijs
 load gl2labijs
 )

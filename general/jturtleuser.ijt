@@ -806,7 +806,7 @@ addlabels'a'
 show a
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/turtledemo.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp/turtledemo.ijs'
 open jpath '~temp/turtledemo.ijs'
 PREPARE
 

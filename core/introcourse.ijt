@@ -5282,7 +5282,7 @@ B =. =: (             [C A V N  C A V N]  anything   6 Hook/Adverb
 [(                    C A V N   )]        anything   8 Paren
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\parsetable.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp\parsetable.ijs'
 PREPARE
 open jpath '~temp\parsetable.ijs'
 

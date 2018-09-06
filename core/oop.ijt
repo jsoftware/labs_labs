@@ -135,7 +135,7 @@ r
 )
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbc.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp/pbc.ijs'
 PREPARE
 open jpath '~temp/pbc.ijs'
 
@@ -434,7 +434,7 @@ destroy_pbc_ f. y  NB. our parent's destroy
 getfirst=: verb def 'get {. keys'
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbcx.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp/pbcx.ijs'
 PREPARE
 open jpath '~temp/pbcx.ijs'
 load '~temp/pbcx.ijs'
@@ -586,7 +586,7 @@ destroy=: codestroy
 get=: verb def 'sn=:>:sn'
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/psn.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp/psn.ijs'
 PREPARE
 open jpath '~temp/psn.ijs'
 load '~temp/psn.ijs'
@@ -628,7 +628,7 @@ r
 )
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbq.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp/pbq.ijs'
 PREPARE
 open jpath '~temp/pbq.ijs'
 load '~temp/pbq.ijs'
@@ -726,7 +726,7 @@ r
 )
 SCRIPT
 PREPARE
-(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/pbs.ijs'
+(toHOST SCRIPT_jlab805_) 1!:2 <jpath '~temp/pbs.ijs'
 PREPARE
 open jpath '~temp/pbs.ijs'
 load '~temp/pbs.ijs'

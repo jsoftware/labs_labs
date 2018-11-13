@@ -1,41 +1,45 @@
 LABTITLE=: 'Jig Augmented Display'
 LABAUTHOR =: 'Bob Therriault'
 
+NB. =========================================================
 Lab Chapter Requirements 
 
+NB. =========================================================
 Lab Section Set Up
  
   The three requirements of the Jig Augmented Display:
 
-  1) You are running J version j805/j806.
+  1) You are running J version j805 or later.
   
   2) You are running the full version of jqt.
 
   3) You have downloaded Jig from the Package Manager.
 
-  The messages below will let you know if there is anything that you need to do in order to continue with this lab.
+  If there is a variable 'v' assigned in your locale, 
+  it will need to be erased to run Jig in this lab
+
+  The messages below will let you know if there is anything 
+  that you need to do in order to continue with this lab.
+
 )
 PREPARE
-VE_jig_=.5 6 e.~ ".([:{: 0 {:: [: <;._2 '/',~ 0 {:: <;._2) JVERSION,LF  NB.to determine if j805 or j806
-Version_jig_=:'   You',( VE_jig_{:: ' need to install';' are running'),' either j805 or j806.',LF, VE_jig_{:: ('   Please, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/System/Installation');'' 
-QT_jig_=.('s'~: _1 {. 0 {:: [: <;._2 '/',~ 3 {:: <;._2) JVERSION,LF  NB.to determine if full build  Qt IDE: 1.5.3s/5.6.2 if slim build
+VE_jig_=.(804 < 0 ". _3 {. 0 {:: [: <;._2 '/',~ 0 {:: <;._2) JVERSION,LF  NB.to determine if Jversion is later than j804
+Version_jig_=:'   You',( VE_jig_{:: ' need to upgrade to at least J805.';' have a sufficient version of J.'),LF, VE_jig_{:: ('   Please, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/System/Installation');'' 
+QT_jig_=. ('s'~: _1 {. 0 {:: [: <;._2 '/',~ 3 {:: <;._2) JVERSION,LF  NB.to determine if full build  Qt IDE: 1.5.3s/5.6.2 if slim build
 jqt_jig_=:'   You',( QT_jig_{:: ' need to install';' are running'),' the full version of jqt.',LF, QT_jig_{:: ('   To update your system, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/Guides/Qt_IDE/Install#Slim_vs_Full_Builds');'' 
-PM_jig_=.fexist '~addons/debug/jig/jig.ijs'
+PM_jig_=. fexist '~addons/debug/jig/jig.ijs'
 Jig_jig_=:'   You',( PM_jig_{:: ' need to install';' have already loaded'),' the Jig addon.',LF, PM_jig_{:: ('   To use Package Manager to download the Jig add on, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/JAL/Package_Manager#Using_Package_Manager');'' 
-Please_jig_=:(*/VE_jig_,QT_jig_,PM_jig_){::'   Address the issue(s) before continuing with the lab';'   Advance to the next section of the lab'
-load '~addons/debug/jig/jig.ijs'
+Please_jig_=:'   Please, ',(*/VE_jig_,QT_jig_,PM_jig_){::'address the issue(s) and restart the lab.';'advance to the next section of the lab.'
+". (*/VE_jig_,QT_jig_,PM_jig_) {:: ' ';'load ''~addons/debug/jig/jig.ijs'''
+Vari_jig_=.(-. 'v' -: &(5!:5@<) 'v_z_'){:: '';'   You will need to erase the variable ''v''',LF,'   in order to run this lab in your locale.',LF,LF,LF
+smoutput LF,Version_jig_,LF,LF,jqt_jig_,LF,LF,Jig_jig_,LF,LF,Vari_jig_,Please_jig_
+
 PREPARE
  
-Version_jig_  NB. jig locales avoid hidden variable conflicts
- 
-jqt_jig_
- 
-Jig_jig_
- 
-Please_jig_
- 
+NB. ========================================================= 
 Lab Chapter Intro 
 
+NB. =========================================================
 Lab Section Seeing is Believing
 
   Jig is an augmented way of seeing results of J sentences.
@@ -50,11 +54,27 @@ Lab Section Seeing is Believing
 
   The type?
 
-  Anything else you know about it by the way that it looks? 
+  Anything else that you might know about it by the way that it looks? 
 )
- 
+PREPARE
+NB. variables for the Jig lab
+result_jig_=:('0',CRLF,'1',LF,'2',TAB)
+T1_jig_=: 1;2;({. 3 2j4);({. 4 2.4);({. 5 2x);({. 6 2r5)
+T2_jig_=: ": i. 3 3
+T3_jig_=: ": 3 3 $9 u: 128512 69 3101 128514
+T4_jig_=: 'AB';(7 u: 67 68); 9 u: 69 70
+SA_jig_=: s: <'😀'
+SB_jig_=: s: <7 u: 128512
+SC_jig_=: s: <9 u: 128512
+T5_jig_=: (2;  0 1 2) $. (3;9) $. 0 $.  3 5 8 $ (45 # 9),7
+T6_jig_=: 2 1 1 1 55 $ 3
+T7_jig_=: (i.1 3);i.3
+T8_jig_=: 2 2 $ ((<'_ 1 1r2 1r3 1r4'),:(< x: % i. 5));((3 0 $ 4);<,. u:3101 );(0 0$1 0 1 1 0);(9 u: 16 + i.14)
+PREPARE 
+
 result_jig_
 
+NB. =========================================================
 Lab Section
 
   Now we'll look at 'result' using standard J verbs. 
@@ -70,6 +90,8 @@ result_jig_
 
 $ result_jig_
  
+
+NB. =========================================================
 Lab Section
 
   And the datatype of 'result' is literal.
@@ -90,6 +112,7 @@ result_jig_
 
 a. i. result_jig_
  
+NB. =========================================================
 Lab Section
 
   Using the tools of $, datatype and a. i. we were able to understand what we were seeing, but we needed to do a lot of work to get there.
@@ -97,6 +120,7 @@ Lab Section
   Wouldn't it be nice to have a display that supplied the information without having to do as much work?
 )
  
+NB. =========================================================
 Lab Section The Jig Augmented Display
 
   This is the Jig display of 'result'. If you don't see it now, make sure that the message box is not being blocked by another window.
@@ -121,8 +145,10 @@ v result_jig_
 
 result_jig_
  
+NB. =========================================================
 Lab Chapter Types
 
+NB. =========================================================
 Lab Section Numerics
 
   So, how does the J text display become Jig? We convert the traditional J text display to Scalable Vector Graphics (SVG) and add information in the form of tool tips. SVG text is displayable in all web browsers and allows control of font, color and positioning of text.
@@ -131,15 +157,16 @@ Lab Section Numerics
 
   Integers would be a good guess, but you might want to do some investigation after your previous experience with 'result'.
 
-  What you can find out about t1?
+  What you can find out about T1?
 
 )
  
 T1_jig_
  
+NB. =========================================================
 Lab Section 
 
-  This is what t1 looks like in the Jig display.
+  This is what T1 looks like in the Jig display.
 
   You can see that the contents of the boxes differ slightly in appearance, containing boolean, integer, complex, floating, extended, and rational types.
 
@@ -155,6 +182,7 @@ v T1_jig_
 
 T1_jig_
  
+NB. =========================================================
 Lab Section
 
   Here is a better example that reveals the most commonly seen versions of these types including the embedded separators.
@@ -167,9 +195,10 @@ PREPARE
  
 v ,. 1;2;3j4;409808e21;409807987979797806576578x;6r13247
  
+NB. =========================================================
 Lab Section Literals and Unicode 
 
-  Look at the table t2 below.
+  Look at the table T2 below.
 
   When you add the scalar 4 to it you get a domain error. What is going on with that?
 
@@ -182,7 +211,7 @@ T2_jig_
  
 Lab Section
 
-  Jig immediately reveals that t2 is a table of literals and the 'numbers' are actually literal numerals separated by blanks (which appear as a lighter shade of green). 
+  Jig immediately reveals that T2 is a table of literals and the 'numbers' are actually literal numerals separated by blanks (which appear as a lighter shade of green). 
 
   Hovering over the literals themselves reveals the UTF-8 encoding, while hovering over the perimeter provides the shape and type of the entire object.
 )
@@ -194,24 +223,26 @@ v T2_jig_
 
 T2_jig_
  
+NB. =========================================================
 Lab Section
 
   Earlier when we looked at 'result' we found that the J text display doesn't always reveal the shape of the table visually because of non-displaying characters - but even if we only use visible characters, we can still run into other problems when we go beyond ASCII. 
 
-  t3 appears to be three rows of three characters, but $ reveals a shape of 3 11.
+  T3 appears to be three rows of three characters, but $ reveals a shape of 3 11.
 
-  See if you can find out why, or advance the lab to view t3 with the Jig display.
+  See if you can find out why, or advance the lab to view T3 with the Jig display.
 )
  
 T3_jig_
 
 $ T3_jig_
   
+NB. =========================================================
 Lab Section
  
   With the Jig display we see that the characters are literals, represented by different numbers of code points. It is the code points that correspond to the shape of the literal array and Jig sets the block width according to the number of code points, making it easier to see how the shape of the literal array is constructed.
 
-  Notice that the first two rows of t3 are padded with blanks to achieve the required shape.
+  Notice that the first two rows of T3 are padded with blanks to achieve the required shape.
 )
 PREPARE
 wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T3_jig_'
@@ -221,6 +252,7 @@ v T3_jig_
 
 T3_jig_  
 
+NB. =========================================================
 Lab Section
 
    The literal, unicode and unicode4 character types follow a similar representation in the Jig display, but are differentiated by background and text colouring.  Again, the type is always available by hovering, so the visual differences are just a convenience.
@@ -235,9 +267,10 @@ v T4_jig_
  
 T4_jig_ 
  
+NB. =========================================================
 Lab Section Symbols 
 
-  The symbols sa, sb and sc look identical in the J text display, sharing the same shape and type, but they are still not equivalent.
+  The symbols SA, SB and SC look identical in the J text display, sharing the same shape and type, but they are still not equivalent.
 
   Do you know why? See if you can find out before you move on to the next section. 
 )
@@ -262,11 +295,12 @@ SA_jig_-:SB_jig_
 SB_jig_-:SC_jig_
 SA_jig_-:SC_jig_
  
+NB. =========================================================
 Lab Section
 
   Jig shows why.
 
-  It turns out that symbols are mapped according to the code points of their labels. The type of the label for sa is literal (4 code points), the label of sb is type unicode (2 code points) and the label type for sc is unicode4 (1 code point).
+  It turns out that symbols are mapped according to the code points of their labels. The type of the label for SA is literal (4 code points), the label of SB is type unicode (2 code points) and the label type for SC is unicode4 (1 code point).
 
   This means that the three symbols are distinct and distinguishable depending on the number of code points in their labels. In Jig, more code points means wider labels and label type is further distinguished by colour. Hovering over the symbol block gives us the label type, the index in the hash table, and the total number of symbols defined, while hovering over the label itself provides the code points.
 )
@@ -276,6 +310,7 @@ PREPARE
  
 v SA_jig_,SB_jig_,SC_jig_
  
+NB. =========================================================
 Lab Section Sparse Arrays 
 
   The J text display of the sparse representation for a matrix provides quite a bit of information. The indices of the non-sparse values and the values themselves are available, but you would be hard pressed to find the sparse (filler) values or which indices are being used to generate the sparse representation.
@@ -285,6 +320,7 @@ Lab Section Sparse Arrays
  
 T5_jig_
  
+NB. =========================================================
 Lab Section
 
   Jig mirrors the layout of the J text display for Sparse Arrays. Indices are listed to the left of the dividing line and the corresponding values are shown to the right of the dividing line. Colour is used to indicate the types for the indices, results and to highlight the separating vertical bar. Tooltips provide information about the sparse indices to the left of the dividing line and the sparse element of the matrix to the right.
@@ -301,8 +337,10 @@ PREPARE
 T5_jig_        NB. sparse representation of T5_jig_
 
  
+NB. =========================================================
 Lab Chapter Shapes
 
+NB. =========================================================
 Lab Section Standard Shape 
 
   Often when trying to figure out the result of my J programs, I feel as if I am one of the blind people tasked with describing an elephant.
@@ -314,11 +352,12 @@ Lab Section Standard Shape
   The Jig display is more like being handed a picture of an elephant with descriptions already attached to the different parts.
 ) 
  
+NB. =========================================================
 Lab Section
  
-  Let's compare the views of Jig and the J text display for table t6.
+  Let's compare the views of Jig and the J text display for table T6.
 
-  You immediately recognize a higher dimension array because of the blank lines between the rows of t6, but it is difficult to know the precise shape by estimating the number of blank lines you see between between the rows. Jig provides the answer quickly and accurately when you hover over the array.
+  You immediately recognize a higher dimension array because of the blank lines between the rows of T6, but it is difficult to know the precise shape by estimating the number of blank lines you see between between the rows. Jig provides the answer quickly and accurately when you hover over the array.
 
   Jig is also useful in cases where the array exceeds the dimensions of the display, because as long as you can see the tool tip in the upper left corner of the object, you have access to the exact value of the shape. 
 ) 
@@ -330,6 +369,7 @@ v T6_jig_
    
 T6_jig_
  
+NB. =========================================================
 Lab Section Singletons 
 
   One of the areas where the J text display is particularly challenged is in the way it shows shapes with leading 1's. 
@@ -342,6 +382,7 @@ Lab Section Singletons
 1 1 $ 'a'
 1 1 1 1 1 $ 'a'
   
+NB. =========================================================
 Lab Section
 
   Jig provides an additional hint by tinting the background a light blue if there is a leading 1 in the shape of the object. This alerts the user that hovering may be needed to find the precise shape.
@@ -356,6 +397,7 @@ v T7_jig_
  
 T7_jig_
  
+NB. =========================================================
 Lab Section Empty Arrays
 
   The J text display is also challenged when it comes to displaying empty arrays (arrays with no atoms i.e. arrays with a 0 in their shape). 
@@ -381,6 +423,7 @@ PREPARE
 1 0 $ 4
 0 0 $ 4
 
+NB. =========================================================
 Lab Section
 
   The J text display can only use line feeds and blank spaces to show empty shapes and as a result 0 4 $ 4 and 0 2 $ 4 appear identical.
@@ -399,6 +442,7 @@ PREPARE
 0 4 $ 4
 0 2 $ 4
 
+NB. =========================================================
 Lab Section
 
   Unfortunately, when you get beyond two dimensions, things get tricky. 4 0 4 $ 4 and 0 4 $ 4 appear to be identical, since both arrays have 0 rows.
@@ -414,6 +458,7 @@ wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 0 4 $ 4'
 v 0 4 $ 4
 PREPARE
 
+NB. =========================================================
 Lab Section
 
   One last hint that Jig gives is that if all of the indices of the shape are 0 then the block is shown in a lighter shade of grey, distinguishing 0 0 0 $ 5 from 2 0 0 $ 5.
@@ -425,8 +470,10 @@ wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 2 0 0 $ 5'
 v 2 0 0 $ 5
 PREPARE
   
+NB. =========================================================
 Lab Chapter Boxed
 
+NB. =========================================================
 Lab Section Contents Versus Container 
 
   One of the biggest challenges in getting Jig running was being able to produce boxed results consistent with the J textual display. 
@@ -444,6 +491,7 @@ PREPARE
  
 2 2 $ (i.3 1);'cat';(<,'A');i. 1 3
  
+NB. =========================================================
 Lab Section Unicode Ragged Right Edges 
 
   As mentioned before, the J text display wraps box drawing characters around the box contents to create the box perimeter. The downside of this process is that unicode characters which have varying widths will create boxes with ragged right edges.
@@ -459,6 +507,7 @@ PREPARE
  
 <,. u:3101 
    
+NB. =========================================================
 Lab Section Special Characters - Boxed and Unboxed 
 
   In J, some characters change their appearance radically in boxed or unboxed form. Line feed (LF) and carriage return (CR) characters cause the string to be positioned on a new line when unboxed, but display as a blank space when boxed. This is also true of the TAB character, except here the width of the space depends on tab stops when unboxed and is a single blank space when boxed.
@@ -482,8 +531,10 @@ PREPARE
  
 <'0',CR,LF,'1',LF,CR,'2',TAB,'3'
  
+NB. =========================================================
 Lab Chapter A Final Example
 
+NB. =========================================================
 Lab Section What do you see?  
 
   As one last test, here is a mildly complicated object in J text display. How much can you tell about the types and shapes of the contents for each box?
@@ -491,6 +542,7 @@ Lab Section What do you see?
  
 T8_jig_
  
+NB. =========================================================
 Lab Section  
 
   And now the same object viewed with Jig.
@@ -501,8 +553,10 @@ PREPARE
  
 v T8_jig_
   
+NB. =========================================================
 Lab Chapter Function keys
 
+NB. =========================================================
 Lab Section Function keys  
 
   If the Jig addon has been loaded into your session, Jig can be invoked by preceding the J sentence with the letter v and pressing return.
@@ -518,19 +572,19 @@ Lab Section Function keys
 to the session configuration script accessed through the 'Edit | Configure | User Keys' menu, then restart J. 
  
  
+NB. =========================================================
 Lab Chapter Other issues
 
+NB. =========================================================
 Lab Section Other issues     
 
   Is it perfect? Not yet, but as more people use it and report the issues they find, it can become better.
 
   There are three known issues that I am aware of.
 
-  1) Clipping of the displayed characters for a long array such as 'i. 286'. This seems to be an issue with jqt on Mac and Windows platforms, but does not affect all Unix systems. When the SVG string that forms the display is sent through a standard browser, this is also not an issue, indicating that this may not be a problem when Jig is ported over to the JHS platform.
+  1)  Each time a Jig window is resized, the originating J sentence is rerun. When verbs such as ? are used this will generate different results each time the window is resized. The alternative is to lock the results before display, but this can affect the type that is displayed i.e. the results of ? are floating type, but when locked down evaluate as integers. I chose to have the values change rather than type because a type change is more likely to lead the user astray.
 
-  2) Each time a Jig window is resized, the originating J sentence is rerun. When verbs such as ? are used this will generate different results each time the window is resized. The alternative is to lock the results before display, but this can affect the type that is displayed i.e. the results of ? are floating type, but when locked down evaluate as integers. I chose to have the values change rather than type because a type change is more likely to lead the user astray.
-
-  3) There is an issue that arises when you use Jig to view sentences containing the variables x or y. This will cause Jig to use its own value for x and y and not the originally declared values in the current locale. The work-around is to specify x as x_base_ and y as y_base_. Then the argument will be evaluated in the base locale and not rely on Jig's values of x and y. Only the x and y variable names are affected in this way and all other variables will get their values from the current locale.
+  2) There is an issue that arises when you use Jig to view sentences containing the variables x or y. This will cause Jig to use its own value for x and y and not the originally declared values in the current locale. The work-around is to specify x as x_base_ and y as y_base_. Then the argument will be evaluated in the base locale and not rely on Jig's values of x and y. Only the x and y variable names are affected in this way and all other variables will get their values from the current locale.
 
   If you have suggestions that could overcome these issues and still retain the functionality of Jig, I would love to hear them.
 

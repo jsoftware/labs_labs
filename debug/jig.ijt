@@ -24,18 +24,17 @@ Lab Section Set Up
 )
 PREPARE
 VE_jig_=.(804 < 0 ". _3 {. 0 {:: [: <;._2 '/',~ 0 {:: <;._2) JVERSION,LF  NB.to determine if Jversion is later than j804
-Version_jig_=:'   You',( VE_jig_{:: ' need to upgrade to at least J805.';' have a sufficient version of J.'),LF, VE_jig_{:: ('   Please, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/System/Installation');'' 
+Version_jig_=.'   You',( VE_jig_{:: ' need to upgrade to at least J805.';' have a sufficient version of J.'),LF, VE_jig_{:: ('   Please, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/System/Installation');'' 
 QT_jig_=. ('s'~: _1 {. 0 {:: [: <;._2 '/',~ 3 {:: <;._2) JVERSION,LF  NB.to determine if full build  Qt IDE: 1.5.3s/5.6.2 if slim build
-jqt_jig_=:'   You',( QT_jig_{:: ' need to install';' are running'),' the full version of jqt.',LF, QT_jig_{:: ('   To update your system, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/Guides/Qt_IDE/Install#Slim_vs_Full_Builds');'' 
+jqt_jig_=.'   You',( QT_jig_{:: ' need to install';' are running'),' the full version of jqt.',LF, QT_jig_{:: ('   To update your system, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/Guides/Qt_IDE/Install#Slim_vs_Full_Builds');'' 
 PM_jig_=. fexist '~addons/debug/jig/jig.ijs'
-Jig_jig_=:'   You',( PM_jig_{:: ' need to install';' have already loaded'),' the Jig addon.',LF, PM_jig_{:: ('   To use Package Manager to download the Jig add on, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/JAL/Package_Manager#Using_Package_Manager');'' 
-Please_jig_=:'   Please, ',(*/VE_jig_,QT_jig_,PM_jig_){::'address the issue(s) and restart the lab.';'advance to the next section of the lab.'
+Jig_jig_=.'   You',( PM_jig_{:: ' need to install';' have already loaded'),' the Jig addon.',LF, PM_jig_{:: ('   To use Package Manager to download the Jig add on, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/JAL/Package_Manager#Using_Package_Manager');'' 
+Please_jig_=.'   Please, ',(*/VE_jig_,QT_jig_,PM_jig_){::'address the issue(s) and restart the lab.';'advance to the next section of the lab.'
+smoutput LF,Version_jig_,LF,LF,jqt_jig_,LF,LF,Jig_jig_,LF,LF,Please_jig_,LF
 ". (*/VE_jig_,QT_jig_,PM_jig_) {:: ' ';'load ''~addons/debug/jig/jig.ijs'''
-Vari_jig_=.(-. 'v' -: &(5!:5@<) 'v_z_'){:: '';'   You will need to erase the variable ''v''',LF,'   in order to run this lab in your locale.',LF,LF,LF
-smoutput LF,Version_jig_,LF,LF,jqt_jig_,LF,LF,Jig_jig_,LF,LF,Vari_jig_,Please_jig_
+smoutput (-. 'v' -: &(5!:5@<) 'v_z_'){:: '';'   You will need to erase the variable ''v''',LF,'   in order to run this lab in your locale.',LF,LF
 
-PREPARE
- 
+PREPARE 
 NB. ========================================================= 
 Lab Chapter Intro 
 

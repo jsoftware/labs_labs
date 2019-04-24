@@ -61,7 +61,7 @@ gl2demo_g_paint=: 3 : 0
 wh=. glqwh_jgl2_''
 glrgb_jgl2_ 255 0 0
 glbrush_jgl2_''
-glrect_jgl2_ (wh,wh) * 300 300 400 400 % 1000
+glrect_jgl2_ roundint (wh,wh) * 300 300 400 400 % 1000
 )
 
 gl2demo_run''

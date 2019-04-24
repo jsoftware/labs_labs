@@ -240,7 +240,7 @@ Here are the drawing commands. Each has a matching verb ending in "01".
   gdrect       draw rectangle
   gdtext       draw text
 
-The arguments are the same as for the corresponding gl... verb, e.g. gdrect has the same argument as glrect. See the online help, User Manual - Window Driver Command Reference.
+The arguments are the same as for the corresponding gl... verb, e.g. gdrect has the same argument as glrect. See the wiki Guides/Window_Driver/gl2_Command_Reference.
 )
 
 NB. =========================================================

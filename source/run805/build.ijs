@@ -1,3 +1,3 @@
 NB. build
 
-NB. now built from ~Addons/labs/labs/source/run
+load '~Addons/labs/labs/source/run/build.ijs'

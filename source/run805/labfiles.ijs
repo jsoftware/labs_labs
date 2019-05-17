@@ -22,6 +22,15 @@ if. #ADDLABS do.
 else.
   ADDLABS=: i.0 4
 end.
+fls=. fls #~ (<'.ijt') = _4 {.each fls=. dtree p
+fls=. fls -. 2 {"1 ADDLABS
+if. #fls do.
+  cat=. '/' taketo each (#p) }. each fls
+  tit=. labgettitle1 each fls
+  msk=. 0 < # &> tit
+  ADDLABS=: ADDLABS,msk#cat,.tit,.fls,.<0
+end.
+EMPTY
 )
 
 NB. =========================================================
@@ -114,11 +123,14 @@ end.
 )
 
 NB. =========================================================
+NB. get title of old or new lab
 labgettitle1=: 3 : 0
-t=. toJ 1!:11 y;0 100
-if. 'LABTITLE=:' -: 10 {. t do.
-   ". (t i. LF) {. t
-else.
- ''
+dat=. <;._2 LF,~ 1000 {. freads y
+dat=. deb 0 pick dat -. a:
+if. 'LABTITLE' -: 8 {. dat do.
+  ". dat
+elseif. 'NB. Lab:' -: 8 {. dat do.
+  deb 8 }. dat
+elseif. do. ''
 end.
 )

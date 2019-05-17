@@ -1,2 +1,2 @@
 
-NB. load '~Addons/labs/labs/source/run/test.ijs'
+load '~Addons/labs/labs/source/run/run.ijs'

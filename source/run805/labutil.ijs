@@ -54,6 +54,24 @@ fls=. ({.~ 2 i.~ '/' +/\ .= ]) each fls
 )
 
 NB. =========================================================
+NB.*dtree v get filenames in directory tree
+NB. return list of filenames in directory tree
+NB. y is a folder name (with or without trailing separator)
+NB. hidden files and directories are ignored
+NB. result has full pathnames
+dtree=: 3 : 0
+p=. y #~ (+./\ *. +./\.) y~:' '
+p=. jpath p,'/' -. {:p
+d=. 1!:0 p,'*'
+if. 0 = #d do. '' return. end.
+d=. d #~ 'h' ~: 1 {"1 > 4 {"1 d
+if. 0 = #d do. '' return. end.
+m=. 'd' = 4 {"1 > 4 {"1 d
+d=. (<p) ,each {."1 d
+((-.m) # d), ;dtree each m # d
+)
+
+NB. =========================================================
 NB. excludes
 NB. ignore labs in exclude lists
 excludes=: 3 : 0

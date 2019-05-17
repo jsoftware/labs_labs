@@ -47,6 +47,17 @@ fls=. (#add) }. each b#fls
 fls=. ({.~ 2 i.~ '/' +/\ .= ]) each fls
 'To run this lab, first install: ',commaseps fls
 )
+dtree=: 3 : 0
+p=. y #~ (+./\ *. +./\.) y~:' '
+p=. jpath p,'/' -. {:p
+d=. 1!:0 p,'*'
+if. 0 = #d do. '' return. end.
+d=. d #~ 'h' ~: 1 {"1 > 4 {"1 d
+if. 0 = #d do. '' return. end.
+m=. 'd' = 4 {"1 > 4 {"1 d
+d=. (<p) ,each {."1 d
+((-.m) # d), ;dtree each m # d
+)
 excludes=: 3 : 0
 t=. 'b' fread '~addons/labs/labs/exlabs.txt'
 if. t-:_1 do. y return. end.
@@ -125,6 +136,15 @@ if. #ADDLABS do.
 else.
   ADDLABS=: i.0 4
 end.
+fls=. fls #~ (<'.ijt') = _4 {.each fls=. dtree p
+fls=. fls -. 2 {"1 ADDLABS
+if. #fls do.
+  cat=. '/' taketo each (#p) }. each fls
+  tit=. labgettitle1 each fls
+  msk=. 0 < # &> tit
+  ADDLABS=: ADDLABS,msk#cat,.tit,.fls,.<0
+end.
+EMPTY
 )
 labgetsubdir=: 3 : 0
 t=. 1!:0 y,'*'
@@ -197,11 +217,13 @@ end.
 
 )
 labgettitle1=: 3 : 0
-t=. toJ 1!:11 y;0 100
-if. 'LABTITLE=:' -: 10 {. t do.
-   ". (t i. LF) {. t
-else.
- ''
+dat=. <;._2 LF,~ 1000 {. freads y
+dat=. deb 0 pick dat -. a:
+if. 'LABTITLE' -: 8 {. dat do.
+  ". dat
+elseif. 'NB. Lab:' -: 8 {. dat do.
+  deb 8 }. dat
+elseif. do. ''
 end.
 )
 ADVANCE=: 0 : 0

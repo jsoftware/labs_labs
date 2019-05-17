@@ -396,5 +396,4 @@ LABNDX=: ({.-]) +/\. (<'key') ~: {."1 LABDEF
 0
 )
 lab_z_=: lab_jlab_
-
 spx_z_=: lab_jlab_

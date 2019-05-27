@@ -1,0 +1,211 @@
+NB. Lab: Video - The Head Monadic Verb - {.y 
+NB. 
+NB.labchapter:Video Requirements
+
+0 : 0
+_______________________________________
+
+To run this video lab you must have 
+access to youtube.com through the 
+internet. 
+
+If you do not, the lab will still 
+advance thorugh the exercises, but the 
+videos will not be displayed.
+
+Videos will appear as steps in the lab,
+but you will need to click play on the video 
+to get it started.
+
+When you have viewed a video, select 
+the line below the video and continue 
+on as you would for any other lab.
+
+This is required because when you are 
+interacting with a video, you are not 
+actually interacting with the J lab.
+_______________________________________
+)
+
+NB.labchapter:Action of {. on Non-Empty arrays
+
+NB.labhtml:<iframe width="600" height="400" src="https://www.youtube.com/embed/3lZde3JFynQ?feature=oembed;rel=0&amp;"></iframe>
+
+0 : 0
+_______________________________________
+
+Now, a chance to play with some of these
+concepts and see if the results of these
+examples meet your expectations.
+_______________________________________
+)
+
+[ A23 =. i. 2  3
+
+$ A23
+
+NB.Can you predict the result of
+NB.{. A23 and $ {. A23 ?
+
+{. A23  NB. The first item is a row of length 3
+$ {. A23
+
+0 : 0
+_______________________________________
+
+Pretty much makes sense that the first
+item of a shape of 2 3 will have a 
+shape of 3.
+
+Remember that we create a one item list
+using 1 {. A23 and then take the first
+item from that list using 0 { 1 {. A23
+
+Now, let's try another one.
+_______________________________________
+)
+
+[ A4 =. i. 4
+
+$ A4
+
+NB.Can you predict the result of
+NB.{. A4 and $ {. A4 ?
+
+{. A4
+$ {. A4 NB. Atoms have empty shape
+
+0 : 0
+_______________________________________
+
+The shape of the first item is empty
+because the first item of a rank one 
+array with shape 4 is an atom.
+
+What if we had a list of length 1?
+_______________________________________
+)
+
+[ A1 =. ,4
+
+$ A1 
+
+NB.Can you predict the result of
+NB.{. A1 and $ {. A1 ?
+
+{. A1
+$ {. A1 NB. Atoms have empty shape
+
+0 : 0
+_______________________________________
+
+Even if it is a list of length one,
+1 {. A1 will still create a list of 
+length one and the first item of that
+list will be an atom with an empty shape.
+
+Play around a bit more until you are
+comfortable with these results or
+any others that you might invent. You are
+working in a fully functioning J
+environment.
+
+When you are satisfied, advance the 
+lab and get ready for the next video 
+which covers the case of empty shapes.
+_______________________________________
+)
+
+NB.labchapter:Action of {. on Empty arrays
+
+NB.labhtml:<iframe width="600" height="400" src="https://www.youtube.com/embed/Wup3WjZrqkI?feature=oembed;rel=0&amp;"></iframe>
+
+0 : 0
+_______________________________________
+
+Now we have looked at a number of
+different empty arrays, so we probably 
+don't have to go over the examples you 
+have just seen, but feel free to on
+your own time if you wish. I'll define
+a few for your benefit.
+_______________________________________
+)
+
+[ A0 =. 0 $ 4
+[ A02 =. 0 2 $ 4
+[ A20 =. 2 0 $ 4
+
+0 : 0
+_______________________________________
+
+What is more interesting is whether we
+can tell if the fills have taken place  
+even if there is no visible result.
+
+What about A010=. 0 1 0 $ 4
+
+We know that the result was an empty line,
+but is there any way to know if a fill was
+ever used?
+
+As a matter of fact, there is if we use the 
+fit conjunction (!.) which specifies the fill 
+that is used if required.
+_______________________________________
+)
+
+[ A010=. 0 1 0 $ 4   
+datatype A010 NB. Integer as expected because the 'empty' content is 4.
+{. A010 NB. Returns an empty line as expected.
+$ {. A010 NB. The shape of the first item is 1 0 as expected.
+datatype {. A010 NB. Integer as expected.
+
+0 : 0
+_______________________________________
+
+But if we force a fill of a different type,
+then we can see if the type changes.
+
+We do this using the Fit Conjunction !.
+
+{.(!.a:) is a new verb based on {.
+where !. forces the fill (if required) 
+to be an empty box - a:
+_______________________________________
+)
+
+{.(!.a:) A010 NB. Returns an empty line, as before
+datatype {.(!.a:) A010 NB. But now the type has changed, so fill was used even if we could not see it!
+
+NB.Well, that pretty much wraps up this lab,
+NB.except for a list of references where you
+NB.can find out more in depth information about
+NB.what you have seen.
+
+NB.labchapter:References
+
+0 : 0
+_______________________________________
+
+ Nuvoc Definition for Head found at https://code.jsoftware.com/wiki/Vocabulary/curlylfdot 
+ J for C Programmers - Chapter 8 - Head found in Monads section at https://www.jsoftware.com/help/jforc/more_verbs.htm#_Toc191734357
+ The J Dictionary Vocabulary Definition for Head found at https://www.jsoftware.com/help/dictionary/d521.htm
+
+ Nuvoc Definition for Fit Conjunction found at https://code.jsoftware.com/wiki/Vocabulary/bangdot 
+ J for C Programmers - Chapter 8 - Fit Conjunction found in Dyads section at https://www.jsoftware.com/help/jforc/more_verbs.htm#_Toc191734356
+ The J Dictionary Vocabulary Definition for Fit Conjunction found at https://www.jsoftware.com/help/dictionary/d411.htm
+ _______________________________________
+)
+
+0 : 0
+_______________________________________
+
+If you would like to review any of the
+previous chapters, advance the lab then 
+position the cursor on the chapter you
+wish to review and press return.
+_______________________________________
+)
+
+lab ':'

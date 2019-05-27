@@ -54,12 +54,14 @@ media/videolabs/videolabintro.ijt
 # ---------------------------------------------
 EXJQT=: 0 : 0
 labs/labs/graphics/d3.ijt
+labs/labs/core/head.ijt
 )
 
 # ---------------------------------------------
 EXJNET=: 0 : 0
 labs/labs/graphics/d3.ijt
 media/videolabs/videolabintro.ijt
+labs/labs/core/head.ijt
 )
 
 # ---------------------------------------------

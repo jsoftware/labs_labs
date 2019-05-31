@@ -48,20 +48,22 @@ labs/labs/system/pm.ijt
 labs/labs/system/sockcli.ijt
 labs/labs/system/sockinet.ijt
 labs/labs/system/sockserv.ijt
-media/videolabs/videolabintro.ijt
+media/videolabs/headjqt.ijt
+media/videolabs/videolabjqt.ijt
 )
 
 # ---------------------------------------------
 EXJQT=: 0 : 0
 labs/labs/graphics/d3.ijt
-labs/labs/core/head.ijt
+media/videolabs/headjhs.ijt
 )
 
 # ---------------------------------------------
 EXJNET=: 0 : 0
 labs/labs/graphics/d3.ijt
-media/videolabs/videolabintro.ijt
-labs/labs/core/head.ijt
+media/videolabs/headjhs.ijt
+media/videolabs/headjqt.ijt
+media/videolabs/videolabjqt.ijt
 )
 
 # ---------------------------------------------
@@ -74,6 +76,7 @@ graphics/fvj3/labs/owin3.ijt
 graphics/fvj3/labs/povkit2.ijt
 graphics/fvj3/labs/raster6.ijt
 graphics/jturtle/jturtleuser.ijt
+labs/labs/core/head.ijt
 labs/labs/general/jturtleuser.ijt
 labs/labs/general/nn1.ijt
 labs/labs/graphics/gl2.ijt

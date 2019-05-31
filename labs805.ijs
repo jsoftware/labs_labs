@@ -186,9 +186,9 @@ else.
   j=. ; < @ ({. ,. labgettutor &> @ {:)"1 LABDIR
   j=. ~. j,ADDLABS
 end.
+j=. excludes j
 j=. (~: 1 {"1 j) # j
-labs=. j sort > 1{"1 j
-LABS=: excludes labs
+LABS=: j sort > 1{"1 j
 )
 labgettutor=: labgetjt
 labgetjt=: 3 : 0

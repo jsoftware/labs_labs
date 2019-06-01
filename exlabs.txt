@@ -32,6 +32,7 @@ graphics/fvj4/raster.ijt
 graphics/fvj4/raster_ja.ijt
 labs/labs/core/jclick1.ijt
 labs/labs/core/jclickbeginners.ijt
+labs/labs/core/head.ijt
 labs/labs/debug/dissect1.ijt
 labs/labs/debug/dissect2.ijt
 labs/labs/graphics/fractals.ijt

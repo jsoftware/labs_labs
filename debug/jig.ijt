@@ -579,7 +579,7 @@ Lab Section Other issues
 
   Is it perfect? Not yet, but as more people use it and report the issues they find, it can become better.
 
-  There are three known issues that I am aware of.
+  There are two known issues that I am aware of.
 
   1)  Each time a Jig window is resized, the originating J sentence is rerun. When verbs such as ? are used this will generate different results each time the window is resized. The alternative is to lock the results before display, but this can affect the type that is displayed i.e. the results of ? are floating type, but when locked down evaluate as integers. I chose to have the values change rather than type because a type change is more likely to lead the user astray.
 

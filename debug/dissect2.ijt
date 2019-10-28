@@ -86,7 +86,7 @@ This is true for expansion blocks generally: when you click again on the result 
 Clicking the < or << buttons is another way to remove the expansion block.
 )
 
-B. =========================================================
+NB. =========================================================
 Lab Section u/ on 2
 Sometimes, when you know that (y) has exactly 2 items, you write (u/ y) so that you can refer to the first item of (y) as ([) and the second one as (]) .
 

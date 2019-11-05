@@ -222,7 +222,6 @@ socklisten=: 3 : 0
 sdcleanup''
 SKACCEPT=: ''
 SKLISTEN=: 0 pick sdcheck sdsocket''
-sdcheck sdasync SKLISTEN
 name=. sdcheck sdgethostbyname'localhost'
 sdcheck sdbind SKLISTEN;name,<SKPORT
 sdcheck sdlisten SKLISTEN, {.y,1

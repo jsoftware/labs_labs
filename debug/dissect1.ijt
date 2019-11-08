@@ -87,11 +87,13 @@ The < and > buttons just below the menu undo and redo selections.  The << button
 
 NB. =========================================================
 Lab Section Tooltips and Status Line
-Hover the cursor over elements of the diagram to see associated tooltips. You can change the level of detail in the tooltips using the menu option Tooltips|Detail. You can change how quickly the tooltips appear using the menu option Tooltips|Delay.
+Hover the cursor over elements of the diagram to see associated tooltips. You can change the level of detail in the tooltips using the menu option Tooltips|Detail. You can change how quickly the tooltips appear using the menu option Tooltips|Delay. You can change the size of the font used for tooltips in Preferences|Font|Select.
 
 The Status Line, which is above the main display, to the right of the > button, gives an immediate summary of the information under the cursor.
 
 If you choose Tutorial mode in Tooltips|Detail, the tooltip text might not fit in the dissect window if your sentence is short.  In that case, resize the window to show the tooltip.
+
+When dissect starts, the status line shows a Tip of the Day.  You may view all such Tips using the Help menu.
 
 NB. =========================================================
 Lab Section Tooltips and Status Line ct'd
@@ -433,7 +435,7 @@ Click on the (527) block in the final result.  You see the usual selection and h
 
 Now use the arrow keys to move around.  Observe that the selection moves accordingly, with the proper highlighting.
 
-The arrow keys move the selection within a 2x2 array of result-cells.
+The arrow keys move the selection within a two-dimensional array of result-cells.
 )
 PREPARE
 dissectclose''
@@ -717,7 +719,7 @@ Click on the row containing the name (W) in the result of the (>) verb.  This se
 
 Opening this cell produced an atom, (W).  This atom was filled with 14 more spaces to match the shape of the other items of the assembled result.  You can see the fill in the crosshatching of the selected result.
 
-Yo can also see the fill in the result portion of shape line [that's the part with the purple background].  This cell produced an atom.  The shape of an atom is empty.  This shape - empty, which is invisible - is displayed before the parentheses.  The parentheses around the filled result-cell-shape still indicate that the overall result was filled.
+You can also see the fill in the result portion of shape line [that's the part with the purple background].  This cell produced an atom.  The shape of an atom is empty.  This shape - empty, which is invisible - is displayed before the parentheses.  The parentheses around the filled result-cell-shape still indicate that the overall result was filled.
 )
 
 NB. =========================================================
@@ -911,7 +913,7 @@ NB. =========================================================
 Lab Chapter Putting results onto the clipboard
 NB. =========================================================
 Lab Section The clipboard
-Right-click the shape line (4 3) of the result of (+:).  You see the brief message 'result copied to clipboard'.
+Right-click the shape line (4 4) of the result of (+:).  You see the brief message 'result copied to clipboard'.
 
 Now go to the J execution window and press ctrl-V (or Edit|Paste).
 

@@ -30,8 +30,6 @@ The server can handle multiple, simultaneous clients. A database manager is a ty
 NB. =========================================================
 Lab Section
 The server and client classes can be used in any J Front End (Jconsole or Jwd) on any platform (Windows, Unix, PocketPC).
-
-The Windows only sdasync facility is not used. The use of sdasync is discouraged. It is not portable, doesn't work in Jconsole, is less efficient than sdselect, is atypical socket programming, and may be decommitted in future releases.
 )
 
 NB. =========================================================

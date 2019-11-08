@@ -119,32 +119,6 @@ toserver 'We now switch to the server to see that it is running again.'
 
 NB. =========================================================
 Lab Section
-You should have just marked the server socket with sdasync.
-
-Now when we send new data to the socket it will run socket_handler'' in the server.
-)
-sdcheck 'this should cause an event' sdsend skclient,0
-
-NB. =========================================================
-Lab Section
-)
-toserver ''
-
-NB. =========================================================
-Lab Section
-Do several sends to the server.
-)
-sdcheck '1111111' sdsend skclient,0
-sdcheck '2222222222222222222' sdsend skclient,0
-sdcheck '333333333333333333333333'sdsend skclient,0
-
-NB. =========================================================
-Lab Section
-)
-toserver ''
-
-NB. =========================================================
-Lab Section
 The server sent us a J variable. Read the data and create the variable here in our task.
 )
 ASSERT skclient e. >0{sdcheck sdselect''

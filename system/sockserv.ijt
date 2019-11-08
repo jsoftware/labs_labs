@@ -1,8 +1,8 @@
 LABTITLE=: 'Socket Driver Server'
 
 NB. =========================================================
-Lab Section Introduction
-There is reference documentation of the Socket Driver in the User Manual available from the J help menu.
+Lab Section Socket Driver Server
+A socket is an endpoint in a bi-directional communication channel. The other end can be in the same task, not usually very interesting, in another task on the same machine, or in a task on another machine that is accessed through a TCP/IP connection.
 )
 PREPARE
 ASSERT=: 3 : 0
@@ -13,18 +13,6 @@ m=. y,((0<#y)#LF2),'Dismiss this dialog, switch to the client session, and conti
 sminfo 'Server';m
 )
 PREPARE
-
-NB. =========================================================
-Lab Section Socket Driver Server
-A socket is an endpoint in a bi-directional communication channel. The other end can be in the same task, not usually very interesting, in another task on the same machine, or in a task on another machine that is accessed through a TCP/IP connection.
-)
-
-NB. =========================================================
-Lab Section
-J provides support for driving sockets under Windows 9x/NT/2000. The Socket Driver is not available on the Macintosh.
-
-This lab assumes that you are able to access sockets.
-)
 
 NB. =========================================================
 Lab Section
@@ -318,54 +306,7 @@ You have marked this end of the socket as non-blocking. This has not changed the
 
 NB. =========================================================
 Lab Section
-You could use sdselect to "poll" for actions to be taken. There is also a parameter to sdselect that gives a timeout value that makes this possible without staying in a tight loop. This form of select waits for a socket that is ready for reading, writing, or has an error and returns when an event occurs. But if there is nothing to do and the timer value has expired, then the sdselect returns so that you do not stay hung in the sdselect.
-)
-
-NB. =========================================================
-Lab Section
-However, we will not explore this use of sdselect because there is a better solution under Windows.
-
-In Windows, sdasync marks a socket as non-blocking AND requests that any change in the state of the socket, such as new data to be read, causes the sentence socket_handler'' to be executed.
-
-This is similar to how window events such as the press of a form button runs sentence wdhandler''.
-
-On other platforms, calling sdasync will cause an error. Nevertheless, the lab can still be continued.
-)
-
-NB. =========================================================
-Lab Section
-socket_handler is not defined so the first thing to do is to give it a definition so we do not just see a value error when it runs.
-)
-socket_handler=:3 : '''socket_handler run : Check sdselect for stuff to do!!!'''
-
-NB. =========================================================
-Lab Section
-Let us mark our server socket with sdasync.
-)
-sdcheck sdasync skserver
-
-NB. =========================================================
-Lab Section
-)
-toclient 'We now switch to the client to have it send us some data.'
-
-NB. =========================================================
-Lab Section
-You should see that the sentence socket_handler'' was run when the client did the sdsend.
-)
-
-NB. =========================================================
-Lab Section
-)
-toclient ''
-
-NB. =========================================================
-Lab Section
-Even though the client did several sends, we got only one notification that there was a change. That is, socket_handler'' was not executed for each send the client did.
-
-socket_handler is called whenever there is NEW information in the sdselect result. The socket_handler should do an sdselect and it should process all available information. If there was any new information that we might not have processed based on that first sdselect, then the socket_handler will be run again.
-
-If the socket_handler takes care of all processing required by an sdselect then it can depend on the next call to socket_handler to take care of any new information.
+This end uses sdselect to "poll" for actions to be taken. There is also a parameter to sdselect that gives a timeout value that makes this possible without staying in a tight loop. This form of select waits for a socket that is ready for reading, writing, or has an error and returns when an event occurs. But if there is nothing to do and the timer value has expired, then the sdselect returns so that you do not stay hung in the sdselect.
 )
 
 NB. =========================================================
@@ -387,7 +328,7 @@ NB. =========================================================
 Lab Section
 In the simple examples here we have worked with small amounts of data and have made the assumption that the data all goes in one send and is all received in one sdrecv.
 
-In a real application a send of a large amount of data may indicate that only part of the data could be sent. The application has to wait (probably for a socket_handler call) until sdselect indicates the socket is ready for the sending of more data before the rest of the data is sent. Similarly, to receive data in general it is necessary to do more than one receive to get all the data that belongs together.
+In a real application a send of a large amount of data may indicate that only part of the data could be sent. The application has to wait until sdselect indicates the socket is ready for the sending of more data before the rest of the data is sent. Similarly, to receive data in general it is necessary to do more than one receive to get all the data that belongs together.
 )
 
 NB. =========================================================

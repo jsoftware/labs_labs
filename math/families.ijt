@@ -30,7 +30,7 @@ In what follows, we will define further families based on the power function, in
 
 Further information on any notation used may  be obtained by pressing the F1 key to display the vocabulary, and using the mouse to click on the desired item.
 
-For example, look up the function ^ used in this section, and the function p. and the operators & and t. to be used in subsequent sections.
+For example, look up the function ^ used in this section, and the function p. and the operator & to be used in subsequent sections.
 )
 
 NB. =========================================================
@@ -52,7 +52,7 @@ x=: 2
 NB. =========================================================
 Lab Section OPERATORS
 
-An operator applies to verbs and nouns, i.e. functions and variables, to produce a function. In what follows, we will use operators to define new families, but will also introduce the Taylor operator (t.) for the purpose of clarifying the definitions and uses of certain functions.
+An operator applies to verbs and nouns, i.e. functions and variables, to produce a function. In what follows, we will use operators to define new families
 
 We begin with some simple examples of operators:
 )
@@ -69,49 +69,6 @@ f g x
 h=: f@g          NB. @ (Atop) applies f atop the result of g
 
 h x
-
-NB. =========================================================
-Lab Section
-
-Taylor operator
-
-The expression f t. produces a function which applied to indices produces corresponding coefficients of a polynomial f. Thus f t. 0 gives the leading (zeroth) coefficient, and f t. 0 1 2 3 4 5 6 7 8 gives the first 9.
-)
-i=: 0 1 2 3 4 5 6 7 8
-
-f t. i
-
-g t. i
-
-(f@g) t. i
-
-(f*g) t. i            NB. Product of polynomials
-
-0 0 9 12 4 3 2 0 0 p. x
-
-(f x)*(g x)
-
-(f*g) x
-
-(f+g) t. i           NB. Sum of polynomials
-
-NB. =========================================================
-Lab Section EXPERIMENTS
-
-To gain deeper understanding, experiment with variations on the expressions used in each section. For example, enter the last expression from the preceding section, that is:
-
-   (f+g) t. i
-
-Then enter the following two sentences, separately:
-
-   i.4
-
-   (f+g) t. i.4
-
-To facilitate accurate re-entry, use the up arrow key to move the cursor up to any desired expression on the screen and then press the ENTER key to bring it down to the entry area for possible revision before again pressing ENTER to execute it.
-
-Revision may be done by using the backspace key and the left and right arrow keys.
-)
 
 NB. =========================================================
 Lab Section
@@ -154,20 +111,12 @@ exp=: e&^
 
 exp i
 
-exp t. i
-
-1 % exp t. i         NB. % denotes division
-
-!i      NB. The coefficients are the reciprocal factorials
-
 NB. =========================================================
 Lab Section
 
 The symbol ^ has been used thus far to denote a function of two arguments. Used monadically (with only one argument) it denotes the function e&^, that is, the exponential. Thus:
 )
 ^ i
-
-^ t. i
 
 NB. =========================================================
 Lab Section
@@ -194,8 +143,6 @@ g i
 
 g -i
 
-g t. i    NB. Non-zero coefficients only in even positions
-
 NB. =========================================================
 Lab Section
 
@@ -218,8 +165,6 @@ op i
 (ep+op) i
 
 f i
-
-ep t. i
 
 NB. =========================================================
 Lab Section
@@ -335,19 +280,7 @@ x=: 0 1 2 3 4 5 6
 
 q x
 
-q t. x
-
 (g%f) x
-
-(g%f) t. x
-
-(0 1&p. % 1 _1 _1&p.) t. i.6 5
-
-NB. =========================================================
-Lab Section
-
-The table of Fibonacci numbers in the preceding section illustrates the fact that the Taylor coefficients of rational functions present surprising and interesting patterns. For further discussion of this see the "CONCRETE MATH COMPANION", available from website www.jsoftware.com.
-)
 
 NB. =========================================================
 Lab Section HYPERGEOMETRICS
@@ -355,8 +288,6 @@ Lab Section HYPERGEOMETRICS
 The hypergeometric operator H. applies to lists to produce a rational function whose limiting value, for a large number of terms, may represent a wide variety of important functions. For example:
 )
 1 H. 1 i.6       NB. The exponential function
-
-1 H. 1 t. i.6
 
 NB. =========================================================
 Lab Section

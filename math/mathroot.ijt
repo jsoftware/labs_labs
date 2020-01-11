@@ -441,67 +441,6 @@ r p. x
 p. r
 
 NB. =========================================================
-Lab Section TAYLOR COEFFICIENTS
-The Taylor coefficient operator t. produces the coefficients
-of a polynomial function to which it is applied. More
-generally, it produces the coefficients of a polynomial
-approximation to other functions, such as the exponential,
-the trigonometric functions, and rational functions,i.e. ratios
-of two polynomials. Thus:
-)
-f=: 3 1 4 2 & p.
-
-'x i'=: 0 1 2 3 4 ; 0 1 2 3 4 5
-
-f x
-
-f t. i
-
-^ t. i
-
-(^ t. i) p. x
-
-^ x
-
-% ^ t. i
-
-^ t: i      NB. weighted Taylor coefficients for exponential
-
-1&o. t: i   NB. sine
-5&o. t: i   NB. hyperbolic sine
-
-NB. =========================================================
-Lab Section
-)
-p=: 4 _3 1 2&p.
-
-q=: _1 5 1&p.
-
-(p+q) t. i.10
-
-(p-q) t. i.10
-
-(q-p) t. i.10
-
-(p*q) t. i.10
-
-(p%q) t. i.10
-
-(q%p) t. i.10
-
-p@q t. i.10
-
-q@p t. i.10
-
-p@>: t. i.10
-
-p@<: t. i.10
-
-(0 1&p. % 1 _1 _1&p.) t. i.15
-
-(% -. - *:) t. i.15
-
-NB. =========================================================
 Lab Section PERMUTATIONS
 Permutations may be represented in a variety of ways, the
 simplest being by a vector of indices. Since the permutation

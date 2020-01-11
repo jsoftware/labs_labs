@@ -37,7 +37,7 @@ if. LF ~: {:cfiled do. cfiled =. cfiled , LF end.
 NB. Cut to lines
 lines =. <;._2 cfiled -. CR
 NB. discard comments
-lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines  
+lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines
 NB. get delimiter for each line
 delims =. (,&';' {~ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+' i.&0@:e.~ deb)@> lines
 NB. get existing keyname;values
@@ -191,7 +191,7 @@ So,
 You can see that a vast number of programs can be written with just a few
 keystrokes.
 )
-NB. The definition of (x u/ y) [where (u) is a verb] says that 
+NB. The definition of (x u/ y) [where (u) is a verb] says that
 NB. it creates a table:
 (0 1 2 3) +/ (0 1 2 3)   NB. Create an addition table
 NB. The same modifier can be applied to a different verb to create a
@@ -326,7 +326,7 @@ Lab Section What Is An Array?
 An ARRAY is a noun that contains a number of VALUES each of which is
 identified by a numerical INDEX.
 
-All the values in an array must have the same TYPE: numeric, 
+All the values in an array must have the same TYPE: numeric,
 character, or boxed.  There are some other exotic types that we
 will not use.
 
@@ -495,7 +495,7 @@ Consider a noun with shape 2 3 4 5.
  k      k-cell      k-cell         Comment
         frame       shape
  ------------------------------------------
- 0      2 3 4 5     (empty)     2x3x4x5 shaped group of atoms 
+ 0      2 3 4 5     (empty)     2x3x4x5 shaped group of atoms
  1      2 3 4       5           2x3x4 array of 5-atom lists
  2      2 3         4 5         2x3 table of 4x5 tables
  3      2           3 4 5       two 3x4x5 arrays
@@ -814,7 +814,7 @@ NB. ============================================================================
 Lab Section Scripts
 So far we have written single sentences.  You can do a lot with a J sentence, but the time will come when you want to write a verb containing several sentences.
 
-You will write your verb in a SCRIPT, a file with extension .ijs.  You can use your favorite editor to edit your script, or you can use J's built-in edit window.  To run a verb in the script, you first LOAD the script, which feeds the lines of the script into the interpreter as if you had typed them from the keyboard.  
+You will write your verb in a SCRIPT, a file with extension .ijs.  You can use your favorite editor to edit your script, or you can use J's built-in edit window.  To run a verb in the script, you first LOAD the script, which feeds the lines of the script into the interpreter as if you had typed them from the keyboard.
 
 We have created a sample script in the edit window.
 
@@ -2037,7 +2037,7 @@ want to be executed.
 
 The most frequent use of ([:) is in the form  (u : [:) or ([: : v).
 
-The conjunction (u : v) creates a verb whose monadic valence is 
+The conjunction (u : v) creates a verb whose monadic valence is
 (u)
 and whose dyadic valence is (v).  In other words, (x (u : v) y) is (x v y), while ((u : v) y) is (u y).
 
@@ -3435,7 +3435,7 @@ NB. ============================================================================
 Lab Section (x {. y) (x }. y) (x |. y) (x u;.1 2 _1 _2 y) can be multidimensional
 The dyads that work on arrays:
 
-(x {. y) (x }. y) (x |. y) (x u;.1 y) (x u;._1 y) (x u;.2 y) (x u;._2 y) 
+(x {. y) (x }. y) (x |. y) (x u;.1 y) (x u;._1 y) (x u;.2 y) (x u;._2 y)
 
 allow the operation to be performed on multiple axes.  This is a
 feature that is often overlooked.
@@ -5670,4 +5670,3 @@ choose the pattern modifier.  It will be interpreted only once, at the
 time it is defined.  A latent modifier is interpreted for every cell it
 is executed on.
 )
-

@@ -172,7 +172,6 @@ u$:~ y
 )
 table=:/~~
   T=:table
-taylor=:t.
 tie=:`
 times=:2 : 'u table * v table'
 trim=:}.
@@ -1544,22 +1543,6 @@ e=: sum diagonal c * table d
 e
 
 ((c with poly * d with poly) ; (e with poly)) 0 1 2 3 4 5
-
-NB. =========================================================
-Lab Section
-
-The coefficients of a product polynomial may also
-be obtained from the Taylor series of the product.
-
-As shown in Concrete Mathematics (Graham, Knuth, and Patashnik),
-the fibonacci numbers can be obtained as the Taylor series
-of a rational function:
-)
-(c with poly * d with poly) taylor 0 1 2 3 NB. First four coefficients
-
-(c with poly * d with poly) taylor int 10
-
-(0 1 with poly % 1 _1 _1 with poly) taylor int 10
 
 NB. =========================================================
 Lab Section

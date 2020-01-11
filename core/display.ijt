@@ -202,25 +202,6 @@ PROD=: 2 : 'm&p. * n&p.' NB. Product operator
 c PROD d y
 
 NB. =========================================================
-Lab Section TAYLOR COEFFICIENTS
-
-The expression f t. applies the Taylor operator t. to the function f to produce a function which, applied to an index, produces the corresponding Taylor coefficient. For example:
-)
-^ t. 0 1 2 3 4 5  NB. Coeffs of approximation to exponential
-
-i=: 0 1 2 3 4 5 6 7 8 9 10
-
-c;d
-
-c&p. t. i
-
-c PROD d t. i
-
-c RAT d t. i  NB. Non-terminating rational
-
-d RAT c t. i
-
-NB. =========================================================
 Lab Section FUNCTIONS OF n ARGUMENTS
 
 Expressions of the form f(a,b,c) and f(a,b,c,d) are commonly used to denote functions of more than two arguments.

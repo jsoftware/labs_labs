@@ -670,66 +670,6 @@ chapter, click on Chapters under the Studio menu.
 )
 
 NB. =========================================================
-Lab Chapter Taylor Series
-NB. =========================================================
-Lab Section Introduction
-A series that can be used as coefficients of a polynomial
-to approximate a function f is called the Taylor series
-for f. Taylor series are provided by the adverb t. as illustrated below.
-)
-^ t. 0  NB. Leading item of Taylor series for the exponential
-^ t.i.7 NB. First seven items of TS for ^
-sin=: 1&o.
-cos=: 2&o.
-
-sin t. i.7
-cos t. i.7
-
-i:3
-(cos t. i.7) p. i:3
-cos i:3
-
-NB. =========================================================
-Lab Section Extended  Precision and Rationals
-The expression ! x: 20 gives factorial 20 to complete
-precision. Moreover, 2 % x:3 gives the result of dividing 2 by
-3 in rational form.
-)
-! 20             NB. Approximation in "scientific notation"
-! x: 20
-
-2%3
-2%x: 3
-
-]a=:% 1 + i. x:6 NB. Reciprocals in rational form
-
-a +/ a           NB. Addition table
-
-NB. =========================================================
-Lab Section
-)
-a
-
-a */ a
-
-a %/ a
-
-^ t. i. x: 10 NB. Taylor series in rational form
-
-NB. =========================================================
-Lab Section Joint display
-A joint display of Taylor series.
-)
->((^t.);(sin t.);(cos t.)) i. x:10
-
-NB. =========================================================
-Lab Section Selecting topics
-This is the end of this chapter. To continue with
-the next chapter, advance as usual. But to select any other
-chapter, click on Chapters under the Studio menu.
-)
-
-NB. =========================================================
 Lab Chapter Binomial Coefficients
 NB. =========================================================
 Lab Section Introduction
@@ -1009,41 +949,6 @@ function applied to x+i gives
 )
 
 NB. =========================================================
-Lab Section
-Similar analysis for other powers gives n*x^(n-1) as the
-derivative of x^n Moreover, the derivative of a multiple of a
-function is the same multiple of the derivative, and the derivative
-of a sum of functions is the sum of their derivatives.
-
-These observations extend the analysis to polynomials, with the simple
-consequence that the derivative of the polynomial c&p. is
-the polynomial d&p., where d=:}. c*i.#c.
-)
-]c=:1&o. t. i. x:8 NB. Taylor series for sin
-
-c*i.#c
-
-]d=:}.c*i.#c       NB. Coefficients for derivative (cos)
-
-d&p. y=:0.1*i:30   NB. Range from about -pi to pi
-
-PLOT y;>(c&p. y);(d&p. y)
-
-NB. =========================================================
-Lab Section
-The foregoing shows that the essential notion of the
-calculus (that is, the derivative) can be treated without
-resort to the general analysis of limits, provided
-that attention is restricted to polynomials or to
-rational functions obtained as the ratio of polynomials.
-
-Since polynomials and rationals can be used to approximate all
-the functions of interest in an introductory course in
-calculus, this is not a serious restriction. This approach to
-the calculus will be pursued in the next chapter.
-)
-
-NB. =========================================================
 Lab Section Selecting topics
 This is the end of this chapter. To continue with
 the next chapter, advance as usual. But to select any other
@@ -1091,23 +996,6 @@ c&p. d._2 x
 c&p. d._1 d._1 x
 
 c&p. d._1 d.1 x
-
-NB. =========================================================
-Lab Section
-The Taylor adverb t. gives the coefficients of
-derivatives and integrals.
-
-From the results shown below it is clear that d._1
-uses a zero constant of integration. The effect of
-any other can be obtained by adding it.
-)
-c&p. d.1 t. i.7
-
-c&p. d.2 t. i.7
-
-c&p. d._1 t. i.7
-
-(4: + c&p. d._1) t. i.7
 
 NB. =========================================================
 Lab Section Selecting topics

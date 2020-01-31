@@ -1,4 +1,4 @@
-NB. Lab: shared library (dll/so/dylib) callback
+NB. Lab: Shared Library - dll/so/dylib callback
 
 0 : 0
 this lab assumes you are already familiar with using cd to call a procedure in a shared library

@@ -1,0 +1,35 @@
+NB. Lab: shared library (dll/so/dylib) callback
+
+0 : 0
+this lab assumes you are already familiar with using cd to call a procedure in a shared library
+
+qsort Clibrary routine calls a callback to compare 2 elements from a list
+
+following is the qsort routine declaration from msdn:
+ void qsort(void *base,size_t number,size_t width,int (__cdecl *compare )(const void *, const void *)
+
+unix declaration is the same
+)
+
+libc=: ' ',~>(-.UNAME-:'Win'){'msvcrt';unxlib'c'
+
+
+qsort=: (libc,'qsort n * x x x')&cd
+
+cb=. cdcb 2 NB. get address of callabck routine with 2 parameters
+
+NB. the callback calls J verb cdcallback with 2 integer parametes
+NB. the parameters are pointers to items in the list that are beging sorted
+NB. return integer scalar from the comparison
+cdcallback=: 3 : 0
+'a b'=: y
+a=. memr a,0,1,JINT
+b=. memr b,0,1,JINT
+r=. ''$a-b
+)
+
+quicksort=: 3 : 0
+>1{qsort y;(#y);8;cb
+)
+
+quicksort 10?10

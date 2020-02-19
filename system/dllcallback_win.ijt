@@ -1,4 +1,4 @@
-LABTITLE=: 'DLL Callback'
+LABTITLE=: 'Shared Library (d) (windows only) - callback
 LABERRORS=: 1
 LABFOCUS=: 0
 

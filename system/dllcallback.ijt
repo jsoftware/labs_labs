@@ -1,35 +1,43 @@
-NB. Lab: Shared Library - dll/so/dylib callback
+NB. Lab: Shared Library (b) (dll/so/dylib) - callback
 
 0 : 0
-this lab assumes you are already familiar with using cd to call a procedure in a shared library
+this lab assumes you are already familiar calling DLLS
+if not, see lab: Shared Library - intro
 
-qsort Clibrary routine calls a callback to compare 2 elements from a list
+qsort C library routine calls a callback to compare 2 elements from a list
 
-following is the qsort routine declaration from msdn:
- void qsort(void *base,size_t number,size_t width,int (__cdecl *compare )(const void *, const void *)
+msdn qsort declaration is:
+void qsort(void *base,size_t number,size_t width,
+ int (__cdecl *compare )(const void *, const void *)
 
-unix declaration is the same
+unix declaration is similar
+
+base    - address of the list to be sorted
+number  - number of items in the list
+width   - width in bytes of an item
+compare - address of callback to do the comparison
 )
 
-libc=: ' ',~>(-.UNAME-:'Win'){'msvcrt';unxlib'c'
+assert IF64 NB. requires J64
 
+[libc=: ' ',~>(-.UNAME-:'Win'){'msvcrt';unxlib'c'
 
 qsort=: (libc,'qsort n * x x x')&cd
 
-cb=. cdcb 2 NB. get address of callabck routine with 2 parameters
+cb2=. cdcb 2 NB. get address of callback routine with 2 parameters
 
-NB. the callback calls J verb cdcallback with 2 integer parametes
-NB. the parameters are pointers to items in the list that are beging sorted
+NB. the callback calls J verb cdcallback with 2 integer parameters
+NB. the parameters are pointers to items in the list to be sorted
 NB. return integer scalar from the comparison
 cdcallback=: 3 : 0
 'a b'=: y
-a=. memr a,0,1,JINT
+a=. memr a,0,1,JINT NB. get integer at address
 b=. memr b,0,1,JINT
-r=. ''$a-b
+r=. ''$a-b          NB. return scalar integer
 )
 
 quicksort=: 3 : 0
->1{qsort y;(#y);8;cb
+>1{qsort y;(#y);8;cb2
 )
 
 quicksort 10?10

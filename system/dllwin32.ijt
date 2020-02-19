@@ -1,4 +1,4 @@
-LABTITLE=: 'DLL: Using System DLLs (file examples)'
+LABTITLE=: 'Shared Library (e) (windows only) - file examples'
 LABERRORS=: 1
 
 NB. =========================================================

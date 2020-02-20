@@ -7,34 +7,30 @@ if not, see lab: Shared Library - intro
 see: https://code.jsoftware.com/wiki/Guides/DLLs/Calling_DLLs
 
 ~addons/labs/labs/examples/dllwrite has prebuilt DLLs for this lab
- windows - test.dll
- linux   - libtestdll.so
- macos   - libtestdll.dylib
+ windows -    dlltest.dll
+ linux   - libdlltest.so
+ macos   - libdlltest.dylib
 )
 
 0 : 0
 you can build for other platforms or play with changes
 
-non-Windows:
+linux/macos:
  $ cd .../addons/labs/labs/examples/dllwrite
  $ make -f makefile_linux (or makefile_macos)
 
 windows:
- create a VS project for a 64 bit DLL and include testdll.c
+ > cd .../addons/labs/labs/examples/dllwrite
+ > build.bat
 )
-
-[csrcfile=: '~addons/labs/labs/examples/dllwrite/dlltest.c'
 
 'prebuilt DLLs are for J64' assert IF64
 
-0 : 0
-open csrcfile and study the routines as they are used in the lab
-the routines use C int type which is 32 bit
-the J declaration for 32 bit integer is i
+[csrcfile=: '~addons/labs/labs/examples/dllwrite/dlltest.c'
 
-a fully qualified DLL filename avoids search complications
-)
+NB. open csrcfile and study the routines as they are used in the lab
 
+NB. a fully qualified DLL filename avoids search complications
 dll=: jpath '~addons/labs/labs/examples/dllwrite/'
 dll=: dll,;(('Linux';'Darwin')i.<UNAME){'libdlltest.so';'libdlltest.dylib';'dlltest.dll'
 [dll=: '"',dll,'" ' NB. "s allow blanks and trailing blank separates from procedure
@@ -44,21 +40,22 @@ procedure incval has no result and no parameters
 look at its definition in csrcfile
 
 CDPROC makes the name visible to callers
- __stdcall is the calling convention and is discussed later
+__stdcall is the calling convention and is discussed later
 
 declaration has information from the C prototype
  C - void incval()
- J - n - no result (0)
+ J - n - no result
 )
 
 (dll,'incval n') cd '' NB. (filename procedure declaration) cd parameters 
 
 0 : 0
-getval has an integer result and no parameters.
+getval has an int result and no parameters
  C - int getval()
- J - i - integer result
-)
+ J - i - int result
 
+C int type is 32 bit and the J declaration for 32 bit is  i
+)
 (dll,'getval i') cd ''
 
 NB. for repeated use, define verbs with their arguments bound to cd
@@ -72,16 +69,19 @@ incval''
 getval''
 
 0 : 0
-inci returns an integer and has an integer parameter
+inci returns an int and has an int parameter
  C - int inci(int i)
  J - i        i
+
+cd result is a list of boxes
+1st is the procedure result and then copies of the parameters
+copies of parameters are returned as they can be modified by the procedure
 )
 inci=: 'inci i i' cdm
 
 0 : 0
-cd result is a list of boxes
-1st is the procedure result and the others are copies of the parameters
-copies of the parameters are returned as they can be modified by the procedure
+BE CAREFUL! - bad declaration or parameter can CRASH or CORRUPT MEMORY
+inci declaration MUST be i i to match its C prototype
 )
 inci 23   NB. scalar is treated as boxed parameter
 inci <123
@@ -94,13 +94,6 @@ incd has a float result and parameter
 incd=: 'incd d d' cdm
 incd 123.5
 
-0 : 0
-An incorrect declaration can CRASH or CORRUPT MEMORY.
-BE CAREFUL WHEN DEVELOPING A PROCEDURE INTERFACE!
-
-inci declaration MUST be i i to match its C prototype
-otherwise you will see crashes
-)
 
 0 : 0
 addi returns the integer sum of two integer parameters
@@ -116,7 +109,7 @@ cder''      NB. 0 - no error
 
 'notafile inci i i' cd <23
 cder''   NB. 1 - file not found
-cderx''  NB. in some cases there is extra info (or not)
+cderx''  NB. extra error info (not always useful)
 
 'incix i i' cdm 23
 cder''   NB. 2 - procedure not found
@@ -161,7 +154,7 @@ addvi 5;5$1   NB. boolean converted to integer
 
 0 : 0
 * declaration is a memory address
-*i means the parameter must be an address of integers
+*i means it must address 32 bit ints
 this helps avoid calling the procedure with bad parameters
 )
 addvi 4;'asdfasdfasdfasdf'
@@ -199,6 +192,8 @@ toint=: _2&ic   NB. convert char data to integer (32 bit)
 tochar=: 2&ic   NB. convert integer data to char (32 bit)
 [a. i. tochar i.4
 
+NB. see: https://code.jsoftware.com/wiki/Guides/DLLs/Memory_Management
+
 [ptr=: mema 16                NB. allocate 16 bytes (4 ints (4 bytes each))
 toint memr ptr,0,16          NB. current contents
 (tochar i.4) memw ptr,0,16   NB. set memory
@@ -207,7 +202,6 @@ toint memr ptr,0,16          NB. new contents
 0 : 0
 if a parameter declared as a pointer is a boxed integer scalar
 then that value is used as the pointer
-
 a NULL pointer is: <0
 )
 4;<<ptr  NB. boxed integer is memory address
@@ -216,7 +210,7 @@ addvi 4;<<ptr  NB. sum 4 integers at ptr
 toint memr ptr,0,16
 incvi 4;<<ptr   NB. increment 4 integers at ptr
 toint memr ptr,0,16
-addvi 4;<<ptr   NB. sum 4 integers at ptr
+addvi 4;<<ptr   NB. sum 4 ints at ptr
 
 NB. using a bad address can crash or corrupt!
 
@@ -281,26 +275,29 @@ a. i. >2{z   NB. incremented shorts
 0 : 0
 > + % options
 
-   (filename procedure [>] [+] [%] declaration) cd parameters
+(filename procedure [>] [+] [%] declaration) cd parameters
 
 > returns just the result (that is, >{.... cd ...
 
-+ selects the alternate (__cdecl) calling convention for Windows
++ selects the alternate (__cdecl) calling convention for windows
 
 % does an fpreset (float state reset) after the procedure call
-some routines leave an invalide state that can cause a J crash
-this should rarely if ever be necessary
+some routines leave an invalid state that can cause a J crash
+rarely if ever necessary as most routines are now well behaved
 )
+addi 23 24
+addix=: 'addi > i i i' cdm
+addix 23 24
 
 0 : 0
-cd supports 2 calling conventions for Windows
-__stdcall is the calling convention for Windows API routines
+cd supports 2 calling conventions for windows
+__stdcall is the calling convention for windows API routines
 __cdecl is the standard C calling convention
 
-default calling convention in Windows is __stdcall
+default calling convention in windows is __stdcall
 to get __cdecl you need to add + to the declaration
 
-non-Windows systems have only only 1 convention and the + has no effect
+non-windows systems have only only 1 convention and + has no effect
 )
 
 'altinci + i i' cdm 23 NB. crash in windows without +
@@ -311,4 +308,5 @@ a new version can't be used until the current one is unloaded
 )
 inci 23  NB. DLL is loaded
 cdf''    NB. unload all DLLs
+NB. build a new version
 inci 23  NB. load and use the new version

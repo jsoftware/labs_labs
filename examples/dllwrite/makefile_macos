@@ -1,5 +1,8 @@
 CFLAGS= -fPIC -O3 -fvisibility=hidden
-FLAGS=  -dynamiclib -o libjd.dylib
+FLAGS=  -dynamiclib -o libdlltest.dylib
 
-libjd.dylib : csv.o csvout.o join.o epoch.o util.o
-	$(CC) csv.o csvout.o join.o epoch.o util.o $(FLAGS)
+libdlltest.dylib : dlltest.o
+	$(CC) dlltest.o $(FLAGS)
+
+clean:
+	rm -f dlltest.o

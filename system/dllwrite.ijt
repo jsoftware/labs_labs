@@ -116,7 +116,7 @@ cder''      NB. 0 - no error
 
 'notafile inci i i' cd <23
 cder''   NB. 1 - file not found
-cderx''  NB. in some cases there is additinal info
+cderx''  NB. in some cases there is extra info (or not)
 
 'incix i i' cdm 23
 cder''   NB. 2 - procedure not found
@@ -174,7 +174,7 @@ declaration of * is analogous to C void*
 )
 addvix=: 'addvi i i *' cdm
 addvix 7;i.7
-addvix 3;'asdfasdfasdf'   NB. address of characters - will be treated as integers
+addvix 3;'asdfasdfasdf'   NB. address of chars - treated as 4 byte ints
 
 0 : 0
 a procedure can modify data addressed by a pointer

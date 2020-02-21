@@ -94,7 +94,6 @@ incd has a float result and parameter
 incd=: 'incd d d' cdm
 incd 123.5
 
-
 0 : 0
 addi returns the int sum of two int parameters
  C - int addi(int x, int y)
@@ -115,6 +114,7 @@ addi 2;<.3+2^35 NB. perhaps a surprising result - 64 bit -> 32 bit
 NB. cder returns information about the last cd: error number and additional info
 inci <23
 cder''      NB. 0 - no error
+NB. see Error Messages at: https://code.jsoftware.com/wiki/Guides/DLLs
 
 'notafile inci i i' cd <23
 cder''   NB. 1 - file not found
@@ -201,7 +201,7 @@ toint=: _2&ic   NB. convert char data to integer (32 bit)
 tochar=: 2&ic   NB. convert integer data to char (32 bit)
 [a. i. tochar i.4
 
-NB. see: https://code.jsoftware.com/wiki/Guides/DLLs/Memory_Management
+NB. see Memory Management link at: https://code.jsoftware.com/wiki/Guides/DLLs
 
 [ptr=: mema 16                NB. allocate 16 bytes (4 ints (4 bytes each))
 toint memr ptr,0,16          NB. current contents
@@ -282,11 +282,9 @@ z=: incvs 2;shorts
 a. i. >2{z   NB. incremented shorts
 
 0 : 0
-> + % options
-
 (filename procedure [>] [+] [%] declaration) cd parameters
 
-> returns just the result (that is, >{.... cd ...
+> returns just the result
 
 + selects the alternate (__cdecl) calling convention for windows
 

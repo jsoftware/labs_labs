@@ -96,12 +96,21 @@ incd 123.5
 
 
 0 : 0
-addi returns the integer sum of two integer parameters
+addi returns the int sum of two int parameters
  C - int addi(int x, int y)
- J - i        i      i - integer result and 2 integer parameters
+ J - i        i      i - intr result and 2 int parameters
 )
 addi=: 'addi i i i' cdm
 addi 23;24
+
+0 : 0
+the C routine is working with 32 bit ints
+the parameter starts out in J as a 64 bit integer
+it will be cast to int (that is, info is discarded)
+)
+
+[3+<.2^35
+addi 2;<.3+2^35 NB. perhaps a surprising result - 64 bit -> 32 bit
 
 NB. cder returns information about the last cd: error number and additional info
 inci <23
@@ -128,9 +137,9 @@ addi 123;23.5
 cder''   NB. 6 1 - 2nd parameter is wrong type
 
 datatype p=: 23.5 - 19.5
-addi 2;p  NB. p is treated as integer 4
+addi 2;p  NB. p is treated as int 4
 
-addi 2;1 NB. boolean treated as an integer
+addi 2;1 NB. boolean treated as an int
 
 0 : 0
 incc has a character result and parameter.
@@ -142,15 +151,15 @@ incc 'b'
 incc 'g'
 
 0 : 0
-addvi returns the integer sum of a list
-1st parameter is count of the integers in the list
-2nd paramter is pointer to a list of integers
+addvi returns the int sum of a list
+1st parameter is count of the ints in the list
+2nd paramter is pointer to a list of ints
  C - int addvi(int n, int* p)
  J - i         i      *i
 )
 addvi=: 'addvi i i *i' cdm
 addvi 7;i.7
-addvi 5;5$1   NB. boolean converted to integer
+addvi 5;5$1   NB. boolean converted to int
 
 0 : 0
 * declaration is a memory address
@@ -172,8 +181,8 @@ addvix 3;'asdfasdfasdf'   NB. address of chars - treated as 4 byte ints
 0 : 0
 a procedure can modify data addressed by a pointer
 incvi returns no result
-parameters are an integer count and a pointer to a list of integers
-the procedure increments each integer in the list
+parameters are an int count and a pointer to a list of ints
+the procedure increments each int in the list
 
  C - void incvi(int n, int* p)
  J - n          i      *i
@@ -205,10 +214,10 @@ then that value is used as the pointer
 a NULL pointer is: <0
 )
 4;<<ptr  NB. boxed integer is memory address
-addvi 4;<<ptr  NB. sum 4 integers at ptr
+addvi 4;<<ptr  NB. sum 4 ints at ptr
 
 toint memr ptr,0,16
-incvi 4;<<ptr   NB. increment 4 integers at ptr
+incvi 4;<<ptr   NB. increment 4 ints at ptr
 toint memr ptr,0,16
 addvi 4;<<ptr   NB. sum 4 ints at ptr
 
@@ -252,7 +261,7 @@ types c x d and j are respectively: 1 8 8 and 16 bytes
 J64 x type is 64 bit, type i is 32 bit, and type l is 64
 J32 x type is 32 bit, type i is 32 bit, and type l is invalid
 
-type s (2 byte short integer) and f (4 byte float)
+type s (2 byte short int) and f (4 byte float)
 these are not native J types and extra work is involved in using them
 result of s or f is converted to x or d
 an s or f parameter is converted from x or d for the call

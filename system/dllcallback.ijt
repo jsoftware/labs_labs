@@ -3,7 +3,22 @@ NB. Lab: Shared Library (b) (dll/so/dylib) - callback
 0 : 0
 this lab assumes you are already familiar calling DLLS
 if not, see lab: Shared Library - intro
+)
 
+0 : 0
+A dll can callback to the caller
+
+  J calls dll       ->
+                        dll runs
+                    <-  dll callback to J
+  J callback runs
+  J returns         ->
+                        dll runs
+                    <-  dll returns to J
+  J runs
+)
+
+0 : 0
 qsort C library routine calls a callback to compare 2 elements from a list
 
 msdn qsort declaration is:

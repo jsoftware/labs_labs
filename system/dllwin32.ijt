@@ -1,21 +1,18 @@
-LABTITLE=: 'Shared Library (e) (windows only) - file examples'
-LABERRORS=: 1
+NB. Lab:'Shared Library (e) (windows only) - file examples'
 
-NB. =========================================================
-Lab Section overview
-This lab shows how to use system DLL WIN32 API procedures.
+0 : 0
+this lab assumes you are already familiar with DLLs
+if not, see lab: Shared Library (b) (dll/so/dylib) - intro
 
-It helps if you are familiar with calling DLL procedures. See lab "DLL: Writing and Using A DLL" and User Manual chapter "DLLs and Memory Management".
+this lab assumes you know some C and have an overview of the WIN32 API
 
-This lab assumes you know some C and have an overview of the WIN32 API.
-
-The lab uses file procedures CreateFile, WriteFile, ReadFile etc. from system DLL kernel32.
+the lab uses file procedures CreateFile, WriteFile, ReadFile etc. from system DLL kernel32
 )
-require 'dll'         NB. dll utils
-require 'winapi'      NB. API utils
 
-NB. =========================================================
-Lab Section
+assert UNAME-:'Win' NB. windows only
+assert IF64 NB. requires J64
+
+0 : 0
 A DLL file contains procedures (functions) you can call.
 
 System DLLs provide system services.
@@ -25,15 +22,13 @@ kernel32.dll provides core services, user32.dll provides user services, and gdi3
 This lab does not give an overview of the API or services provided.
 )
 
-NB. =========================================================
-Lab Section
+0 : 0
 There are many books that document the Win32 API and if you are going to use it you will need one.
 
 It helps if you can use an API reference during the lab, but there is enough summary information included to get by.
 )
 
-NB. =========================================================
-Lab Section
+0 : 0
 cd (15!:0) calls a DLL procedure.
 
    'filename procedure declaration' cd parameters
@@ -43,8 +38,7 @@ The filename is the DLL that contains the procedure. A suffix of .dll is assumed
 The declaration is a simple, language neutral, specification of the procedure result and parameter types.
 )
 
-NB. =========================================================
-Lab Section
+0 : 0
 A bad declaration or parameters can CRASH or CORRUPT MEMORY.
 
 cd checks declaration and parameter types as best it can.
@@ -54,8 +48,8 @@ A scalar declaration (i) must have a scalar parameter.
 A pointer declaration (*i) must have a non-scalar parameter, or a boxed scalar, used as a memory address.
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 J provides file functions with the 1!:x family. These functions are similar to the standard C library functions and are the same across all platforms.
 
 The 1!:x functions map to C library functions which in turn map to Win32 API functions. They are an indirect use of the API functions.
@@ -63,8 +57,8 @@ The 1!:x functions map to C library functions which in turn map to Win32 API fun
 Let us use some API file procedures directly.
 )
 
-NB. =========================================================
-Lab Section CreateFile
+
+0 : 0 CreateFile
 The CreateFile procedure creates a file handle. A file handle is the kernel object used to access a file.
 
 The next section is a very condensed/edited version of the CreateFile documentation.
@@ -72,8 +66,8 @@ The next section is a very condensed/edited version of the CreateFile documentat
 It starts with the C prototype for the procedure.
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 HANDLE CreateFile
   LPCTSTR lpFileName,           // pointer to name
   DWORD dwDesiredAccess,        // access
@@ -91,8 +85,8 @@ HANDLE CreateFile
 Result -1 for failure. CloseHandle closes CreateFile handle.
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 You need to convert the C prototype to a J declaration. To do this you need to know that, for example, C HANDLE and DWORD types are both 32 bit integers and are J i declarations.
 
 Most prototypes have been converted and are in win32api.dat.
@@ -100,8 +94,8 @@ Most prototypes have been converted and are in win32api.dat.
 WARNING: win32api.dat is incomplete and may have errors. In particular, some C pointer types may not be declared as pointers. Always check the declaration against the C prototype.
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 Adverb win32api returns a verb with win32api.dat information bound with cd (15!:0).
 
 Procedures with character parameters come in two flavors: ...A for 8 bit chars and ...W for 16 bit (wide) chars. The win32api adverb assumes A. You think of CreateFile as the API procedure, but it does not exist. Instead there are CreateFileA and CreateFileW.
@@ -109,8 +103,8 @@ Procedures with character parameters come in two flavors: ...A for 8 bit chars a
 CreateFile=: 'CreateFile'win32api
 CreateFile
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 CreateFile declaration: i *c i i * i i i
  result: HANDLE - i
  parameters:
@@ -122,8 +116,8 @@ security is unused and must be the NULL pointer. template is unused and must be 
 In our examples we use access GENERIC_READ+GENERIC_READ, share 0, and attributes 0.
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 Define createfile with name and disp arguments and use defaults for the others. The createfile result is the procedure result which is a file handle or _1.
 
 NULL pointer for security is (<0) .
@@ -132,8 +126,8 @@ createfile=: 4 : 0   NB. name createfile disp
 >{.CreateFile x;(GENERIC_READ+GENERIC_WRITE);0;(<0);y;0;0
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 API procedures use lots of named integer constants.
 
 winset defines Win32 API constants.
@@ -144,15 +138,15 @@ winset 'CREATE_NEW CREATE_ALWAYS OPEN_NEW OPEN_EXISTING TRUNCATE_EXISTING'
 
 CREATE_NEW
 
-NB. =========================================================
-Lab Section CloseHandle
+
+0 : 0 CloseHandle
 When you are finished with a handle you should close it.
 )
 CloseHandle=: 'CloseHandle'win32api
 CloseHandle
 
-NB. =========================================================
-Lab Section DeleteFile
+
+0 : 0 DeleteFile
 You will want to be able to delete files.
 )
 DeleteFile=: 'DeleteFile'win32api
@@ -161,8 +155,8 @@ DeleteFile
 NB. delete so subsequent CREATE_NEW will work
 DeleteFile <jpath '~user\test.jnk'
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 The 1st element of the cd result is the procedure result.
 
 Many API functions return an integer result where 0 is failure and non-0 is success. In most cases GetLastError has extra information.
@@ -172,29 +166,29 @@ cderx returns the GetLastError information.
 DeleteFile <jpath '~user\test.jnk'
 cderx''
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 Often you only want the scalar result of the procedure. win32apir is similar to win32api, except that its result is just the procedure result.
 )
 DeleteFileR=: 'DeleteFile'win32apir
 DeleteFileR <jpath '~user\test.jnk'  NB. 0 result is failure
 
-NB. =========================================================
-Lab Section create a new file
+
+0 : 0 create a new file
 Create a new file called "user\test.jnk"
 )
 [fh=: (jpath '~user\test.jnk') createfile CREATE_NEW
 NB. fh is the handle - _1 for failure
 
-NB. =========================================================
-Lab Section WriteFile
+
+0 : 0 WriteFile
 Define WriteFile to write data to a file.
 )
 WriteFile=: 'WriteFile'win32api
 WriteFile
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 Compare C prototype with the declaration.
 
  BOOL HANDLE LPCVOID DWORD LPDWORD LPOVERLAPPED
@@ -210,8 +204,8 @@ BOOL WriteFile
   LPOVERLAPPED lpOverlapped
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 Define writefile for simple use of WriteFile.
 
 The lpBytesWritten parameter is a pointer to an integer set as the number of bytes written. Its parameter is ,0.
@@ -222,16 +216,16 @@ writefile=: 4 : 0 NB. handle writefile string
 WriteFile x;y;(#y);(,0);<<0
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 )
 [z=:fh writefile 'testing 1 2 3'
 >{.z   NB. procedure result - 0 failure
 >3{z   NB. bytes to write
 >4{z   NB. bytes written (set by procedure)
 
-NB. =========================================================
-Lab Section GetFileSize
+
+0 : 0 GetFileSize
 The GetFileSize 2nd parameter is a pointer for the high-order integer for files that are greater than 4GB in size.
 
 Define getfilesize to return the file size.
@@ -241,8 +235,8 @@ GetFileSize
 getfilesize=: 3 : '>{.GetFileSize y;<<0'
 getfilesize fh
 
-NB. =========================================================
-Lab Section SetFilePointer
+
+0 : 0 SetFilePointer
 WriteFile and ReadFile both access bytes at the file pointer in the file and update the file pointer when they finish. We need to be able to set the file pointer.
 )
 winset 'FILE_BEGIN FILE_CURRENT FILE_END'
@@ -250,15 +244,15 @@ SetFilePointer=: 'SetFilePointer'win32api
 SetFilePointer
 setfilepointer=:4 : '>{.SetFilePointer x;y;(<0);FILE_BEGIN'
 
-NB. =========================================================
-Lab Section ReadFile
+
+0 : 0 ReadFile
 ReadFile parameters are similar to WriteFile.
 )
 ReadFile=: 'ReadFile'win32api
 ReadFile
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 readfile uses ReadFile, setfilepointer, and getfilesize to read the entire file.
 )
 readfile=: 3 : 0 NB. readfile filehandle
@@ -269,44 +263,44 @@ count=.getfilesize y
 
 readfile fh
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 )
 fh setfilepointer 3
 fh writefile '   abcdef and more data'
 readfile fh
 
-NB. =========================================================
-Lab Section CloseHandle
+
+0 : 0 CloseHandle
 )
 CloseHandle fh
 
-NB. =========================================================
-Lab Section CreateDirectory
+
+0 : 0 CreateDirectory
 )
 CreateDirectory=: 'CreateDirectory'win32api
 CreateDirectory
 createdirectory=: 3 : 'CreateDirectory y;<<0'
 createdirectory jpath '~user\junklab'   NB. 0 is failure
 
-NB. =========================================================
-Lab Section MoveFile
+
+0 : 0 MoveFile
 MoveFile renames an existing file or a directory.
  BOOL MoveFile(LPCTSTR lpExistingName,LPCTSTR lpNewName);
 
 lpNewName - new name of a file or directory. The new name must not already exist. A new file may be on a different file system or drive. A new directory must be on the same drive.
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 )
 MoveFile=: 'MoveFile'win32api
 MoveFile
 MoveFile (jpath '~user\test.jnk');jpath '~user\junklab\test.jnk'
 NB. check to see that the file has moved
 
-NB. =========================================================
-Lab Section CopyFile
+
+0 : 0 CopyFile
 CopyFile copies an existing file to a new file.
  BOOL CopyFile(
   LPCTSTR lpExistingFileName,
@@ -316,22 +310,22 @@ CopyFile copies an existing file to a new file.
 bFailIfExists - If 1 and new file exists, function fails. If 0 and new file exists, function overwrites it.
 )
 
-NB. =========================================================
-Lab Section
+
+0 : 0
 )
 CopyFile=: 'CopyFile'win32api
 CopyFile
 CopyFile (jpath '~user\junklab\test.jnk');(jpath '~user\junklab\xxx.jnk');0
 NB. check to see that the file has been copied
 
-NB. =========================================================
-Lab Section delete files
+
+0 : 0 delete files
 )
 DeleteFile <jpath '~user\junklab\test.jnk'
 DeleteFile <jpath '~user\junklab\xxx.jnk'
 
-NB. =========================================================
-Lab Section remove directory
+
+0 : 0 remove directory
 )
 RemoveDirectory=: 'RemoveDirectory'win32api
 RemoveDirectory

@@ -1,73 +1,60 @@
 NB. Lab:'Shared Library (e) (windows only) - file examples'
 
 0 : 0
-this lab assumes you are already familiar with DLLs
+this lab assumes you are familiar with DLLs
 if not, see lab: Shared Library (b) (dll/so/dylib) - intro
 
 this lab assumes you know some C and have an overview of the WIN32 API
 
-the lab uses file procedures CreateFile, WriteFile, ReadFile etc. from system DLL kernel32
+the lab uses procedures CreateFile, WriteFile, ReadFile etc. from DLL kernel32
+
+internet search "msdn CreateFile" for CreateFile info
+
+routines often require constants declared in C header files
+internet search "msdn XXXX" can help track down the value to use for XXXX
 )
 
 assert UNAME-:'Win' NB. windows only
-assert IF64 NB. requires J64
+assert IF64         NB. requires J64
 
 0 : 0
-A DLL file contains procedures (functions) you can call.
+a bad declaration or parameters can CRASH or CORRUPT MEMORY
 
-System DLLs provide system services.
+cd checks declaration and parameter types as best it can
 
-kernel32.dll provides core services, user32.dll provides user services, and gdi32.dll provides GDI, i.e. graphical device interface, services. There are many other system DLLs.
+scalar declaration (x) must have a scalar parameter
 
-This lab does not give an overview of the API or services provided.
+a pointer declaration (*x) must have a non-scalar parameter,
+or a boxed scalar(used as a memory address)
 )
 
 0 : 0
-There are many books that document the Win32 API and if you are going to use it you will need one.
+J provides file functions with the 1!:x family
+that are wrappers for standard C library file functions
+and are similar on all platforms
 
-It helps if you can use an API reference during the lab, but there is enough summary information included to get by.
+in addition to the C library file functions, windows has additional facilities
 )
 
 0 : 0
-cd (15!:0) calls a DLL procedure.
-
-   'filename procedure declaration' cd parameters
-
-The filename is the DLL that contains the procedure. A suffix of .dll is assumed. Do not provide a path for system DLLs.
-
-The declaration is a simple, language neutral, specification of the procedure result and parameter types.
+some procedures with character parameters come in two flavors:
+...A for 8 bit chars and ...W for 16 bit (wide) chars
 )
+deletefile=: 'kernel32 DeleteFileA > x *c'&cd
+closehandle=: 'kernel32 CloseHandle > x x'&cd NB. close file handle
+
+cleanup=: 3 : 0
+if. 0=nc<'fh' do. closehandle fh end.
+erase<'fh'
+ferase'~temp/test.jnk'
+)
+cleanup'' NB. clean state from earlier runs
 
 0 : 0
-A bad declaration or parameters can CRASH or CORRUPT MEMORY.
+CreateFile creates a file handle - a kernel object used to access a file
 
-cd checks declaration and parameter types as best it can.
+CreateFile prototype is:
 
-A scalar declaration (i) must have a scalar parameter.
-
-A pointer declaration (*i) must have a non-scalar parameter, or a boxed scalar, used as a memory address.
-)
-
-
-0 : 0
-J provides file functions with the 1!:x family. These functions are similar to the standard C library functions and are the same across all platforms.
-
-The 1!:x functions map to C library functions which in turn map to Win32 API functions. They are an indirect use of the API functions.
-
-Let us use some API file procedures directly.
-)
-
-
-0 : 0 CreateFile
-The CreateFile procedure creates a file handle. A file handle is the kernel object used to access a file.
-
-The next section is a very condensed/edited version of the CreateFile documentation.
-
-It starts with the C prototype for the procedure.
-)
-
-
-0 : 0
 HANDLE CreateFile
   LPCTSTR lpFileName,           // pointer to name
   DWORD dwDesiredAccess,        // access
@@ -82,251 +69,120 @@ HANDLE CreateFile
   dwDisposition   - CREATE_NEW  CREATE_ALWAYS  OPEN_EXISTING
                     OPEN_ALWAYS  TRUNCATE_EXISTING
 
-Result -1 for failure. CloseHandle closes CreateFile handle.
+result -1 for failure
 )
-
 
 0 : 0
-You need to convert the C prototype to a J declaration. To do this you need to know that, for example, C HANDLE and DWORD types are both 32 bit integers and are J i declarations.
-
-Most prototypes have been converted and are in win32api.dat.
-
-WARNING: win32api.dat is incomplete and may have errors. In particular, some C pointer types may not be declared as pointers. Always check the declaration against the C prototype.
+you need to convert the C prototype to a J declaration
+to do this you need to know that, for example, HANDLE and DWORD types
+have declarations x
+most C parameters can be declared as x or *x
 )
-
 
 0 : 0
-Adverb win32api returns a verb with win32api.dat information bound with cd (15!:0).
+result name access share security disp attributes template
+x      *c   x      x     *        x    x          x
 
-Procedures with character parameters come in two flavors: ...A for 8 bit chars and ...W for 16 bit (wide) chars. The win32api adverb assumes A. You think of CreateFile as the API procedure, but it does not exist. Instead there are CreateFileA and CreateFileW.
+security is unused and must be the NULL pointer (<<0)
+template is unused and must be 0
+
+in our examples we use access GENERIC_READ+GENERIC_READ, share 0, and attributes 0
 )
-CreateFile=: 'CreateFile'win32api
-CreateFile
 
+createfile=: 4 : 0
+'kernel32 CreateFileA > x *c x x * x x x'cd y;(GENERIC_READ+GENERIC_WRITE);0;(<0);x;0;0
+)
+
+GENERIC_READ=: _2147483648
+GENERIC_WRITE=: 1073741824
+CREATE_NEW=: 1
+
+[fh=: CREATE_NEW createfile jpath '~temp/test.jnk' NB. fh is handle - _1 for failure
 
 0 : 0
-CreateFile declaration: i *c i i * i i i
- result: HANDLE - i
- parameters:
-  name access share security disp attributes template
-  *c   i      i     *        i    i          i
+The 1st element of the cd result is the procedure result
 
-security is unused and must be the NULL pointer. template is unused and must be 0.
-
-In our examples we use access GENERIC_READ+GENERIC_READ, share 0, and attributes 0.
-)
-
-
-0 : 0
-Define createfile with name and disp arguments and use defaults for the others. The createfile result is the procedure result which is a file handle or _1.
-
-NULL pointer for security is (<0) .
-)
-createfile=: 4 : 0   NB. name createfile disp
->{.CreateFile x;(GENERIC_READ+GENERIC_WRITE);0;(<0);y;0;0
-)
-
-
-0 : 0
-API procedures use lots of named integer constants.
-
-winset defines Win32 API constants.
-)
-winset 'GENERIC_READ GENERIC_WRITE'
-winset 'FILE_SHARE_READ FILE_SHARE_WRITE'
-winset 'CREATE_NEW CREATE_ALWAYS OPEN_NEW OPEN_EXISTING TRUNCATE_EXISTING'
-
-CREATE_NEW
-
-
-0 : 0 CloseHandle
-When you are finished with a handle you should close it.
-)
-CloseHandle=: 'CloseHandle'win32api
-CloseHandle
-
-
-0 : 0 DeleteFile
-You will want to be able to delete files.
-)
-DeleteFile=: 'DeleteFile'win32api
-DeleteFile
-
-NB. delete so subsequent CREATE_NEW will work
-DeleteFile <jpath '~user\test.jnk'
-
-
-0 : 0
-The 1st element of the cd result is the procedure result.
-
-Many API functions return an integer result where 0 is failure and non-0 is success. In most cases GetLastError has extra information.
+Many API functions return an integer result where 0 is failure and non-0 is success
+in most cases GetLastError has extra information
 
 cderx returns the GetLastError information.
 )
-DeleteFile <jpath '~user\test.jnk'
+deletefile <jpath '~temp/test.jnk'
 cderx''
-
-
-0 : 0
-Often you only want the scalar result of the procedure. win32apir is similar to win32api, except that its result is just the procedure result.
-)
-DeleteFileR=: 'DeleteFile'win32apir
-DeleteFileR <jpath '~user\test.jnk'  NB. 0 result is failure
-
-
-0 : 0 create a new file
-Create a new file called "user\test.jnk"
-)
-[fh=: (jpath '~user\test.jnk') createfile CREATE_NEW
-NB. fh is the handle - _1 for failure
-
-
-0 : 0 WriteFile
-Define WriteFile to write data to a file.
-)
-WriteFile=: 'WriteFile'win32api
-WriteFile
-
+closehandle fh
+deletefile <jpath '~temp/test.jnk'
+[fh=: CREATE_NEW createfile jpath '~temp/test.jnk' NB. fh is handle - _1 for failure
 
 0 : 0
-Compare C prototype with the declaration.
-
- BOOL HANDLE LPCVOID DWORD LPDWORD LPOVERLAPPED
- i    i      *       i     *i      *
-
-LP... (LongPointer) is a pointer type.
-
 BOOL WriteFile
   HANDLE hFile,           // file handle
   LPCVOID lpBuffer,       // pointer to data to write
   DWORD nBytesToWrite,    // bytes to write
   LPDWORD lpBytesWritten, // pointer to integer
   LPOVERLAPPED lpOverlapped
-)
 
-
-0 : 0
-Define writefile for simple use of WriteFile.
-
-The lpBytesWritten parameter is a pointer to an integer set as the number of bytes written. Its parameter is ,0.
-
-The lpOverlapped parameter should be the NULL pointer.
+lpBytesWritten parameter is a pointer to an integer set as the number of bytes written. Its parameter is ,0.
+lpOverlapped parameter should be the NULL pointer.
 )
 writefile=: 4 : 0 NB. handle writefile string
-WriteFile x;y;(#y);(,0);<<0
+'kernel32 WriteFile > x x * x *x *' cd x;y;(#y);(,0);<<0
 )
 
+fh writefile 'testing 1 2 3'
 
-0 : 0
+getfilesize=: 3 : 0
+''$>{:'kernel32 GetFileSizeEx x x *x'cd y;,0 NB. want a scalar result
 )
-[z=:fh writefile 'testing 1 2 3'
->{.z   NB. procedure result - 0 failure
->3{z   NB. bytes to write
->4{z   NB. bytes written (set by procedure)
-
-
-0 : 0 GetFileSize
-The GetFileSize 2nd parameter is a pointer for the high-order integer for files that are greater than 4GB in size.
-
-Define getfilesize to return the file size.
-)
-GetFileSize=: 'GetFileSize'win32api
-GetFileSize
-getfilesize=: 3 : '>{.GetFileSize y;<<0'
 getfilesize fh
 
-
-0 : 0 SetFilePointer
-WriteFile and ReadFile both access bytes at the file pointer in the file and update the file pointer when they finish. We need to be able to set the file pointer.
-)
-winset 'FILE_BEGIN FILE_CURRENT FILE_END'
-SetFilePointer=: 'SetFilePointer'win32api
-SetFilePointer
-setfilepointer=:4 : '>{.SetFilePointer x;y;(<0);FILE_BEGIN'
-
-
-0 : 0 ReadFile
-ReadFile parameters are similar to WriteFile.
-)
-ReadFile=: 'ReadFile'win32api
-ReadFile
-
-
 0 : 0
-readfile uses ReadFile, setfilepointer, and getfilesize to read the entire file.
+WriteFile and ReadFile both access bytes at the file pointer in the file
+and update the file pointer when they finish
 )
+
+FILE_BEGIN=:   0
+FILE_CURRENT=: 1
+FILE_END=:     2
+
+setfilepointer=: 4 : 0
+'kernel32 SetFilePointerEx > x x x *x x'cd x;y;(,0);FILE_BEGIN
+)
+
 readfile=: 3 : 0 NB. readfile filehandle
 y setfilepointer 0
 count=.getfilesize y
->2{ReadFile y;(count#' ');count;(,0);<<0
+;2{'kernel32 ReadFile x x * x *x *'cd y;(count#' ');count;(,0);<<0
 )
-
 readfile fh
 
-
-0 : 0
-)
 fh setfilepointer 3
 fh writefile '   abcdef and more data'
 readfile fh
+closehandle fh
 
-
-0 : 0 CloseHandle
+createdirectory=: 3 : 0
+'kernel32 CreateDirectoryA > x *c *'cd y;<<0
 )
-CloseHandle fh
+createdirectory jpath '~temp/junklab'   NB. 0 is failure
 
-
-0 : 0 CreateDirectory
-)
-CreateDirectory=: 'CreateDirectory'win32api
-CreateDirectory
-createdirectory=: 3 : 'CreateDirectory y;<<0'
-createdirectory jpath '~user\junklab'   NB. 0 is failure
-
-
-0 : 0 MoveFile
-MoveFile renames an existing file or a directory.
- BOOL MoveFile(LPCTSTR lpExistingName,LPCTSTR lpNewName);
-
-lpNewName - new name of a file or directory. The new name must not already exist. A new file may be on a different file system or drive. A new directory must be on the same drive.
-)
-
+NB. BOOL MoveFile(LPCTSTR lpExistingName,LPCTSTR lpNewName);
+MoveFile=: 'kernel32 MoveFileA > x *c *c'&cd
+MoveFile (jpath '~temp/test.jnk');jpath '~temp/junklab/test.jnk'
 
 0 : 0
-)
-MoveFile=: 'MoveFile'win32api
-MoveFile
-MoveFile (jpath '~user\test.jnk');jpath '~user\junklab\test.jnk'
-NB. check to see that the file has moved
-
-
-0 : 0 CopyFile
 CopyFile copies an existing file to a new file.
  BOOL CopyFile(
   LPCTSTR lpExistingFileName,
   LPCTSTR lpNewFileName,
   BOOL  bFailIfExists);
 
-bFailIfExists - If 1 and new file exists, function fails. If 0 and new file exists, function overwrites it.
+bFailIfExists - if 1 and new file exists, function fails
 )
+CopyFile=: 'kernel32 CopyFileA > x *c *c i'&cd
+CopyFile (jpath '~temp\junklab\test.jnk');(jpath '~temp/junklab/xxx.jnk');0
 
+deletefile <jpath '~temp/junklab/test.jnk'
+deletefile <jpath '~temp/junklab/xxx.jnk'
 
-0 : 0
-)
-CopyFile=: 'CopyFile'win32api
-CopyFile
-CopyFile (jpath '~user\junklab\test.jnk');(jpath '~user\junklab\xxx.jnk');0
-NB. check to see that the file has been copied
-
-
-0 : 0 delete files
-)
-DeleteFile <jpath '~user\junklab\test.jnk'
-DeleteFile <jpath '~user\junklab\xxx.jnk'
-
-
-0 : 0 remove directory
-)
-RemoveDirectory=: 'RemoveDirectory'win32api
-RemoveDirectory
-RemoveDirectory <jpath '~user\junklab'
+RemoveDirectory=: 'kernel32 RemoveDirectoryA >x *c'&cd
+RemoveDirectory <jpath '~temp/junklab'

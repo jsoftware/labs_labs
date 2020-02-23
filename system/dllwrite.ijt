@@ -44,7 +44,7 @@ __stdcall is the calling convention and is discussed later
 
 declaration has information from the C prototype
  C - void incval()
- J - n - no result
+ J - n - no result and no parameters
 )
 
 (dll,'incval n') cd '' NB. (filename procedure declaration) cd parameters 
@@ -52,7 +52,7 @@ declaration has information from the C prototype
 0 : 0
 getval has an int result and no parameters
  C - int getval()
- J - i - int result
+ J - i - int result and no parameters
 
 C int type is 32 bit and the J declaration for 32 bit is  i
 )
@@ -97,7 +97,7 @@ incd 123.5
 0 : 0
 addi returns the int sum of two int parameters
  C - int addi(int x, int y)
- J - i        i      i - intr result and 2 int parameters
+ J - i        i      i - int result and 2 int parameters
 )
 addi=: 'addi i i i' cdm
 addi 23;24
@@ -122,7 +122,6 @@ cderx''  NB. extra error info (not always useful)
 
 'incix i i' cdm 23
 cder''   NB. 2 - procedure not found
-cderx''
 
 inci 12
 inci ''
@@ -220,8 +219,6 @@ toint memr ptr,0,16
 incvi 4;<<ptr   NB. increment 4 ints at ptr
 toint memr ptr,0,16
 addvi 4;<<ptr   NB. sum 4 ints at ptr
-
-NB. using a bad address can crash or corrupt!
 
 0 : 0
 getdata returns the string "static data"

@@ -12,10 +12,26 @@ A dll can callback to the caller
                         dll runs
                     <-  dll callback to J
   J callback runs
+  verb cdcallback
   J returns         ->
                         dll runs
                     <-  dll returns to J
   J runs
+)
+
+0 : 0
+dll routine callback calls compiled C code in JE
+the compiled JE code calls the J verb cdballback
+with y parameter that is list of integers parameters
+
+although there are many different types of callback parameters
+they are all passed at the lowest level as integers
+bit, byte, char, wide char, short integer, integer, and float
+are all passed as 64 bit values
+everything else is passed as a pointer and can be treated as 64 bit
+doesn't matter what they are, just just how many of them there are
+
+different compiled C code in JE handles differing number of parameters 
 )
 
 0 : 0
@@ -39,7 +55,7 @@ assert IF64 NB. requires J64
 
 qsort=: (libc,'qsort n * x x x')&cd
 
-cb2=. cdcb 2 NB. get address of callback routine with 2 parameters
+cb2=. cdcb 2 NB. get address of callback code with 2 parameters
 
 NB. the callback calls J verb cdcallback with 2 integer parameters
 NB. the parameters are pointers to items in the list to be sorted

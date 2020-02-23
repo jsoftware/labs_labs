@@ -47,18 +47,6 @@ to continue enumeration, the callback returns 1
 )
 
 0 : 0
-although there are many different types of callback parameters
-they are all passed at the lowest level as integers
-bit, byte, char, wide char, short integer, integer, and float
-are all passed as 64 bit values
-everything else is passed as a pointer and can be treated 64 bit
-doesn't matter what they are, just just how many of them there are
-
-we need the address of a callback function for EnumWindows
-this is the address of a C function built when JE was compiled
-)
-
-0 : 0
 EnumWindowsProc has two parameters and both are passed as integers
 we need a callback that takes two integer arguments
 

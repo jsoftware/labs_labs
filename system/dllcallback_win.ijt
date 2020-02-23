@@ -6,29 +6,27 @@ if not, see lab: Shared Library (b) (dll/so/dylib) - callback
 )
 
 assert UNAME-:'Win' NB. windows only
-assert IF64 NB. requires J64
+assert IF64         NB. requires J64
 
 0 : 0
-win API function EnumWindows uses a callback
-
-EnumWindows enumerates all top-level windows
+EnumWindows uses a callback to enumerate top-level windows
 by passing each window handle, in turn, to a callback function
-EnumWindows continues until all are enumerated or the callback returns 0
 
-the Enumwindows prototype is:
+EnumWindows continues until all are done or the callback returns 0
+
+Enumwindows prototype:
 
 BOOL EnumWindows(WNDENUMPROC lpEnumFunc, LPARAM lParam);
 
  lpEnumFunc - address of callback function
  lParam - application-defined value
 
-the callback function prototype is:
+callback function prototype:
 
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam);
 
  hwnd - window handle
  lParam - app-defined value (same as from EnumWindows call)
-
 
 to continue enumeration, the callback returns 1
 )
@@ -49,29 +47,20 @@ to continue enumeration, the callback returns 1
 )
 
 0 : 0
+although there are many different types of callback parameters
+they are all passed at the lowest level as integers
+bit, byte, char, wide char, short integer, integer, and float
+are all passed as 64 bit values
+everything else is passed as a pointer and can be treated 64 bit
+doesn't matter what they are, just just how many of them there are
+
 we need the address of a callback function for EnumWindows
 this is the address of a C function built when JE was compiled
-
-EnumWindows needs only one callback
-but in general there could be many different callbacks
-with different arguments and it is not practical to compile all of them
 )
-
-
-0 : 0
-although there are many different types of parameters
-they are all passed at the lowest level as integers
-a bit, byte, character, unicode character, short integer, integer, and float
-are all passed as 64 bit values
-everything else is passed as a pointer that can be treated as an integer
-
-it doesn't matter what they are, just just how many of them there are
-)
-
 
 0 : 0
 EnumWindowsProc has two parameters and both are passed as integers
-e need a callback that takes two integer arguments
+we need a callback that takes two integer arguments
 
 cdcb returns the address of a compiled C routine that handles
 the number of integers in the cdcb argument
@@ -79,7 +68,6 @@ the number of integers in the cdcb argument
 cdcb callbacks return an integer result
 all C data types can be returned in an integer
 )
-
 [cdcb2=: cdcb 2 NB. cdcb2 is a C callback with 2 integer args
 
 EnumWindows=: 'user32 EnumWindows x x x'&cd
@@ -88,20 +76,17 @@ EnumWindows=: 'user32 EnumWindows x x x'&cd
 EnumWindows has 2 args:
 
   cdcb2 - address of callback with 2 args
-  app-defined value - unused, use 123
+  app-defined value - unused in this example, use 123
 )
 erase'cdcallback' NB. be sure not to use one that was not intended
 EnumWindows cdcb2 ; 123 NB. gets cdcallback value error
 
 0 : 0
-look at the error above
-the C callback called J verb cdcallback with 2 args
-
+the C routine called J verb cdcallback with 2 args
 the 1st is the window handle and the second is the app-defined value
 
 an error in the callback returns 0 to the dll
-in this case a 0 result from the callback causes EnumWindows
-to stop enumeration
+in this case the 0 result causes EnumWindows to stop enumeration
 )
 
 0 : 0
@@ -150,12 +135,16 @@ local definitions of cdcallback allow each dll call to call
 the appropriate cdcallback definition
 )
 
-NB. EnumChildWindows is similar to EnumWindows, but has an extra arg of the window
+0 : 0
+EnumChildWindows is similar to EnumWindows
+but has an extra arg of the window
+)
 EnumChildWindows=: 'user32 EnumChildWindows x x x x'&cd
 
 0 : 0
 EnumChildWindows is called in the EnumWindows callback
-and how cdcallback is set before each call so that the appropriate one is used.
+and how cdcallback is set before each call so that the
+appropriate one is used
 )
 enumall=: 3 : 0
 callbackr=: i.0 0
@@ -180,7 +169,7 @@ all=: enumall'' NB. enumerate all windows
 
 0 : 0
 EnumDateFormats enumerates date formats
-EnumDateFormats takes two args: LCID and type
+it takes: LCID and type
 
 LCID 0 is the default language
 type 1 is short formats and 2 is long
@@ -197,7 +186,7 @@ r[erase'callbackr'[r=.callbackr
 )
 
 0 : 0
-cdcallback is called with 1 integer arg that is the address of the format string
+cdcallback is called with 1 integer arg that is an address
 memr reads the string from the address
 1 result continues the enumeration
 )
@@ -228,5 +217,5 @@ if there are the same number of args, distinguish by:
 J callbacks are defined for 0 through 9 args
 
 J callbacks return an integer result
-this covers no result and all data types that can be represented in a 64 bits
+this covers no result and all types represented in 64 bits
 )

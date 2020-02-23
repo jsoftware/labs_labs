@@ -1,4 +1,4 @@
-NB. Lab:'Shared Library (e) (windows only) - file examples'
+NB. Lab: Shared Library (e) (windows only) - file examples
 
 0 : 0
 this lab assumes you are familiar with DLLs
@@ -8,32 +8,31 @@ this lab assumes you know some C and have an overview of the WIN32 API
 
 the lab uses procedures CreateFile, WriteFile, ReadFile etc. from DLL kernel32
 
-internet search "msdn CreateFile" for CreateFile info
+internet search "msdn win32api CreateFile" for CreateFile info
 
 routines often require constants declared in C header files
-internet search "msdn XXXX" can help track down the value to use for XXXX
+internet search "msdn win32api XXXX" can help find the value XXXX
+or track it down through the windows header fileapi.h
 )
 
 assert UNAME-:'Win' NB. windows only
 assert IF64         NB. requires J64
 
 0 : 0
-a bad declaration or parameters can CRASH or CORRUPT MEMORY
-
+a bad declaration or parameter can CRASH or CORRUPT MEMORY
 cd checks declaration and parameter types as best it can
-
 scalar declaration (x) must have a scalar parameter
-
 a pointer declaration (*x) must have a non-scalar parameter,
 or a boxed scalar(used as a memory address)
 )
 
 0 : 0
 J provides file functions with the 1!:x family
-that are wrappers for standard C library file functions
+that are wrappers for standard C library functions
 and are similar on all platforms
 
-in addition to the C library file functions, windows has additional facilities
+in addition to the C library file functions,
+windows has win32api facilities
 )
 
 0 : 0
@@ -53,7 +52,7 @@ cleanup'' NB. clean state from earlier runs
 0 : 0
 CreateFile creates a file handle - a kernel object used to access a file
 
-CreateFile prototype is:
+CreateFile prototype:
 
 HANDLE CreateFile
   LPCTSTR lpFileName,           // pointer to name
@@ -75,8 +74,7 @@ result -1 for failure
 0 : 0
 you need to convert the C prototype to a J declaration
 to do this you need to know that, for example, HANDLE and DWORD types
-have declarations x
-most C parameters can be declared as x or *x
+have declarations x - most C parameters can be declared as x or *x
 )
 
 0 : 0
@@ -86,7 +84,8 @@ x      *c   x      x     *        x    x          x
 security is unused and must be the NULL pointer (<<0)
 template is unused and must be 0
 
-in our examples we use access GENERIC_READ+GENERIC_READ, share 0, and attributes 0
+in our examples we use access GENERIC_READ+GENERIC_READ,
+share 0, and attributes 0
 )
 
 createfile=: 4 : 0
@@ -100,16 +99,15 @@ CREATE_NEW=: 1
 [fh=: CREATE_NEW createfile jpath '~temp/test.jnk' NB. fh is handle - _1 for failure
 
 0 : 0
-The 1st element of the cd result is the procedure result
-
-Many API functions return an integer result where 0 is failure and non-0 is success
-in most cases GetLastError has extra information
-
-cderx returns the GetLastError information.
+many API functions return an integer result
+where 0 is failure and non-0 is success
+GetLastError has extra information for most errors
+cderx returns the GetLastError information
 )
 deletefile <jpath '~temp/test.jnk'
 cderx''
 closehandle fh
+erase'fh' NB. don't use it again after it is closed
 deletefile <jpath '~temp/test.jnk'
 [fh=: CREATE_NEW createfile jpath '~temp/test.jnk' NB. fh is handle - _1 for failure
 
@@ -121,8 +119,9 @@ BOOL WriteFile
   LPDWORD lpBytesWritten, // pointer to integer
   LPOVERLAPPED lpOverlapped
 
-lpBytesWritten parameter is a pointer to an integer set as the number of bytes written. Its parameter is ,0.
-lpOverlapped parameter should be the NULL pointer.
+lpBytesWritten parameter is a pointer to an integer set
+as the number of bytes written
+lpOverlapped parameter should be the NULL pointer
 )
 writefile=: 4 : 0 NB. handle writefile string
 'kernel32 WriteFile > x x * x *x *' cd x;y;(#y);(,0);<<0
@@ -159,6 +158,7 @@ fh setfilepointer 3
 fh writefile '   abcdef and more data'
 readfile fh
 closehandle fh
+erase'fh' NB. don't use it again after it is closed
 
 createdirectory=: 3 : 0
 'kernel32 CreateDirectoryA > x *c *'cd y;<<0
@@ -166,8 +166,10 @@ createdirectory=: 3 : 0
 createdirectory jpath '~temp/junklab'   NB. 0 is failure
 
 NB. BOOL MoveFile(LPCTSTR lpExistingName,LPCTSTR lpNewName);
-MoveFile=: 'kernel32 MoveFileA > x *c *c'&cd
-MoveFile (jpath '~temp/test.jnk');jpath '~temp/junklab/test.jnk'
+movefile=: 3 : 0
+'kernel32 MoveFileA > x *c *c'cd y
+)
+movefile jpath each '~temp/test.jnk';'~temp/junklab/test.jnk'
 
 0 : 0
 CopyFile copies an existing file to a new file.
@@ -178,8 +180,10 @@ CopyFile copies an existing file to a new file.
 
 bFailIfExists - if 1 and new file exists, function fails
 )
-CopyFile=: 'kernel32 CopyFileA > x *c *c i'&cd
-CopyFile (jpath '~temp\junklab\test.jnk');(jpath '~temp/junklab/xxx.jnk');0
+copyfile=: 3 : 0
+'kernel32 CopyFileA > x *c *c i'cd y
+)
+copyfile (jpath each'~temp/junklab/test.jnk';'~temp/junklab/xxx.jnk'),<0
 
 deletefile <jpath '~temp/junklab/test.jnk'
 deletefile <jpath '~temp/junklab/xxx.jnk'

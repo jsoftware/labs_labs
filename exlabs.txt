@@ -37,14 +37,10 @@ labs/labs/debug/dissect1.ijt
 labs/labs/debug/dissect2.ijt
 labs/labs/graphics/fractals.ijt
 labs/labs/graphics/graphut.ijt
-labs/labs/graphics/viewmat.ijt
 labs/labs/livetexts/candg.ijt
 labs/labs/livetexts/linearalgebra.ijt
-labs/labs/math/teachersaide.ijt
 labs/labs/system/client_server.ijt
 labs/labs/system/debug.ijt
-labs/labs/system/mapfile.ijt
-labs/labs/system/mappeddb.ijt
 labs/labs/system/pm.ijt
 labs/labs/system/sockcli.ijt
 labs/labs/system/sockinet.ijt

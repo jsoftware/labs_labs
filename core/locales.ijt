@@ -330,30 +330,11 @@ cocurrent 'base'
 aa=: verb def 'bb 0'
 bb=: verb def 'cc_foo_ 0'
 cc_foo_ =: verb def 'dd 0'
-dd_foo_ =: verb def '13!:18$0' NB. return stack
+dd_foo_ =: verb def '8{.13!:18$0' NB. return stack (just 8 lines for aa call)
 
-NB. =========================================================
-Lab Section
-Study the output of running the example.
-
-In the ijx window execute:
-
-   aa 0
-
-The result is the stack when dd executes.
-)
-cocurrent 'base'
-NB. execute sentence:   aa 0
-
-NB. =========================================================
-Lab Section
-The result should be:
-    aa 0
-        dd 0
-        cc_foo_ 0
-        bb 0
-        aa 0
-)
+dbr 1 NB. turn on debug so stack info is available
+aa 0  NB. displays call stack when dd_foo_ is running
+dbr 0 NB. turn off debug 
 
 NB. =========================================================
 Lab Section summary so far

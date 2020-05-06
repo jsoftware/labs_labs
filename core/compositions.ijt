@@ -1,0 +1,284 @@
+LABTITLE=: 'Compositions @ @: & &:'
+LABFOCUS=: 1
+LABWIDTH=: 80
+
+NB. =========================================================
+Lab Chapter Compositions
+NB. =========================================================
+Lab Section What is a composition?
+To see the Table of Contents for this lab, go to Help|Studio|Chapters in the menu for this window.
+
+A composition is a verb that applies two verbs in sequence.
+
+An example is ((+/ @: -) y) .
+
+This applies the verb (-) to (y), and then applies the verb (+/) to the result of (-).  The verb (+/) means 'add up all the items).
+
+To advance to the next section, press ctrl+J in any of the main lab windows [the term window, the debug window, or the dissect window].  On a Mac, use Cmd+J.
+
+NOTE: In this lab, parentheses are used to indicate J code.
+)
+PREPARE
+require 'debug/dissect'
+
+NB. Fix up user's config file
+desiredkeyvals =: ';'&(taketo ; takeafter);._2 (0 : 0)
+F2;0;Dissect Line;dissect&.finddissectline_dissect_ 0
+F3;0;Dissect Last Error;dissect&.finddissectline_dissect_ 1
+F4;0;Lint;lintwindow_lint_''
+)
+fkeystatus =: 3 : 0''
+fkeyinfo =. 0$a:
+cfiled =. 1!:1 cfile =. < jpath '~config/userkeys.cfg'
+if. LF ~: {:cfiled do. cfiled =. cfiled , LF end.
+NB. Cut to lines
+lines =. <;._2 cfiled -. CR
+NB. discard comments
+lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines  
+NB. get delimiter for each line
+delims =. (,&';' {~ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+' i.&0@:e.~ deb)@> lines
+NB. get existing keyname;values
+keynameval =. delims (taketo ; takeafter)&> lines
+NB. for each desired value, get the key assigned currently
+keyassigns =. keynameval i.&:(1&{"1) desiredkeyvals
+NB. For the values not yet assigned, see if the keys are
+NB. available
+if. +./ assignedmask =. keyassigns < #keynameval do.
+  fkeyinfo =. fkeyinfo , ((0 {"1 keynameval) {~ assignedmask # keyassigns) ('You can use ' , [ , ' for ' , ])&.> ';' ([ taketo takeafter)&.> assignedmask # 1 {"1 desiredkeyvals
+end.
+
+keysneeded =. (keyassigns = #keynameval) # (0 {"1 desiredkeyvals)
+if. #availkeys =. keysneeded -. 0 {"1 keynameval do.
+  NB. Get the string to use for the new keys
+  newvals =. (availkeys e.~ 0 {"1 desiredkeyvals) # desiredkeyvals
+  NB. Get strings to add to config
+  newconfigs =. ; (0&{ , ';' ; (<LF) ,~ 1&{)"1 newvals
+  NB. Get prompt string to use
+  select. #newkeys =. {."1 newvals
+  case. 1 do.
+    keystg =. 'key ', ; newkeys
+  case. 2 do.
+    keystg =. 'keys ' , (>{. newkeys) , ' and ' , (>{: newkeys)
+  case. do.
+    keystg =. _2 }. 'keys ' , ; (}: , (<'and ') , {:) (,&', '&.> newkeys)
+  end.
+  if. 'yes' -: wd 'mb query mb_yes mb_no "May I change configuration?" "I would like to define function ',keystg,'.  Is that OK with you?',LF,LF,'If so, I will stop J and you will need to restart it."' do.
+    NB. Rewrite config file
+    (cfiled , newconfigs) 1!:2 cfile
+    NB. Kill J to allow restart with new keys
+    2!:55 (0)
+  end.
+end.
+fkeyinfo
+)
+PREPARE
+y =. i. 5
+- y
+(+/ @: -) y
+
+
+
+NB. =========================================================
+Lab Section The Dissect tool
+In this lab we will use the Dissect tool to examine the results of execution.
+
+You see the dissection of the sentence ((+/ @: -) i. 5).
+
+To see the dissection of any sentence, click in the sentence and press F2.
+
+Take a moment to experiment with running Dissect on sentences.  We will not need all the facilities of the Dissect tool.  If you want to learn about them, you can runs the Labs for Dissect.  For our purposes, it is enough that you notice that execution flow is from top to bottom, and each block contains the result of one verb, whose name and rank are displayed at the top of the block.
+
+)
+dissect '((+/ @: -) i. 5)'
+
+NB. =========================================================
+Lab Section Who needs composition?
+Consider the sentence
+
+   +/ - i. 5
+_10
+
+Dissect it, just for practice.  Observe that it executes (i.), then (-), then (+/) in order.
+
+Now suppose you want to write a single verb that does the operation of (-) followed by (+/).  You want to call this verb sumneg and you will use it with
+
+  sumneg i. 5
+_10
+
+Write the definition of sumneg.  Your definition will look like
+
+sumneg =: <some combination including +/ and - >
+
+Test your (sumneg) program and see if it works correctly. 
+NB. =========================================================
+Lab Section sumneg
+
+If you got a working definition of sumneg, good on you.  Most novices don't.  The mistakes are instructive.
+
+The most common attempt is
+
+sumneg =: +/ -
+
+Let's try it:
+
+   sumneg =: +/ -
+   sumneg i. 5
+ 0 _1 _2 _3 _4
+ 1  0 _1 _2 _3
+ 2  1  0 _1 _2
+ 3  2  1  0 _1
+ 4  3  2  1  0
+
+??? What happened?  Run dissect to see.  (Click in the sentence and press F2)  At first, all you see is that the verb sumneg took in a perfectly valid argument and produced something wild.  But you can look deeper.  In the dissect window, right-click on the big word 'sumneg' at the top of its block.  That will open a dissection of the internals of that verb.  What did it execute?
+
+The input (i. 5) came in at the top and went into (-), but it also went into (+/).  What was executed was not
+
++/ - i. 5
+
+but
+
+(i. 5) +/ - i. 5
+
+We don't need to know what that did, except to observe that it wasn't what we wanted.  How do we fix sumneg?
+)
+PREPARE
+sumneg =: +/ -
+PREPARE
+
+NB. =========================================================
+Lab Section sumneg explained
+Let's go back to the definition:
+
+   sumneg =: +/ -
+
+The author of this definition had a common misconception: that executing a name in J is like a macro expansion, where the name is replaced by the text of its definition.  In fact, executing a name is more like calling a subroutine in a normal language: the definition of the name is compiled into an internal form, and the arguments are presented to that form for execution.
+
+What is the internal form of this sumneg?
+
+The full explanation is more than we can handle right now, but fortunately there is a simple way to end up at the right place:
+
+To see the value of an assigned verb, put parentheses around the definition.
+
+Thus, sumneg has the value  (+/ -)  where the parentheses are necessary.
+
+You may say, Well, what does THAT mean then?  That's progress: formerly you thought you knew what +/ - meant, while now you realize you don't know what (+/ -) means.  You have to look it up or ask for help, and you will find that exactly two verbs enclosed by parentheses are a HOOK, and that
+
+   (u v) y
+
+is executed as
+
+   y u v y
+
+which is what we suspected.  You can run
+
+   (+/ -) i. 5
+
+to verify.
+)
+
+(+/ -) i. 5
+
+
+NB. =========================================================
+Lab Section sumneg repaired
+Since just writing verbs in sequence doesn't cause them to be executed in sequence, what does?
+
+This is where you need a composition.  You need a way to combine the two verbs into a single verb that executes one verb then the other.
+
+The composition you want is (@:).  (u@:v y) executes (v y) and then executes (u) on the result.
+
+(+/)@:- is the verb you want.  And adding parentheses doesn't change its value, so you can assign that verb to a name.
+
+Run dissect to see how sumneg should work.
+)
+sumneg =: +/@:-
+sumneg i. 5
++/@:- i. 5  NB. same result
+
+
+NB. =========================================================
+Lab Section @: vs @
+The other common mistake in defining sumneg is to use (@) instead of (@:) to produce
+   sumneg =: +/@-
+   sumneg i. 5
+ 0 _1 _2 _3 _4
+
+Why didn't it add up the values?
+
+To see what went wrong, run dissect and right-click in the name sumneg.
+
+Dissect balks.  It says you 'must select a single result-cell for analysis'.  Humor it.  Click on the center value (_2) in the result area, and then go back and click on the name sumneg.
+
+Now dissect shows the execution of sumneg, but you can see it is operating on only one atom rather than the entire array.  The 'sum' is being taken over only one number, which isn't much of a sum at all.
+
+What's the difference between (@:) and (@)?  The rank of the verb they produce.
+
+To see the rank of a verb, use (b. 0), like so:
+)
+sumneg =: +/@:-
+sumneg b. 0
+sumneg =: +/@-
+sumneg b. 0
+
+NB. =========================================================
+Lab Section +/@-
+The key fact, whose capital importance you must grasp, is that every verb has a rank, including verbs made by combining primitives.
+
+The rank of a verb is the rank of the pieces that its arguments will be diced into.  The verb will operate on each of those pieces, called argument cells, independently.  When the verb is finished, the result-cells will be assembled into the result of the verb.
+
+The rank of (u@:v) is infinite, which means the arguments are not split at all.  That is why (+/@:-) operated on its argument as a whole.
+
+The rank of (u@v) is the same as the rank of (v).  The rank of (-) is 0.  Thus the rank of (+/@-) is 0.  That means that the verb operated on every cell of rank 0 - that is, every atom - separately.  That's what we saw, and we didn't like it.
+
+How do you know that the rank of (-) is 0?  You can look in NuVoc, or you can use (b. 0).  [Some programmers just guess, but that's not recommended - they don't seem to use J for long.]
+)
+- b. 0
+
+NB. =========================================================
+Lab Section @ in Dissect
+(@) and (@:) produce different displays in Dissect.  Let's look into an example.
+
+We will use a program that counts the number of items inside each box of a noun.  The verb to count items is (# y), and the verb to open a box is (> y).
+
+Now dissect (#@> y) by clicking on it and pressing F2.
+
+You can see the value of y, and the result, which is as expected: 4 items, 5 items, 2 items.
+
+Think and click until you can answer two questions:
+
+Why is the result of executing (>) not visible?
+
+How can you see it? 
+)
+]y =. 'word';1 2 3 4 5;i. 2 5
+#@> y
+)
+PREPARE
+y =. 'word';1 2 3 4 5;i. 2 5
+PREPARE
+
+NB. =========================================================
+Lab Section @ in Dissect
+The result of (> y) is not visible for the most compelling of reasons: it doesn't exist.
+
+(> y) was never executed.  In fact, it couldn't be executed - doing so would produce a domain error (try it and see).
+
+The overall verb (#@> y) has rank 0, because (> y) has rank 0.  That means that (#@>) was executed 3 times, one for each box of y.  And thus (>) was executed 3 times.
+
+To see the result of executing (>), you have to choose the result-cell of (#@>) that you want to examine.  Do so by clicking in the overall result.  When you have selected a result-cell that depends only on a single argument-cell into (#@>), the complete execution on that cell will be displayed.  With this verb one click is enough.  With more complex verbs you may have to click more than once.
+)
+
+NB. =========================================================
+Lab Chapter Worked Problems
+NB. =========================================================
+Lab Section
+
+NB. =========================================================
+Lab Section
+
+NB. =========================================================
+Lab Section
+
+
+
+

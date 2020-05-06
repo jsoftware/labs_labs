@@ -10,9 +10,9 @@ To see the Table of Contents for this lab, go to Help|Studio|Chapters in the men
 
 A composition is a verb that applies two verbs in sequence.
 
-An example is ((+/ @: -) y) .
+An example is ((>: @: *:) y) .
 
-This applies the verb (-) to (y), and then applies the verb (+/) to the result of (-).  The verb (+/) means 'add up all the items).
+This applies the verb (*:) [square] to (y), and then applies the verb (>:) [increment] to the result of (*:).
 
 To advance to the next section, press ctrl+J in any of the main lab windows [the term window, the debug window, or the dissect window].  On a Mac, use Cmd+J.
 
@@ -82,14 +82,14 @@ NB. =========================================================
 Lab Section The Dissect tool
 In this lab we will use the Dissect tool to examine the results of execution.
 
-You see the dissection of the sentence ((+/ @: -) i. 5).
+You see the dissection of the sentence ((>: @: *:) i. 5).
 
 To see the dissection of any sentence, click in the sentence and press F2.
 
-Take a moment to experiment with running Dissect on sentences.  We will not need all the facilities of the Dissect tool.  If you want to learn about them, you can runs the Labs for Dissect.  For our purposes, it is enough that you notice that execution flow is from top to bottom, and each block contains the result of one verb, whose name and rank are displayed at the top of the block.
+Take a moment to experiment with running Dissect on sentences.  We will not need all the facilities of the Dissect tool.  If you want to learn about them, you can run the Labs for Dissect.  For our purposes, it is enough that you notice that execution flow is from top to bottom, and that each block contains the result of one verb, whose name and rank are displayed at the top of the block.
 
 )
-dissect '((+/ @: -) i. 5)'
+dissect '((>: @: *:) i. 5)'
 
 NB. =========================================================
 Lab Section Who needs composition?
@@ -98,7 +98,7 @@ Consider the sentence
    +/ - i. 5
 _10
 
-Dissect it, just for practice.  Observe that it executes (i.), then (-), then (+/) in order.
+Dissect it, just for practice.  [Click in the sentence and press F2.]  Observe that it executes (i.), then (-), then (+/) in order.
 
 Now suppose you want to write a single verb that does the operation of (-) followed by (+/).  You want to call this verb sumneg and you will use it with
 
@@ -129,7 +129,7 @@ Let's try it:
  3  2  1  0 _1
  4  3  2  1  0
 
-??? What happened?  Run dissect to see.  (Click in the sentence and press F2)  At first, all you see is that the verb sumneg took in a perfectly valid argument and produced something wild.  But you can look deeper.  In the dissect window, right-click on the big word 'sumneg' at the top of its block.  That will open a dissection of the internals of that verb.  What did it execute?
+??? What happened?  Run dissect to see.  [Click in the sentence and press F2.]  At first, all you see is that the verb sumneg took in a perfectly valid argument and produced something wild.  But you can look deeper.  In the dissect window, right-click on the big word 'sumneg' at the top of its block.  That will open a dissection of the internals of that verb.  What did it execute?
 
 The input (i. 5) came in at the top and went into (-), but it also went into (+/).  What was executed was not
 
@@ -169,13 +169,12 @@ is executed as
 
    y u v y
 
-which is what we suspected.  You can run
+which is what we suspected from our Dissect work.  You can run
 
    (+/ -) i. 5
 
 to verify.
 )
-
 (+/ -) i. 5
 
 
@@ -211,7 +210,7 @@ Dissect balks.  It says you 'must select a single result-cell for analysis'.  Hu
 
 Now dissect shows the execution of sumneg, but you can see it is operating on only one atom rather than the entire array.  The 'sum' is being taken over only one number, which isn't much of a sum at all.
 
-What's the difference between (@:) and (@)?  The rank of the verb they produce.
+What's the difference between (@:) and (@)?  Drum roll... the rank of the verb they produce.
 
 To see the rank of a verb, use (b. 0), like so:
 )
@@ -224,7 +223,7 @@ NB. =========================================================
 Lab Section +/@-
 The key fact, whose capital importance you must grasp, is that every verb has a rank, including verbs made by combining primitives.
 
-The rank of a verb is the rank of the pieces that its arguments will be diced into.  The verb will operate on each of those pieces, called argument cells, independently.  When the verb is finished, the result-cells will be assembled into the result of the verb.
+Definition: the rank of a verb is the rank of the pieces that its arguments will be diced into.  The verb will execute on each of those pieces, called argument cells, independently.  When the verb is finished, the result-cells from the executionas will be assembled into the result of the verb.
 
 The rank of (u@:v) is infinite, which means the arguments are not split at all.  That is why (+/@:-) operated on its argument as a whole.
 
@@ -236,11 +235,11 @@ How do you know that the rank of (-) is 0?  You can look in NuVoc, or you can us
 
 NB. =========================================================
 Lab Section @ in Dissect
-(@) and (@:) produce different displays in Dissect.  Let's look into an example.
+(@) and (@:) produce different displays in Dissect.  We have already seen (@:); let's look into an example of (@).
 
 We will use a program that counts the number of items inside each box of a noun.  The verb to count items is (# y), and the verb to open a box is (> y).
 
-Now dissect (#@> y) by clicking on it and pressing F2.
+Now dissect (#@> y) [by clicking on it and pressing F2].
 
 You can see the value of y, and the result, which is as expected: 4 items, 5 items, 2 items.
 
@@ -261,9 +260,9 @@ NB. =========================================================
 Lab Section @ in Dissect
 The result of (> y) is not visible for the most compelling of reasons: it doesn't exist.
 
-(> y) was never executed.  In fact, it couldn't be executed - doing so would produce a domain error (try it and see).
+(> y) was never executed.  In fact, it couldn't be executed - doing so would produce a domain error [try it and see].
 
-The overall verb (#@> y) has rank 0, because (> y) has rank 0.  That means that (#@>) was executed 3 times, one for each box of y.  And thus (>) was executed 3 times.
+The overall verb (#@> y) has rank 0, because (> y) has rank 0.  That means that (#@>) was executed for each box of y - 3 times in all.  And thus (>) was executed 3 times.
 
 To see the result of executing (>), you have to choose the result-cell of (#@>) that you want to examine.  Do so by clicking in the overall result.  When you have selected a result-cell that depends only on a single argument-cell into (#@>), the complete execution on that cell will be displayed.  With this verb one click is enough.  With more complex verbs you may have to click more than once.
 )

@@ -3,6 +3,11 @@ NB. Lab: my stuff
 a=: 3 : 'just testing'
 A=. 2 3 5 7 11
 
+0 : 0 fwrites '~temp/t1.txt'
+my moo
+my goo
+)
+
 NB. several lines of text
 NB.  several lines of text
 NB.   several lines of text

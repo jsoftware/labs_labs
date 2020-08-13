@@ -263,7 +263,7 @@ y*y
 NB. =========================================================
 Lab Section
 )
-SG=: 1 : '~.@(, ,/@(x/~))^:_'   NB. subgroup
+SG=: 1 : '~.@(, ,/@(u/~))^:_'   NB. subgroup
 
 f=: 7&|@*      NB. multiplication modulo 7
 
@@ -399,7 +399,7 @@ Function tables for ^!.e can be used to make clear the
 relationship between Stirling numbers of the first kind and
 Stirling numbers of the second kind.
 )
-FT=: 1 : '^!.x/~@i.'   NB. falling/rising factorial table
+FT=: 1 : '^!.u/~@i.'   NB. falling/rising factorial table
 
 _1 FT 6                 NB. falling factorial table
 
@@ -467,7 +467,7 @@ C. cy             NB. C. is self-inverse
 NB. =========================================================
 Lab Section
 )
-SG=: 1 : '~.@(, ,/@(x/~))^:_'
+SG=: 1 : '~.@(, ,/@(u/~))^:_'
 
 ] p=. ?.~ 22        NB. a random permutation of order 22
 

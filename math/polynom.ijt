@@ -296,7 +296,7 @@ Lab Section
 We may also define a corresponding secant-slope operator:
 )
 SCS=: 1 : 0
-((x@+ - x@]) % [) "0
+((u@+ - u@]) % [) "0
 )
 
 ,. (s ^&3 SCS/ x) ; (s ^&4 SCS/ x)

@@ -168,7 +168,7 @@ NB. Circuit Theory II: Passive & linear
 pwr =: adverb : 'dp u'          NB. The power absorbed by a circuit
 Tfm =: dyad : '(tr y)dp x dp y'
 sum =: (+each)/
-Interc =: conjunction : '>@sum x Tfm each y'
+Interc =: conjunction : '>@sum u Tfm each v'
 pind =:  <each @{@ ,~ @ <        NB. partitioning indices
 pmat =: pind@] {each <@[         NB. partitioned matrix
 require '~addons/math/lapack/lapack.ijs'
@@ -655,7 +655,7 @@ sum =: (+each)/
 ] M =: M1;M2;M3
 
 >@sum G Tfm each M
-Interc =: conjunction : '>@sum x Tfm each y'
+Interc =: conjunction : '>@sum u Tfm each v'
 G Interc M           NB. matrix of the interconnection
 
 NB. =========================================================

@@ -50,6 +50,7 @@ media/videolabs/beheadjqt.ijt
 media/videolabs/tailjqt.ijt
 media/videolabs/curtailjqt.ijt
 media/videolabs/tallyjqt.ijt
+media/videolabs/catalanjqt.ijt
 media/videolabs/videolabjqt.ijt
 )
 
@@ -60,6 +61,7 @@ media/videolabs/headjhs.ijt
 media/videolabs/beheadjhs.ijt
 media/videolabs/tailjhs.ijt
 media/videolabs/curtailjhs.ijt
+media/videolabs/catalanjhs.ijt
 media/videolabs/tallyjhs.ijt
 )
 
@@ -76,6 +78,8 @@ media/videolabs/curtailjhs.ijt
 media/videolabs/curtailjqt.ijt
 media/videolabs/tallyjhs.ijt
 media/videolabs/tallyjqt.ijt
+media/videolabs/catalanjhs.ijt
+media/videolabs/catalanjqt.ijt
 media/videolabs/videolabjqt.ijt
 )
 

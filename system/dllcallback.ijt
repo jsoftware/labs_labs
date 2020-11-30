@@ -21,7 +21,7 @@ A dll can callback to the caller
 
 0 : 0
 dll routine callback calls compiled C code in JE
-the compiled JE code calls the J verb cdballback
+the compiled JE code calls the J verb cdcallback
 with y parameter that is list of integers parameters
 
 although there are many different types of callback parameters

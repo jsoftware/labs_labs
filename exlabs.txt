@@ -89,4 +89,6 @@ labs/labs/system/regbuild.ijt
 media/image3/image3.ijt
 media/image3/image3html.ijt
 media/image3/image3movie.ijt
+media/videolabs/catalanjhs.ijt
+media/videolabs/catalanjqt.ijt
 )

@@ -45,38 +45,16 @@ labs/labs/system/pm.ijt
 labs/labs/system/sockcli.ijt
 labs/labs/system/sockinet.ijt
 labs/labs/system/sockserv.ijt
-media/videolabs/headjqt.ijt
-media/videolabs/beheadjqt.ijt
-media/videolabs/tailjqt.ijt
-media/videolabs/curtailjqt.ijt
-media/videolabs/tallyjqt.ijt
-media/videolabs/videolabjqt.ijt
 )
 
 # ---------------------------------------------
 EXJQT=: 0 : 0
 labs/labs/graphics/d3.ijt
-media/videolabs/headjhs.ijt
-media/videolabs/beheadjhs.ijt
-media/videolabs/tailjhs.ijt
-media/videolabs/curtailjhs.ijt
-media/videolabs/tallyjhs.ijt
 )
 
 # ---------------------------------------------
 EXJNET=: 0 : 0
 labs/labs/graphics/d3.ijt
-media/videolabs/headjhs.ijt
-media/videolabs/headjqt.ijt
-media/videolabs/beheadjhs.ijt
-media/videolabs/beheadjqt.ijt
-media/videolabs/tailjhs.ijt
-media/videolabs/tailjqt.ijt
-media/videolabs/curtailjhs.ijt
-media/videolabs/curtailjqt.ijt
-media/videolabs/tallyjhs.ijt
-media/videolabs/tallyjqt.ijt
-media/videolabs/videolabjqt.ijt
 )
 
 # ---------------------------------------------
@@ -108,4 +86,15 @@ media/image3/image3html.ijt
 media/image3/image3movie.ijt
 media/videolabs/catalanjqt.ijt
 media/videolabs/catalanjhs.ijt
+media/videolabs/headjhs.ijt
+media/videolabs/headjqt.ijt
+media/videolabs/beheadjhs.ijt
+media/videolabs/beheadjqt.ijt
+media/videolabs/tailjhs.ijt
+media/videolabs/tailjqt.ijt
+media/videolabs/curtailjhs.ijt
+media/videolabs/curtailjqt.ijt
+media/videolabs/tallyjhs.ijt
+media/videolabs/tallyjqt.ijt
+media/videolabs/videolabjqt.ijt
 )

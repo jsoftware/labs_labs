@@ -284,9 +284,9 @@ Just so you can see what you have to look forward to, this lab will show you the
 Yes, that one line is the whole program!
 )
 NB. y is list of boxed names, result is unboxed shortest name
-findshortestname =: {::~   (i. <./)@:(#@>)
+fsname =: {::~   (i. <./)@:(#@>)
 
-findshortestname 'Jeb';'Hillary';'George';'Bill'
+fsname 'Jeb';'Hillary';'George';'Bill'
 
 NB. =========================================================
 Lab Chapter The Distinct-Birthday Problem

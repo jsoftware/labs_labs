@@ -15,9 +15,6 @@ Lab Section Set Up
 
   3) You have downloaded Jig from the Package Manager.
 
-  If there is a variable 'v' assigned in your locale, 
-  it will need to be erased to run Jig in this lab
-
   The messages below will let you know if there is anything 
   that you need to do in order to continue with this lab.
 
@@ -32,7 +29,7 @@ Jig_jig_=.'   You',( PM_jig_{:: ' need to install';' have already loaded'),' the
 Please_jig_=.'   Please, ',(*/VE_jig_,QT_jig_,PM_jig_){::'address the issue(s) and restart the lab.';'advance to the next section of the lab.'
 smoutput LF,Version_jig_,LF,LF,jqt_jig_,LF,LF,Jig_jig_,LF,LF,Please_jig_,LF
 ". (*/VE_jig_,QT_jig_,PM_jig_) {:: ' ';'load ''~addons/debug/jig/jig.ijs'''
-smoutput (-. 'v' -: &(5!:5@<) 'v_z_'){:: '';'   You will need to erase the variable ''v''',LF,'   in order to run this lab in your locale.',LF,LF
+
 
 PREPARE 
 NB. ========================================================= 
@@ -128,19 +125,19 @@ Lab Section The Jig Augmented Display
 
   Jig returns a message box with the title of the J sentence being evaluated. The appearance of the yellow font on the green blocks tells us that we are looking at literals.
 
-  When you hover over regions of the display, the hover region turns light purple and tool tips reveal more information.
+  When you hover over regions of the display, the hover region turns light purple and tool tips reveal more information. If you are using J versions 901 or greater clicking on the purple region will open a message box with larger print that can be selected and copied. 
 
   Notice that invisible characters are represented by blank blocks, providing a target for hovering as well as alerting the user to their existence.
 
-  When the Jig windows are no longer needed, you can close them to reduce on-screen clutter.
+  When the Jig windows are no longer needed, you can close them to reduce on-screen clutter. They can be retrieved later using the retrieve button, although displays will cycle through the 10 current windows unless explicitly saved using the 'Save' check box
 
   The rest of this lab will provide you with information about Jig and interpreting the appearance of the display. I hope you will find Jig to be a useful diagnostic tool when working with J.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v result_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig result_jig_'
 PREPARE
  
-v result_jig_
+jig result_jig_
 
 result_jig_
  
@@ -171,13 +168,13 @@ Lab Section
 
   The type and shape information is revealed by hovering over the boxes, but as you become familiar with Jig you can distinguish type by appearance alone. You don't need to memorize these, as the type is always available by hovering. 
 
-  Booleans are white with a black outline, integers are just black, complex are italicized and green with a white 'j' to separate imaginary and real parts (if necessary), floating are blue with a white 'e' to separate the significand and the exponent (if necesary), extended are charcoal grey, and rationals are thicker black with a red 'r' to separate numerator and denominator (if necessary). These colours and font effects were chosen so that they appear distinct even in grayscale.
+  Booleans are white with a black outline, integers are just black, complex are italicized and green with a white 'j' to separate imaginary and real parts (if necessary), floating are blue with a white 'e' to separate the significand and the exponent (if necessary), extended are charcoal grey, and rationals are thicker black with a red 'r' to separate numerator and denominator (if necessary). These colours and font effects were chosen so that they appear distinct even in grayscale.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T1_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T1_jig_'
 PREPARE
  
-v T1_jig_
+jig T1_jig_
 
 T1_jig_
  
@@ -189,10 +186,10 @@ Lab Section
   Feel free to evaluate other J nouns to see how the numeric types are displayed in Jig.
 ) 
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v ,. 1;2;3j4;409808e21;409807987979797806576578x;6r13247'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig ,. 1;2;3j4;409808e21;409807987979797806576578x;6r13247'
 PREPARE
  
-v ,. 1;2;3j4;409808e21;409807987979797806576578x;6r13247
+jig ,. 1;2;3j4;409808e21;409807987979797806576578x;6r13247
  
 NB. =========================================================
 Lab Section Literals and Unicode 
@@ -215,10 +212,10 @@ Lab Section
   Hovering over the literals themselves reveals the UTF-8 encoding, while hovering over the perimeter provides the shape and type of the entire object.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T2_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T2_jig_'
 PREPARE
  
-v T2_jig_
+jig T2_jig_
 
 T2_jig_
  
@@ -244,10 +241,10 @@ Lab Section
   Notice that the first two rows of T3 are padded with blanks to achieve the required shape.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T3_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T3_jig_'
 PREPARE
  
-v T3_jig_
+jig T3_jig_
 
 T3_jig_  
 
@@ -259,10 +256,10 @@ Lab Section
    Literals have yellow font on dark green blocks, unicode characters have black font on yellow blocks and unicode4 characters are shown with black font over gold blocks. These colours were chosen so that they are distinguishable by grayscale alone.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T4_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T4_jig_'
 PREPARE
  
-v T4_jig_
+jig T4_jig_
  
 T4_jig_ 
  
@@ -304,10 +301,10 @@ Lab Section
   This means that the three symbols are distinct and distinguishable depending on the number of code points in their labels. In Jig, more code points means wider labels and label type is further distinguished by colour. Hovering over the symbol block gives us the label type, the index in the hash table, and the total number of symbols defined, while hovering over the label itself provides the code points.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v SA_jig_,SB_jig_,SC_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig SA_jig_,SB_jig_,SC_jig_'
 PREPARE
  
-v SA_jig_,SB_jig_,SC_jig_
+jig SA_jig_,SB_jig_,SC_jig_
  
 NB. =========================================================
 Lab Section Sparse Arrays 
@@ -327,8 +324,8 @@ Lab Section
   Sparse representations are useful for some applications in J and this representation should make it easier to use them effectively.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T5_jig_'
-v T5_jig_
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T5_jig_'
+jig T5_jig_
 PREPARE
  
 0 $. T5_jig_   NB. dense representation of T5_jig_
@@ -361,10 +358,10 @@ Lab Section
   Jig is also useful in cases where the array exceeds the dimensions of the display, because as long as you can see the tool tip in the upper left corner of the object, you have access to the exact value of the shape. 
 ) 
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T6_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T6_jig_'
 PREPARE
  
-v T6_jig_
+jig T6_jig_
    
 T6_jig_
  
@@ -389,10 +386,10 @@ Lab Section
   I have boxed two objects (one with a leading 1 in the shape and one without) as a comparison
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T7_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T7_jig_'
 PREPARE
  
-v T7_jig_
+jig T7_jig_
  
 T7_jig_
  
@@ -410,12 +407,12 @@ Lab Section Empty Arrays
   You may have to reposition the Jig displays to see all the examples. 
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 3 0 $ 4'
-v 3 0 $ 4
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 1 0 $ 4'
-v 1 0 $ 4
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 0 0 $ 4'
-v 0 0 $ 4
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 3 0 $ 4'
+jig 3 0 $ 4
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 1 0 $ 4'
+jig 1 0 $ 4
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 0 0 $ 4'
+jig 0 0 $ 4
 PREPARE
   
 3 0 $ 4
@@ -432,10 +429,10 @@ Lab Section
   This means 0 4 $ 4 will look wider than 0 2 $ 4 in Jig.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 0 4 $ 4'
-v 0 4 $ 4
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 0 2 $ 4'
-v 0 2 $ 4
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 0 4 $ 4'
+jig 0 4 $ 4
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 0 2 $ 4'
+jig 0 2 $ 4
 PREPARE
  
 0 4 $ 4
@@ -446,15 +443,15 @@ Lab Section
 
   Unfortunately, when you get beyond two dimensions, things get tricky. 4 0 4 $ 4 and 0 4 $ 4 appear to be identical, since both arrays have 0 rows.
 
-  Of course, Jig quickly provides the precise shapes through hovering.
+  Of course, Jig quickly provides difference by havning the 4 0 4 shape appear as a darker shade due to the non-zero leading index. The precise shapes can always be found by hovering.
 
   Repositioning the display windows allows you to compare the results.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 4 0 4 $ 4'
-v 4 0 4 $ 4
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 0 4 $ 4'
-v 0 4 $ 4
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 4 0 4 $ 4'
+jig 4 0 4 $ 4
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 0 4 $ 4'
+jig 0 4 $ 4
 PREPARE
 
 NB. =========================================================
@@ -463,10 +460,10 @@ Lab Section
   One last hint that Jig gives is that if all of the indices of the shape are 0 then the block is shown in a lighter shade of grey, distinguishing 0 0 0 $ 5 from 2 0 0 $ 5.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 0 0 0 $ 5'
-v 0 0 0 $ 5
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 2 0 0 $ 5'
-v 2 0 0 $ 5
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 0 0 0 $ 5'
+jig 0 0 0 $ 5
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 2 0 0 $ 5'
+jig 2 0 0 $ 5
 PREPARE
   
 NB. =========================================================
@@ -481,11 +478,11 @@ Lab Section Contents Versus Container
 
   For Jig, SVG is used to place a rectangle large enough to enclose the contents of the box, then that rectangle is given a thick black edge that becomes the box. Behind this 'box' a larger rounded rectangle is placed as a target that displays the properties of the box in a tool tip.
 
-  Boxes enclosing boxes are treated the same way as any other contents. This means that not only is the outer boxed structure available for accessing information through hovering, but the contents of each box are also available.
+  Boxes enclosing boxes are treated the same way as any other contents. This means that not only is the outer boxed structure available for accessing information through hovering, but the contents of each box are also available. Additionally, the depth of the boxed contents and the path are displayed as well.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v 2 2 $ (i.3 1);''cat'';(<,''A'');i. 1 3'
-v 2 2 $ (i.3 1);'cat';(<,'A');i. 1 3
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig 2 2 $ (i.3 1);''cat'';(<,''A'');i. 1 3'
+jig 2 2 $ (i.3 1);'cat';(<,'A');i. 1 3
 PREPARE
  
 2 2 $ (i.3 1);'cat';(<,'A');i. 1 3
@@ -500,8 +497,8 @@ Lab Section Unicode Ragged Right Edges
   In the example below the result of u: 3101 is a character that is wider than the monospace font can accommodate and this creates the ragged edge of the J text display, while the Jig display is unaffected by the wider character.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v <,. u:3101 '
-v <,. u:3101
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig <,. u:3101 '
+jig <,. u:3101
 PREPARE
  
 <,. u:3101 
@@ -520,10 +517,10 @@ Lab Section Special Characters - Boxed and Unboxed
   Again you may have to move windows around to be able to compare the different Jig displays.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v ''0'',CR,LF,''1'',LF,CR,''2'',TAB,''3'''
-v '0',CR,LF,'1',LF,CR,'2',TAB,'3'
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v < ''0'',CR,LF,''1'',LF,CR,''2'',TAB,''3'''
-v <'0',CR,LF,'1',LF,CR,'2',TAB,'3'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig ''0'',CR,LF,''1'',LF,CR,''2'',TAB,''3'''
+jig '0',CR,LF,'1',LF,CR,'2',TAB,'3'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig < ''0'',CR,LF,''1'',LF,CR,''2'',TAB,''3'''
+jig <'0',CR,LF,'1',LF,CR,'2',TAB,'3'
 PREPARE
    
 '0',CR,LF,'1',LF,CR,'2',TAB,'3'
@@ -547,10 +544,10 @@ Lab Section
   And now the same object viewed with Jig.
 )
 PREPARE
-wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'v T8_jig_'
+wd 'sm set inputlog text *', (wd 'sm get inputlog'),LF,'jig T8_jig_'
 PREPARE
  
-v T8_jig_
+jig T8_jig_
   
 NB. =========================================================
 Lab Chapter Function keys

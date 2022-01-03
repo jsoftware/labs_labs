@@ -35,6 +35,7 @@ labs/labs/core/jclickbeginners.ijt
 labs/labs/core/head.ijt
 labs/labs/debug/dissect1.ijt
 labs/labs/debug/dissect2.ijt
+labs/labs/debug/jig.ijt
 labs/labs/graphics/fractals.ijt
 labs/labs/graphics/graphut.ijt
 labs/labs/livetexts/candg.ijt

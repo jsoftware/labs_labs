@@ -20,7 +20,17 @@ Lab Section Set Up
 
 )
 PREPARE
-VE_jig_=.(804 < 0 ". _3 {. 0 {:: [: <;._2 '/',~ 0 {:: <;._2) JVERSION,LF  NB.to determine if Jversion is later than j804
+require 'pacman'
+
+3 : 0 ''
+if. IFJHS do. echo 'jig is only supported on jQt IDE at this time' return. end.
+
+if. 3=4!:0<'revinfo_j_' do. NB. check for JVERSION (including new 9.4 format)
+ t=. getJverold_jpacman_ ''
+else.
+ t=. 4 {. 9!:14 ''
+end.
+VE_jig_=. 804 < 0 ". }.t  NB.to determine if Jversion is later than j804
 Version_jig_=.'   You',( VE_jig_{:: ' need to upgrade to at least J805.';' have a sufficient version of J.'),LF, VE_jig_{:: ('   Please, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/System/Installation');'' 
 QT_jig_=. ('s'~: _1 {. 0 {:: [: <;._2 '/',~ 3 {:: <;._2) JVERSION,LF  NB.to determine if full build  Qt IDE: 1.5.3s/5.6.2 if slim build
 jqt_jig_=.'   You',( QT_jig_{:: ' need to install';' are running'),' the full version of jqt.',LF, QT_jig_{:: ('   To update your system, see the following instructions:',LF,'   http://code.jsoftware.com/wiki/Guides/Qt_IDE/Install#Slim_vs_Full_Builds');'' 
@@ -29,7 +39,7 @@ Jig_jig_=.'   You',( PM_jig_{:: ' need to install';' have already loaded'),' the
 Please_jig_=.'   Please, ',(*/VE_jig_,QT_jig_,PM_jig_){::'address the issue(s) and restart the lab.';'advance to the next section of the lab.'
 smoutput LF,Version_jig_,LF,LF,jqt_jig_,LF,LF,Jig_jig_,LF,LF,Please_jig_,LF
 ". (*/VE_jig_,QT_jig_,PM_jig_) {:: ' ';'load ''~addons/debug/jig/jig.ijs'''
-
+)
 
 PREPARE 
 NB. ========================================================= 

@@ -2,7 +2,6 @@
 /* Licensed use only. Any other use is in violation of copyright. */
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
-
 /* File created by MIDL compiler version 5.01.0164 */
 /* at Thu Jun 22 11:55:16 2000
  */
@@ -11,7 +10,6 @@
     error checks: allocation ref bounds_check enum stub_data
 */
 //@@MIDL_FILE_HEADING(  )
-
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
 #ifndef __REQUIRED_RPCNDR_H_VERSION__
@@ -44,7 +42,6 @@ extern "C" {
 typedef interface IJDLLServer IJDLLServer;
 #endif 	/* __IJDLLServer_FWD_DEFINED__ */
 
-
 #ifndef __JDLLServer_FWD_DEFINED__
 #define __JDLLServer_FWD_DEFINED__
 
@@ -55,7 +52,6 @@ typedef struct JDLLServer JDLLServer;
 #endif /* __cplusplus */
 
 #endif 	/* __JDLLServer_FWD_DEFINED__ */
-
 
 /* header files for imported files */
 #include "oaidl.h"
@@ -68,7 +64,6 @@ void __RPC_USER MIDL_user_free( void __RPC_FAR * );
 
 /* interface IJDLLServer */
 /* [oleautomation][dual][unique][helpstring][uuid][object] */
-
 
 EXTERN_C const IID IID_IJDLLServer;
 
@@ -319,10 +314,7 @@ interface IJDLLServer
   CONST_VTBL struct IJDLLServerVtbl __RPC_FAR *lpVtbl;
 };
 
-
-
 #ifdef COBJMACROS
-
 
 #define IJDLLServer_QueryInterface(This,riid,ppvObject)	\
     (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
@@ -332,7 +324,6 @@ interface IJDLLServer
 
 #define IJDLLServer_Release(This)	\
     (This)->lpVtbl -> Release(This)
-
 
 #define IJDLLServer_GetTypeInfoCount(This,pctinfo)	\
     (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
@@ -345,7 +336,6 @@ interface IJDLLServer
 
 #define IJDLLServer_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
     (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
-
 
 #define IJDLLServer_Do(This,input,r)	\
     (This)->lpVtbl -> Do(This,input,r)
@@ -403,16 +393,12 @@ interface IJDLLServer
 
 #endif /* COBJMACROS */
 
-
 #endif 	/* C style interface */
-
-
 
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Do_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ BSTR input,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Do_Stub(
   IRpcStubBuffer *This,
@@ -420,12 +406,10 @@ void __RPC_STUB IJDLLServer_Do_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Show_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ long b,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Show_Stub(
   IRpcStubBuffer *This,
@@ -433,12 +417,10 @@ void __RPC_STUB IJDLLServer_Show_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Log_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ long b,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Log_Stub(
   IRpcStubBuffer *This,
@@ -446,11 +428,9 @@ void __RPC_STUB IJDLLServer_Log_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_IsBusy_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_IsBusy_Stub(
   IRpcStubBuffer *This,
@@ -458,11 +438,9 @@ void __RPC_STUB IJDLLServer_IsBusy_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Break_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Break_Stub(
   IRpcStubBuffer *This,
@@ -470,11 +448,9 @@ void __RPC_STUB IJDLLServer_Break_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Quit_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Quit_Stub(
   IRpcStubBuffer *This,
@@ -482,13 +458,11 @@ void __RPC_STUB IJDLLServer_Quit_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Get_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ BSTR jname,
   /* [out] */ VARIANT __RPC_FAR *v,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Get_Stub(
   IRpcStubBuffer *This,
@@ -496,20 +470,17 @@ void __RPC_STUB IJDLLServer_Get_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Set_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ BSTR jname,
   /* [in] */ VARIANT __RPC_FAR *v,
   /* [retval][out] */ long __RPC_FAR *r);
 
-
 void __RPC_STUB IJDLLServer_Set_Stub(
   IRpcStubBuffer *This,
   IRpcChannelBuffer *_pRpcChannelBuffer,
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
-
 
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_GetM_Proxy(
   IJDLLServer __RPC_FAR * This,
@@ -520,13 +491,11 @@ void __RPC_STUB IJDLLServer_Set_Stub(
   /* [out] */ long __RPC_FAR *jdata,
   /* [retval][out] */ long __RPC_FAR *r);
 
-
 void __RPC_STUB IJDLLServer_GetM_Stub(
   IRpcStubBuffer *This,
   IRpcChannelBuffer *_pRpcChannelBuffer,
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
-
 
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_SetM_Proxy(
   IJDLLServer __RPC_FAR * This,
@@ -537,13 +506,11 @@ void __RPC_STUB IJDLLServer_GetM_Stub(
   /* [in] */ long __RPC_FAR *jdata,
   /* [retval][out] */ long __RPC_FAR *r);
 
-
 void __RPC_STUB IJDLLServer_SetM_Stub(
   IRpcStubBuffer *This,
   IRpcChannelBuffer *_pRpcChannelBuffer,
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
-
 
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_ErrorText_Proxy(
   IJDLLServer __RPC_FAR * This,
@@ -551,13 +518,11 @@ void __RPC_STUB IJDLLServer_SetM_Stub(
   /* [out] */ VARIANT __RPC_FAR *v,
   /* [retval][out] */ long __RPC_FAR *r);
 
-
 void __RPC_STUB IJDLLServer_ErrorText_Stub(
   IRpcStubBuffer *This,
   IRpcChannelBuffer *_pRpcChannelBuffer,
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
-
 
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_ErrorTextM_Proxy(
   IJDLLServer __RPC_FAR * This,
@@ -565,18 +530,15 @@ void __RPC_STUB IJDLLServer_ErrorText_Stub(
   /* [out] */ long __RPC_FAR *text,
   /* [retval][out] */ long __RPC_FAR *r);
 
-
 void __RPC_STUB IJDLLServer_ErrorTextM_Stub(
   IRpcStubBuffer *This,
   IRpcChannelBuffer *_pRpcChannelBuffer,
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Clear_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Clear_Stub(
   IRpcStubBuffer *This,
@@ -584,12 +546,10 @@ void __RPC_STUB IJDLLServer_Clear_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_Transpose_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ long b,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_Transpose_Stub(
   IRpcStubBuffer *This,
@@ -597,13 +557,11 @@ void __RPC_STUB IJDLLServer_Transpose_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_ErrorTextB_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ long error,
   /* [out] */ VARIANT __RPC_FAR *v,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_ErrorTextB_Stub(
   IRpcStubBuffer *This,
@@ -611,13 +569,11 @@ void __RPC_STUB IJDLLServer_ErrorTextB_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_GetB_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ BSTR jname,
   /* [out] */ VARIANT __RPC_FAR *v,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_GetB_Stub(
   IRpcStubBuffer *This,
@@ -625,13 +581,11 @@ void __RPC_STUB IJDLLServer_GetB_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_SetB_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ BSTR jname,
   /* [in] */ VARIANT __RPC_FAR *v,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_SetB_Stub(
   IRpcStubBuffer *This,
@@ -639,13 +593,11 @@ void __RPC_STUB IJDLLServer_SetB_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
 /* [helpstring] */ HRESULT STDMETHODCALLTYPE IJDLLServer_DoR_Proxy(
   IJDLLServer __RPC_FAR * This,
   /* [in] */ BSTR input,
   /* [out] */ VARIANT __RPC_FAR *v,
   /* [retval][out] */ long __RPC_FAR *r);
-
 
 void __RPC_STUB IJDLLServer_DoR_Stub(
   IRpcStubBuffer *This,
@@ -653,18 +605,13 @@ void __RPC_STUB IJDLLServer_DoR_Stub(
   PRPC_MESSAGE _pRpcMessage,
   DWORD *_pdwStubPhase);
 
-
-
 #endif 	/* __IJDLLServer_INTERFACE_DEFINED__ */
-
-
 
 #ifndef __JDLLServerLib_LIBRARY_DEFINED__
 #define __JDLLServerLib_LIBRARY_DEFINED__
 
 /* library JDLLServerLib */
 /* [version][helpstring][uuid] */
-
 
 EXTERN_C const IID LIBID_JDLLServerLib;
 

@@ -251,7 +251,6 @@ How can you see it?
 )
 ]y =. 'word';1 2 3 4 5;i. 2 5
 #@> y
-)
 PREPARE
 y =. 'word';1 2 3 4 5;i. 2 5
 PREPARE
@@ -310,7 +309,7 @@ lengthx =: %: @: (+/) @ *:
 
 !  Dissect it if you don't understand why it will fail.
 )
-length =: %: @: (+/) @: *: of the lengths of the vectors.
+length =: %: @: (+/) @: *: NB. lengths of the vector
 length 3 4 12
 
 NB. =========================================================
@@ -494,4 +493,4 @@ Dissect the examples below to see how the components are executed.
 Forms with (&) and (&:) can be used monadically, but the monadic case (u&:v y) executes exactly like (u@:v y), and (u&v y) like (u@v y).  For this reason monadic forms in (&) and (&:) are seldom used.
 )
 'three' +&:# 'four'
-('three';'seven') +@(#&>) ('two;'five')
+('three';'seven') +@(#&>) ('two';'five')

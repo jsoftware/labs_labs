@@ -50,12 +50,10 @@ labs/labs/system/sockserv.ijt
 
 # ---------------------------------------------
 EXJQT=: 0 : 0
-labs/labs/graphics/d3.ijt
 )
 
 # ---------------------------------------------
 EXJNET=: 0 : 0
-labs/labs/graphics/d3.ijt
 )
 
 # ---------------------------------------------
@@ -72,6 +70,7 @@ labs/labs/core/head.ijt
 labs/labs/general/jturtleuser.ijt
 labs/labs/general/nn1.ijt
 labs/labs/graphics/gl2.ijt
+labs/labs/graphics/d3.ijt
 labs/labs/graphics/opengl.ijt
 labs/labs/graphics/openglut.ijt
 labs/labs/graphics/plotjhs.ijt

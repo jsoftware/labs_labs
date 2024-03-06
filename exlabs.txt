@@ -35,6 +35,7 @@ labs/labs/core/jclickbeginners.ijt
 labs/labs/core/head.ijt
 labs/labs/debug/dissect1.ijt
 labs/labs/debug/dissect2.ijt
+labs/labs/debug/jig.ijt
 labs/labs/graphics/fractals.ijt
 labs/labs/graphics/graphut.ijt
 labs/labs/livetexts/candg.ijt
@@ -49,12 +50,10 @@ labs/labs/system/sockserv.ijt
 
 # ---------------------------------------------
 EXJQT=: 0 : 0
-labs/labs/graphics/d3.ijt
 )
 
 # ---------------------------------------------
 EXJNET=: 0 : 0
-labs/labs/graphics/d3.ijt
 )
 
 # ---------------------------------------------
@@ -71,6 +70,7 @@ labs/labs/core/head.ijt
 labs/labs/general/jturtleuser.ijt
 labs/labs/general/nn1.ijt
 labs/labs/graphics/gl2.ijt
+labs/labs/graphics/d3.ijt
 labs/labs/graphics/opengl.ijt
 labs/labs/graphics/openglut.ijt
 labs/labs/graphics/plotjhs.ijt
@@ -84,17 +84,4 @@ labs/labs/system/regbuild.ijt
 media/image3/image3.ijt
 media/image3/image3html.ijt
 media/image3/image3movie.ijt
-media/videolabs/catalanjqt.ijt
-media/videolabs/catalanjhs.ijt
-media/videolabs/headjhs.ijt
-media/videolabs/headjqt.ijt
-media/videolabs/beheadjhs.ijt
-media/videolabs/beheadjqt.ijt
-media/videolabs/tailjhs.ijt
-media/videolabs/tailjqt.ijt
-media/videolabs/curtailjhs.ijt
-media/videolabs/curtailjqt.ijt
-media/videolabs/tallyjhs.ijt
-media/videolabs/tallyjqt.ijt
-media/videolabs/videolabjqt.ijt
 )

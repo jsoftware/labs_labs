@@ -601,7 +601,7 @@ b_m_
 
 NB. =========================================================
 Lab Section
-a and b are both valid names when used in m The a definition comes from m and the b definition comes from mm.
+a and b are both valid names when used in m locale.  The a definition comes from m and the b definition comes from mm.
 
 names only lists names in the current locale. names does not search down the path for all names that could be used.
 )
@@ -673,7 +673,7 @@ NB. =========================================================
 Lab Section cocreate
 So far all locales had names that started with an alphabetic and were chosen by the programmer.
 
-cocreate creates a locale with an name of digits.
+cocreate creates a locale with a name of digits.
 
 cocreate is intended primarily for use in OOP and we will just take a quick look here.
 )
@@ -702,13 +702,19 @@ In OOP terminology a named locale is a class and a numbered locale is an object.
 
 NB. =========================================================
 Lab Section
-A numbered locale name can be used just like a named locale name.
+A numbered locale name that was created by cocreate can be used just like a named locale name.  You may not create a numbered locale implicitly.
+
+Numbered locale names are usually used as indirect locatives.  A numbered indirect locative can be an integer atom rather than a boxed string of literal digits.
 )
-w=: <'200'
-abc_200_ =: 123
+]w =: cocreate ''
+abc__w =: 123
 abc__w
+]wi =: 0 ". > w  NB. locale number as integer
+abc__wi
 abc__w=: 'testing'
-abc_200_
+abc__wi
+wi =: 1000000
+abc__wi  NB. can't create a numbered locale by mentioning it!
 
 NB. =========================================================
 Lab Section

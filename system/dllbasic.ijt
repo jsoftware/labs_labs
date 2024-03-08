@@ -13,7 +13,7 @@ see: https://code.jsoftware.com/wiki/Guides/DLLs/Calling_DLLs
 
 WARNING:
 calling DLLS with incorrect declaration or parameter
-can cause crashes or corrpted memory!
+can cause crashes or corrupted memory!
 )
 
 0 : 0

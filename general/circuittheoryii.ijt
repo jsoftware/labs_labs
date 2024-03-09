@@ -174,7 +174,7 @@ pmat =: pind@] {each <@[         NB. partitioned matrix
 require '~addons/math/lapack/lapack.ijs'
 require '~addons/math/lapack/dgeev.ijs'
 eiv =: >@(1&{)@dgeev_jlapack_   NB. compute eigenvalues
-eivs =: eiv@(] ..tr)            NB. eivs G <-> eiv(G+tr G)%2
+eivs =: eiv@-:@(+ tr)            NB. eivs G <-> eiv(G+tr G)%2
 conn =: |."1 @ ($ (#.^:_1) i.@(*/@$))        NB. connections
 cmpv =: ":"0 @,                              NB. component values
 info =: ('&*@vccs3 map  '&,)"1               NB. constant info
@@ -864,7 +864,7 @@ In J we can use the eigenvalue finder in the addon "lapack":
 require '~addons/math/lapack/lapack.ijs'
 require '~addons/math/lapack/dgeev.ijs'
 eiv =: >@(1&{)@dgeev_jlapack_   NB. compute eigenvalues
-eivs =: eiv@(] ..tr)            NB. eivs G <-> eiv(G+tr G)%2
+eivs =: eiv@-:@(+ tr)            NB. eivs G <-> eiv(G+tr G)%2
 
 NB. =========================================================
 Lab Section
@@ -1496,7 +1496,7 @@ gyrator.
 Proof.  For every square matrix T ,
  T
  (0.5* T + tr T) + (0.5* T - tr T)
- ((] ..tr)T) + ((] .:tr)T)
+ (-:@(+ tr)T) + (-:@(- tr)T)
 
 The first term is symmetric while the second is
 skew-symmetric.
@@ -1504,14 +1504,14 @@ skew-symmetric.
 
 Example.  The circuit 2: * diff (or equivalently diff+diff)
 has a realization as the parallel interconnection of a
-triangle of 3 unit resistors   (] ..tr) G  and a gyrator
- (] .:tr) G .
+triangle of 3 unit resistors   -:@(+ tr) G  and a gyrator
+ -:@(- tr) G .
 )
 ]G =: (diff+diff)matrix 3
-(] ..tr)G
-(] .: tr)G
+-:@(+ tr)G
+-:@(- tr)G
 
-G -: ((] ..tr)+(] .:tr))G
+G -: (-:@(+ tr)+-:@(- tr))G
 
 NB. =========================================================
 Lab Section
@@ -1528,7 +1528,7 @@ resistors must be negative.)
 )
 
 W =: vccs3 matrix 3
-((] ..tr);(] .:tr))2*W
+(-:@(+ tr);-:@(- tr))2*W
 
 NB. =========================================================
 Lab Section
@@ -1839,9 +1839,9 @@ Proof.  Let G be the matrix of an n-terminal NRR g . In the
 section on passivity in linear circuits I showed that
    (G&dp)pwr v
  is identical to
-   (] ..tr G)&dp pwr v
+   (-:@(+ tr) G)&dp pwr v
 
-But for an NRR,  (] ..tr)G  is the matrix of a resistor.
+But for an NRR,  -:@(+ tr)G  is the matrix of a resistor.
 Hence g is passive.
 )
 diff pwr ra 4
@@ -1863,7 +1863,7 @@ Theorem.  Every NRR has a realization as the parallel
 connection of a resistor and a gyrator.
 
 Proof.  For every square matrix N,
-   N -: (] ..tr N) + (] .:tr N)
+   N -: (-:@(+ tr) N) + (-:@(- tr) N)
  If N is the matrix of an NRR, the first term is a resistor
 and the second is a gyrator.
 )

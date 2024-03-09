@@ -925,35 +925,6 @@ G=:cos;sin;%&10
 plot ;/W mp >G grid
 
 NB. =========================================================
-Lab Section
-
-In the expressions f d.1 and f d.2 the operator d. gives specified derivatives of a function f. Experiment with its use as illustrated below:
-)
-H=:sin d.1;sin;%&10
-
-map=:;/@:(W&mp@:>)
-
-plot map H grid
-
-NB. =========================================================
-Lab Section
-
-                           EXERCISES
-
-1. Enter and plot each of the following functions. First try to predict the appearance of the plot, then plot it, and finally explain its actual appearance:
-
- I=:sin d.2;sin;%&10
-
- J=:sin d.1;sin;%&10 d.1
-
- K=:sin d.1;sin;%&10 d.2
-
- L=:sin d.1;sin;%:
-
- M=:cos;sin@:+:;%&10
-)
-
-NB. =========================================================
 Lab Section 8. Spatial Vectors, ijk Notation in R3
 
 The unit vectors i, j, k will be defined as in SL, and then used to form the identity matrix I. The vector u of Example 2.10 of SL may then be expressed in terms of either the unit vectors or the identity matrix as follows:

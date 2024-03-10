@@ -21,11 +21,15 @@ Two: an ODBC driver that reads & writes the datasource.
 
 Three: an application interface that calls the driver.
 
-For Windows, first download and install Access ODBC driver from https://www.microsoft.com/en-us/download/details.aspx?id=13255
+For Windows, first download and install Access ODBC driver from https://www.microsoft.com/en-us/download/details.aspx?id=54920
 
 For Debian Linux, install sqlite3 and its ODBC driver using command line,
 
 sudo aptitude install libsqliteodbc
+
+For Mac, install sqlite3 and its ODBC driver using command line,
+
+brew install sqlite sqliteodbc unixodbc
 
 This lab shows how to use the basic facilities of the J ODBC interface.  First load the basic interface script.
 )
@@ -54,6 +58,8 @@ Linux/Mac:
 
 For Linux/Mac, create the file $HOME/.odbc.ini and add the following lines into it, (change the file path of database)
 
+Linx:
+
  [jdata]
  Description=jdata db
  Driver=SQLite3
@@ -63,6 +69,30 @@ For Linux/Mac, create the file $HOME/.odbc.ini and add the following lines into 
  Description=jdata2 db
  Driver=SQLite3
  Database=/home/bakerjd/jdata2.db
+
+Mac intel:
+
+ [jdata]
+ Description=jdata db
+ Driver=/usr/local/lib/libsqlite3odbc.dylib
+ Database=/Users/bakerjd/jdata.db
+
+ [jdata2]
+ Description=jdata2 db
+ Driver=/usr/local/lib/libsqlite3odbc.dylib
+ Database=/Users/bakerjd/jdata2.db
+
+Mac m1/m2:
+
+ [jdata]
+ Description=jdata db
+ Driver=/opt/homebrew/lib/libsqlite3odbc.dylib
+ Database=/Users/bakerjd/jdata.db
+
+ [jdata2]
+ Description=jdata2 db
+ Driver=/opt/homebrew/lib/libsqlite3odbc.dylib
+ Database=/Users/bakerjd/jdata2.db
 
 )
 PREPARE
@@ -101,9 +131,6 @@ It is also useful to determine what columns are in particular tables.
 )
 NB. show the columns of tdata
 'tdata' ddcol ch
-
-NB. show the columns of addr
-'addr' ddcol ch
 
 NB. =========================================================
 Lab Section Statement handles

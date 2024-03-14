@@ -14,27 +14,20 @@ Many databases that can be accessed by ODBC support long binary and long charact
 NB. =========================================================
 Lab Section
 The method is simple but how well it works is entirely dependent of the underlying ODBC driver and host database.
-This lab uses the ACCESS driver and SQLserver driver. The ACCESS driver can handle about 400,000 hex bytes. With SQL Server this method has been applied to 16 megabyte hex blobs.
+This lab uses the Sqlite driver.
 
 To get started define some simple utilities.
 )
 NB. encode J nouns as hexadecimal character lists
-inhex =: [: , 3!:3
-
-NB. decode hexadecimal character lists
-dehex =:  [: 3!:2 ] $~ (# % 8:) , 8:
+inhex=: ,@:(toupper@:(_2&({.!.'0'))@:hfd"0@:(a.&i.)@:(3!:1))
 
 NB. quote J char lists
 quote =: ''''&,@(,&'''')@(#~ >:@(=&''''))
 
 NB. =========================================================
 Lab Section Why use hexadecimal?
-(inhex) and (dehex) convert arbitrary J nouns to and from hexadecimal lists. The hexadecimal list representation is used because it can represent any J noun in a character format that is free of control characters, quotes, null bytes and other characters that often cause SQL parsing problems.
+(inhex) converts arbitrary J nouns to hexadecimal lists. The hexadecimal list representation is used because it is required by Sqlite insert statement syntax.
 )
-hexdat =: inhex dat =: (i. 2 3);'boo';3j7 4j9;2 3$2x^2 3 4
-
-dat -: dehex hexdat
-
 NB. =========================================================
 Lab Section Load ODBC
 )
@@ -55,15 +48,11 @@ The next section checks it is correctly registered.
 DSN     DRIVER and DATA LOCATION
 -----------------------------------------
 
-Windows:
- jblob   Access file  ~/jblob.mdb
-
-Linux/Mac:
+Windows/Linux/Mac:
  jblob   Sqlite file  ~/jblob.db
 )
 PREPARE
-(jpath '~/jblob.mdb') fcopynew^:IFWIN (jpath '~addons/labs/labs/examples/data/jblob.mdb')
-(jpath '~/jblob.db') fcopynew^:IFUNIX (jpath '~addons/labs/labs/examples/data/jblob.db')
+(jpath '~/jblob.db') fcopynew (jpath '~addons/labs/labs/examples/data/jblob.db')
 PREPARE
 NB. check ODBC dsn registration - result should be 1
 (<'jblob') e. {."1 ddsrc 0
@@ -80,7 +69,7 @@ The first step is inserting blobs.  This step defines a simple verb that shows h
 )
 putblob =: 4 : 0
 sql =. 'insert into blobs (jjname,jjvalue) values ('
-sql =. sql,(quote x),',',(quote inhex ".x),')'
+sql =. sql,(quote x),',x',(quote inhex ".x),')'
 sql ddsql y
 )
 
@@ -110,7 +99,7 @@ getblob =: 4 : 0
 sql=.'select jjvalue from blobs where jjname = '
 sql=.sql,quote x
 dat=.ddfet(sql ddsel y),_1
-dehex ,>dat
+3!:2 ,>dat
 )
 
 NB. =========================================================
@@ -132,49 +121,10 @@ NB. empty test blob table
 NB. how many deleted
 ddcnt ch
 
-NB. disconnect
-dddis ch
-
-NB. =========================================================
-Lab Section Large blobs
-The remainder of this lab uses the SQL Server driver to show that this method can effectively scale to very large blobs.  If you do not have access to an SQL Server database stop here.  If you do have appropriate access you have to define a simple table with the same structure as the jblob.mdb or jblob.db database.  I assume you have defined this table and registered it as an ODBC datasource.  I have defined such a table in the (jdant) datasource.
-)
-ch2 =: ddcon 'dsn=jdant'
-
-NB. =========================================================
-Lab Section
-Show columns of blobs table.
-)
-'blobs' ddcol ch2
-
-NB. =========================================================
-Lab Section
-Store blobs in SQL server table
-)
-(;:'b1 b2 b3 b4') putblob&.> ch2
-
-NB. =========================================================
-Lab Section
-Define a large blob and store in the SQL server table.
-)
-bigblob =: ?1000000#10000
-
-'bigblob' putblob ch2
-
-NB. =========================================================
-Lab Section
-Fetch the blob and compare to original.
-)
-baseblob =: 'bigblob' getblob ch2
-
-baseblob -: bigblob
-
 NB. =========================================================
 Lab Section
 So much for blobs!
 )
-NB. clear test table
-'delete from blobs' ddsql ch2
 
 NB. disconnect datasource
-dddis ch2
+dddis ch

@@ -115,10 +115,6 @@ else.
   y
 end.
 )
-f=: 3 : 'lab_jlab_ :: 0'
-plot_jctrl_fkey_jwplot_=: f f.
-jvm_jctrl_fkey_jviewmat_=: f f.
-graph_jctrl_fkey_jzgraph_=: f f.
 labaddons=: 3 : 0
 ADDLABS=: ''
 p=. jpath '~addons/'

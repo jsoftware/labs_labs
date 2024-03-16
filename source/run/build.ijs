@@ -35,3 +35,14 @@ labs805.ijs
 T=: {."1 dirtree'~addons/*.ijt'
 S=: (jpath'~Addons')&, each (# jpath '~addons') }. each T
 T fcopynew each S
+
+NB. =========================================================
+NB. copies labs over to addons
+S=: jpath '~Addons/labs/labs'
+T=: jpath '~addons/labs/labs'
+fixdir=: T , (#S) }. ]
+mkdir_j_ &> fixdir each dirpath S
+
+SF=: {."1 dirtree S
+TF=: fixdir each SF
+TF fcopynew each SF

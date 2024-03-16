@@ -149,10 +149,3 @@ else.
   y
 end.
 )
-
-NB. =========================================================
-NB. function keys for common applications:
-f=: 3 : 'lab_jlab_ :: 0'
-plot_jctrl_fkey_jwplot_=: f f.
-jvm_jctrl_fkey_jviewmat_=: f f.
-graph_jctrl_fkey_jzgraph_=: f f.

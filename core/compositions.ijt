@@ -34,7 +34,7 @@ if. LF ~: {:cfiled do. cfiled =. cfiled , LF end.
 NB. Cut to lines
 lines =. <;._2 cfiled -. CR
 NB. discard comments
-lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines  
+lines =. (#~  ('NB.' -.@-: 3 {. deb)@>) lines
 NB. get delimiter for each line
 delims =. (,&';' {~ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+' i.&0@:e.~ deb)@> lines
 NB. get existing keyname;values
@@ -109,7 +109,7 @@ Write the definition of sumneg.  Your definition will look like
 
 sumneg =: <some combination including +/ and - >
 
-Test your (sumneg) program and see if it works correctly. 
+Test your (sumneg) program and see if it works correctly.
 NB. =========================================================
 Lab Section sumneg
 
@@ -247,7 +247,7 @@ Think and click until you can answer two questions:
 
 Why is the result of executing (>) not visible?
 
-How can you see it? 
+How can you see it?
 )
 ]y =. 'word';1 2 3 4 5;i. 2 5
 #@> y
@@ -293,7 +293,7 @@ Define the length of a vector as the square root of the sum of the squares of th
 
 Solution:
 
-Apply the verbs in order with 
+Apply the verbs in order with
 
 length =: %: @: (+/) @: *:
 
@@ -303,7 +303,7 @@ length2 =: %: @ (+/) @: *:
 
 (length2) is parsed as (%:@(+/))@:*: which means that (%:@(+/)) has the rank of (+/) which is infinite.  In this case (@) and (@:) give the same result.
 
-But don't try 
+But don't try
 
 lengthx =: %: @: (+/) @ *:
 
@@ -484,7 +484,7 @@ NB. =========================================================
 Lab Section & and &:
 The conjunctions (&) and (&:) are used for a different form of dyadic composition.
 
-(x u&:v y) has infinite rank, and executes as ((v x) u (v y)).  In words, (v) is applied to each of (x) and (y) monadically, and (u) is applied dyadically between those results. 
+(x u&:v y) has infinite rank, and executes as ((v x) u (v y)).  In words, (v) is applied to each of (x) and (y) monadically, and (u) is applied dyadically between those results.
 
 (x u&v y) follows the same pattern, but the left and rights verb are the monadic rank of (v).  (x) and (y) are diced into cells before being presented to (u&v), with each cell going through the operation separately and the result-cells assembled into a final result at the end.
 

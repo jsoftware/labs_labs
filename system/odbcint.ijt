@@ -70,29 +70,35 @@ Linx:
  Driver=SQLite3
  Database=/home/bakerjd/jdata2.db
 
-Mac intel:
+Mac:
 
  [jdata]
  Description=jdata db
- Driver=/usr/local/lib/libsqlite3odbc.dylib
+ Driver=SQLite3
  Database=/Users/bakerjd/jdata.db
 
  [jdata2]
  Description=jdata2 db
- Driver=/usr/local/lib/libsqlite3odbc.dylib
+ Driver=SQLite3
  Database=/Users/bakerjd/jdata2.db
+
+In addition for Mac, add an entry to odbcinst.ini
+
+Mac intel:
+add the follwing lines to /usr/local/etc/odbcinst.ini
+
+ [SQLite3]
+ Description=SQLite3
+ Driver=/usr/local/lib/libsqlite3odbc.dylib
+ UsageCount=1
 
 Mac m1/m2:
+add the follwing lines to /usr/local/etc/odbcinst.ini
 
- [jdata]
- Description=jdata db
+ [SQLite3]
+ Description=SQLite3
  Driver=/opt/homebrew/lib/libsqlite3odbc.dylib
- Database=/Users/bakerjd/jdata.db
-
- [jdata2]
- Description=jdata2 db
- Driver=/opt/homebrew/lib/libsqlite3odbc.dylib
- Database=/Users/bakerjd/jdata2.db
+ UsageCount=1
 
 )
 PREPARE

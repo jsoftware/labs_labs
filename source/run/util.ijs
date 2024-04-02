@@ -23,6 +23,21 @@ laberror''
 )
 
 NB. =========================================================
+NB. close any plot or viewmat before section with error,
+NB. so the error is not signaled in the graphic event handler
+closegraphics=: 3 : 0
+w=. wdforms''
+w=. w #~ ({."1 w) e. ;:'plot viewmat'
+if. #w do.
+  nms=. ~.{."1 w
+  if. 1 < #nms do. nms=. 'graphics' end.
+  echo LF,'Closing ',(;nms),' window',((1<#w) # 's'),'...',LF
+  {{ wd 'psel ',y,';pclose' }} each 1{"1 w
+end.
+EMPTY
+)
+
+NB. =========================================================
 delnb=: 3 : 0
 y }.~ 3 + 'NB. ' -: 4 {. y
 )
@@ -131,7 +146,6 @@ runscript=: 3 : 0
 SCRIPT=: SCRIPT, y,LF
 )
 
-
 NB. =========================================================
 j=. <;._2 (0 : 0)
 & &amp;
@@ -148,7 +162,7 @@ tohtml=: rplc & (f;"0 t)
 
 NB. =========================================================
 NB. function keys for common applications:
-f=. 3 : 'lab_jlab_ :: ] 0'
+f=. 3 : 'lab_jlab_ 0'
 plot_jctrl_fkey_jwplot_=: f f.
 jvm_jctrl_fkey_jviewmat_=: f f.
 graph_jctrl_fkey_jzgraph_=: f f.

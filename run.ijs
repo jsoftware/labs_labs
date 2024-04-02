@@ -1,3 +1,3 @@
 
 load 'labs/labs'
-lab '~Addons/labs/labs/graphics/graphut.ijt'
+NB. lab '~Addons/labs/labs/graphics/graphut.ijt'

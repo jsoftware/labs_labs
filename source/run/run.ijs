@@ -7,4 +7,4 @@ NB. dbg 0
 NB. dbstops'labselect'
 NB. labselect_jlab805_''
 
-lab '~Addons/labs/labs/source/run/simple.ijs'
+NB. lab '~Addons/labs/labs/source/run/simple.ijs'

@@ -219,6 +219,10 @@ Executing t_foo_ :
 
 When t_foo_ is executed it sets q in foo, not q in base.
 )
+PREPARE
+closegraphics_jlab_''
+PREPARE
+wd 'sm focus term'
 cocurrent 'base'
 t_foo_ =: verb def 'q=: y'
 t_foo_ 456
@@ -334,7 +338,7 @@ dd_foo_ =: verb def '8{.13!:18$0' NB. return stack (just 8 lines for aa call)
 
 dbr 1 NB. turn on debug so stack info is available
 aa 0  NB. displays call stack when dd_foo_ is running
-dbr 0 NB. turn off debug 
+dbr 0 NB. turn off debug
 
 NB. =========================================================
 Lab Section summary so far
@@ -485,6 +489,9 @@ Lab Section z
 
 Execution of qwert in base looks for a definition in base. When it is not found, the search continues in the locales in the current path. z is in the path, so the qwert definition in z is used.
 )
+PREPARE
+closegraphics_jlab_''
+PREPARE
 erase 'qwert'
 qwert
 qwert_z_ =: 'from z'
@@ -514,6 +521,9 @@ NB. =========================================================
 Lab Section
 Assignment is always in the current locale.
 )
+PREPARE
+closegraphics_jlab_''
+PREPARE
 ggg=: 'ggg from base'
 ggg_z_ =: 'ggg from z' NB. z current, then assigns ggg
 ggg
@@ -706,6 +716,9 @@ A numbered locale name that was created by cocreate can be used just like a name
 
 Numbered locale names are usually used as indirect locatives.  A numbered indirect locative can be an integer atom rather than a boxed string of literal digits.
 )
+PREPARE
+closegraphics_jlab_''
+PREPARE
 ]w =: cocreate ''
 abc__w =: 123
 abc__w

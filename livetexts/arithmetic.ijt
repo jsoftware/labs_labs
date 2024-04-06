@@ -821,6 +821,9 @@ The sentence add digits*10^exponents works because the list exponents provides t
 
 However, it will not work for the list d=:3 4 5 6. Thus:
 )
+PREPARE
+closegraphics_jlab_''
+PREPARE
 add digits*10^exponents
 d=:3 4 5 6
 add d*10^exponents
@@ -1086,6 +1089,9 @@ NB. =========================================================
 Lab Section
 Since the lists 5 9 4 3 1 7 6 5 4 2 and 4 6 7 2 1 9 8 differ in length, they cannot be added directly on the computer, but the shorter can be lengthened by leading zeros (which do not change the number it represents). Thus:
 )
+PREPARE
+closegraphics_jlab_''
+PREPARE
 p=:5 9 4 3 1 7 6 5 4 2
 q=:4 6 7 2 1 9 8
 r=:0 0 0 4 6 7 2 1 9 8

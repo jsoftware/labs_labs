@@ -25,12 +25,13 @@ laberror''
 closegraphics=: 3 : 0
 w=. wdforms''
 w=. w #~ ({."1 w) e. ;:'plot viewmat'
-if. #w do.
-  nms=. ~.{."1 w
-  if. 1 < #nms do. nms=. 'graphics' end.
-  echo LF,'Closing ',(;nms),' window',((1<#w) # 's'),'...',LF
-  {{ wd 'psel ',y,';pclose' }} each 1{"1 w
-end.
+if. 0 = #w do. EMPTY return. end.
+nms=. ~.{."1 w
+if. 1 < #nms do. wnd=. 'graphics' else. wnd=. 0 pick nms end.
+echo LF,'Closing ',wnd,' window',((1<#w) # 's'),'...',LF
+if. (<'viewmat') e. nms do. closeall_jviewmat_'' end.
+w=. w #~ ({."1 w) = <'plot'
+{{ wd 'psel ',y,';pclose' }} each 1{"1 w
 EMPTY
 )
 delnb=: 3 : 0

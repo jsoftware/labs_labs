@@ -1353,6 +1353,9 @@ Lab Section G. Limits of Sequences
 
 The first example in Section 5.4 concerns the sequence t=:1r2&^
 )
+PREPARE
+closeviewmat_jlab_ ^: (UNAME -: 'Darwin') ''
+PREPARE
 t=:1r2&^
 t 0 1 2 3
 x=:i.9

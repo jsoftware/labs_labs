@@ -34,6 +34,10 @@ w=. w #~ ({."1 w) = <'plot'
 {{ wd 'psel ',y,';pclose' }} each 1{"1 w
 EMPTY
 )
+closeviewmat=: 3 : 0
+closeall_jviewmat_ ::] ''
+EMPTY
+)
 delnb=: 3 : 0
 y }.~ 3 + 'NB. ' -: 4 {. y
 )

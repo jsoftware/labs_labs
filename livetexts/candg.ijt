@@ -1866,7 +1866,7 @@ wilson n       NB. Test for primes
 
 (wilson n) # n NB. Select primes
 
-n=:int 50x
+n=:inc int 50x
 n
 
 (wilson n) # n NB. Curiously, Wilson's test gives 1 as a prime

@@ -11,7 +11,7 @@ a=. ''''
 quote=: (a&,@(,&a))@ (#~ >:@(=&a))
 plurals=: ] , (1: ~: [) # 's'"_
 round=: [ * [: <. 0.5"_ + %~
-setlocale=: cocurrent @ <
+setlocale=: 18!:4 @ <
 termLF=: , (0: < #) # LF"_ -. _1&{.    NB. ensure LF terminated
 termdelLF=: }.~ [: - 0: i.~ LF&= @ |.  NB. ensure not LF terminated
 tolist=: ; @: (DEL&, each) @: (,&DEL each)

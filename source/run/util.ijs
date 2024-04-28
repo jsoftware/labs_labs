@@ -3,7 +3,7 @@ NB. util
 isinteger=: (-: <.) ::0:
 matches=: <@[ = #@[ {.each ]
 plurals=: ] , (1: ~: [) # 's'"_
-setlocale=: 18!:4 @ <
+setlocale=: cocurrent @ <
 toLF=: }. @ ; @: (LF&, each)
 
 NB. =========================================================

@@ -7,7 +7,7 @@ LAB805=: '~addons/labs/labs/labs805.ijs'
 isinteger=: (-: <.) ::0:
 matches=: <@[ = #@[ {.each ]
 plurals=: ] , (1: ~: [) # 's'"_
-setlocale=: 18!:4 @ <
+setlocale=: cocurrent @ <
 toLF=: }. @ ; @: (LF&, each)
 assert=: 3 : 0
 '' assert y

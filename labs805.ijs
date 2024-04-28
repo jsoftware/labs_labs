@@ -13,7 +13,7 @@ a=. ''''
 quote=: (a&,@(,&a))@ (#~ >:@(=&a))
 plurals=: ] , (1: ~: [) # 's'"_
 round=: [ * [: <. 0.5"_ + %~
-setlocale=: 18!:4 @ <
+setlocale=: cocurrent @ <
 termLF=: , (0: < #) # LF"_ -. _1&{.
 termdelLF=: }.~ [: - 0: i.~ LF&= @ |.
 tolist=: ; @: (DEL&, each) @: (,&DEL each)

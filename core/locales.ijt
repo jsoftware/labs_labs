@@ -754,7 +754,7 @@ Summary of 18!:x definitions:
  18!:1   conl        - 0/1  named/numbered
  18!:2   copath      - return path : set path
  18!:3   cocreate    - create numbered
- 18!:4   cocurrent   - set current
+ 18!:4   cocurrent   - set current (after starting the J session, use cocurrent instead of 18!:4)
  18!:5   coname      - return current
  18!:55  coerase     - erase
 )

@@ -11,7 +11,6 @@ a=. ''''
 quote=: (a&,@(,&a))@ (#~ >:@(=&a))
 plurals=: ] , (1: ~: [) # 's'"_
 round=: [ * [: <. 0.5"_ + %~
-setlocale=: 18!:4 @ <
 termLF=: , (0: < #) # LF"_ -. _1&{.    NB. ensure LF terminated
 termdelLF=: }.~ [: - 0: i.~ LF&= @ |.  NB. ensure not LF terminated
 tolist=: ; @: (DEL&, each) @: (,&DEL each)
@@ -112,13 +111,13 @@ IMMEX=: y
 
 NB. =========================================================
 run1=: 3 : 0
-setlocale 'base'
+cocurrent 'base'
 0!:111 y [ 4!:55<'y'
 )
 
 NB. =========================================================
 runquiet=: 3 : 0
-setlocale 'base'
+cocurrent 'base'
 0!:100 y [ 4!:55<'y'
 )
 

@@ -32,7 +32,7 @@ NB. open csrcfile and study the routines as they are used in the lab
 
 NB. a fully qualified DLL filename avoids search complications
 dll=: jpath '~addons/labs/labs/examples/dllwrite/'
-dll=: dll,;(('Darwin';'Win')i.<UNAME){'libdlltest.dylib';'dlltest.dll';'libdlltest.so'
+dll=: dll,;(('Darwin';'Win')i.<UNAME){'libdlltest.dylib';(('arm64'-:9!:56'cpu'){::'dlltest.dll';'dlltest_arm64.dll');'libdlltest.so'
 [dll=: '"',dll,'" ' NB. "s allow blanks and trailing blank separates from procedure
  
 0 : 0

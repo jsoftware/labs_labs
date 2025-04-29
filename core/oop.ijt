@@ -20,6 +20,7 @@ coerase <'pbcx'
 coerase <'pbs'
 coerase <'psn'
 coerase <'pbq'
+)
 PREPARE
 
 NB. =========================================================

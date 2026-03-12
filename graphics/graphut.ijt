@@ -80,6 +80,7 @@ PREPARE
 if. 0=wdisparent <'gl2demo' do.
   load '~temp/gl2demo.ijs'
 end.
+)
 PREPARE
 
 NB. =========================================================
